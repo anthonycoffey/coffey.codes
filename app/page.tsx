@@ -3,9 +3,9 @@ import Toolbar from "components/Toolbar";
 
 export default async function Page() {
   return (
-    <div className="bg-gray-200 h-screen container mx-auto">
-      <Toolbar/>
-      <AllArticles/>
+    <div className="container mx-auto h-screen bg-gray-200 px-2">
+      <Toolbar />
+      <AllArticles />
     </div>
   );
 }

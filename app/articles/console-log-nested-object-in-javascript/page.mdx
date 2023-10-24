@@ -1,0 +1,31 @@
+export const metadata = {
+  title: "Console Log Nested Object in JavaScript",
+  description: `Troubleshooting in Node environments with Console.log() using a helper function to display nested objects in a readable format.`,
+  date: "Oct 24, 2023",
+  authors: ["Anthony Coffey"],
+}
+
+# {metadata.title}
+
+
+Sometimes when working in Node environments, console logging objects doesn't provide the information you'd expect. That may be due to nested object structures, and one way I like to make
+sure I'm not hallucinating is by using a helper function to log the nested data - just to be sure.
+
+Import the following module into your code and you'll be able to `logNestedObjects` and see any "hidden" information that is stashed away in your response object.
+
+```javascript
+export function logNestedObjects(variable: any, depth = 0) {
+    const indent = '  '.repeat(depth); // Adjust the indentation level
+
+    if (typeof variable === 'object' && variable !== null) {
+        console.log(indent + '{');
+        for (const key in variable) {
+            console.log(indent + `  ${key}:`);
+            logNestedObjects(variable[key], depth + 2); // Recursively log nested objects
+        }
+        console.log(indent + '}');
+    } else {
+        console.log(indent + variable);
+    }
+}
+```

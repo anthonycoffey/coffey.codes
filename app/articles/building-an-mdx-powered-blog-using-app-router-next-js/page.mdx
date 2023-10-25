@@ -1,0 +1,77 @@
+import image from "./image.png";
+import Counter from "./Counter";
+export const metadata = {
+  title: "Building an MDX Powered Blog using App Router",
+  description: `How I built an MDX powered blog using App Router with Next.js and Tailwind CSS.`,
+  date: "Oct 25, 2023",
+  authors: ["Anthony Coffey"],
+  image,
+};
+
+# {metadata.title}
+
+Having an MDX powered blog is frickin' crazy y'all! I can import components directly into my article! 😲
+
+<Counter />
+
+### The problem with my old site
+
+My old site was powered by contentful CMS backend, and it was so unintuitive for me to include code snippets or create content on the fly.
+
+Contentful doesn't support embedded code snippets, so I had to create a custom post type with a single textarea field that I would paste code into and then go back and include it in the associated blog post.
+
+It worked, but it made documenting a process or sharing a code snippet really inconvenient. It honestly took all the fun out of writing about tech, but this is a total game changer! 🤯
+
+In this article I will document how I built an MDX powered blog using App Router. Check out the code for this website [here](https://github.com/anthonycoffey/coffey.codes)
+
+### What is MDX?
+
+MDX is a file format that lets you write JSX embedded inside markdown. It's pretty cool, and it's what I'm using to write this article.
+
+### This is the way
+
+Now I have an easy way to quickly write articles with code snippets and images. I can even import components directly into my article! (I did say that already, lol... I'm pretty excited about it though!
+
+### How I did it
+
+Coming soon!
+
+## Counter Component Example
+
+This is arbitrary, but a cool demonstration of my new blogging method! 😎 I can import components directly into my article, I'm going to scream it out into the streets of South Austin! 😂
+
+```javascript
+"use client"; // this is required for the embedded component to work within the .mdx file
+import React, { useState } from "react";
+
+export default function CounterComponent() {
+  const [count, setCount] = useState < number > 0;
+
+  const incrementCount = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  return (
+    <div className="flex items-center justify-center bg-gradient-to-b from-blue-500 to-purple-500 p-8">
+      <div className="bg-white rounded-lg p-8 shadow-lg">
+        <span className="font-bold mb-4 block text-center">
+          Counter Example
+        </span>
+        <div className="flex items-center space-x-4">
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+            onClick={incrementCount}
+          >
+            Increment
+          </button>
+          <span className="text-xl font-semibold p-2 border border-2 rounded">
+            {count}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+<Counter />

@@ -21,7 +21,7 @@ export default async function AllArticles() {
           >
             {metadata.image && (
               <Image
-                className="h-48 w-full object-cover"
+                className="h-66 w-full object-cover"
                 src={metadata.image}
                 alt={title}
               />

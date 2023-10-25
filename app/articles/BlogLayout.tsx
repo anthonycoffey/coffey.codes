@@ -28,7 +28,7 @@ export default async function Layout({
             />
           </div>
         )}
-        <ArticleInfo article={article} className="px-1 text-sm" />
+        <ArticleInfo article={article} className="px-1 text-sm mb-5" />
         {children}
       </article>
     </>

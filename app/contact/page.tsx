@@ -37,7 +37,6 @@ export default function Contact() {
             <textarea
               id="message"
               name="message"
-              rows="4"
               placeholder="Your Message"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-400"
               required

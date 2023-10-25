@@ -2,6 +2,7 @@ import Image from "next/image";
 import image from "./image.png";
 import Counter from "./Counter";
 import paulie from "./paulie.gif";
+import babyyoda from "./babyyoda.gif";
 export const metadata = {
   title: "MDX Powered Blog Using App Router on Next.js",
   description: `How I built an MDX powered blog using App Router with Next.js and Tailwind CSS.`,
@@ -32,9 +33,17 @@ Check out the code for this website [here](https://github.com/anthonycoffey/coff
 
 MDX is a file format that lets you write JSX embedded inside markdown. It's pretty cool, and it's what I'm using to write this article.
 
-### This is the way
+<Image
+  src={babyyoda}
+  alt="Baby Yoda"
+  width={300}
+  height={150}
+  className="mx-auto !my-0"
+/>
 
-Now I have an easy way to quickly write articles with code snippets and images. I can even import components directly into my article!
+### This is the way...
+
+Now I have a quick and easy way to blog with code snippets on the fly! I can even import components directly into my article!
 
 <small className="text-center block">
   (I know, I know! I said that already...)

@@ -25,13 +25,16 @@ export default function RootLayout({
     <html lang="en" className={helvetica.className}>
       <body>
         <Toolbar />
-        <main>{children}</main>
+        <main className="overflow-hidden">{children}</main>
         <footer className="py-2">
-          <div className="flex flex-row justify-center p-4">
+          <div className="flex flex-row justify-center py-10">
             <div className="flex flex-col">
-              <div className="text-center">Coffey.Codes © 2023</div>
+              <div className="text-center">
+                <img src="/underconstruction.gif" alt="under construction" />
+              </div>
             </div>
           </div>
+          <div className="text-center">Coffey.Codes © 2023</div>
         </footer>
       </body>
     </html>

@@ -1,8 +1,8 @@
 import Image from "next/image";
 function ToolbarMenu() {
   return (
-    <div className={"flex-1"}>
-      <ul className="float-right flex flex-row p-1">
+    <div className={"flex flex-1 items-center justify-end "}>
+      <ul className="inline-flex">
         <li className={"mx-2"}>
           <a href="/">Home</a>
         </li>
@@ -30,7 +30,7 @@ function Logo() {
 
 export default function Toolbar() {
   return (
-    <header className="flex p-8">
+    <header className="flex sm:p-2 p-4 container mx-auto">
       <Logo />
       <ToolbarMenu />
     </header>

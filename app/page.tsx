@@ -3,7 +3,7 @@ import AllArticles from "components/AllArticles";
 export default async function Page() {
   return (
     <>
-      <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-700 py-20 text-white mb-10">
+      <section className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-700 py-20 text-white mb-10">
         <div className="container mx-auto text-center prose">
           <h1 className="text-4xl font-bold text-white">Hey Y'all!</h1>
           <p className="mt-4 text-xl text-white">
@@ -18,24 +18,16 @@ export default async function Page() {
             Contact Me
           </a>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto">
-        <div className="flex flex-row justify-between">
-          {/*<img src="/underconstruction.gif" alt="under construction" />*/}
-          {/*<img src="/underconstruction.gif" alt="under construction" />*/}
-          {/*<img src="/underconstruction.gif" alt="under construction" />*/}
-          {/*<img src="/underconstruction.gif" alt="under construction" />*/}
-        </div>
+      <section className="container mx-auto">
         <div className="flex justify-center">
-          <img src="/underconstruction.gif" alt="under construction" />
           <img src="/underconstruction-bar.gif" alt="under construction" />
           <img src="/underconstruction-bar.gif" alt="under construction" />
           <img src="/underconstruction-bar.gif" alt="under construction" />
-          <img src="/underconstruction.gif" alt="under construction" />
         </div>
         <AllArticles />
-      </div>
+      </section>
     </>
   );
 }

@@ -8,7 +8,7 @@ export default async function AllArticles() {
   const articles = await getAllArticles();
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
       {articles.map((article) => {
         const { metadata } = article;
         const title = String(metadata.title);

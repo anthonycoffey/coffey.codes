@@ -34,7 +34,9 @@ export default function RootLayout({
               </div>
             </div>
           </div>
-          <div className="text-center">Coffey.Codes © 2023</div>
+          <div className="text-center">
+            coffey.codes © {new Date().getFullYear()}
+          </div>
         </footer>
       </body>
     </html>

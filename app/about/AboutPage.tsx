@@ -34,7 +34,7 @@ export default function AboutPage() {
             medium sized businesses.
           </p>
           <p className="tracking-wide">
-            March 2022, I was employed as a Full Stack Software Engineer at
+            March 2022, I was employed as a Full Stack Software Engineer at{" "}
             <a href="https://www.maranihealth.com/" target="_blank">
               Marani Health
             </a>

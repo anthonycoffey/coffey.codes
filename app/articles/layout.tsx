@@ -4,7 +4,11 @@ import Image from "next/image";
 import { getArticleBySlug } from "utils/getArticles";
 import Toolbar from "../../components/Toolbar";
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const slug = headers().get("x-next-article-slug") as string;
   const article = await getArticleBySlug(slug);
   const { metadata } = article;
@@ -12,7 +16,6 @@ export default async function Layout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <Toolbar />
       <article className="prose mx-auto lg:prose-xl">
         {image && (
           <div className="flex max-h-[60vh] justify-center">

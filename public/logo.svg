@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1602.28 698.73">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-2 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-5 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-6 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-9 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-10 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-11 {
+        letter-spacing: 0em;
+      }
+
+      .cls-12 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-14 {
+        font-family: Helvetica, Helvetica;
+        font-size: 146px;
+      }
+
+      .cls-14, .cls-15 {
+        fill: #231f20;
+      }
+
+      .cls-16 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-15" d="m650.5,407.72l21.51,12.42,104.32,60.23v-240.9l-104.32-60.23-104.31-60.22v240.9l41.4,23.9,41.4,23.9Z"/>
+      <polygon class="cls-15" points="916.38 407.72 999.18 359.91 999.18 239.46 999.18 214.62 999.18 176.62 999.18 119.01 894.87 179.23 790.56 239.46 790.55 359.91 790.56 480.36 873.36 432.56 916.38 407.72"/>
+      <polygon class="cls-15" points="996.04 107.21 844.15 195.1 813.79 212.62 783.45 230.14 753.09 212.62 570.45 107.21 783.44 0 996.04 107.21"/>
+      <text class="cls-14" transform="translate(310.74 599.7)"><tspan class="cls-2" x="0" y="0">&lt;</tspan><tspan class="cls-7" x="83.42" y="0">c</tspan><tspan class="cls-1" x="155.11" y="0">o</tspan><tspan class="cls-16" x="231.63" y="0">f</tspan><tspan class="cls-10" x="272.67" y="0">f</tspan><tspan class="cls-9" x="307.65" y="0">e</tspan><tspan class="cls-13" x="382.78" y="0">y</tspan><tspan class="cls-5" x="442.93" y="0">.</tspan><tspan class="cls-11" x="477.58" y="0">c</tspan><tspan class="cls-12" x="549.26" y="0">o</tspan><tspan class="cls-4" x="628.08" y="0">d</tspan><tspan class="cls-8" x="706.17" y="0">e</tspan><tspan class="cls-6" x="783.63" y="0">s</tspan><tspan class="cls-3" x="854.46" y="0">/</tspan><tspan x="895.53" y="0">&gt;</tspan></text>
+    </g>
+  </g>
+</svg>

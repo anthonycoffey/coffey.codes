@@ -11,15 +11,25 @@ const importAll = (r): Promise<Article[]> =>
         metadata: module?.metadata,
         component: module?.default,
         readingTime: module?.metadata_readingTime,
-      } satisfies Article;
-    })
+      };
+    }),
   );
 
-export const getAllArticles = async (): Promise<Article[]> =>
-  importAll(
+export const getAllArticles = async (): Promise<Article[]> => {
+  const allArticles = await importAll(
     //@ts-ignore
-    require.context("../app/articles/", true, /^\.\/[^\/]+\/page\.mdx$/)
+    require.context("../app/articles/", true, /^\.\/[^\/]+\/page\.mdx$/),
   );
+
+  // Sort articles by date in descending order (most recent first)
+  allArticles.sort((a, b) => {
+    const dateA: number = new Date(a.metadata.date).valueOf();
+    const dateB: number = new Date(b.metadata.date).valueOf();
+    return dateB - dateA;
+  });
+
+  return allArticles;
+};
 
 export const getArticleBySlug = async (slug: string): Promise<Article> => {
   const module = require(`../app/articles/${slug}/page.mdx`);

@@ -1,0 +1,73 @@
+import image from "./image.png";
+export const metadata = {
+  title: "Unit Testing in Python with Pytest",
+  description: ` Pytest is known for its simplicity, scalability, and flexibility. In this tutorial, we will cover how  use pytest for writing unit tests in Python and discuss naming conventions and docstring best practices.`,
+  date: "Feb 16, 2023",
+  authors: ["Anthony Coffey"],
+  image,
+};
+
+# {metadata.title}
+
+### Introduction
+
+Pytest is a popular testing framework for Python that allows developers to write comprehensive and scalable tests for their code. Pytest is known for its simplicity, scalability, and flexibility. In this tutorial, we will cover how to use pytest for writing unit tests in Python and discuss naming conventions and docstring best practices.
+
+### Installation
+
+Before you can use pytest, you need to install it on your computer. You can install pytest using pip, the Python package manager. Open your terminal and run the following command:
+
+```bash
+pip install pytest
+```
+
+Once you have installed pytest, you can start writing your tests.
+
+### Writing tests with Pytest
+
+Pytest uses a simple and intuitive syntax for writing tests. To write a test in pytest, you need to create a function that starts with the word "test\_" and then include assertions that verify the expected behavior of your code.
+
+```python
+def test_addition():
+  assert 1 + 2 == 3
+```
+
+In this example, we have created a test function called "test_addition" that checks if 1 + 2 equals 3. To run this test, save the code in a file named "test_math.py" and run the following command in your terminal:
+
+To run this test, save the code in a file named "test_math.py" and run the following command in your terminal:
+
+```python
+test test_math.py
+```
+
+Pytest will run the test with all the specified input combinations and output the results.
+
+### Naming conventions
+
+Naming conventions are important for writing readable and maintainable tests. Here are some naming conventions to follow when writing tests with pytest:
+
+- Test function names should start with test\_
+
+- Use underscores to separate words in function names (e.g., test_addition).
+
+- Use descriptive function names that clearly indicate what is being tested (e.g., test_addition instead of test_001).
+
+### Docstring best practices
+
+Docstrings are used to provide documentation for your code, including your tests. Here are some best practices to follow when writing docstrings for your test functions:
+
+- Use triple quotes to create docstrings.
+
+- Include a description of what the test is checking.
+
+- Include any setup or teardown instructions that are required for the test to run.
+
+- Include any known edge cases or boundary conditions that the test is checking.
+
+- Use examples to illustrate how the test works.
+
+### Conclusion
+
+In this tutorial, we covered how to use pytest for writing unit tests in Python and discussed naming conventions and docstring best practices. By following these guidelines, you can write tests that are readable, maintainable, and scalable. Remember that writing tests is an important part of the software development process and can help you catch bugs before they make it into production.
+
+Happy testing! 🧪👨‍🔬

@@ -15,7 +15,7 @@ export default function AboutPage() {
           />
         </div>
         <div className="prose lg:prose-xl col-span-2">
-          <h1 className="text-2xl font-bold">Hey Y'all</h1>
+          <h1 className="text-2xl font-bold">👋 Hey Y'all</h1>
           <p className="leading-1 tracking-wide">
             My name is <b>Anthony Coffey</b> and I'm a <b>Software Engineer</b>,{" "}
             <b>Artist</b>, <b>Designer</b>, <b>Musician</b> and fellow{" "}

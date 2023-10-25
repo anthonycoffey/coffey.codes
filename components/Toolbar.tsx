@@ -1,15 +1,15 @@
 import Image from "next/image";
 function ToolbarMenu() {
   return (
-    <div className={"flex flex-1 items-center justify-end "}>
-      <ul className="inline-flex">
-        <li className={"mx-2"}>
+    <div className={"flex flex-1 items-center justify-end w-1/2"}>
+      <ul className="flex flex-row justify-between [&>*]:mx-3">
+        <li className="hover:underline">
           <a href="/">Home</a>
         </li>
-        <li className={"mx-2"}>
+        <li className="hover:underline">
           <a href="/about">About</a>
         </li>
-        <li className={"mx-2"}>
+        <li className="hover:underline">
           <a href="/contact">Contact</a>
         </li>
       </ul>

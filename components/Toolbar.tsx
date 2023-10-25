@@ -4,9 +4,6 @@ function ToolbarMenu() {
     <div className={"flex flex-1 items-center justify-end w-1/2"}>
       <ul className="flex flex-row justify-between [&>*]:mx-3">
         <li className="hover:underline">
-          <a href="/">Home</a>
-        </li>
-        <li className="hover:underline">
           <a href="/about">About</a>
         </li>
         <li className="hover:underline">

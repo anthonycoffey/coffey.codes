@@ -1,7 +1,9 @@
+import Image from "next/image";
 import image from "./image.png";
 import Counter from "./Counter";
+import paulie from "./paulie.gif";
 export const metadata = {
-  title: "Building an MDX Powered Blog using App Router",
+  title: "MDX Powered Blog Using App Router on Next.js",
   description: `How I built an MDX powered blog using App Router with Next.js and Tailwind CSS.`,
   date: "Oct 25, 2023",
   authors: ["Anthony Coffey"],
@@ -10,19 +12,21 @@ export const metadata = {
 
 # {metadata.title}
 
-Having an MDX powered blog is frickin' crazy y'all! I can import components directly into my article! 😲
+Having an MDX powered blog is frickin' wild y'all! I can import React components directly into my article! 😲
 
 <Counter />
 
 ### The problem with my old site
 
-My old site was powered by contentful CMS backend, and it was so unintuitive for me to include code snippets or create content on the fly.
+My old site was powered by Contentful CMS backend, and it was so unintuitive for me to include code snippets or create content on the fly.
 
 Contentful doesn't support embedded code snippets, so I had to create a custom post type with a single textarea field that I would paste code into and then go back and include it in the associated blog post.
 
 It worked, but it made documenting a process or sharing a code snippet really inconvenient. It honestly took all the fun out of writing about tech, but this is a total game changer! 🤯
 
-In this article I will document how I built an MDX powered blog using App Router. Check out the code for this website [here](https://github.com/anthonycoffey/coffey.codes)
+In this article I will document how I built an MDX powered blog using App Router on Next.js
+
+Check out the code for this website [here](https://github.com/anthonycoffey/coffey.codes)
 
 ### What is MDX?
 
@@ -30,15 +34,25 @@ MDX is a file format that lets you write JSX embedded inside markdown. It's pret
 
 ### This is the way
 
-Now I have an easy way to quickly write articles with code snippets and images. I can even import components directly into my article! (I did say that already, lol... I'm pretty excited about it though!
+Now I have an easy way to quickly write articles with code snippets and images. I can even import components directly into my article!
 
-### How I did it
+<small className="text-center block">
+  (I know, I know! I said that already...)
+</small>
 
-Coming soon!
+<div className="grid grid-cols-2 prose lg:prose-xl">
+  <blockquote className="lg:text-2xl lg:mt-10 pr-4">
+    "Ay ton', you heard what I said? ... I said I can import components directly
+    into my article.. heh heh"
+  </blockquote>
+  <div>
+    <Image src={paulie} alt="Paulie Walnuts" width={300} height={300} />
+  </div>
+</div>
 
 ## Counter Component Example
 
-This is arbitrary, but a cool demonstration of my new blogging method! 😎 I can import components directly into my article, I'm going to scream it out into the streets of South Austin! 😂
+This is an arbitrary example, but nonetheless a cool demonstration of my new blogging tool! 😎
 
 ```javascript
 "use client"; // this is required for the embedded component to work within the .mdx file

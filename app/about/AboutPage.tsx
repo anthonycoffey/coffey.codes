@@ -30,16 +30,16 @@ export default function AboutPage() {
           </p>
           <p className="tracking-wide">
             Since then, I've gained valuable professional experience working as
-            a system admin, plugin/theme developer, engineer or consultant for
-            start-ups and small/medium sized businesses.
+            a system admin, engineer or consultant for start-ups and small to
+            medium sized businesses.
           </p>
           <p className="tracking-wide">
-            Since March 2022, I've been working full time as a Full Stack
-            Software Engineer at{" "}
+            March 2022, I was employed as a Full Stack Software Engineer at
             <a href="https://www.maranihealth.com/" target="_blank">
               Marani Health
             </a>
           </p>
+
           <p className="tracking-wide">
             If you have a project you'd like to discuss, please feel free to{" "}
             <a href="/contact">contact me.</a>

@@ -1,7 +1,7 @@
 export default function AboutPage() {
   return (
     <div className="container mx-auto flex grid grid-cols-1 md:grid-cols-2 mt-10">
-      <div className="prose lg:prose-xl mb-10 px-4 text-center md:text-left">
+      <div className="prose lg:prose-xl mb-10 px-4 text-center md:text-left mx-auto">
         <h1 className="text-2xl font-bold mb-6">👋 Hey Y'all</h1>
         <p className="leading-1 tracking-wide">
           My name is <b>Anthony Coffey</b> and I'm an <b>Artist</b>,{" "}
@@ -49,7 +49,7 @@ export default function AboutPage() {
         <img
           src="/psych.png"
           alt="Contact"
-          className="rounded-full mb-4 mx-auto"
+          className="rounded-full p-10 md:p-5 mx-auto"
         />
       </div>
     </div>

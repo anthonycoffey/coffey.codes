@@ -4,14 +4,13 @@ import axios from "axios";
 type FormData = {
   name: string;
   email: string;
-  phone: string;
+
   message: string;
 };
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
-    phone: "",
     message: "",
   });
   const [messageSent, setMessageSent] = useState<boolean>(false);
@@ -39,7 +38,6 @@ export default function ContactForm() {
       data: {
         name: formData?.name,
         email: formData?.email,
-        phone: formData?.phone,
         message: formData?.message,
       },
       headers: {
@@ -62,7 +60,7 @@ export default function ContactForm() {
       {!messageSent ? (
         <>
           <form onSubmit={handleFormSubmit}>
-            <div className="grid grid-cols-2">
+            <div className="grid md:grid-cols-2">
               <div className="pr-2">
                 <label
                   className="block text-gray-700 font-bold mb-2"
@@ -99,23 +97,6 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="mb-2">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="phone"
-              >
-                Phone
-              </label>
-              <input
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="phone"
-                name="phone"
-                type="phone"
-                placeholder="Your phone number"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
             <div className="mb-2">
               <label
                 className="block text-gray-700 font-bold mb-2"

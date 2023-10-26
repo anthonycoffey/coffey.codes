@@ -1,3 +1,5 @@
+import Chip from "../../components/Chip";
+
 export default function AboutPage() {
   return (
     <div className="container mx-auto flex grid grid-cols-1 md:grid-cols-2 mt-10">
@@ -5,17 +7,16 @@ export default function AboutPage() {
         <h1 className="text-2xl font-bold mb-6">👋 Hey Y'all</h1>
         <p className="leading-1 tracking-wide">
           My name is <b>Anthony Coffey</b> and I'm an <b>Artist</b>,{" "}
-          <b>Musician</b>, <b>Software Engineer</b> and fellow <b>Human</b>{" "}
-          living in <b>Austin, Texas</b>.
+          <b>Musician</b> and <b>Software Engineer</b> living in{" "}
+          <b>Austin, Texas</b>.
         </p>
         <p className="leading-1 tracking-wide">
-          May 2012, I graduated from Gulf Coast State College and started a
-          business doing WordPress development{" "}
-          <small>(Linux, Apache, mySQL, PHP)</small>.
+          In May of 2012, I graduated from Gulf Coast State College and started
+          a business doing WordPress plugin and theme development.
         </p>
         <p className="leading-1 tracking-wide">
           I was able to launch my career right out of college thanks to some
-          great mentors and the E-lance platform, which was later acquired by
+          great mentors and the Elance platform, which was later acquired by
           Upwork.
         </p>
         <p className="leading-1 tracking-wide">

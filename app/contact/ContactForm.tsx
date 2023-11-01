@@ -60,7 +60,7 @@ export default function ContactForm() {
       {!messageSent ? (
         <>
           <form onSubmit={handleFormSubmit}>
-            <div className="grid md:grid-cols-2">
+            <div className="grid md:grid-cols-2 text-left">
               <div className="pr-2">
                 <label
                   className="block text-gray-700 font-bold mb-2"
@@ -97,7 +97,7 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="mb-2">
+            <div className="mb-2 text-left">
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="message"

@@ -1,34 +1,34 @@
 const LOGOS = [
+  "html-5.svg",
+  "css-3.svg",
+  "sass.svg",
+  "javascript.svg",
+  "typescript-icon.svg",
   "angular-icon.svg",
+  "react.svg",
+  "vue.svg",
+  "tailwindcss.svg",
+  "nodejs.svg",
+  "expo.svg",
+  "aws.svg",
   "aws-amplify.svg",
   "aws-lambda.svg",
-  "aws.svg",
-  "css-3.svg",
-  "expo.svg",
+  "graphql.svg",
   "firebase.svg",
   "google-cloud-functions.svg",
   "google-cloud-run.svg",
   "google-cloud.svg",
-  "graphql.svg",
-  "heroku.svg",
-  "highcharts.svg",
-  "html-5.svg",
-  "javascript.svg",
   "mongodb.svg",
-  "mysql.svg",
-  "netlify.svg",
-  "nodejs.svg",
-  "php.svg",
   "postgresql.svg",
-  "react.svg",
-  "sass.svg",
+  "php.svg",
+  "mysql.svg",
+  "wordpress.svg",
+  "highcharts.svg",
   "sentry.svg",
   "swagger.svg",
-  "tailwindcss.svg",
-  "typescript-icon.svg",
+  "heroku.svg",
+  "netlify.svg",
   "vercel.svg",
-  "vue.svg",
-  "wordpress.svg",
 ];
 export default function AboutPage() {
   return (
@@ -87,8 +87,7 @@ export default function AboutPage() {
       </div>
       <div className="container mx-auto flex  mt-10">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
-          <h4>I have notable experience with the following technologies:</h4>
-          <div className="grid grid-cols-12 gap-4 justify-items-center items-center content-center">
+          <div className="grid grid-cols-6 gap-20 justify-items-center items-center content-center">
             {LOGOS.map((logo) => (
               <img src={`/logos/${logo}`} />
             ))}

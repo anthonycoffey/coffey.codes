@@ -81,15 +81,15 @@ export default function AboutPage() {
           <img
             src="/psych.png"
             alt="Contact"
-            className="rounded-full p-10 md:p-5 mx-auto"
+            className="p-4 md:p-10 rounded-full mx-auto"
           />
         </div>
       </div>
-      <div className="container mx-auto flex  mt-10">
+      <div className="container mx-auto flex mt-24">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
-          <div className="grid grid-cols-6 gap-20 justify-items-center items-center content-center">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-20 justify-items-center items-center content-center">
             {LOGOS.map((logo) => (
-              <img src={`/logos/${logo}`} />
+              <img src={`/logos/${logo}`} alt={logo.replace(".svg", "")} />
             ))}
           </div>
         </div>

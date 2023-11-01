@@ -6,11 +6,11 @@ export default function ContactPage() {
         <h1 className="text-2xl font-bold mb-6">💌 Contact Me</h1>
         <ContactForm />
       </div>
-      <div className="flex px-10 justify-center items-center content-center">
+      <div className="flex justify-center items-center content-center">
         <img
           src="/contact.png"
           alt="Contact"
-          className="rounded-full mx-auto"
+          className="p-4 md:p-10 rounded-full mx-auto"
         />
       </div>
     </div>

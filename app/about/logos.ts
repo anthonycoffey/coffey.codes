@@ -1,0 +1,36 @@
+const frontend: string[] = [
+  "html-5.svg",
+  "css-3.svg",
+  "javascript.svg",
+  "typescript-icon.svg",
+  "sass.svg",
+  "react.svg",
+  "vue.svg",
+  "angular-icon.svg",
+  "bootstrap.svg",
+  "materializecss.svg",
+  "tailwindcss.svg",
+  "greensock.svg",
+];
+const backend: string[] = [
+  "php.svg",
+  "python.svg",
+  "nodejs.svg",
+  "postgresql.svg",
+  "mysql.svg",
+  "mongodb.svg",
+  "graphql.svg",
+  "firebase.svg",
+  "aws-amplify.svg",
+  "google-cloud.svg",
+  "aws.svg",
+  "heroku.svg",
+  "netlify.svg",
+  "vercel.svg",
+  "expo.svg",
+  "swagger.svg",
+  "sentry.svg",
+  "wordpress.svg",
+];
+
+export { frontend, backend };

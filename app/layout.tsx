@@ -1,4 +1,4 @@
-import "./global.sass";
+import "./main.sass";
 import Toolbar from "../components/Toolbar";
 import localFont from "next/font/local";
 

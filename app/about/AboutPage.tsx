@@ -1,40 +1,11 @@
-const LOGOS = [
-  "html-5.svg",
-  "css-3.svg",
-  "sass.svg",
-  "javascript.svg",
-  "typescript-icon.svg",
-  "react.svg",
-  "angular-icon.svg",
-  "vue.svg",
-  "tailwindcss.svg",
-  "nodejs.svg",
-  "expo.svg",
-  "aws.svg",
-  "aws-amplify.svg",
-  "aws-lambda.svg",
-  "graphql.svg",
-  "firebase.svg",
-  "google-cloud-functions.svg",
-  "google-cloud-run.svg",
-  "google-cloud.svg",
-  "mongodb.svg",
-  "postgresql.svg",
-  "php.svg",
-  "mysql.svg",
-  "wordpress.svg",
-  "highcharts.svg",
-  "sentry.svg",
-  "swagger.svg",
-  "heroku.svg",
-  "netlify.svg",
-  "vercel.svg",
-];
+import { frontend, backend } from "./logos";
+import LogoGrid from "./components/LogoGrid";
+
 export default function AboutPage() {
   return (
     <>
-      <div className="container mx-auto flex grid grid-cols-1 md:grid-cols-2 mt-10">
-        <div className="prose lg:prose-xl mb-10 px-4 text-center md:text-left mx-auto">
+      <div className="page">
+        <div className="page-content">
           <h1 className="text-2xl font-bold mb-6">👋 Hey Y'all</h1>
           <p className="leading-1 tracking-wide">
             My name is <b>Anthony Coffey</b> and I'm an <b>Artist</b>,{" "}
@@ -77,23 +48,31 @@ export default function AboutPage() {
             .
           </p>
         </div>
-        <div className="flex justify-center items-center content-center">
-          <img
-            src="/psych.png"
-            alt="Contact"
-            className="p-4 md:p-10 rounded-full mx-auto"
-          />
+        <div className="page-image">
+          <img src="/psych.png" alt="Contact" />
         </div>
       </div>
-      <div className="container mx-auto flex mt-24">
+      <div className="container mx-auto mt-24">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-20 justify-items-center items-center content-center">
-            {LOGOS.map((logo) => (
-              <img src={`/logos/${logo}`} alt={logo.replace(".svg", "")} />
-            ))}
-          </div>
+          <h1 className="text-2xl font-bold mb-6 text-center">
+            Frontend Expertise
+          </h1>
+          <LogoGrid logos={frontend} />
         </div>
       </div>
+      <div className="container mx-auto mt-24">
+        <div className="mb-10 px-4 text-center md:text-left mx-auto">
+          <h1 className="text-2xl font-bold mb-6 text-center">
+            Cloud/Backend Expertise
+          </h1>
+          <LogoGrid logos={backend} />
+        </div>
+      </div>
+      {/*<div className="container mx-auto flex mt-24">*/}
+      {/*  <div className="mb-10 px-4 text-center md:text-left mx-auto">*/}
+      {/*    <LogoGrid logos={cloud} cols={10} />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </>
   );
 }

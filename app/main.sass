@@ -1,0 +1,19 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+
+.page
+  @apply container mx-auto flex grid grid-cols-1 md:grid-cols-2 mt-10
+
+  &-content
+    @apply prose lg:prose-xl mb-10 px-4 text-center md:text-left mx-auto
+
+  &-image
+    @apply flex justify-center items-center content-center
+
+    img
+      @apply p-4 md:p-10 rounded-full mx-auto
+
+
+.logo-grid
+  @apply grid justify-items-center items-center content-center

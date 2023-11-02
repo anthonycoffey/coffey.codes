@@ -53,7 +53,7 @@ export function WorkHistory() {
     },
     {
       company: "Rock Candy Media",
-      title: "WordPress Theme & Plugin Developer",
+      title: "WordPress Developer",
       location: "Austin, Texas",
       start: "Apr, 2018",
       skills: [
@@ -68,6 +68,7 @@ export function WorkHistory() {
         "Apache",
         "PHP",
         "mySQL",
+        "Composer",
       ],
     },
     {

@@ -1,5 +1,6 @@
-import { frontend, backend } from "./logos";
+import { backend, frontend } from "./logos";
 import LogoGrid from "./components/LogoGrid";
+import { WorkHistory } from "./components/WorkHistory";
 
 export default function AboutPage() {
   return (
@@ -52,6 +53,13 @@ export default function AboutPage() {
           <img src="/psych.png" alt="Contact" />
         </div>
       </div>
+
+      <div className="container mx-auto mt-24">
+        <div className="mb-10 px-4 text-center md:text-left mx-auto">
+          <WorkHistory />
+        </div>
+      </div>
+
       <div className="container mx-auto mt-24">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
           <h1 className="text-2xl font-bold mb-6 text-center">

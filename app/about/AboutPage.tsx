@@ -54,7 +54,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="container mx-auto mt-24">
+      <div className="container mx-auto">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
           <WorkHistory />
         </div>

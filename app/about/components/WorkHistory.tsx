@@ -83,6 +83,7 @@ export function WorkHistory() {
         "Apache",
         "PHP",
         "mySQL",
+        "Composer",
         "JavaScript",
         "HTML5",
         "SEO",
@@ -111,8 +112,6 @@ export function WorkHistory() {
       start: "Jun, 2015",
       skills: [
         "WordPress",
-        "Linux",
-        "Apache",
         "PHP",
         "mySQL",
         "JavaScript",

@@ -34,7 +34,7 @@ export function WorkHistory() {
       title: "React Native Engineer",
       location: "Austin, Texas",
       start: "March, 2021",
-      skills: ["Swagger", "Expo", "React Native", "TypeScript"],
+      skills: ["Strapi", "Expo", "React Native", "TypeScript"],
     },
     {
       company: "Lifecycle Insights ",

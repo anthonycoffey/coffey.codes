@@ -155,8 +155,8 @@ export function WorkHistory() {
   return (
     <div className="-my-6">
       <h1 className="text-2xl font-bold mb-6">Work History</h1>
-      {data.map((job: WorkHistory) => (
-        <div className="relative pl-8 sm:pl-32 py-6 group">
+      {data.map((job: WorkHistory, index: number) => (
+        <div className="relative pl-8 sm:pl-32 py-6 group" key={`wh-${index}`}>
           <div className="font-caveat font-medium text-2xl text-indigo-500 mb-1 sm:mb-0">
             {job.company}
           </div>

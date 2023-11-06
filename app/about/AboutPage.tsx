@@ -55,7 +55,7 @@ export default function AboutPage() {
       </div>
 
       <div className="container mx-auto">
-        <div className="mb-10 px-4 text-center md:text-left mx-auto">
+        <div className="mb-10 px-4 mx-auto">
           <WorkHistory />
         </div>
       </div>
@@ -76,11 +76,6 @@ export default function AboutPage() {
           <LogoGrid logos={backend} />
         </div>
       </div>
-      {/*<div className="container mx-auto flex mt-24">*/}
-      {/*  <div className="mb-10 px-4 text-center md:text-left mx-auto">*/}
-      {/*    <LogoGrid logos={cloud} cols={10} />*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </>
   );
 }

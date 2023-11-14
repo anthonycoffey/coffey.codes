@@ -1,0 +1,28 @@
+import image from "./image.png";
+export const metadata = {
+  title: "How to See When a File Got Deleted or Changed with Git",
+  description: `Ever needed to trace exactly what happened to a rogue file? Well, there's a Git command for that!`,
+  date: "Nov 14, 2023",
+  authors: ["Anthony Coffey"],
+  image,
+};
+
+To determine when a file was removed in Git, you can use the git log command with specific options. Here's an easy way to do it:
+
+1. Open your Terminal or Command Prompt.
+
+2. Navigate to your Git repository.
+
+3. Run the following command:
+
+```bash
+git log --full-history -- [file_path]
+```
+
+Replace [file_path] with the path of the file you're interested in. This command will show the entire history of the file, including the commit where it was deleted.
+
+Look through the log output. The commit where the file was removed will be indicated. You can see the commit message, author, date, and other details to understand the context of the removal.
+
+If you have a large number of commits and you want to narrow down the search, you can add additional options to the git log command, such as `--author` to filter by the commit author, or `--before` and `--after` to specify a date range.
+
+Remember that this method works best if the file deletion was committed and pushed to the repository. If the file was removed without committing the change, it won't show up in the Git history.

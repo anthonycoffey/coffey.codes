@@ -1,9 +1,9 @@
+"use client";
 import "./main.sass";
 import Toolbar from "../components/Toolbar";
 import localFont from "next/font/local";
-import Script from "next/script";
 import Head from "next/head";
-const {NODE_ENV} = process.env;
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const helvetica = localFont({
   src: [
@@ -26,20 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={helvetica.className}>
-    <Head>
-      {(NODE_ENV === "production") && (
-        <>
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-MV8YG7QQW0"></Script>
-          <Script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-MV8YG7QQW0');
-          </Script>
-        </>
-      )}
-    </Head>
+      <Head>
+        <GoogleAnalytics trackPageViews />
+      </Head>
       <body>
         <Toolbar />
         <main className="overflow-hidden">{children}</main>
@@ -56,7 +45,6 @@ export default function RootLayout({
           </div>
         </footer>
       </body>
-
     </html>
   );
 }

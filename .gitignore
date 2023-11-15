@@ -3,6 +3,7 @@
 .idea
 node_modules
 tsconfig.tsbuildinfo
+.env*
 .pnp.*
 .yarn/*
 !.yarn/patches

@@ -2,7 +2,6 @@
 import "./main.sass";
 import Toolbar from "../components/Toolbar";
 import localFont from "next/font/local";
-import Head from "next/head";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const helvetica = localFont({
@@ -26,10 +25,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={helvetica.className}>
-      <Head>
-        <GoogleAnalytics trackPageViews />
-      </Head>
       <body>
+        <GoogleAnalytics trackPageViews />
         <Toolbar />
         <main className="overflow-hidden">{children}</main>
         <footer className="py-2">

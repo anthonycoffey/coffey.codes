@@ -1113,6 +1113,7 @@ __metadata:
     framer-motion: "npm:^10.16.4"
     global: "npm:^4.4.0"
     next: "npm:^13.4.4"
+    nextjs-google-analytics: "npm:^2.3.3"
     postcss: "npm:^8.4.24"
     postprocessing: "npm:^6.33.2"
     prettier: "npm:^3.0.3"
@@ -1673,12 +1674,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fsevents@npm:^2.3.2":
+  version: 2.3.3
+  resolution: "fsevents@npm:2.3.3"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: a1f0c44595123ed717febbc478aa952e47adfc28e2092be66b8ab1635147254ca6cfe1df792a8997f22716d4cbafc73309899ff7bfac2ac3ad8cf2e4ecc3ec60
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
 "fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
     node-gyp: "npm:latest"
   checksum: be78a3efa3e181cda3cf7a4637cb527bcebb0bd0ea0440105a3bb45b86f9245b307dc10a2507e8f4498a7d4ec349d1910f4d73e4d4495b16103106e07eee735b
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"fsevents@patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>":
+  version: 2.3.3
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
+  dependencies:
+    node-gyp: "npm:latest"
   conditions: os=darwin
   languageName: node
   linkType: hard
@@ -3152,6 +3172,21 @@ __metadata:
   bin:
     next: dist/bin/next
   checksum: dd4b958c5a006288c616b08045657b371891432b87441564e41641015b4c5876fad11173edb039b9dab705976231e47040234029d8302de26c53b11d541a17f3
+  languageName: node
+  linkType: hard
+
+"nextjs-google-analytics@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "nextjs-google-analytics@npm:2.3.3"
+  dependencies:
+    fsevents: "npm:^2.3.2"
+  peerDependencies:
+    next: ">=11.0.0"
+    react: ">=17.0.0"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: 121b26a74dc6da193111d79d70c169a61c1a64d8c880784fa0ad4880e3d36a5e08c5491a16d135b99cba83765a1670b8e69c3e5376e8c9e8152c02b9bc6fb045
   languageName: node
   linkType: hard
 

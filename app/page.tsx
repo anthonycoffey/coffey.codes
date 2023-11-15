@@ -1,5 +1,4 @@
 import AllArticles from "components/AllArticles";
-import HeroSection from "../components/HeroSection";
 
 export default async function Page() {
   return (

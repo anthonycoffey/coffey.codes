@@ -24,8 +24,8 @@ export default function AboutPage() {
           </p>
           <p className="leading-1 tracking-wide">
             Since then, I've gained valuable professional experience working as
-            a sysadmin, engineer, and consultant for start-ups and small to
-            medium-sized businesses.
+            a sysadmin, fullstack engineer, and consultant for start-ups and
+            small to medium-sized businesses.
           </p>
           <p className="leading-1 tracking-wide">
             March 2022, I was employed as a Full Stack Software Engineer at{" "}

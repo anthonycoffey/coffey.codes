@@ -39,14 +39,14 @@ export default function AboutPage() {
             </a>
           </p>
           <p className="leading-1 tracking-wide">
-            If you have a project you'd like to discuss, please feel free to{" "}
+            If you have a project you'd like to discuss with me, feel free to{" "}
             <a
               href="/contact"
               className="text-blue-500 hover:underline focus:underline focus:outline-none"
             >
-              contact me
+              reach out
             </a>
-            .
+            !
           </p>
 
           <div className="social-icons">

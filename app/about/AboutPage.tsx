@@ -7,11 +7,11 @@ export default function AboutPage() {
     <>
       <div className="page">
         <div className="page-content">
-          <h1 className="text-2xl font-bold mb-6">👋 Hey Y'all</h1>
+          <h1 className="text-2xl font-bold mb-6">🤠Howdy Y'all!</h1>
           <p className="leading-1 tracking-wide">
-            My name is <b>Anthony Coffey</b> and I'm an <b>Artist</b>,{" "}
-            <b>Musician</b> and <b>Software Engineer</b> living in{" "}
-            <b>Austin, Texas</b>.
+            Welcome to my little corner of the internet! My name is Anthony
+            Coffey and I'm an <u>Artist</u>, <u>Musician</u> and{" "}
+            <u>Software Engineer</u> living in Austin, Texas.
           </p>
           <p className="leading-1 tracking-wide">
             In May of 2012, I graduated from Gulf Coast State College and

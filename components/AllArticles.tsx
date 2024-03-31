@@ -1,8 +1,24 @@
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
-import Image from "next/image";
 import ArticleInfo from "./ArticleInfo";
+
+const generateRandomGradient = () => {
+  const colors = [
+    "#FFC0CB", // Pink
+    "#FFD700", // Gold
+    "#00FFFF", // Aqua
+    "#8A2BE2", // BlueViolet
+    "#FF4500", // OrangeRed
+    "#7FFF00", // Chartreuse
+    "#FF1493", // DeepPink
+    "#00BFFF", // DeepSkyBlue
+  ];
+  const angle = Math.floor(Math.random() * 360);
+  const color1 = colors[Math.floor(Math.random() * colors.length)];
+  const color2 = colors[Math.floor(Math.random() * colors.length)];
+  return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+};
 
 export default async function AllArticles() {
   const articles = await getAllArticles();
@@ -12,23 +28,26 @@ export default async function AllArticles() {
       {articles.map((article) => {
         const { metadata } = article;
         const title = String(metadata.title);
+        const gradientStyle = {
+          backgroundImage: generateRandomGradient(),
+          minHeight: "250px",
+        };
 
         return (
           <Link
             key={title}
             href={"/articles/" + article.slug}
-            className="flex flex-col overflow-hidden rounded shadow-sm transition-shadow duration-200 hover:shadow-md"
+            className="flex flex-col overflow-hidden rounded-lg shadow-sm transition-shadow duration-200 hover:shadow-lg"
           >
-            {metadata.image && (
-              <Image
-                className="h-66 w-full object-cover"
-                src={metadata.image}
-                alt={title}
-              />
-            )}
-            <div className="px-6 py-4">
+            <div
+              className="w-full flex items-center justify-center text-center p-4"
+              style={gradientStyle}
+            >
+              <div className="text-white text-2xl font-bold">{title}</div>
+            </div>
+            <div className="p-2 m-2">
               <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
-              <div className="mb-2 text-xl font-bold">{title}</div>
+              {/*<div className="mb-2 text-xl font-bold">{title}</div>*/}
               <p className="text-base text-gray-700">{metadata.description}</p>
             </div>
           </Link>

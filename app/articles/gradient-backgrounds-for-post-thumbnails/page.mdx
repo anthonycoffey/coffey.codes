@@ -18,9 +18,9 @@ create each image. When trying to create content on the fly, it's not very intui
 
 First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
 
-- note: tailwind classes removed for clarity \*
+_please note: tailwind classes removed from markup for clarity_
 
-```js
+```jsx
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
@@ -64,7 +64,7 @@ Let's replace the old thumbnail code with an HTML/CSS based approach that will g
 
 The code below will generate a gradient background for each post. I'll explain how it works down below!
 
-```js
+```jsx
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";

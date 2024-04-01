@@ -1,5 +1,5 @@
 "use client";
-import "./main.sass";
+import "@/styles/main.sass";
 import Toolbar from "../components/Toolbar";
 import localFont from "next/font/local";
 import { GoogleAnalytics } from "nextjs-google-analytics";

@@ -43,7 +43,7 @@ export default async function AllArticles() {
               className="w-full flex items-center justify-center text-center p-4"
               style={gradientStyle}
             >
-              <div className="text-white text-2xl font-bold">{title}</div>
+              <h3 className="post-title">{title}</h3>
             </div>
             <div className="p-2 m-2">
               <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />

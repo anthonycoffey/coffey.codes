@@ -1,23 +1,29 @@
 import ArticleInfo from "components/ArticleInfo";
 import { headers } from "next/headers";
 import { getArticleBySlug } from "utils/getArticles";
-import Toolbar from "../../components/Toolbar";
 
-const generateRandomGradient = () => {
-  const colors = [
-    "#FFC0CB", // Pink
-    "#FFD700", // Gold
-    "#00FFFF", // Aqua
-    "#8A2BE2", // BlueViolet
-    "#FF4500", // OrangeRed
-    "#7FFF00", // Chartreuse
-    "#FF1493", // DeepPink
-    "#00BFFF", // DeepSkyBlue
+const generateRandomGradient = (seed) => {
+  const colorPairs = [
+    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
+    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
+    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
+    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
+    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
+    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
   ];
-  const angle = Math.floor(Math.random() * 360);
-  const color1 = colors[Math.floor(Math.random() * colors.length)];
-  const color2 = colors[Math.floor(Math.random() * colors.length)];
-  return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+
+  // Ensure the seed is a string
+  const validSeed = typeof seed === "string" ? seed : "";
+
+  // Simple hash function to generate a pseudo-random number based on the seed
+  const hash = Array.from(validSeed).reduce(
+    (acc, char) => acc + char.charCodeAt(0),
+    0,
+  );
+
+  const index = hash % colorPairs.length;
+  const [color1, color2] = colorPairs[index];
+  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
 };
 
 export default async function Layout({
@@ -30,8 +36,8 @@ export default async function Layout({
   const { metadata } = article;
   const title = String(metadata.title);
   const gradientStyle = {
-    backgroundImage: generateRandomGradient(),
-    minHeight: "250px",
+    backgroundImage: generateRandomGradient(slug),
+    minHeight: "200px",
   };
 
   return (

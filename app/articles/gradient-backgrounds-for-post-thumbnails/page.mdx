@@ -1,0 +1,175 @@
+export const metadata = {
+  title: "Gradient Backgrounds for Post Thumbnails",
+  description: `I think it's finally time to remove these tacky under contruction GIFs and make some changes around here! Check out this article to see how I did it!`,
+  date: "Mar 29, 2024",
+  authors: ["Anthony Coffey"],
+};
+
+When I first created this site, I was creating post thumbnails in Photoshop using
+a PSD template that I created. This was a time-consuming process and I was never too happy with the results.
+
+My gut was telling me at the time to pursue a more programmatic approach to creating the design I wanted, but I ignored it.
+It's been driving me crazy for weeks now, so lets take a look at how we can improve this!
+
+## The Problem
+
+My blog templates used to display post thumbnail as a background image. However, this was a problem because I have to manually create each image and when trying to create content on the fly, and that's just not very intuitive and can ultimately slow down my workflow.
+
+First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
+
+```js
+import React from "react";
+import { getAllArticles } from "utils/getArticles";
+import Link from "next/link";
+import Image from "next/image";
+import ArticleInfo from "./ArticleInfo";
+
+export default async function AllArticles() {
+  const articles = await getAllArticles();
+
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
+      {articles.map((article) => {
+        const { metadata } = article;
+        const title = String(metadata.title);
+
+        return (
+          <Link
+            key={title}
+            href={"/articles/" + article.slug}
+            className="flex flex-col overflow-hidden rounded shadow-sm transition-shadow duration-200 hover:shadow-md"
+          >
+            {metadata.image && (
+              <Image
+                className="h-66 w-full object-cover"
+                src={metadata.image}
+                alt={title}
+              />
+            )}
+            <div className="px-6 py-4">
+              <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
+              <div className="mb-2 text-xl font-bold">{title}</div>
+              <p className="text-base text-gray-700">{metadata.description}</p>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+```
+
+## The Solution
+
+Let's replace the old thumbnail code with an HTML/CSS based approach that will generate background gradients for each post. This will allow me to create a unique look for each post without having to create a new image for each one.
+
+The code below will generate a gradient background for each post. I'll explain how it works down below!
+
+```js
+import React from "react";
+import { getAllArticles } from "utils/getArticles";
+import Link from "next/link";
+import ArticleInfo from "./ArticleInfo";
+
+const generateRandomGradient = (seed) => {
+  const colorPairs = [
+    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
+    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
+    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
+    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
+    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
+    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
+  ];
+
+  // Ensure the seed is a string
+  const validSeed = typeof seed === "string" ? seed : "";
+
+  // Simple hash function to generate a pseudo-random number based on the seed
+  const hash = Array.from(validSeed).reduce(
+    (acc, char) => acc + char.charCodeAt(0),
+    0,
+  );
+
+  const index = hash % colorPairs.length;
+  const [color1, color2] = colorPairs[index];
+  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
+};
+
+export default async function AllArticles() {
+  const articles = await getAllArticles();
+
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
+      {articles.map((article) => {
+        const { metadata } = article;
+        const title = String(metadata.title);
+        const gradientStyle = {
+          backgroundImage: generateRandomGradient(),
+          minHeight: "250px",
+        };
+
+        return (
+          <Link
+            key={title}
+            href={"/articles/" + article.slug}
+            className="flex flex-col overflow-hidden rounded-lg shadow-sm transition-shadow duration-200 hover:shadow-lg"
+          >
+            <div
+              className="w-full flex items-center justify-center text-center p-4"
+              style={gradientStyle}
+            >
+              <h3 className="post-title">{title}</h3>
+            </div>
+            <div className="p-2 m-2">
+              <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
+              <p className="text-base text-gray-700">{metadata.description}</p>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+```
+
+This code generates a random gradient for each post and sets it as the background of the post thumbnail. This will give each post a unique look without having to create a new image for each one.
+
+## How does it work?
+
+The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
+
+```js
+const generateRandomGradient = (seed) => {
+  const colorPairs = [
+    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
+    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
+    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
+    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
+    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
+    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
+  ];
+
+  // Ensure the seed is a string
+  const validSeed = typeof seed === "string" ? seed : "";
+
+  // Simple hash function to generate a pseudo-random number based on the seed
+  const hash = Array.from(validSeed).reduce(
+    (acc, char) => acc + char.charCodeAt(0),
+    0,
+  );
+
+  const index = hash % colorPairs.length;
+  const [color1, color2] = colorPairs[index];
+  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
+};
+```
+
+1. _Color Pairs_: We define an array of color pairs, each consisting of two pastel colors that blend well together. These colors are chosen to ensure a pleasant gradient that looks good with white text over it.
+
+2. _Seed Validation_: We ensure the seed value is a string. If not, we default to an empty string. This is important because we'll be using string methods to generate the hash.
+
+3. _Hash Generation_: We convert the seed string into an array of characters using Array.from(). Then, we use the reduce() method to iterate over each character, converting it to its character code using char.charCodeAt(0) and accumulating the sum. This sum acts as a simple hash of the seed string.
+
+4. _Index Calculation_: We calculate the index by taking the modulus of the hash with the length of the colorPairs array. This ensures that the index is always within the bounds of the array.
+
+5. _Gradient Generation_: We use the index to select a pair of colors from the colorPairs array. Then, we construct a CSS radial gradient string using these colors. The gradient is centered (circle at 50% 50%) and transitions smoothly from color1 to color2.

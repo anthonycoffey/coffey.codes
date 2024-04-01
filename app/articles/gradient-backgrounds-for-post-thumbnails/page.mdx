@@ -17,7 +17,7 @@ My blog templates used to display post thumbnail as a background image. However,
 
 First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
 
-```js
+```
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
@@ -65,7 +65,7 @@ Let's replace the old thumbnail code with an HTML/CSS based approach that will g
 
 The code below will generate a gradient background for each post. I'll explain how it works down below!
 
-```js
+```
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
@@ -138,7 +138,7 @@ This code generates a random gradient for each post and sets it as the backgroun
 
 The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
 
-```js
+```
 const generateRandomGradient = (seed) => {
   const colorPairs = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
@@ -184,7 +184,7 @@ To do this, all you've got to do is create a file `utils/generateRandomGradient.
 
 This is what the helper function code looks like in the new file:
 
-```js
+```
 const generateRandomGradient = (seed) => {
   const colorPairs: string[][] = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
@@ -251,7 +251,7 @@ export default generateRandomGradient;
 
 To import the file, all you have to do is add the following line to the top of the file where you want to use the function:
 
-```js
+```
 import generateRandomGradient from "utils/generateRandomGradient";
 ```
 

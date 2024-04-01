@@ -18,7 +18,7 @@ create each image. When trying to create content on the fly, it's not very intui
 
 First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
 
-```
+```js
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
@@ -66,35 +66,12 @@ Let's replace the old thumbnail code with an HTML/CSS based approach that will g
 
 The code below will generate a gradient background for each post. I'll explain how it works down below!
 
-```
+```js
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
 import ArticleInfo from "./ArticleInfo";
-
-const generateRandomGradient = (seed) => {
-  const colorPairs = [
-    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
-    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
-    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
-    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
-    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
-    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
-  ];
-
-  // Ensure the seed is a string
-  const validSeed = typeof seed === "string" ? seed : "";
-
-  // Simple hash function to generate a pseudo-random number based on the seed
-  const hash = Array.from(validSeed).reduce(
-    (acc, char) => acc + char.charCodeAt(0),
-    0,
-  );
-
-  const index = hash % colorPairs.length;
-  const [color1, color2] = colorPairs[index];
-  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
-};
+import generateRandomGradient from "utils/generateRandomGradient";
 
 export default async function AllArticles() {
   const articles = await getAllArticles();
@@ -102,10 +79,10 @@ export default async function AllArticles() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
       {articles.map((article) => {
-        const { metadata } = article;
+        const { metadata, slug } = article;
         const title = String(metadata.title);
         const gradientStyle = {
-          backgroundImage: generateRandomGradient(),
+          backgroundImage: generateRandomGradient(slug),
           minHeight: "250px",
         };
 
@@ -123,6 +100,7 @@ export default async function AllArticles() {
             </div>
             <div className="p-2 m-2">
               <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
+              {/*<div className="mb-2 text-xl font-bold">{title}</div>*/}
               <p className="text-base text-gray-700">{metadata.description}</p>
             </div>
           </Link>
@@ -139,7 +117,7 @@ This code generates a random gradient for each post and sets it as the backgroun
 
 The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
 
-```
+```js
 const generateRandomGradient = (seed) => {
   const colorPairs = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
@@ -185,7 +163,7 @@ To do this, all you've got to do is create a file `utils/generateRandomGradient.
 
 This is what the helper function code looks like in the new file:
 
-```
+```js
 const generateRandomGradient = (seed) => {
   const colorPairs: string[][] = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
@@ -251,7 +229,7 @@ export default generateRandomGradient;
 
 To import the file, all you have to do is add the following line to the top of the file where you want to use the function:
 
-```
+```js
 import generateRandomGradient from "utils/generateRandomGradient";
 ```
 

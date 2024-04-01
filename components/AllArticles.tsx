@@ -2,23 +2,7 @@ import React from "react";
 import { getAllArticles } from "utils/getArticles";
 import Link from "next/link";
 import ArticleInfo from "./ArticleInfo";
-
-const generateRandomGradient = () => {
-  const colors = [
-    "#FFC0CB", // Pink
-    "#FFD700", // Gold
-    "#00FFFF", // Aqua
-    "#8A2BE2", // BlueViolet
-    "#FF4500", // OrangeRed
-    "#7FFF00", // Chartreuse
-    "#FF1493", // DeepPink
-    "#00BFFF", // DeepSkyBlue
-  ];
-  const angle = Math.floor(Math.random() * 360);
-  const color1 = colors[Math.floor(Math.random() * colors.length)];
-  const color2 = colors[Math.floor(Math.random() * colors.length)];
-  return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
-};
+import generateRandomGradient from "utils/generateRandomGradient";
 
 export default async function AllArticles() {
   const articles = await getAllArticles();
@@ -29,7 +13,7 @@ export default async function AllArticles() {
         const { metadata } = article;
         const title = String(metadata.title);
         const gradientStyle = {
-          backgroundImage: generateRandomGradient(),
+          backgroundImage: generateRandomGradient(title),
           minHeight: "250px",
         };
 

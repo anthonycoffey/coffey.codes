@@ -18,6 +18,8 @@ create each image. When trying to create content on the fly, it's not very intui
 
 First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
 
+- note: tailwind classes removed for clarity \*
+
 ```js
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
@@ -29,17 +31,13 @@ export default async function AllArticles() {
   const articles = await getAllArticles();
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
+    <div>
       {articles.map((article) => {
         const { metadata } = article;
         const title = String(metadata.title);
 
         return (
-          <Link
-            key={title}
-            href={"/articles/" + article.slug}
-            className="flex flex-col overflow-hidden rounded shadow-sm transition-shadow duration-200 hover:shadow-md"
-          >
+          <Link key={title} href={"/articles/" + article.slug}>
             {metadata.image && (
               <Image
                 className="h-66 w-full object-cover"
@@ -47,10 +45,10 @@ export default async function AllArticles() {
                 alt={title}
               />
             )}
-            <div className="px-6 py-4">
-              <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
-              <div className="mb-2 text-xl font-bold">{title}</div>
-              <p className="text-base text-gray-700">{metadata.description}</p>
+            <div>
+              <ArticleInfo article={article} />
+              <h3>{title}</h3>
+              <p>{metadata.description}</p>
             </div>
           </Link>
         );
@@ -77,7 +75,7 @@ export default async function AllArticles() {
   const articles = await getAllArticles();
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-0">
+    <div>
       {articles.map((article) => {
         const { metadata, slug } = article;
         const title = String(metadata.title);
@@ -87,21 +85,13 @@ export default async function AllArticles() {
         };
 
         return (
-          <Link
-            key={title}
-            href={"/articles/" + article.slug}
-            className="flex flex-col overflow-hidden rounded-lg shadow-sm transition-shadow duration-200 hover:shadow-lg"
-          >
-            <div
-              className="w-full flex items-center justify-center text-center p-4"
-              style={gradientStyle}
-            >
+          <Link key={title} href={"/articles/" + article.slug}>
+            <div style={gradientStyle}>
               <h3 className="post-title">{title}</h3>
             </div>
             <div className="p-2 m-2">
-              <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
-              {/*<div className="mb-2 text-xl font-bold">{title}</div>*/}
-              <p className="text-base text-gray-700">{metadata.description}</p>
+              <ArticleInfo article={article} />
+              <p>{metadata.description}</p>
             </div>
           </Link>
         );

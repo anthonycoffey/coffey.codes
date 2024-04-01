@@ -6,12 +6,12 @@ export const metadata = {
 };
 
 When I first created this site, I was creating post thumbnails in Photoshop using
-a PSD template that I created. This was a time-consuming process and I was never too happy with the results.
+a PSD template that I created. This was a time-consuming process and I was never quite happy with the results.
 
 My gut was telling me at the time to pursue a more programmatic approach to creating the design I wanted, but I ignored it.
 It's been driving me crazy for weeks now, so lets take a look at how we can improve this!
 
-## The Problem
+### The Problem
 
 My blog templates used to display post thumbnail as a background image. However, this was a problem because I have to manually create each image and when trying to create content on the fly, and that's just not very intuitive and can ultimately slow down my workflow.
 
@@ -59,7 +59,7 @@ export default async function AllArticles() {
 }
 ```
 
-## The Solution
+### The Solution
 
 Let's replace the old thumbnail code with an HTML/CSS based approach that will generate background gradients for each post. This will allow me to create a unique look for each post without having to create a new image for each one.
 
@@ -134,7 +134,7 @@ export default async function AllArticles() {
 
 This code generates a random gradient for each post and sets it as the background of the post thumbnail. This will give each post a unique look without having to create a new image for each one.
 
-## How does it work?
+### How does it work?
 
 The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
 

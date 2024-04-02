@@ -20,8 +20,6 @@ First, let's take a look at the old code for the `AllArticles` component that di
 
 _please note: tailwind classes removed from markup for clarity_
 
-### The Goal
-
 ```jsx
 import React from "react";
 import { getAllArticles } from "utils/getArticles";
@@ -111,52 +109,6 @@ The core of our approach is the `generateRandomGradient` function. This function
 
 ```js
 const generateRandomGradient = (seed) => {
-  const colorPairs = [
-    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
-    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
-    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
-    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
-    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
-    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
-  ];
-
-  // Ensure the seed is a string
-  const validSeed = typeof seed === "string" ? seed : "";
-
-  // Simple hash function to generate a pseudo-random number based on the seed
-  const hash = Array.from(validSeed).reduce(
-    (acc, char) => acc + char.charCodeAt(0),
-    0,
-  );
-
-  const index = hash % colorPairs.length;
-  const [color1, color2] = colorPairs[index];
-  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
-};
-```
-
-1. _Color Pairs_: We define an array of color pairs, each consisting of two pastel colors that blend well together. These colors are chosen to ensure a pleasant gradient that looks good with white text over it.
-
-2. _Seed Validation_: We ensure the seed value is a string. If not, we default to an empty string. This is important because we'll be using string methods to generate the hash.
-
-3. _Hash Generation_: We convert the seed string into an array of characters using Array.from(). Then, we use the reduce() method to iterate over each character, converting it to its character code using char.charCodeAt(0) and accumulating the sum. This sum acts as a simple hash of the seed string.
-
-4. _Index Calculation_: We calculate the index by taking the modulus of the hash with the length of the colorPairs array. This ensures that the index is always within the bounds of the array.
-
-5. _Gradient Generation_: We use the index to select a pair of colors from the colorPairs array. Then, we construct a CSS radial gradient string using these colors. The gradient is centered (circle at 50% 50%) and transitions smoothly from color1 to color2.
-
-### Closing Thoughts
-
-Now that we've implemented this solution, I can create a unique look for each post without having to create a new image for each one. This will save me time and allow me to focus on creating content rather than designing thumbnails.
-
-Since I've utilized this function in two places, let's refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
-
-To do this, all you've got to do is create a file `utils/generateRandomGradient.js` and move the `generateRandomGradient` function into it. Then, you can import it wherever you need it in your application.
-
-This is what the helper function code looks like in the new file:
-
-```js
-const generateRandomGradient = (seed) => {
   const colorPairs: string[][] = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
     ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
@@ -166,65 +118,60 @@ const generateRandomGradient = (seed) => {
     ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
     ["#ff9a9e", "#fad0c4"], // Soft red to soft peach
     ["#ffecd2", "#fcb69f"], // Soft peach to soft orange
-    ["#a18cd1", "#fbc2eb"], // Soft purple to soft pink
-    ["#fad0c4", "#ffd1ff"], // Soft peach to soft lavender
-    ["#f6d365", "#fda085"], // Soft yellow to soft orange
-    ["#84fab0", "#8fd3f4"], // Soft teal to soft blue
-    ["#a6c0fe", "#f68084"], // Soft blue to soft red
-    ["#fccb90", "#d57eeb"], // Soft orange to soft purple
-    ["#e0c3fc", "#8ec5fc"], // Soft purple to soft blue
-    ["#8ec5fc", "#e0c3fc"], // Soft blue to soft purple
-    ["#4facfe", "#00f2fe"], // Bright blue to bright cyan
-    ["#43e97b", "#38f9d7"], // Bright green to bright teal
-    ["#fa709a", "#fee140"], // Bright pink to bright yellow
-    ["#30cfd0", "#330867"], // Bright teal to deep purple
-    ["#c471f5", "#fa71cd"], // Bright purple to bright pink
-    ["#48c6ef", "#6f86d6"], // Bright sky blue to bright periwinkle
-    ["#feada6", "#f5efef"], // Soft coral to light gray
-    ["#a1c4fd", "#c2e9fb"], // Soft blue to soft cyan
-    ["#d4fc79", "#96e6a1"], // Light green to soft green
-    ["#84fab0", "#8fd3f4"], // Soft teal to soft blue
-    ["#cfd9df", "#e2ebf0"], // Light gray to lighter gray
-    ["#a6c0fe", "#f68084"], // Soft blue to soft red
-    ["#fccb90", "#d57eeb"], // Soft orange to soft purple
-    ["#e0c3fc", "#8ec5fc"], // Soft purple to soft blue
-    ["#8ec5fc", "#e0c3fc"], // Soft blue to soft purple
-    ["#4facfe", "#00f2fe"], // Bright blue to bright cyan
-    ["#43e97b", "#38f9d7"], // Bright green to bright teal
-    ["#fa709a", "#fee140"], // Bright pink to bright yellow
-    ["#30cfd0", "#330867"], // Bright teal to deep purple
-    ["#c471f5", "#fa71cd"], // Bright purple to bright pink
-    ["#48c6ef", "#6f86d6"], // Bright sky blue to bright periwinkle
-    ["#feada6", "#f5efef"], // Soft coral to light gray
-    ["#a1c4fd", "#c2e9fb"], // Soft blue to soft cyan
-    ["#d4fc79", "#96e6a1"], // Light green to soft green
-    ["#84fab0", "#8fd3f4"], // Soft teal to soft blue
-    ["#cfd9df", "#e2ebf0"], // Light gray to lighter gray
   ];
 
   // Ensure the seed is a string
   const validSeed = typeof seed === "string" ? seed : "";
 
-  // Simple hash function to generate a pseudo-random number based on the seed
+  // Modified hash function to incorporate the position of each character
   const hash = Array.from(validSeed).reduce(
-    (acc, char) => acc + char.charCodeAt(0),
+    (acc, char, index) => acc + char.charCodeAt(0) * (index + 1),
     0,
   );
 
   const index = hash % colorPairs.length;
   const [color1, color2] = colorPairs[index];
-  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
+
+  // Use the hash to generate percentages for the gradient's center position
+  const xPercent = hash % 100;
+  const yPercent = (hash / 100) % 100;
+
+  return `radial-gradient(circle at ${xPercent}% ${yPercent}%, ${color1}, ${color2})`;
 };
 
 export default generateRandomGradient;
 ```
 
-To import the file, all you have to do is add the following line to the top of the file where you want to use the function:
+Here is a quick breakdown of everything that's happening in the `generateRandomGradient` function:
+
+1. _Define color pairs_: The function starts with an array of color pairs (colorPairs). Each pair consists of two colors that will be used to create the gradient. These colors are chosen to be pastel shades that transition smoothly from one to another.
+
+2. _Ensure the seed is a string_: The function checks if the provided seed is a string. If not, it sets validSeed to an empty string. This is important because the next step involves string operations.
+
+3. _Generate a hash from the seed_: The function uses a custom hash function to convert the validSeed into a numerical value (hash). This is done by iterating over each character in the seed, converting the character to its ASCII code using charCodeAt(0), multiplying it by its position in the string (index + 1), and adding it to an accumulator (acc). This hash is used to ensure that different seeds produce different gradients.
+
+4. _Select a color pair based on the hash_: The function calculates an index by taking the modulus of the hash with the length of the colorPairs array. This ensures that the index is within the bounds of the array. The corresponding color pair is then selected and destructured into color1 and color2.
+
+5. _Generate percentages for the gradient's center position_: The function calculates two percentages (xPercent and yPercent) based on the hash. These percentages determine the position of the center of the radial gradient. This adds an element of variability to the gradient based on the seed.
+
+6. _Return the CSS radial gradient_: Finally, the function constructs a CSS radial-gradient string using the selected colors and the calculated percentages for the center position. This string can be used in CSS to set the background of an element to the generated gradient.
+
+7. _Export the function_: The last line export default generateRandomGradient; makes the function available for import in other JavaScript modules.
+
+Overall, this function allows for the generation of a variety of radial gradients based on a seed value, which can be useful for creating dynamic and visually appealing backgrounds in web development. Using this approach, the same gradient is returned for the same seed value, ensuring consistency across multiple uses of the function. Also, in production I've added more color combos and with the hash function, it's unlikely that the same gradient will be generated for different seeds.
+
+### Closing Thoughts
+
+Now that we've implemented this solution, I can create a unique look for each post without needing to create a new image for each one. This will save me time and allow me to focus on creating content rather than designing thumbnails.
+
+Since I've utilized this function in two places, let's refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
+
+To do this, all you have to do is create a file utils/generateRandomGradient.js and move the generateRandomGradient function into it and export it. Then, you can import it wherever you need it in your application.
+
+To import the file, simply add the following line to the top of the file where you want to use the function:
 
 ```js
 import generateRandomGradient from "utils/generateRandomGradient";
 ```
-
-You may have noticed that I've also added more color combos for a more diverse gradient selection. Feel free to add more color pairs to the array to expand the variety of gradients available.
 
 Thanks for reading! I hope this article has been helpful in showing you how to create unique post thumbnails using CSS gradients. Happy coding!

@@ -31,7 +31,6 @@ export default async function AllArticles() {
             </div>
             <div className="p-2 m-2">
               <ArticleInfo article={article} className="-mt-2 mb-2 text-xs" />
-              {/*<div className="mb-2 text-xl font-bold">{title}</div>*/}
               <p className="text-base text-gray-700">{metadata.description}</p>
             </div>
           </Link>

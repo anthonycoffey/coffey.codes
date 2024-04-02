@@ -47,15 +47,20 @@ const generateRandomGradient = (seed) => {
   // Ensure the seed is a string
   const validSeed = typeof seed === "string" ? seed : "";
 
-  // Simple hash function to generate a pseudo-random number based on the seed
+  // Modified hash function to incorporate the position of each character
   const hash = Array.from(validSeed).reduce(
-    (acc, char) => acc + char.charCodeAt(0),
+    (acc, char, index) => acc + char.charCodeAt(0) * (index + 1),
     0,
   );
 
   const index = hash % colorPairs.length;
   const [color1, color2] = colorPairs[index];
-  return `radial-gradient(circle at 50% 50%, ${color1}, ${color2})`;
+
+  // Use the hash to generate percentages for the gradient's center position
+  const xPercent = hash % 100;
+  const yPercent = (hash / 100) % 100;
+
+  return `radial-gradient(circle at ${xPercent}% ${yPercent}%, ${color1}, ${color2})`;
 };
 
 export default generateRandomGradient;

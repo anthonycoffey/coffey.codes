@@ -48,5 +48,6 @@ const colorPairs: string[][] = [
   ["#FF00FF", "#8A2BE2"], // Magenta to Blue Violet
   ["#FF69B4", "#DDA0DD"], // Hot Pink to Plum
   ["#FF1493", "#EE82EE"], // Deep Pink to Violet
+];
 
 export default colorPairs;

@@ -6,10 +6,10 @@ export const metadata = {
 };
 
 When I first created this site, I was creating post thumbnails in Photoshop using
-a PSD template that I created. This was a time-consuming process and I was never quite happy with the results.
+a PSD template that I created. This process was not only time-consuming, but I was also never fully satisfied with the results.
 
 My gut was telling me at the time to pursue a more programmatic approach to creating the design I wanted, but I ignored it.
-It's been driving me crazy for weeks now, so lets take a look at how we can improve this!
+It's been driving me crazy for weeks now, so lets take a look at how we can create the same design but without images - just code!
 
 ### The Problem
 
@@ -60,7 +60,7 @@ export default async function AllArticles() {
 
 ### The Solution
 
-Let's replace the old thumbnail code with an HTML/CSS based approach that will generate background gradients for each post. This will allow me to create a unique look for each post without having to create a new image for each one.
+First, let's replace the code above with an HTML/CSS based approach that will generate background gradients for each post.
 
 The code below will generate a gradient background for each post. I'll explain how it works down below!
 
@@ -162,11 +162,11 @@ Overall, this function allows for the generation of a variety of radial gradient
 
 ### Closing Thoughts
 
-Now that we've implemented this solution, I can create a unique look for each post without needing to create a new image for each one. This will save me time and allow me to focus on creating content rather than designing thumbnails.
+Now, I can create a unique "thumbnail" for each post without needing to create an image. This will save me time and allow me to focus on creating content rather than designing thumbnails. Now, my next mission is to tackle Open Graph tags to ensure that when I share my posts on social media, they look just as good as they do on my site!
 
-Since I've utilized this function in two places, let's refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
+Since I've utilized this function in two places, let's go ahead refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
 
-To do this, all you have to do is create a file utils/generateRandomGradient.js and move the generateRandomGradient function into it and export it. Then, you can import it wherever you need it in your application.
+To do this, all you have to do is create a file `generateRandomGradient.js` and move the `generateRandomGradient` function into it and export it. Then, you can import it wherever you need it in your application.
 
 To import the file, simply add the following line to the top of the file where you want to use the function:
 

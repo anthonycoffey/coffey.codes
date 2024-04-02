@@ -105,24 +105,21 @@ This code generates a random gradient for each post and sets it as the backgroun
 
 The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
 
-```js
-const generateRandomGradient = (seed) => {
-  const colorPairs = [
-    ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
-    ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
-    ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
-    ["#ffecd2", "#fcb69f"], // Pastel peach to pastel orange
-    ["#a1c4fd", "#c2e9fb"], // Pastel blue to pastel cyan
-    ["#fed6e3", "#a8edea"], // Pastel pink to pastel aqua
-    ["#ff9a9e", "#fad0c4"], // Soft red to soft peach
-    ["#ffecd2", "#fcb69f"], // Soft peach to soft orange
+```ts
+const generateRandomGradient = (seed: string) => {
+  const colorPairs: string[][] = [
+    ["#00FFFF", "#0000FF"], // Cyan to Blue
+    ["#1E90FF", "#32CD32"], // Dodger Blue to Lime Green
+    ["#00FF7F", "#8A2BE2"], // Spring Green to Blue Violet
+    ["#008080", "#FF4500"], // Teal to Orange Red
+    ["#6A5ACD", "#00FF00"], // Slate Blue to Lime
+    ["#0000FF", "#FFD700"], // Blue to Gold
+    ["#5F9EA0", "#DC143C"], // Cadet Blue to Crimson
+    ["#40E0D0", "#FF8C00"], // Turquoise to Dark Orange
   ];
 
-  // Ensure the seed is a string
-  const validSeed = typeof seed === "string" ? seed : "";
-
   // Modified hash function to incorporate the position of each character
-  const hash = Array.from(validSeed).reduce(
+  const hash = Array.from(seed).reduce(
     (acc, char, index) => acc + char.charCodeAt(0) * (index + 1),
     0,
   );
@@ -156,7 +153,7 @@ Overall, this function allows for the generation of a variety of radial gradient
 
 ### Closing Thoughts
 
-Now, I can create a the look and feel I wanted for each post without needing to manually create an image. This will save me time and allow me to focus on creating content rather than designing thumbnails. Now, my next mission is to tackle Open Graph tags to ensure that when I share my posts on social media they look just as good as they do on my site!
+Now, I can create the look and feel I wanted for each post without needing to manually create an image. This will save me time and allow me to focus on creating content rather than designing thumbnails. Now, my next mission is to tackle Open Graph tags to ensure that when I share my posts on social media they look just as good as they do on my site!
 
 Since I've utilized this function in two places, let's go ahead refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
 

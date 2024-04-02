@@ -1,8 +1,6 @@
 const colorPairs: string[][] = [
   // Vibrant and Energetic
   ["#FF6347", "#FF4500"], // Tomato to Orange Red
-  ["#FFD700", "#FFA500"], // Gold to Orange
-  ["#32CD32", "#00FF00"], // Lime Green to Lime
   ["#00BFFF", "#1E90FF"], // Deep Sky Blue to Dodger Blue
   ["#BA55D3", "#9400D3"], // Medium Orchid to Dark Violet
   ["#87CEFA", "#B0C4DE"], // Light Sky Blue to Light Steel Blue
@@ -15,10 +13,6 @@ const colorPairs: string[][] = [
   ["#FFA07A", "#FA8072"], // Light Salmon to Salmon
   ["#FF7F50", "#FF6347"], // Coral to Tomato
   ["#FF4500", "#DC143C"], // Orange Red to Crimson
-  ["#FF8C00", "#FFA500"], // Dark Orange to Orange
-  ["#FFD700", "#FFFF00"], // Gold to Yellow
-  ["#ADFF2F", "#7FFF00"], // Green Yellow to Chartreuse
-  ["#00FF00", "#32CD32"], // Lime to Lime Green
   ["#00FA9A", "#00FF7F"], // Medium Spring Green to Spring Green
   ["#00FFFF", "#00CED1"], // Aqua to Dark Turquoise
   ["#8A2BE2", "#4B0082"], // Blue Violet to Indigo
@@ -33,16 +27,10 @@ const colorPairs: string[][] = [
   ["#4682B4", "#00CED1"], // Steel Blue to Dark Turquoise
   ["#5F9EA0", "#AFEEEE"], // Cadet Blue to Pale Turquoise
   ["#FF6347", "#FFD700"], // Tomato to Gold
-  ["#00FF00", "#00BFFF"], // Lime to Deep Sky Blue
   ["#9400D3", "#87CEFA"], // Dark Violet to Light Sky Blue
   ["#708090", "#00CED1"], // Slate Gray to Dark Turquoise
   ["#66CDAA", "#AFEEEE"], // Medium Aquamarine to Pale Turquoise
   ["#FF4500", "#FF69B4"], // Orange Red to Hot Pink
-  ["#FFA500", "#DB7093"], // Orange to Pale Violet Red
-  ["#FFFF00", "#FF7F50"], // Yellow to Coral
-  ["#7FFF00", "#FF8C00"], // Chartreuse to Dark Orange
-  ["#00FF7F", "#FFD700"], // Spring Green to Gold
-  ["#0000FF", "#ADFF2F"], // Blue to Green Yellow
   ["#800080", "#1E90FF"], // Purple to Dodger Blue
   ["#DA70D6", "#4169E1"], // Orchid to Royal Blue
   ["#FF00FF", "#8A2BE2"], // Magenta to Blue Violet

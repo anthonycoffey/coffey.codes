@@ -66,11 +66,7 @@ To do this, lets create a function called `generateRandomGradient` that will tak
 import colorPairs from "@/utils/colorPairs";
 
 const generateRandomGradient = (seed: string) => {
-  // Ensure the seed is a string
-  const validSeed = typeof seed === "string" ? seed : "";
-
-  // Modified hash function to incorporate the position of each character
-  const hash = Array.from(validSeed).reduce(
+  const hash = Array.from(seed).reduce(
     (acc, char, index) => acc + char.charCodeAt(0) * (index + 1),
     0,
   );
@@ -82,10 +78,6 @@ const generateRandomGradient = (seed: string) => {
   const isRadial = hash % 2 === 0;
   const gradientType = isRadial ? "radial-gradient" : "linear-gradient";
   const angle = hash % 360;
-
-  console.log(
-    `color1: ${color1}, color2: ${color2}, isRadial: ${isRadial}, angle: ${angle}`,
-  );
 
   // Construct the gradient string based on the type
   return isRadial

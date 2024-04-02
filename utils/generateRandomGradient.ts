@@ -13,11 +13,10 @@ const generateRandomGradient = (seed: string) => {
   const index = hash % colorPairs.length;
   const [color1, color2] = colorPairs[index];
 
-  // Use the hash to generate percentages for the gradient's center position
-  const xPercent = hash % 100;
-  const yPercent = (hash / 100) % 100;
-
-  return `radial-gradient(circle at ${xPercent}% ${yPercent}%, ${color1}, ${color2})`;
+  // Use the hash to determine the gradient type and angle
+  const gradientType = hash % 2 === 0 ? "radial-gradient" : "linear-gradient";
+  const angle = hash % 360;
+  return `${gradientType}(${angle}deg, ${color1}, ${color2})`;
 };
 
 export default generateRandomGradient;

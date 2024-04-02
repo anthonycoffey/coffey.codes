@@ -58,68 +58,19 @@ export default async function AllArticles() {
 
 ### The Solution
 
-First, let's replace the code above with an HTML/CSS based approach that will generate background gradients for each post.
+Next, let's replace the code above with an HTML/CSS based approach that will generate background gradients for each post.
 
-The code below will generate a gradient background for each post. I'll explain how it works down below!
+To do this, lets create a function called `generateRandomGradient` that will take a seed value (like the post title or slug) and generate a unique gradient based on that seed.
 
-```jsx
-import React from "react";
-import { getAllArticles } from "utils/getArticles";
-import Link from "next/link";
-import ArticleInfo from "./ArticleInfo";
-import generateRandomGradient from "utils/generateRandomGradient";
+```typescript
+import colorPairs from "@/utils/colorPairs";
 
-export default async function AllArticles() {
-  const articles = await getAllArticles();
-
-  return (
-    <div>
-      {articles.map((article) => {
-        const { metadata, slug } = article;
-        const title = String(metadata.title);
-        const gradientStyle = {
-          backgroundImage: generateRandomGradient(slug),
-          minHeight: "250px",
-        };
-
-        return (
-          <Link key={title} href={"/articles/" + article.slug}>
-            <div style={gradientStyle}>
-              <h3 className="post-title">{title}</h3>
-            </div>
-            <div className="p-2 m-2">
-              <ArticleInfo article={article} />
-              <p>{metadata.description}</p>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
-```
-
-This code generates a random gradient for each post and sets it as the background of the post thumbnail. This will give each post a unique look without having to create a new image for each one.
-
-### How does it work?
-
-The core of our approach is the `generateRandomGradient` function. This function takes a seed value (typically a unique identifier like a slug or title from your data) and uses it to generate a pseudo-random gradient. Here's the function:
-
-```ts
 const generateRandomGradient = (seed: string) => {
-  const colorPairs: string[][] = [
-    ["#00FFFF", "#0000FF"], // Cyan to Blue
-    ["#1E90FF", "#32CD32"], // Dodger Blue to Lime Green
-    ["#00FF7F", "#8A2BE2"], // Spring Green to Blue Violet
-    ["#008080", "#FF4500"], // Teal to Orange Red
-    ["#6A5ACD", "#00FF00"], // Slate Blue to Lime
-    ["#0000FF", "#FFD700"], // Blue to Gold
-    ["#5F9EA0", "#DC143C"], // Cadet Blue to Crimson
-    ["#40E0D0", "#FF8C00"], // Turquoise to Dark Orange
-  ];
+  // Ensure the seed is a string
+  const validSeed = typeof seed === "string" ? seed : "";
 
   // Modified hash function to incorporate the position of each character
-  const hash = Array.from(seed).reduce(
+  const hash = Array.from(validSeed).reduce(
     (acc, char, index) => acc + char.charCodeAt(0) * (index + 1),
     0,
   );
@@ -127,29 +78,43 @@ const generateRandomGradient = (seed: string) => {
   const index = hash % colorPairs.length;
   const [color1, color2] = colorPairs[index];
 
-  // Use the hash to generate percentages for the gradient's center position
-  const xPercent = hash % 100;
-  const yPercent = (hash / 100) % 100;
-
-  return `radial-gradient(circle at ${xPercent}% ${yPercent}%, ${color1}, ${color2})`;
+  // Use the hash to determine the gradient type and angle
+  const gradientType = hash % 2 === 0 ? "radial-gradient" : "linear-gradient";
+  const angle = hash % 360;
+  return `${gradientType}(${angle}deg, ${color1}, ${color2})`;
 };
 
 export default generateRandomGradient;
 ```
 
-Here is a quick breakdown of everything that's happening in the `generateRandomGradient` function:
+The above code includes a dependency, the `colorPairs` array. It contains pairs of colors to be used in the gradients. This array is defined in a separate file and imported into the `generateRandomGradient` function.
 
-1. **Define color pairs**: The function starts with an array of color pairs. Each pair consists of two colors that will be used to create the gradient. These colors are chosen to be pastel shades that transition smoothly from one to another.
+```typescript
+const colorPairs: string[][] = [
+  // Soft and Harmonious
+  ["#FFB6C1", "#FFE4E1"], // Light Pink to Misty Rose
+  ["#ADD8E6", "#B0E0E6"], // Light Blue to Powder Blue
+  ["#E0FFFF", "#AFEEEE"], // Light Cyan to Pale Turquoise
+  ["#FFFACD", "#FAFAD2"], // Lemon Chiffon to Light Goldenrod Yellow
+  ["#F0E68C", "#FFFFE0"], // Khaki to Light Yellow
 
-2. **Generate a hash from the seed**: The function uses a custom hash function to convert the validSeed into a numerical value (hash). This is done by iterating over each character in the seed, converting the character to its ASCII code using `charCodeAt(0)`, multiplying it by its position in the string, and adding it to an accumulator. This hash is used to ensure that different seeds produce different gradients.
+  // Vibrant and Energetic
+  ["#FF6347", "#FF4500"], // Tomato to Orange Red
+  ["#FFD700", "#FFA500"], // Gold to Orange
+  ["#32CD32", "#00FF00"], // Lime Green to Lime
+  ["#00BFFF", "#1E90FF"], // Deep Sky Blue to Dodger Blue
+  ["#BA55D3", "#9400D3"], // Medium Orchid to Dark Violet
 
-3. **Select a color pair based on the hash**: The function calculates an index by taking the modulus of the hash with the length of the `colorPairs` array. This ensures that the index is within the bounds of the array. The corresponding color pair is then selected and destructured into color1 and color2.
+  // Cool and Calming
+  ["#87CEFA", "#B0C4DE"], // Light Sky Blue to Light Steel Blue
+  ["#4682B4", "#708090"], // Steel Blue to Slate Gray
+  ["#00CED1", "#20B2AA"], // Dark Turquoise to Light Sea Green
+  ["#5F9EA0", "#66CDAA"], // Cadet Blue to Medium Aquamarine
+  ["#AFEEEE", "#E0FFFF"], // Pale Turquoise to Light Cyan
+];
 
-4. **Generate percentages for the gradient's center position**: The function calculates two percentages based on the hash. These percentages determine the position of the center of the radial gradient. This adds an element of variability to the gradient based on the seed.
-
-5. **Return the CSS radial gradient**: Finally, the function constructs a CSS radial-gradient string using the selected colors and the calculated percentages for the center position. This string can be used in CSS to set the background of an element to the generated gradient.
-
-Overall, this function allows for the generation of a variety of radial gradients based on a seed value, which can be useful for creating dynamic and visually appealing backgrounds in web development. Using this approach, the same gradient is returned for the same seed value, ensuring consistency across multiple uses of the function. Also, in production I've added more color combos and with the hash function, it's unlikely that the same gradient will be generated for different seeds.
+export default colorPairs;
+```
 
 ### Closing Thoughts
 

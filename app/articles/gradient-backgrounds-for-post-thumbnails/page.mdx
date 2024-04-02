@@ -16,9 +16,7 @@ It's been driving me crazy for weeks now, so lets take a look at how we can crea
 My blog templates used to display post thumbnail as a background image. However, this was a problem because I had to manually
 create each image. When trying to create content on the fly, it's not very intuitive and can ultimately slow down my workflow.
 
-First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails.
-
-_please note: tailwind classes removed from markup for clarity_
+First, let's take a look at the old code for the `AllArticles` component that displays a grid of post thumbnails. Please note that Tailwind CSS classes have been removed for clarity.
 
 ```jsx
 import React from "react";
@@ -109,7 +107,7 @@ The core of our approach is the `generateRandomGradient` function. This function
 
 ```js
 const generateRandomGradient = (seed) => {
-  const colorPairs: string[][] = [
+  const colorPairs = [
     ["#f6d365", "#fda085"], // Pastel yellow to pastel orange
     ["#fbc2eb", "#a6c1ee"], // Pastel pink to pastel blue
     ["#e0c3fc", "#8ec5fc"], // Pastel purple to pastel sky blue
@@ -144,34 +142,22 @@ export default generateRandomGradient;
 
 Here is a quick breakdown of everything that's happening in the `generateRandomGradient` function:
 
-1. _Define color pairs_: The function starts with an array of color pairs (colorPairs). Each pair consists of two colors that will be used to create the gradient. These colors are chosen to be pastel shades that transition smoothly from one to another.
+1. **Define color pairs**: The function starts with an array of color pairs. Each pair consists of two colors that will be used to create the gradient. These colors are chosen to be pastel shades that transition smoothly from one to another.
 
-2. _Ensure the seed is a string_: The function checks if the provided seed is a string. If not, it sets validSeed to an empty string. This is important because the next step involves string operations.
+2. **Generate a hash from the seed**: The function uses a custom hash function to convert the validSeed into a numerical value (hash). This is done by iterating over each character in the seed, converting the character to its ASCII code using `charCodeAt(0)`, multiplying it by its position in the string, and adding it to an accumulator. This hash is used to ensure that different seeds produce different gradients.
 
-3. _Generate a hash from the seed_: The function uses a custom hash function to convert the validSeed into a numerical value (hash). This is done by iterating over each character in the seed, converting the character to its ASCII code using charCodeAt(0), multiplying it by its position in the string (index + 1), and adding it to an accumulator (acc). This hash is used to ensure that different seeds produce different gradients.
+3. **Select a color pair based on the hash**: The function calculates an index by taking the modulus of the hash with the length of the `colorPairs` array. This ensures that the index is within the bounds of the array. The corresponding color pair is then selected and destructured into color1 and color2.
 
-4. _Select a color pair based on the hash_: The function calculates an index by taking the modulus of the hash with the length of the colorPairs array. This ensures that the index is within the bounds of the array. The corresponding color pair is then selected and destructured into color1 and color2.
+4. **Generate percentages for the gradient's center position**: The function calculates two percentages based on the hash. These percentages determine the position of the center of the radial gradient. This adds an element of variability to the gradient based on the seed.
 
-5. _Generate percentages for the gradient's center position_: The function calculates two percentages (xPercent and yPercent) based on the hash. These percentages determine the position of the center of the radial gradient. This adds an element of variability to the gradient based on the seed.
-
-6. _Return the CSS radial gradient_: Finally, the function constructs a CSS radial-gradient string using the selected colors and the calculated percentages for the center position. This string can be used in CSS to set the background of an element to the generated gradient.
-
-7. _Export the function_: The last line export default generateRandomGradient; makes the function available for import in other JavaScript modules.
+5. **Return the CSS radial gradient**: Finally, the function constructs a CSS radial-gradient string using the selected colors and the calculated percentages for the center position. This string can be used in CSS to set the background of an element to the generated gradient.
 
 Overall, this function allows for the generation of a variety of radial gradients based on a seed value, which can be useful for creating dynamic and visually appealing backgrounds in web development. Using this approach, the same gradient is returned for the same seed value, ensuring consistency across multiple uses of the function. Also, in production I've added more color combos and with the hash function, it's unlikely that the same gradient will be generated for different seeds.
 
 ### Closing Thoughts
 
-Now, I can create a unique "thumbnail" for each post without needing to create an image. This will save me time and allow me to focus on creating content rather than designing thumbnails. Now, my next mission is to tackle Open Graph tags to ensure that when I share my posts on social media, they look just as good as they do on my site!
+Now, I can create a the look and feel I wanted for each post without needing to manually create an image. This will save me time and allow me to focus on creating content rather than designing thumbnails. Now, my next mission is to tackle Open Graph tags to ensure that when I share my posts on social media they look just as good as they do on my site!
 
 Since I've utilized this function in two places, let's go ahead refactor it into a utility function that can be reused across the application. This will help keep our code DRY (Don't Repeat Yourself) and make it easier to maintain in the future.
-
-To do this, all you have to do is create a file `generateRandomGradient.js` and move the `generateRandomGradient` function into it and export it. Then, you can import it wherever you need it in your application.
-
-To import the file, simply add the following line to the top of the file where you want to use the function:
-
-```js
-import generateRandomGradient from "utils/generateRandomGradient";
-```
 
 Thanks for reading! I hope this article has been helpful in showing you how to create unique post thumbnails using CSS gradients. Happy coding!

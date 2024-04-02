@@ -12,6 +12,12 @@ const nextConfig = {
           "/articles/unveiling-nested-objects-enhanced-console-logging-node-js",
         permanent: true,
       },
+      {
+        source: "/articles/gradient-background-for-post-thumbnails",
+        destination:
+          "/articles/using-css-gradients-for-dynamic-post-thumbnails",
+        permanent: true,
+      },
       // Add more redirects here
     ];
   },

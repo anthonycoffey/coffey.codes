@@ -2,62 +2,62 @@ import image from "./image.png";
 import Image from "next/image";
 
 export const metadata = {
-  title: "Authorize.net for React Native / Expo SDK v49",
-  description: `Introducing my first published node package: react-native-expo-authorize-net! This package allows you to easily integrate Authorize.net into your React Native / Expo app.`,
-  date: "Oct 24, 2023",
+  title: "React Native Expo Authorize.net Package for SDK v49",
+  description:
+    "Introducing my first published node package: react-native-expo-authorize-net! This package allows you to easily integrate Authorize.net into your React Native / Expo app.",
+  date: "Apr 8, 2024",
   authors: ["Anthony Coffey"],
   image,
 };
 
 ### Introduction
 
-Introducing my first published node package: react-native-expo-authorize-net! This package allows you to easily integrate Authorize.net into your React Native / Expo app. It works for both Android/iOS, and is compatible with Expo SDK v49.
+Introducing my first published node package: react-native-expo-authorize-net! This package allows you to easily integrate Authorize.net into your React Native / Expo app. It works for both Android and iOS and is compatible with Expo SDK v49.
 
 [https://www.npmjs.com/package/react-native-expo-authorize-net](https://www.npmjs.com/package/react-native-expo-authorize-net)
 
 ### How did I do it?
 
-It's based on a fork of [react-native-reliantid-authorize-net](https://github.com/Reliantid/react-native-reliantid-authorize-net), but I updated the native module code to implement the following changes:
+It's a fork of [react-native-reliantid-authorize-net](https://github.com/Reliantid/react-native-reliantid-authorize-net). I updated the code to work with the latest Expo SDK and added the following features:
 
-- work with Expo SDK v49 local development builds
-- promisify Auth.net response in both native modules, thus allowing for a more modern approach that works for both platforms using a single syntax.
-- improved error handling for both Android / iOS
+- Work with Expo SDK v49 local development builds.
+- Promisify Auth.net response in both native modules, thus allowing for a more modern approach that works for both platforms using a single syntax.
+- Improved error handling for both Android and iOS.
 
 ### What have I learned?
 
-This project challenged me to learn about building native modules for React Native. Also, I was able to get acquainted with some Java and Objective-C code in a react native context!
-It was very exicting to successfully update the native modules to accomodate the desired changes, and I'm incredibly proud of my work on this package! I hope someone finds it useful!
+This project challenged me to learn about building native modules for React Native. Also, I was able to get acquainted with some Java and Objective-C code in a React Native context! It was very exciting to successfully update the native modules to accommodate the desired changes, and I'm quite proud of my work on this package.
 
-This was a painful, but insightful and rewarding experience 🤣 I feel much more comfortable working with Native Modules and troubleshooting build errors on both platforms! 😎
+Now, I feel much more comfortable working with Native Modules and troubleshooting build errors on both platforms! 😎
 
 ### Usage
 
-```javascript
+```jsx
 import { NativeModules } from 'react-native';
 const { RNAuthorizeNet } = NativeModules;
 
 const isProduction = process.env.NODE_ENV === 'production'; // true | false
 const cardValues = {
-LOGIN_ID: 'XXXX', // AUTH.NET LOGIN_ID
-CLIENT_KEY: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // AUTH.NET PUBLIC KEY
-CARD_NO: '4111111111111111',
-CVV_NO: '000',
-EXPIRATION_MONTH: '11',
-EXPIRATION_YEAR: '23'
+  LOGIN_ID: 'XXXX', // AUTH.NET LOGIN_ID
+  CLIENT_KEY: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // AUTH.NET PUBLIC KEY
+  CARD_NO: '4111111111111111',
+  CVV_NO: '000',
+  EXPIRATION_MONTH: '11',
+  EXPIRATION_YEAR: '23'
 };
 
 RNAuthorizeNet.getTokenWithRequestForCard(cardValues, isProduction)
   .then(response => {
-  console.log(response);
-  /*
-  example response:
-    {
-      DATA_DESCRIPTOR: 'COMMON.ACCEPT.INAPP.PAYMENT',
-      DATA_VALUE: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    }
-  */
+    console.log(response);
+    /*
+    example response:
+      {
+        DATA_DESCRIPTOR: 'COMMON.ACCEPT.INAPP.PAYMENT',
+        DATA_VALUE: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      }
+    */
   })
-  .catch((error: any) => {
+  .catch((error) => {
     if (Platform.OS === 'ios') {
       const { code, message } = error;
       const alertMsg: string = `${message}\n\nError Code: ${code}`;
@@ -72,11 +72,32 @@ RNAuthorizeNet.getTokenWithRequestForCard(cardValues, isProduction)
         cancelable: false
       });
     }
-});
+  });
 ```
 
-_(Please note, error handling is slightly different on each platform and must be handled accordingly as demonstrated above.)_
+As you can see, error handling is slightly different on each platform and must be handled accordingly as demonstrated above.
 
-Now I have a working cross-platform Authorize.net integration for my React Native project and that is truly a milestone worth celebrating! I hope someone else finds this package useful, too!
+### expo-build-properties
 
-If you need help with this package, please [contact me](/contact).
+Please note, the Android module includes some code that requires minSdkVersion 21, but Expo allows us to configure this in `app.json` via `expo-build-properties`.
+
+```json
+{
+  "expo": {
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26
+          },
+          "ios": {}
+        }
+      ]
+    ]
+  }
+}
+```
+
+Now I have a working cross-platform Authorize.net integration for my React Native project, and that is truly a milestone worth celebrating! I hope someone else finds this package useful, too!

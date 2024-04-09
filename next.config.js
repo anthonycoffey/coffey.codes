@@ -18,6 +18,11 @@ const nextConfig = {
           "/articles/using-css-gradients-for-dynamic-post-thumbnails",
         permanent: true,
       },
+      {
+        source: "/articles/my-markdown-resume",
+        destination: "/articles/markdown-resume",
+        permanent: true,
+      },
       // Add more redirects here
     ];
   },

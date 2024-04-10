@@ -69,6 +69,8 @@ export function WorkHistory() {
         "PHP",
         "mySQL",
         "Composer",
+        "AWS",
+        "Google Cloud",
       ],
     },
     {
@@ -87,6 +89,8 @@ export function WorkHistory() {
         "JavaScript",
         "HTML5",
         "SEO",
+        "AWS",
+        "Google Cloud",
       ],
     },
     {
@@ -103,6 +107,7 @@ export function WorkHistory() {
         "mySQL",
         "JavaScript",
         "HTML5",
+        "AWS",
       ],
     },
     {
@@ -118,6 +123,8 @@ export function WorkHistory() {
         "jQuery",
         "HTML5",
         "CSS3",
+        "Google Cloud",
+        "AWS",
       ],
     },
     {
@@ -134,6 +141,7 @@ export function WorkHistory() {
         "jQuery",
         "HTML5",
         "CSS3",
+        "AWS",
       ],
     },
     {
@@ -149,6 +157,8 @@ export function WorkHistory() {
         "jQuery",
         "GravityForms",
         "wooCommerce",
+        "Google Cloud",
+        "AWS",
       ],
     },
   ];

@@ -7,11 +7,11 @@ export const metadata = {
   image,
 };
 
-Have you ever tried to start a service and then discover that something is already running on that port, but you aren't sure what?
+Have you ever tried to start a service in your Node.js environment, only to discover that something is already running on the desired port?
 
 You might have saw an error like `Error: listen EADDRINUSE: address already in use :::5000` and wondered what to do next.
 
-Well then I have a solution for you! There is an incredibly useful package called kill-port that allows you to kill a process on a given port.
+If so, I have a solution for you! There is an incredibly useful Node.js package called kill-port that allows you to kill a process on a given port.
 
 It's super easy to use. All you have to do is run the following command:
 
@@ -19,10 +19,9 @@ It's super easy to use. All you have to do is run the following command:
 npx kill-port 5000
 ```
 
-That's it! Now you can start your service on port 5000. I should mention this isn't "THE" way to end a process by port
-number, but the `npx` command is pretty convenient as it doesn't require you to install anything. I have seen it fail before, and I had to terminate the process another way - but 60% of the time it works everytime! 🤣
+That's it! Now you can start your service on port 5000. I should mention that this isn't the only way to end a process by port number, but the npx command is quite convenient as it doesn't require you to install anything globally. I've seen it fail on rare occasions, and in those cases, I had to terminate the process another way. But in my experience, it works most of the time! 🤣
 
-If you run into that situation, you can look up how to terminate a process by port number on your operating system. I won't go into that here, but the important takeaway here is: if kill-port doesn't work, you can always terminate the process another way!
+If you do run into a situation where kill-port doesn't work, you can look up how to terminate a process by port number on your operating system. I won't go into the specifics here, but the key takeaway is: if kill-port doesn't work, there are always alternative methods to terminate the process!
 
 ## Wait... What if I want to see which process is running on that port before terminating it? 🤔
 
@@ -40,4 +39,4 @@ lsof -i :5000
 netstat -ano | findstr :5000
 ```
 
-Just replace `5000` with the port number you want to check, of course! 🤠
+Just replace 5000 with the port number you want to check. This can be especially useful in development environments where multiple services might be running simultaneously.

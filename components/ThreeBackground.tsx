@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Stars, TorusKnot } from "@react-three/drei";
+import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
+import { Stars, TorusKnot, SpotLight, Environment } from "@react-three/drei";
 
 export default function ThreeBackground() {
   return (
@@ -14,8 +14,13 @@ export default function ThreeBackground() {
         zIndex: -1,
       }}
     >
+      <Environment
+        preset="city"
+        background={false} // can be true, false or "only" (which only sets the background) (default: false)
+      />
       <color attach="background" args={["black"]} />
       <Camera />
+
       <GyratingTorusKnot />
       <Stars
         radius={100} // Outer radius of the star field
@@ -61,13 +66,20 @@ function GyratingTorusKnot() {
     ref.current.rotation.y = Math.sin(clock.getElapsedTime()) * 0.5;
   });
 
+  // Load the texture using the useLoader hook
+  const texture = useLoader(
+    THREE.TextureLoader,
+    "https://images.unsplash.com/photo-1541356665065-22676f35dd40",
+  );
+
   return (
     <TorusKnot ref={ref} args={[1, 0.4, 64, 100]} position={[0, 0, 0]}>
-      <meshStandardMaterial
+      <meshBasicMaterial
         attach="material"
-        color="green"
-        emissive="green"
-        emissiveIntensity={10}
+        envMap={texture}
+        fog={true}
+        refractionRatio={0.95}
+        color="#00ff00" // Bright green
       />
     </TorusKnot>
   );

@@ -3,6 +3,7 @@ import "@/styles/main.sass";
 import Toolbar from "../components/Toolbar";
 import localFont from "next/font/local";
 import { GoogleAnalytics } from "nextjs-google-analytics";
+import ThreeBackground from "@/components/ThreeBackground";
 
 const helvetica = localFont({
   src: [
@@ -25,7 +26,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={helvetica.className}>
-      <body>
+      <body className="dark ">
+        <ThreeBackground />
         <GoogleAnalytics trackPageViews />
         <Toolbar />
         <main className="overflow-hidden">{children}</main>

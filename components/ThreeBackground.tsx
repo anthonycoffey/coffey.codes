@@ -1,7 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
-import { Stars, TorusKnot, SpotLight, Environment } from "@react-three/drei";
+import {
+  Stars,
+  TorusKnot,
+  Environment,
+  OrbitControls,
+} from "@react-three/drei";
 
 export default function ThreeBackground() {
   return (
@@ -14,22 +19,22 @@ export default function ThreeBackground() {
         zIndex: -1,
       }}
     >
-      <Environment
-        preset="city"
-        background={false} // can be true, false or "only" (which only sets the background) (default: false)
-      />
       <color attach="background" args={["black"]} />
       <Camera />
-
       <GyratingTorusKnot />
       <Stars
         radius={100} // Outer radius of the star field
-        depth={50} // Layer depth
+        depth={100} // Layer depth
         count={5000} // Number of stars
         factor={4} // Size factor
         saturation={0} // Saturation (0 for no color)
         fade // Fade in/out based on camera position
       />
+      <Environment
+        preset="city"
+        background={false} // can be true, false or "only" (which only sets the background) (default: false)
+      />
+      <OrbitControls />
     </Canvas>
   );
 }
@@ -67,19 +72,14 @@ function GyratingTorusKnot() {
   });
 
   // Load the texture using the useLoader hook
-  const texture = useLoader(
-    THREE.TextureLoader,
-    "https://images.unsplash.com/photo-1541356665065-22676f35dd40",
-  );
 
   return (
-    <TorusKnot ref={ref} args={[1, 0.4, 64, 100]} position={[0, 0, 0]}>
-      <meshBasicMaterial
-        attach="material"
-        envMap={texture}
-        fog={true}
-        refractionRatio={0.95}
-        color="#00ff00" // Bright green
+    <TorusKnot ref={ref} args={[1, 0.4, 64, 100]} position={[-5, -2, -1]}>
+      <meshPhysicalMaterial
+        metalness={1}
+        roughness={0.1}
+        color="#d4d4d4"
+        envMapIntensity={1}
       />
     </TorusKnot>
   );

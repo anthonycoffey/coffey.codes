@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={helvetica.className}>
-      <body className="dark ">
+    <html lang="en" className={`${helvetica.className} dark`}>
+      <body className="dark:text-green-400">
         <ThreeBackground />
         <GoogleAnalytics trackPageViews />
         <Toolbar />

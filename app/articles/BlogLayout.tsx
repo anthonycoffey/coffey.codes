@@ -19,15 +19,18 @@ export default async function Layout({
 
   return (
     <>
-      <article className="prose mx-auto lg:prose-xl px-4 sm:px-0">
+      <article className="bg-white backdrop-blur prose mx-auto lg:prose-xl px-4 sm:px-0">
         <div
           className="flex max-h-[50vh] justify-center items-center text-center"
           style={gradientStyle}
         >
           <h1 className="post-title">{title}</h1>
         </div>
-        <ArticleInfo article={article} className="px-1 text-sm mb-5" />
-        {children}
+        <div className="px-4">
+          <ArticleInfo article={article} className="px-1 text-sm mb-5" />
+
+          {children}
+        </div>
       </article>
     </>
   );

@@ -15,7 +15,7 @@
     "@mdx-js/loader": "^2.3.0",
     "@next/mdx": "^13.4.4",
     "@react-three/drei": "^9.88.5",
-    "@react-three/fiber": "^8.15.5",
+    "@react-three/fiber": "^8.16.2",
     "@types/three": "^0.157.2",
     "axios": "^1.5.1",
     "framer-motion": "^10.16.4",
@@ -26,12 +26,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-syntax-highlighter": "^15.5.0",
+    "react-use": "^17.5.0",
     "reading-time": "^1.5.0",
     "sass": "^1.69.4",
     "sharp": "^0.32.1",
     "simple-functional-loader": "^1.2.1",
     "supports-color": "^8.1.1",
-    "three": "^0.157.0",
+    "three": "^0.163.0",
     "troika-three-text": "^0.49.0"
   },
   "devDependencies": {

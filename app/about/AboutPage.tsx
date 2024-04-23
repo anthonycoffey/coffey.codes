@@ -1,34 +1,38 @@
 import { backend, frontend } from "./logos";
 import LogoGrid from "./components/LogoGrid";
 import { WorkHistory } from "./components/WorkHistory";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
     <>
       <div className="page">
         <div className="page-content">
-          <h1 className="text-2xl font-bold mb-6">🤠Howdy Y'all!</h1>
+          <h1 className="text-3xl font-bold mb-6">🤠Howdy Y'all!</h1>
+
           <p className="leading-1 tracking-wide">
-            Welcome to my little corner of the internet! My name is Anthony
-            Coffey and I'm an <u>Artist</u>, <u>Musician</u> and{" "}
-            <u>Software Engineer</u> living in Austin, Texas.
+            My name is Anthony Coffey, and I'm a Musician and Software Engineer
+            living in Austin, Texas.{" "}
           </p>
           <p className="leading-1 tracking-wide">
             In May of 2012, I graduated from Gulf Coast State College and
-            started a business doing WordPress plugin and theme development.
+            started freelancing with the LAMP stack, primarily doing WordPress
+            plugin/theme development and internet/search marketing.
           </p>
           <p className="leading-1 tracking-wide">
-            I was able to launch my career right out of college thanks to some
-            great mentors and the Elance platform, which was later acquired by
-            Upwork.
+            Since 2014, I've partnered with hundreds of clients worldwide via
+            the Elance platform, which later became part of Upwork. Throughout
+            my decade-long freelance career, I've built extensive knowledge and
+            expertise in systems architecture, cloud computing, and full-stack
+            development.
           </p>
           <p className="leading-1 tracking-wide">
-            Since then, I've gained valuable professional experience working as
-            a sysadmin, fullstack engineer, and consultant for start-ups and
-            small to medium-sized businesses.
+            In January 2015, I moved to Austin, Texas. Yes, I now know how to
+            Texas two-step or where to find the best tacos in town. Ask me for
+            dive bar or taco truck recommendations!
           </p>
           <p className="leading-1 tracking-wide">
-            March 2022, I was employed as a Full Stack Software Engineer at{" "}
+            In March 2022, I accepted a Full Stack Software Engineering role at{" "}
             <a
               href="https://www.maranihealth.com/"
               target="_blank"
@@ -37,6 +41,7 @@ export default function AboutPage() {
             >
               Marani Health
             </a>
+            .
           </p>
           <p className="leading-1 tracking-wide">
             If you have a project you'd like to discuss with me, feel free to{" "}
@@ -48,7 +53,6 @@ export default function AboutPage() {
             </a>
             !
           </p>
-
           <div className="social-icons">
             <a
               href="https://www.linkedin.com/in/coffeyanthony/"
@@ -83,14 +87,16 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="page-image">
-          <img
-            src="/psych.png"
+          <Image
+            src="/sidepanel.png"
+            width={234 * 2}
+            height={468 * 2}
             alt="Anthony Coffey - Artist, Musician and Software Engineer"
           />
         </div>
       </div>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto my-4">
         <div className="mb-10 px-4 mx-auto">
           <WorkHistory />
         </div>
@@ -98,7 +104,7 @@ export default function AboutPage() {
 
       <div className="container mx-auto mt-24">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
-          <h1 className="text-2xl font-bold mb-6 text-center">
+          <h1 className="text-3xl font-bold mb-6 text-center">
             Frontend Expertise
           </h1>
           <LogoGrid logos={frontend} />
@@ -106,7 +112,7 @@ export default function AboutPage() {
       </div>
       <div className="container mx-auto mt-24">
         <div className="mb-10 px-4 text-center md:text-left mx-auto">
-          <h1 className="text-2xl font-bold mb-6 text-center">
+          <h1 className="text-3xl font-bold mb-6 text-center">
             Cloud/Backend Expertise
           </h1>
           <LogoGrid logos={backend} />

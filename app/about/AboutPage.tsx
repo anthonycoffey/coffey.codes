@@ -35,21 +35,6 @@ export default function AboutPage() {
           </p>
 
           <p className="leading-1 tracking-wide">
-            March 2022, I accepted a Full Stack Software Engineering role at{" "}
-            <a
-              href="https://www.maranihealth.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline focus:underline focus:outline-none"
-            >
-              Marani Health
-            </a>
-            . We are a health tech startup that is revolutionizing the way
-            pregnant women are monitored during their pregnancy. I am excited to
-            be a part of this team and to help build a product that will help
-            save lives.
-          </p>
-          <p className="leading-1 tracking-wide">
             If you have a project you'd like to discuss with me, feel free to{" "}
             <a
               href="/contact"

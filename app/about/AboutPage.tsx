@@ -11,28 +11,28 @@ export default function AboutPage() {
           <h1 className="text-3xl font-bold mb-6">🤠Howdy Y'all!</h1>
 
           <p className="leading-1 tracking-wide">
-            My name is Anthony Coffey, and I'm a Musician and Software Engineer
-            living in Austin, Texas.{" "}
+            My name is Anthony Coffey, and I'm an Artist and Software Engineer
+            living in Austin, Texas.
           </p>
           <p className="leading-1 tracking-wide">
             In May of 2012, I graduated from Gulf Coast State College and
-            started freelancing with the LAMP stack, primarily doing WordPress
-            plugin/theme development and internet/search marketing.
+            started freelancing on LAMP stack, primarily doing WordPress
+            plugin/theme development and jQuery front-end work.
           </p>
           <p className="leading-1 tracking-wide">
             Since 2014, I've partnered with hundreds of clients worldwide via
-            the Elance platform, which later became part of Upwork. Throughout
-            my decade-long freelance career, I've built extensive knowledge and
-            expertise in systems architecture, cloud computing, and full-stack
-            development.
+            the E-lance platform, which later became part of Upwork. Throughout
+            my decade-long freelance career, I have cultivated a wealth of
+            knowledge and expertise in systems architecture, cloud computing,
+            and software development.
           </p>
           <p className="leading-1 tracking-wide">
             In January 2015, I moved to Austin, Texas. Yes, I now know how to
-            Texas two-step or where to find the best tacos in town. Ask me for
-            dive bar or taco truck recommendations!
+            Texas two-step and where to find the best tacos in town. Ask me
+            about my favorite dive bars and taco trucks!
           </p>
           <p className="leading-1 tracking-wide">
-            In March 2022, I accepted a Full Stack Software Engineering role at{" "}
+            March 2022, I accepted a Full Stack Software Engineering role at{" "}
             <a
               href="https://www.maranihealth.com/"
               target="_blank"

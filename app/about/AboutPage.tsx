@@ -10,27 +10,27 @@ export default function AboutPage() {
         <div className="page-content">
           <h1 className="text-3xl font-bold mb-6">🤠Howdy Y'all!</h1>
 
-          <p className="leading-1 tracking-wide">
-            My name is Anthony Coffey, and I'm an Artist and Software Engineer
-            living in Austin, Texas.
+          <p className="leading-1 lg:text-3xl tracking-wide font-bold">
+            <b>My name is Anthony Coffey.</b> I am an Artist and Software
+            Engineer living in Austin, Texas.
           </p>
           <p className="leading-1 tracking-wide">
-            In May of 2012, I graduated from Gulf Coast State College and
-            started freelancing on LAMP stack, primarily doing WordPress
-            plugin/theme development and jQuery front-end work.
+            Spring 2012. Driven by a passion for autonomy and limitless career
+            potential, I stepped away from conventional job structures to chart
+            my own path after college. Determined to start my own web
+            development business, I took to the streets to sell WordPress
+            services door-to-door and luckily, this unconventional approach
+            actually secured some of my first clients that helped me launch my
+            software career.
           </p>
           <p className="leading-1 tracking-wide">
-            Since 2014, I've partnered with hundreds of clients worldwide via
-            the E-lance platform, which later became part of Upwork. Throughout
-            my decade-long freelance career, I have cultivated a wealth of
-            knowledge and expertise in systems architecture, cloud computing,
-            and software development.
+            Since 2014, I've partnered with hundreds of clients worldwide thanks
+            to sites like Elance and Upwork that have allowed me to build a
+            career in remote work. Throughout my decade-long career, I have
+            cultivated a wealth of knowledge and expertise in systems
+            architecture, cloud computing, and software development.
           </p>
-          <p className="leading-1 tracking-wide">
-            In January 2015, I moved to Austin, Texas. Yes, I now know how to
-            Texas two-step and where to find the best tacos in town. Ask me
-            about my favorite dive bars and taco trucks!
-          </p>
+
           <p className="leading-1 tracking-wide">
             March 2022, I accepted a Full Stack Software Engineering role at{" "}
             <a

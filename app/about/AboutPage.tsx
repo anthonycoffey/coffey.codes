@@ -15,20 +15,23 @@ export default function AboutPage() {
             Engineer living in Austin, Texas.
           </p>
           <p className="leading-1 tracking-wide">
-            Spring 2012. Driven by a passion for autonomy and limitless career
+            Spring, 2012. Driven by a passion for autonomy and limitless career
             potential, I stepped away from conventional job structures to chart
-            my own path after college. Determined to start my own web
+            my own path after graduating college. Determined to start my own web
             development business, I took to the streets to sell WordPress
             services door-to-door and luckily, this unconventional approach
             actually secured some of my first clients that helped me launch my
-            software career.
+            software career. The rest, as they say, is history...
           </p>
           <p className="leading-1 tracking-wide">
-            Since 2014, I've partnered with hundreds of clients worldwide thanks
-            to sites like Elance and Upwork that have allowed me to build a
-            career in remote work. Throughout my decade-long career, I have
-            cultivated a wealth of knowledge and expertise in systems
-            architecture, cloud computing, and software development.
+            Since 2014, I have worked with hundreds of clients to develop and
+            maintain custom software solutions designed to meet their unique
+            needs. Throughout my decade-long career, I have cultivated a wealth
+            of knowledge and expertise in systems architecture, cloud computing,
+            and the software development lifecycle. This rich blend of
+            experiences has not only sharpened my technical proficiency but also
+            refined my interpersonal skills, establishing me as an energetic
+            extrovert and a dependable team collaborator.
           </p>
 
           <p className="leading-1 tracking-wide">
@@ -41,7 +44,10 @@ export default function AboutPage() {
             >
               Marani Health
             </a>
-            .
+            . We are a health tech startup that is revolutionizing the way
+            pregnant women are monitored during their pregnancy. I am excited to
+            be a part of this team and to help build a product that will help
+            save lives.
           </p>
           <p className="leading-1 tracking-wide">
             If you have a project you'd like to discuss with me, feel free to{" "}

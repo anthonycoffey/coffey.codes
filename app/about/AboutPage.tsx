@@ -8,42 +8,10 @@ export default function AboutPage() {
     <>
       <div className="page">
         <div className="page-content">
-          <h1 className="text-3xl font-bold mb-6">🤠Howdy Y'all!</h1>
-
-          <p className="leading-1 lg:text-3xl tracking-wide font-bold">
-            <b>My name is Anthony Coffey.</b> I am an Artist and Software
-            Engineer living in Austin, Texas.
-          </p>
-          <p className="leading-1 tracking-wide">
-            Spring, 2012. Driven by a passion for autonomy and limitless career
-            potential, I stepped away from conventional job structures to chart
-            my own path after graduating college. Determined to start my own web
-            development business, I took to the streets to sell WordPress
-            services door-to-door and luckily, this unconventional approach
-            actually secured some of my first clients that helped me launch my
-            software career. The rest, as they say, is history...
-          </p>
-          <p className="leading-1 tracking-wide">
-            Since 2014, I have worked with hundreds of clients to develop and
-            maintain custom software solutions designed to meet their unique
-            needs. Throughout my decade-long career, I have cultivated a wealth
-            of knowledge and expertise in systems architecture, cloud computing,
-            and the software development lifecycle. This rich blend of
-            experiences has not only sharpened my technical proficiency but also
-            refined my interpersonal skills, establishing me as an energetic
-            extrovert and a dependable team collaborator.
-          </p>
-
-          <p className="leading-1 tracking-wide">
-            If you have a project you'd like to discuss with me, feel free to{" "}
-            <a
-              href="/contact"
-              className="text-blue-500 hover:underline focus:underline focus:outline-none"
-            >
-              reach out
-            </a>
-            !
-          </p>
+          <h1 className="leading-1 text-3xl mb-0">Anthony Coffey</h1>
+          <span className="block mt-1 text-xl p-0 text-gray-800 italic">
+            Software Engineer, Solutions Architect, Artist
+          </span>
           <div className="social-icons">
             <a
               href="https://www.linkedin.com/in/coffeyanthony/"
@@ -74,6 +42,37 @@ export default function AboutPage() {
               >
                 <path d="M12 0c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.7 2.8 3.3 2 .3-.6.5-1.3.6-1.6-2.7-.3-5.5-1.4-5.5-6 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.3 1-.3 2-.4 3-.4s2 .1 3 .4c2.3-1.6 3.3-1.3 3.3-1.3.6 1.7.2 2.9.1 3.2.8.9 1.2 2 1.2 3.3 0 4.6-2.8 5.7-5.5 6 .3.3.6.9.6 1.9v2.8c0 .3.2.7.8.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z" />
               </svg>
+            </a>
+          </div>
+          <p className="leading-loose">
+            Spring, 2012. Driven by a passion for autonomy and limitless career
+            potential, I stepped away from conventional job structures to chart
+            my own path after graduating college. Determined to start my own web
+            development business, I took to the streets to sell WordPress
+            services door-to-door and luckily, this unconventional approach
+            actually secured some of my first clients that helped me launch my
+            software career. The rest, as they say, is history...
+          </p>
+          <p className="leading-loose">
+            Since 2014, I have worked with hundreds of clients to develop and
+            maintain custom software solutions designed to meet their unique
+            needs. Throughout my decade-long career, I have cultivated a wealth
+            of knowledge and expertise in systems architecture, cloud computing,
+            and the software development lifecycle. This rich blend of
+            experiences has not only sharpened my technical proficiency but also
+            refined my interpersonal skills, establishing me as an energetic
+            extrovert and a dependable team collaborator.
+          </p>
+
+          <div className="flex flex-col items-center justify-center bg-blue-100 p-10 rounded-lg">
+            <p className="text-2xl font-bold mb-4 text-center">
+              Curious to learn more about my expertise?
+            </p>
+            <a
+              href="/contact"
+              className="px-8 py-3 border border-transparent text-base rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 no-underline"
+            >
+              Let's chat!
             </a>
           </div>
         </div>

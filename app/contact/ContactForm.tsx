@@ -66,7 +66,7 @@ export default function ContactForm() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="name"
                 >
-                  Name
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -76,6 +76,7 @@ export default function ContactForm() {
                   placeholder="Your name"
                   value={formData.name}
                   onChange={handleInputChange}
+                  required={true}
                 />
               </div>
               <div className="mb-2">
@@ -83,7 +84,7 @@ export default function ContactForm() {
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="email"
                 >
-                  Email
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -93,6 +94,7 @@ export default function ContactForm() {
                   placeholder="Your email address"
                   value={formData.email}
                   onChange={handleInputChange}
+                  required={true}
                 />
               </div>
             </div>
@@ -102,7 +104,7 @@ export default function ContactForm() {
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="message"
               >
-                Message
+                Message <span className="text-red-500">*</span>
               </label>
               <textarea
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -111,6 +113,7 @@ export default function ContactForm() {
                 placeholder="Your message"
                 value={formData.message}
                 onChange={handleTextAreaChange}
+                required={true}
               ></textarea>
             </div>
             <div>

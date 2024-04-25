@@ -7,8 +7,8 @@ export default function ContactPage() {
     setShowForm(!showForm);
   };
   return (
-    <div className="page flex min-h-screen">
-      <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center items-center">
+    <div className="page grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+      <div className="col-span-1 lg:col-span-1 p-10 flex flex-col justify-center items-center">
         <h1 className="text-3xl font-bold mb-6">Drop a Line!</h1>
         <p className="mb-4 text-gray-600">
           Have a question? Click below to drop me a line and I'll get back to
@@ -24,11 +24,13 @@ export default function ContactPage() {
         )}
         {showForm && <ContactForm />}
       </div>
-      <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center items-center bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6">Schedule a Meeting!</h1>
+      <div className="col-span-1 lg:col-span-1 p-10 flex flex-col justify-center items-center bg-gray-100">
+        <h1 className="text-3xl font-bold mb-6 text-blue-500">
+          Schedule a Meeting!
+        </h1>
         <p className="mb-4 text-gray-600">
-          Interested in discussing a project or just want to say hi? Check out
-          my availability and book a time that suits you!
+          Interested in Connecting? Check out my availability and book a time
+          that suits you!
         </p>
         <a
           href="https://calendly.com/antcoffpersonal/meet"

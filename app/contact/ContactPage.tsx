@@ -25,7 +25,7 @@ export default function ContactPage() {
         {showForm && <ContactForm />}
       </div>
       <div className="w-full lg:w-1/2 p-10 flex flex-col justify-center items-center bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6">Schedule Meeting!</h1>
+        <h1 className="text-3xl font-bold mb-6">Schedule a Meeting!</h1>
         <p className="mb-4 text-gray-600">
           Interested in discussing a project or just want to say hi? Check out
           my availability and book a time that suits you!

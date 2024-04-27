@@ -49,7 +49,7 @@ export default function AboutPage() {
             potential, I stepped away from conventional job structures to chart
             my own path after graduating college. Determined to start my own web
             development business, I took to the streets to sell WordPress
-            services door-to-door and luckily, this unconventional approach
+            websites door-to-door and luckily, this unconventional approach
             actually secured some of my first clients that helped me launch my
             software career. The rest, as they say, is history...
           </p>

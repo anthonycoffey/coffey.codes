@@ -8,7 +8,7 @@ export default function AboutPage() {
     <>
       <div className="page">
         <div className="page-content">
-          <h1 className="leading-1 text-3xl mb-0">Anthony Coffey</h1>
+          <h1 className="leading-1 text-3xl mb-0 mt-10">Anthony Coffey</h1>
           <span className="block mt-1 text-xl p-0 text-gray-800 italic">
             Software Engineer, Solutions Architect, Artist
           </span>
@@ -44,7 +44,7 @@ export default function AboutPage() {
               </svg>
             </a>
           </div>
-          <p className="leading-loose">
+          <p className="leading-loose sm:text-left">
             Spring, 2012. Driven by a passion for autonomy and limitless career
             potential, I stepped away from conventional job structures to chart
             my own path after graduating college. Determined to start my own web
@@ -53,7 +53,7 @@ export default function AboutPage() {
             actually secured some of my first clients that helped me launch my
             software career. The rest, as they say, is history...
           </p>
-          <p className="leading-loose">
+          <p className="leading-loose sm:text-left">
             Since 2014, I have worked with hundreds of clients to develop and
             maintain custom software solutions designed to meet their unique
             needs. Throughout my decade-long career, I have cultivated a wealth

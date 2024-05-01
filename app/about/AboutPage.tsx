@@ -49,9 +49,9 @@ export default function AboutPage() {
             potential, I stepped away from conventional job structures to chart
             my own path after graduating college. Determined to start my own web
             development business, I took to the streets to sell WordPress
-            websites door-to-door and luckily, this unconventional approach
-            actually secured some of my first clients that helped me launch my
-            software career. The rest, as they say, is history...
+            websites door-to-door and luckily. This unconventional approach
+            surprisingly secured some of my first clients and laid the
+            foundation for my career. The rest, as they say, is history...
           </p>
           <p className="leading-loose sm:text-left">
             Since 2014, I have worked with hundreds of clients to develop and
@@ -64,7 +64,7 @@ export default function AboutPage() {
             extrovert and a dependable team collaborator.
           </p>
 
-          <div className="flex flex-col items-center justify-center bg-blue-100 p-10 rounded-lg">
+          <div className="flex flex-col justify-center bg-blue-100 p-10 rounded-lg items-center">
             <p className="text-2xl font-bold mb-4 text-center">
               Curious to learn more about my expertise?
             </p>

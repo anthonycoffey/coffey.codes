@@ -11,6 +11,13 @@ type WorkHistory = {
 export function WorkHistory() {
   const data: WorkHistory[] = [
     {
+      company: "Southern Made",
+      title: "Staff Engineer",
+      location: "Nashville, Tennessee (Remote)",
+      start: "May, 2024",
+      skills: ["AWS", "Heroku", "Project Management", "Product Management"],
+    },
+    {
       company: "Marani Health",
       title: "Full Stack Software Engineer",
       location: "Remote",

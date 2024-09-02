@@ -44,17 +44,22 @@ export default function AboutPage() {
               </svg>
             </a>
           </div>
+
           <p className="leading-loose sm:text-left">
             Spring, 2012. Driven by a passion for autonomy and limitless career
             potential, I stepped away from conventional job structures to chart
-            my own path after graduating college. Determined to start my own web
-            development business, I took to the streets to sell WordPress
-            websites door-to-door and luckily. This unconventional approach
-            surprisingly secured some of my first clients and laid the
-            foundation for my career. The rest, as they say, is history...
+            my own path after graduating college. In the past, I had a few
+            freelance gigs, but waiting tables was getting old and I became
+            determined to start my own web development business. With the help
+            of a mentor, I did everything I could think of to get new clients.
+            Even going as far as beating the streets to sell WordPress websites
+            door-to-door and surprisingly this unconventional approach secured
+            some of my first clients and laid the foundation for my career. In
+            2014, I joined the UpWork platform and the rest, as they say, is
+            history!
           </p>
           <p className="leading-loose sm:text-left">
-            Since 2014, I have worked with hundreds of clients to develop and
+            Since then, I have worked with hundreds of clients to develop and
             maintain custom software solutions designed to meet their unique
             needs. Throughout my decade-long career, I have cultivated a wealth
             of knowledge and expertise in systems architecture, cloud computing,

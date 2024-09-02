@@ -15,7 +15,14 @@ export function WorkHistory() {
       title: "Staff Engineer",
       location: "Nashville, Tennessee (Remote)",
       start: "May, 2024",
-      skills: ["AWS", "Heroku", "Project Management", "Product Management"],
+      skills: [
+        "AWS",
+        "Heroku",
+        "Project Management",
+        "Cloud Computing",
+        "AI/ML",
+        "Project Estimation",
+      ],
     },
     {
       company: "Marani Health",

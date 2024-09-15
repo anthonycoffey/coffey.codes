@@ -46,27 +46,21 @@ export default function AboutPage() {
           </div>
 
           <p className="leading-loose sm:text-left">
-            Spring, 2012. Driven by a passion for autonomy and limitless career
-            potential, I stepped away from conventional job structures to chart
-            my own path after graduating college. In the past, I had a few
-            freelance gigs, but waiting tables was getting old and I became
-            determined to start my own web development business. With the help
-            of a mentor, I did everything I could think of to get new clients.
-            Even going as far as beating the streets to sell WordPress websites
-            door-to-door and surprisingly this unconventional approach secured
-            some of my first clients and laid the foundation for my career. In
-            2014, I joined the UpWork platform and the rest, as they say, is
-            history!
+            In 2012, fresh out of college, I decided to take a leap and turn my
+            passion for web development into a full-time business. I started
+            small, knocking on doors and offering WordPress websites, which
+            surprisingly helped me land my first few clients. It was a humble
+            beginning, but it paved the way for everything that came after.
           </p>
           <p className="leading-loose sm:text-left">
-            Since then, I have worked with hundreds of clients to develop and
-            maintain custom software solutions designed to meet their unique
-            needs. Throughout my decade-long career, I have cultivated a wealth
-            of knowledge and expertise in systems architecture, cloud computing,
-            and the software development lifecycle. This rich blend of
-            experiences has not only sharpened my technical proficiency but also
-            refined my interpersonal skills, establishing me as an energetic
-            extrovert and a dependable team collaborator.
+            By 2014, encouraged by my mentors, I joined Elance (which later
+            became UpWork), and my freelance career truly took off. Since then,
+            I've worked with hundreds of clients, developing custom software
+            solutions tailored to their unique needs. Along the way, I've honed
+            my skills in systems architecture, cloud computing, and the software
+            development lifecycle. More importantly, I’ve learned how to be a
+            great collaborator — committed to every project I take on and
+            passionate about delivering high value work.
           </p>
 
           <div className="flex flex-col justify-center bg-blue-100 p-10 rounded-lg items-center">

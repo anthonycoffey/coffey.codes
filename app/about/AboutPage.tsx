@@ -57,12 +57,13 @@ export default function AboutPage() {
             became UpWork), and my freelance career truly took off. Since then,
             I've worked with hundreds of clients, developing custom software
             solutions tailored to their unique needs. Along the way, I've honed
-            my skills in systems architecture, cloud computing, and the software
-            development lifecycle. More importantly, I’ve learned how to be a
+            my skills in systems architecture, cloud computing, AI/ML and product management.
+          </p>
+          <p className="leading-loose sm:text-left">
+            Most importantly, I’ve learned how to be a
             great collaborator — committed to every project I take on and
             passionate about delivering high value work.
           </p>
-
           <div className="flex flex-col justify-center bg-blue-100 p-10 rounded-lg items-center">
             <p className="text-2xl font-bold mb-4 text-center">
               Curious to learn more about my expertise?

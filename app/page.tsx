@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Bio',
-  description: 'About me.',
+  title:
+    'Anthony Coffey | Digital Strategist & Software Engineer - Austin, Texas',
+  description:
+    'Portfolio blog site for Austin based software engineer Anthony Coffey',
 };
 
 import { backend, frontend } from './logos';
@@ -71,7 +73,7 @@ export default function Page() {
         </p>
         <div className="flex flex-col justify-center bg-gray-900 p-10 rounded-lg items-center my-10">
           <p className="text-2xl font-bold mb-4 text-center">
-            Curious to learn more about my expertise?
+            Want to learn more about my expertise?
           </p>
           <div className="flex flex-row justify-between w-full">
             <a
@@ -111,9 +113,7 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col justify-center bg-gray-900 p-10 rounded-lg items-center my-10">
-        <p className="text-2xl font-bold mb-4 text-center">
-          Curious to learn more about my expertise?
-        </p>
+        <p className="text-2xl font-bold mb-4 text-center">How can I help?</p>
         <div className="flex flex-row justify-between w-full">
           <a
             href="/contact"

@@ -1,4 +1,8 @@
 {
+  "name": "coffey-codes",
+  "version": "2.0.0",
+  "author": "anthonycoffey <coffey.j.anthony@gmail.com>",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",

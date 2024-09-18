@@ -35,6 +35,23 @@ function readMDXFile(filePath) {
   return parseFrontmatter(rawContent);
 }
 
+function getRSSMDXData(
+  dir: string,
+  page: number = 1,
+  itemsPerPage: number = 10,
+) {
+  return getMDXFiles(dir).map((file) => {
+    let { metadata, content } = readMDXFile(path.join(dir, file));
+    let slug = path.basename(file, path.extname(file));
+
+    return {
+      metadata,
+      slug,
+      content,
+    };
+  });
+}
+
 function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
   let mdxFiles = getMDXFiles(dir).map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file));
@@ -70,6 +87,10 @@ function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
       itemsPerPage,
     },
   };
+}
+
+export function getRSSBlogPosts() {
+  return getRSSMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'));
 }
 
 export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {

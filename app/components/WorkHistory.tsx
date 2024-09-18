@@ -1,4 +1,4 @@
-import Chip from '/app/components/Chip';
+import Chip from './Chip';
 
 type WorkHistory = {
   company: string;

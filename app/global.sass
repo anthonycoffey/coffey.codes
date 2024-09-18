@@ -1,0 +1,167 @@
+@import 'tailwindcss'
+
+::selection
+  background-color: #47a3f3
+  color: #fefefe
+
+:root
+  --sh-class: #2d5e9d
+  --sh-identifier: #354150
+  --sh-sign: #8996a3
+  --sh-string: #007f7a
+  --sh-keyword: #e02518
+  --sh-comment: #a19595
+  --sh-jsxliterals: #6266d1
+  --sh-property: #e25a1c
+  --sh-entity: #e25a1c
+
+@media (prefers-color-scheme: dark)
+  :root
+    --sh-class: #4c97f8
+    --sh-identifier: white
+    --sh-keyword: #f47067
+    --sh-string: #0fa295
+
+  html
+    color-scheme: dark
+
+html
+  min-width: 360px
+  scroll-behavior: smooth
+
+.prose .anchor
+  @apply absolute invisible no-underline
+  margin-left: -1em
+  padding-right: 0.5em
+  width: 80%
+  max-width: 700px
+  cursor: pointer
+
+.anchor:hover
+  @apply visible
+
+.prose a
+  @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em]
+
+.prose .anchor:after
+  @apply text-neutral-300 dark:text-neutral-700
+  content: '#'
+
+.prose *:hover > .anchor
+  @apply visible
+
+.prose pre
+  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm
+
+.prose code
+  @apply px-1 py-0.5 rounded-lg
+
+.prose pre code
+  @apply p-0
+  border: initial
+  line-height: 1.5
+
+.prose code span
+  @apply font-medium
+
+.prose img
+  @apply m-0
+
+.prose p
+  @apply my-4 text-neutral-800 dark:text-neutral-200
+
+.prose h1
+  @apply text-4xl font-medium tracking-tight mt-6 mb-2
+
+.prose h2
+  @apply text-xl font-medium tracking-tight mt-6 mb-2
+
+.prose h3
+  @apply text-xl font-medium tracking-tight mt-6 mb-2
+
+.prose h4
+  @apply text-lg font-medium tracking-tight mt-6 mb-2
+
+.prose strong
+  @apply font-medium
+
+.prose ul
+  @apply list-disc pl-6
+
+.prose ol
+  @apply list-decimal pl-6
+
+.prose > :first-child
+  margin-top: 1.25em !important
+  margin-bottom: 1.25em !important
+
+pre::-webkit-scrollbar
+  display: none
+
+pre
+  -ms-overflow-style: none
+  scrollbar-width: none
+
+input[type='text'],
+input[type='email']
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+
+table
+  display: block
+  max-width: fit-content
+  overflow-x: auto
+  white-space: nowrap
+
+.title
+  text-wrap: balance
+
+
+
+
+
+@layer components
+  .logo-grid
+    @apply grid justify-items-center items-center content-center
+    img
+        min-width: 75px
+
+  .Chip
+    @apply relative inline-block select-none whitespace-nowrap rounded-lg bg-blue-600 py-3 px-4 align-baseline font-sans text-sm font-bold uppercase leading-none text-white m-1
+
+  .social-icons
+    @apply mt-2 justify-center items-center md:justify-start md:items-start
+    display: flex
+    gap: 10px
+
+
+
+  .icon
+    width: 24px
+    width: 24px
+    fill: #fff
+    transition: fill 0.3s
+
+  .icon:hover
+    fill: #00ff00
+
+  h1.post-title
+    @apply text-white text-3xl font-bold mb-0
+    text-shadow: #333333 1px 1px 1px
+
+  h3.post-title
+    @apply text-white text-2xl font-bold mb-0
+    text-shadow: #333333  1px 1px 1px
+
+
+.scroll-to-top
+  @apply cursor-pointer
+  position: absolute
+  right: 0px
+  bottom: 28px
+  transform: translateY(100%)
+  transition: transform 0.3s ease-in-out
+
+.scroll-to-top.visible
+  transform: translateY(0)

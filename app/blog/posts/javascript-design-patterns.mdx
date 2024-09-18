@@ -1,0 +1,203 @@
+---
+title: 'Javascript Design Patterns'
+publishedAt: '2023-02-20'
+summary: 'To build efficient, scalable and maintainable applications, developers often rely on advanced design patterns. In this article, we will explore some advanced design patterns in Javascript that can help developers write better code.'
+---
+
+Javascript is a versatile programming language that allows developers to create a wide range of applications. To build efficient, scalable and maintainable applications, developers often rely on advanced design patterns. In this article, we will explore some advanced design patterns in Javascript that can help developers write better code.
+
+### Module Pattern
+
+The Module pattern is a widely used design pattern in Javascript, which allows developers to create encapsulated code that is not exposed to the global scope. In this pattern, we create an object that contains all of the public methods and properties of a module, and returns that object to the outside world. All of the private methods and properties of the module are kept hidden from the global scope, ensuring that they cannot be accidentally modified or overwritten.
+
+```javascript
+const module = (function () {
+  let privateVariable = "Hello World";
+
+  function privateMethod() {
+    console.log(privateVariable);
+  }
+
+  return {
+    publicMethod: function () {
+      privateMethod();
+    },
+  };
+})();
+
+module.publicMethod(); // 'Hello World'
+```
+
+### Singleton Pattern
+
+The Singleton pattern is a design pattern that restricts the instantiation of a class to a single instance and provides global access to that instance. It is useful when we need to ensure that there is only one instance of an object in the system. The Singleton pattern can be implemented in Javascript using a combination of a private constructor and a static method that returns the singleton instance.
+
+```javascript
+const Singleton = (function () {
+  let instance;
+
+  function createInstance() {
+    const object = new Object({ name: "ChatGPT" });
+    return object;
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) {
+        instance = createInstance();
+      }
+      return instance;
+    },
+  };
+})();
+
+const instance1 = Singleton.getInstance();
+const instance2 = Singleton.getInstance();
+
+console.log(instance1 === instance2); // true
+```
+
+### Observer Pattern
+
+The Observer pattern is a design pattern where an object, known as the subject, maintains a list of its dependents, called observers, and notifies them automatically of any state changes. This pattern is useful when we need to notify multiple objects about a change in state. In Javascript, the Observer pattern can be implemented using the built-in Event Emitter object.
+
+```javascript
+const EventEmitter = require("events");
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+myEmitter.on("event", () => {
+  console.log("an event occurred!");
+});
+myEmitter.emit("event");
+```
+
+### Prototype Pattern
+
+The Prototype pattern is a design pattern in which an object is used as a prototype for creating other objects. The prototype object contains shared properties and methods that are inherited by all the objects created from it. This pattern is useful when we need to create multiple instances of an object with the same properties and methods. In Javascript, the Prototype pattern can be implemented using the Object.create() method.
+
+```javascript
+const Person = {
+  name: "",
+  age: 0,
+  greet: function () {
+    console.log(
+      `Hello, my name is ${this.name}, and I'm ${this.age} years old.`,
+    );
+  },
+};
+
+const person1 = Object.create(Person);
+person1.name = "Alice";
+person1.age = 20;
+
+const person2 = Object.create(Person);
+person2.name = "Bob";
+person2.age = 25;
+
+person1.greet(); // Hello, my name is Alice, and I'm 20 years old.
+person2.greet(); // Hello, my name is Bob, and I'm 25 years old.
+```
+
+### Factory Pattern
+
+The Factory pattern is a design pattern that provides an interface for creating objects, but allows subclasses to alter the type of objects that will be created. This pattern is useful when we need to create objects of different types that share common properties and methods. In Javascript, the Factory pattern can be implemented using a factory function that returns an object.
+
+```javascript
+function createPerson(name, age, gender) {
+  const person = {};
+  person.name = name;
+  person.age = age;
+  person.gender = gender;
+  person.greet = function () {
+    console.log(
+      `Hello, my name is ${this.name}, and I'm ${this.age} years old.`,
+    );
+  };
+  return person;
+}
+
+const person1 = createPerson("Alice", 20, "female");
+const person2 = createPerson("Bob", 25, "male");
+
+person1.greet(); // Hello, my name is Alice, and I'm 20 years old.
+person2.greet(); // Hello, my name is Bob, and I'm 25 years old.
+```
+
+### Decorator Pattern
+
+The Decorator pattern is a design pattern that allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class. This pattern is useful when we need to add new features or functionality to an object without changing its underlying structure. In Javascript, the Decorator pattern can be implemented using a combination of object composition and inheritance.
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  greet() {
+    console.log(
+      `Hello, my name is ${this.name}, and I'm ${this.age} years old.`,
+    );
+  }
+}
+
+class StudentDecorator {
+  constructor(person) {
+    this.person = person;
+    this.grade = 0;
+  }
+  study() {
+    console.log(`${this.person.name} is studying...`);
+  }
+  getGrade() {
+    return this.grade;
+  }
+}
+
+const person = new Person("Alice", 20);
+const student = new StudentDecorator(person);
+
+student.study(); // Alice is studying...
+student.greet(); // Hello, my name is Alice, and I'm 20 years old.
+```
+
+### Facade Pattern
+
+The Facade pattern is a design pattern that provides a simplified interface to a complex system of classes, making it easier to use. This pattern is useful when we need to provide a simple, unified interface to a set of complex classes or systems. In Javascript, the Facade pattern can be implemented using a single object that exposes the methods and properties of the underlying system.
+
+```javascript
+class CustomerService {
+  getCustomer(id) {
+    console.log(`Fetching customer with id ${id}...`);
+    return { id: id, name: "Alice", age: 20 };
+  }
+}
+
+class OrderService {
+  createOrder(customerId, product) {
+    console.log(`Creating order for customer with id ${customerId}...`);
+    return { customerId: customerId, product: product, quantity: 1 };
+  }
+}
+
+class Facade {
+  constructor() {
+    this.customerService = new CustomerService();
+    this.orderService = new OrderService();
+  }
+  placeOrder(customerId, product) {
+    const customer = this.customerService.getCustomer(customerId);
+    const order = this.orderService.createOrder(customerId, product);
+    console.log(`Placing order for customer ${customer.name}...`);
+    console.log(order);
+  }
+}
+
+const facade = new Facade();
+facade.placeOrder(1, "book");
+```
+
+### But wait... there's more!
+
+Just kidding, that's all I've got for now. Javascript design patterns provide a set of proven solutions to common programming problems. These patterns can help developers write better, more efficient, and more maintainable code. The patterns we've covered in this article are just the tip of the iceberg, there are many more!

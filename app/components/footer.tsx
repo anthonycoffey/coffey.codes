@@ -1,6 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ArrowUpRightIcon, ArrowUpCircleIcon } from '@heroicons/react/20/solid';
+import {
+  HomeIcon,
+  PencilIcon,
+  EnvelopeIcon,
+  RssIcon,
+  ArrowUpCircleIcon,
+  CodeBracketIcon,
+} from '@heroicons/react/20/solid';
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -9,18 +16,36 @@ export default function Footer() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
       const nearBottom = document.documentElement.scrollHeight - 100;
-      setShowScrollToTop(scrollPosition >= nearBottom);
+      const hasScrollbar =
+        document.documentElement.scrollHeight > window.innerHeight;
+      setShowScrollToTop(hasScrollbar && scrollPosition >= nearBottom);
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const links = [
     {
+      href: '/',
+      text: 'home',
+      icon: <HomeIcon className="h-4 w-4 ml-1" />,
+    },
+    {
+      href: '/blog',
+      text: 'blog',
+      icon: <PencilIcon className="h-4 w-4 ml-1" />,
+    },
+    {
+      href: '/contact',
+      text: 'contact',
+      icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,
+    },
+    {
       href: '/rss',
       text: 'rss',
-      icon: <ArrowUpRightIcon className="h-4 w-4 ml-1" />,
+      icon: <RssIcon className="h-4 w-4 ml-1" />,
     },
   ];
 
@@ -36,23 +61,19 @@ export default function Footer() {
               href={link.href}
             >
               <p className="ml-2 h-7">
-                <span className="flex items-center">
-                  {link.text}
+                <span className="flex items-center space-x-1">
                   {link.icon}
+                  <span>{link.text}</span>
                 </span>
               </p>
             </a>
           </li>
         ))}
       </ul>
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} MIT Licensed
-      </p>
+
       <div className="relative max-w-xl mx-4 mt-8 lg:mx-auto">
         <a
-          className={`scroll-to-top ${showScrollToTop ? 'visible' : ''}`}
-          rel="noopener noreferrer"
-          target="_blank"
+          className={`scroll-to-top ${showScrollToTop ? 'visible' : 'invisible'}`}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <p className="ml-2 h-7">
@@ -61,6 +82,19 @@ export default function Footer() {
               <ArrowUpCircleIcon className="h-4 w-4 ml-1" />
             </span>
           </p>
+        </a>
+      </div>
+      <div className="justify-center mt-8 text-neutral-600 dark:text-neutral-300 flex items-center space-x-2">
+        <span>© {new Date().getFullYear()} MIT Licensed</span>
+        <span> &#183; </span>
+        <a
+          href="https://github.com/anthonycoffey/coffey.codes"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center hover:underline"
+        >
+          View on GitHub
+          <CodeBracketIcon className="h-4 w-4 ml-1" />
         </a>
       </div>
     </footer>

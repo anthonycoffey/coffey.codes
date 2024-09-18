@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { formatDate } from 'app/blog/utils';
+import Pagination from '../blog/Pagination';
 
 export function BlogPosts({ allBlogs }) {
   const { currentPage, totalPages } = allBlogs.pagination;
 
   return (
-    <div>
+    <>
       {allBlogs.posts.map((post) => (
         <Link
           key={post.slug}
@@ -23,28 +24,7 @@ export function BlogPosts({ allBlogs }) {
           </div>
         </Link>
       ))}
-
-      <div className="relative flex justify-between mt-4">
-        {currentPage > 1 && (
-          <Link
-            href={`?page=${currentPage - 1}`}
-            className="px-4 py-2 bg-gray-700 rounded"
-          >
-            Previous
-          </Link>
-        )}
-        <span className="absolute left-1/2 transform -translate-x-1/2">
-          Page {currentPage} of {totalPages}
-        </span>
-        {currentPage < totalPages && (
-          <Link
-            href={`?page=${currentPage + 1}`}
-            className="px-4 py-2 bg-gray-700 rounded absolute right-0"
-          >
-            Next
-          </Link>
-        )}
-      </div>
-    </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </>
   );
 }

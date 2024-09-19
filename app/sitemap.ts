@@ -4,7 +4,7 @@ export const baseUrl = 'https://coffey.codes';
 
 export default async function sitemap() {
   let blogs = getRSSBlogPosts().map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+    url: `${baseUrl}/articles/${post.slug}`,
     lastModified: post.metadata.publishedAt,
   }));
 

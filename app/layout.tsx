@@ -7,17 +7,20 @@ import GoogleAnalyticsClient from './components/GoogleAnalyticsClient';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
+import Head from 'next/head';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
+    default:
+      'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
     template: '%s - Anthony Coffey | Software Engineer | Austin, Texas',
   },
   description: 'Welcome to my portfolio blogsite!',
   openGraph: {
     title: 'Anthony Coffey | Digital Strategist & Software Engineer',
-    description: 'Portfolio blogsite for Austin based artist and software engineer Anthony Coffey.',
+    description:
+      'Portfolio blog for Austin based artist and software engineer Anthony Coffey.',
     url: baseUrl,
     siteName: 'Anthony Coffey | Digital Strategist & Software Engineer',
     locale: 'en_US',
@@ -52,6 +55,9 @@ export default function RootLayout({
         GeistMono.variable,
       )}
     >
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+      </Head>
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <GoogleAnalyticsClient />

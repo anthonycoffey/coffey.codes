@@ -7,7 +7,6 @@ import GoogleAnalyticsClient from './components/GoogleAnalyticsClient';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
-import Head from 'next/head';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -37,6 +36,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');
@@ -55,9 +55,6 @@ export default function RootLayout({
         GeistMono.variable,
       )}
     >
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=0.8" />
-      </Head>
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <GoogleAnalyticsClient />

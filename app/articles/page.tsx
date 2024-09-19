@@ -1,8 +1,8 @@
 import { BlogPosts } from 'app/components/posts';
-import { getBlogPosts } from 'app/blog/utils';
+import { getBlogPosts } from 'app/articles/utils';
 
 export const metadata = {
-  title: 'Blog',
+  title: 'Articles',
   description:
     'Articles on software development, engineering, product management, and more.',
 };

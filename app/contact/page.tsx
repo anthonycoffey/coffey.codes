@@ -10,18 +10,17 @@ export default async function Page({ searchParams }) {
     <section className="contact-page">
       <div className="page flex flex-col">
         <div className="p-10 flex flex-col justify-center items-center">
-          <h1 className="text-3xl font-bold mb-6">Drop a Line!</h1>
-          <p className="mb-4">
-            Have a question? Click below to drop me a line and I'll get back to
-            you as soon as possible!
+          <h1 className="text-3xl font-bold mb-0">Have a question for me?</h1>
+          <p className="mb-4 text-center">
+            Click the button below to drop me a line and I'll get back to within 1-2 business days.
           </p>
           <ContactForm />
         </div>
         <div className="p-10 flex flex-col justify-center items-center bg-gray-100 rounded">
-          <h1 className="text-3xl font-bold mb-6 text-blue-500">
+          <h1 className="text-3xl font-bold mb-0 text-blue-500">
             Schedule a Meeting!
           </h1>
-          <p className="mb-4 text-gray-600">
+          <p className="mb-4 text-gray-600 text-center">
             Interested in Connecting? Check out my availability and book a time
             that suits you!
           </p>

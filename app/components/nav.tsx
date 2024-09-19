@@ -6,8 +6,8 @@ const navItems = {
     name: 'home',
     icon: <HomeIcon className="h-4 w-4 ml-1" />,
   },
-  '/blog': {
-    name: 'blog',
+  '/articles': {
+    name: 'articles',
     icon: <PencilIcon className="h-4 w-4 ml-1" />,
   },
   '/contact': {

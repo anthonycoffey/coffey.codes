@@ -1,10 +1,3 @@
-export const metadata = {
-  title:
-    'Anthony Coffey | Digital Strategist & Software Engineer - Austin, Texas',
-  description:
-    'Portfolio blog site for Austin based software engineer Anthony Coffey',
-};
-
 import { backend, frontend } from './logos';
 import LogoGrid from './components/LogoGrid';
 import WorkHistory from './components/WorkHistory';
@@ -13,6 +6,10 @@ import {
   DocumentArrowDownIcon,
 } from '@heroicons/react/24/solid';
 
+export const metadata = {
+  title: 'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
+  description: 'Portfolio blog site for Austin based artist and software engineer Anthony Coffey.',
+};
 export default function Page() {
   return (
     <section>

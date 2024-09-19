@@ -16,7 +16,7 @@ This is a portfolio site template complete with a blog. Includes:
 - Geist font
 
 ```bash
-pnpm create next-app --example https://github.com/vercel/examples/tree/main/solutions/blog blog
+pnpm create next-app --example https://github.com/vercel/examples/tree/main/solutions/blog articles
 ```
 
 Then, run Next.js in development mode:

@@ -33,8 +33,8 @@ export default function Footer() {
       icon: <HomeIcon className="h-4 w-4 ml-1" />,
     },
     {
-      href: '/blog',
-      text: 'blog',
+      href: '/articles',
+      text: 'articles',
       icon: <PencilIcon className="h-4 w-4 ml-1" />,
     },
     {

@@ -90,12 +90,12 @@ function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
 }
 
 export function getRSSBlogPosts() {
-  return getRSSMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'));
+  return getRSSMDXData(path.join(process.cwd(), 'app', 'articles', 'posts'));
 }
 
 export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {
   return getMDXData(
-    path.join(process.cwd(), 'app', 'blog', 'posts'),
+    path.join(process.cwd(), 'app', 'articles', 'posts'),
     page,
     itemsPerPage,
   );

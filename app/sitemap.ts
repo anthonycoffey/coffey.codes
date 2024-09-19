@@ -1,4 +1,4 @@
-import { getRSSBlogPosts } from 'app/blog/utils';
+import { getRSSBlogPosts } from 'app/articles/utils';
 
 export const baseUrl = 'https://coffey.codes';
 

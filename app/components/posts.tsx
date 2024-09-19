@@ -6,11 +6,11 @@ export function BlogPosts({ allBlogs }) {
   const { currentPage, totalPages } = allBlogs.pagination;
 
   return (
-    <>
+    <div className="space-y-4">
       {allBlogs.posts.map((post) => (
         <Link
           key={post.slug}
-          className="flex flex-col space-y-1 mb-4"
+          className="flex flex-col mb-4"
           href={`/blog/${post.slug}`}
         >
           <div className="w-full flex flex-col">
@@ -25,6 +25,6 @@ export function BlogPosts({ allBlogs }) {
         </Link>
       ))}
       <Pagination currentPage={currentPage} totalPages={totalPages} />
-    </>
+    </div>
   );
 }

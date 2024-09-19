@@ -5,6 +5,7 @@ import {
   ChatBubbleOvalLeftIcon,
   DocumentArrowDownIcon,
 } from '@heroicons/react/24/solid';
+import SocialIcons from './components/SocialIcons';
 
 export const metadata = {
   title:
@@ -20,6 +21,7 @@ export default function Page() {
         <span className="block mt-1 text-xl p-0 italic">
           Digital Strategist & Software Engineer
         </span>
+        <SocialIcons />
 
         <p className="leading-loose line-">
           In 2012, fresh out of college, I decided to take a leap and turn my

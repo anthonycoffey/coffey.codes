@@ -11,13 +11,15 @@ import { baseUrl } from './sitemap';
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
+    default:
+      'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
     template: '%s - Anthony Coffey | Software Engineer | Austin, Texas',
   },
   description: 'Welcome to my portfolio blogsite!',
   openGraph: {
     title: 'Anthony Coffey | Digital Strategist & Software Engineer',
-    description: 'Portfolio blogsite for Austin based artist and software engineer Anthony Coffey.',
+    description:
+      'Portfolio blog for Austin based artist and software engineer Anthony Coffey.',
     url: baseUrl,
     siteName: 'Anthony Coffey | Digital Strategist & Software Engineer',
     locale: 'en_US',
@@ -34,6 +36,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');

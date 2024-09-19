@@ -40,9 +40,9 @@ export function Navbar() {
                 </Link>
               );
             })}
+            {/* <SocialIcons /> */}
           </div>
         </nav>
-        <SocialIcons />
       </div>
     </aside>
   );

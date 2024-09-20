@@ -4,7 +4,7 @@ import { formatDate, getBlogPosts, getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
 
 export async function generateStaticParams() {
-  let { posts } = getBlogPosts();
+  let posts = getRSSBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -12,7 +12,7 @@ export async function generateStaticParams() {
 }
 
 export function generateMetadata({ params }) {
-  let post = getBlogPosts().posts.find((post) => post.slug === params.slug);
+  let post = getRSSBlogPosts().find((post) => post.slug === params.slug);
   if (!post) {
     return;
   }

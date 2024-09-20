@@ -1,10 +1,29 @@
 import { baseUrl } from 'app/sitemap';
 import { getRSSBlogPosts } from 'app/articles/utils';
 
-export async function GET() {
-  let allBlogs = getRSSBlogPosts();
+function escapeXml(unsafe: string): string {
+  return unsafe.replace(/[<>&'"]/g, function (c) {
+    switch (c) {
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '&':
+        return '&amp;';
+      case '"':
+        return '&quot;';
+      case "'":
+        return '&apos;';
+      default:
+        return c;
+    }
+  });
+}
 
-  const itemsXml = allBlogs
+export async function GET() {
+  let articles = getRSSBlogPosts();
+
+  const itemsXml = articles
     .sort((a, b) => {
       if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
         return -1;
@@ -14,9 +33,9 @@ export async function GET() {
     .map(
       (post) =>
         `<item>
-          <title>${post.metadata.title}</title>
-          <link>${baseUrl}/articles/${post.slug}</link>
-          <description>${post.metadata.summary || ''}</description>
+          <title>${escapeXml(post.metadata.title)}</title>
+          <link>${escapeXml(`${baseUrl}/articles/${post.slug}`)}</link>
+          <description>${escapeXml(post.metadata.summary || '')}</description>
           <pubDate>${new Date(
             post.metadata.publishedAt,
           ).toUTCString()}</pubDate>
@@ -27,12 +46,15 @@ export async function GET() {
   const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0">
     <channel>
-        <title>Anthony Coffey - Digital Strategist & Software Engineer</title>
-        <link>${baseUrl}</link>
-        <description>This is my portfolio RSS feed</description>
+        <title>${escapeXml(
+          'Anthony Coffey - Digital Strategist & Software Engineer',
+        )}</title>
+        <link>${escapeXml(baseUrl)}</link>
+        <description>${escapeXml('This is my portfolio RSS feed')}</description>
         ${itemsXml}
     </channel>
   </rss>`;
+  console.log({ rssFeed });
 
   return new Response(rssFeed, {
     headers: {

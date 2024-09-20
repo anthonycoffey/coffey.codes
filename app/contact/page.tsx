@@ -14,18 +14,16 @@ export default async function Page({ searchParams }) {
             Have a question for me?
           </h1>
           <p className="mb-4 text-center">
-            Click the button below to drop me a line and I'll get back to you
-            within 1-2 business days.
+            Click below to send me a message straight to my inbox!
           </p>
           <ContactForm />
         </div>
         <div className="p-6 md:p-10 flex flex-col justify-center items-center bg-gray-100 rounded">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0 text-blue-500 text-center">
-            Schedule a Meeting!
+            Interested in Connecting?
           </h1>
           <p className="mb-4 text-gray-600 text-center">
-            Interested in Connecting? Check out my availability and book a time
-            that suits you!
+            Check out my availability and book a time that suits you!
           </p>
           <a
             href="https://calendly.com/antcoffpersonal/meet"

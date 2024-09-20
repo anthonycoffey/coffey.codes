@@ -20,6 +20,11 @@ const nextConfig = {
         destination: '/articles/markdown-resume',
         permanent: true,
       },
+      {
+        source: '/about',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };

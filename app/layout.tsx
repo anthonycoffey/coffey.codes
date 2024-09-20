@@ -36,8 +36,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  viewport: 'width=device-width, initial-scale=1',
 };
+
+export const viewport = 'width=device-width, initial-scale=1';
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');
 

@@ -19,7 +19,7 @@ export default function Pagination({ currentPage, totalPages }) {
       {currentPage < totalPages && (
         <Link
           href={`?page=${currentPage + 1}`}
-          className="px-4 py-2 bg-gray-700 rounded flex items-center absolute right-0"
+          className="px-4 py-2 bg-gray-700 rounded flex items-center float-right"
         >
           <span>Next</span>
           <ArrowRightIcon className="h-5 w-5 ml-2" />

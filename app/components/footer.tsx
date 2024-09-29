@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import {
   HomeIcon,
-  PencilIcon,
+  DocumentTextIcon,
   EnvelopeIcon,
   RssIcon,
   ArrowUpCircleIcon,
@@ -35,7 +35,7 @@ export default function Footer() {
     {
       href: '/articles',
       text: 'articles',
-      icon: <PencilIcon className="h-4 w-4 ml-1" />,
+      icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
     },
     {
       href: '/contact',
@@ -73,7 +73,9 @@ export default function Footer() {
 
       <div className="relative max-w-xl mx-4 mt-8 lg:mx-auto">
         <a
-          className={`scroll-to-top ${showScrollToTop ? 'visible' : 'invisible'}`}
+          className={`scroll-to-top ${
+            showScrollToTop ? 'visible' : 'invisible'
+          }`}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <p className="ml-2 h-7">

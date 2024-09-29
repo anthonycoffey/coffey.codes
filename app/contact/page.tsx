@@ -14,7 +14,8 @@ export default async function Page({ searchParams }) {
             Have a question for me?
           </h1>
           <p className="mb-4 text-center">
-            Click below to send me a message straight to my inbox!
+            Fill out the form below to shoot me a message straight to my inbox!
+            🎯
           </p>
           <ContactForm />
         </div>

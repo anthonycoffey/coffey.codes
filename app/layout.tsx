@@ -15,11 +15,11 @@ export const metadata: Metadata = {
       'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
     template: '%s - Anthony Coffey | Software Engineer | Austin, Texas',
   },
-  description: 'Welcome to my portfolio blogsite!',
+  description: 'Welcome to my portfolio blog site!',
   openGraph: {
     title: 'Anthony Coffey | Digital Strategist & Software Engineer',
     description:
-      'Portfolio blog for Austin based artist and software engineer Anthony Coffey.',
+      'Portfolio blog site for Austin based artist and software engineer Anthony Coffey.',
     url: baseUrl,
     siteName: 'Anthony Coffey | Digital Strategist & Software Engineer',
     locale: 'en_US',
@@ -51,7 +51,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        'text-black bg-white dark:text-white dark:bg-black',
+        'dark:text-white dark:bg-black',
         GeistSans.variable,
         GeistMono.variable,
       )}

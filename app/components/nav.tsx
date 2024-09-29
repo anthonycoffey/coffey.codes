@@ -1,5 +1,9 @@
 import Link from 'next/link';
-import { HomeIcon, PencilIcon, EnvelopeIcon } from '@heroicons/react/20/solid';
+import {
+  HomeIcon,
+  DocumentTextIcon,
+  EnvelopeIcon,
+} from '@heroicons/react/20/solid';
 import SocialIcons from './SocialIcons';
 
 const navItems = {
@@ -9,7 +13,7 @@ const navItems = {
   },
   '/articles': {
     name: 'articles',
-    icon: <PencilIcon className="h-4 w-4 ml-1" />,
+    icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
   },
   '/contact': {
     name: 'contact',

@@ -14,16 +14,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default:
-      'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
+      'Anthony Coffey | Solutions Architect & Software Engineer in Austin, Texas',
     template: '%s - Anthony Coffey | Software Engineer | Austin, Texas',
   },
   description: 'Welcome to my portfolio blog site!',
   openGraph: {
-    title: 'Anthony Coffey | Digital Strategist & Software Engineer',
+    title: 'Anthony Coffey | Solutions Architect & Software Engineer',
     description:
       'Portfolio blog site for Austin based artist and software engineer Anthony Coffey.',
     url: baseUrl,
-    siteName: 'Anthony Coffey | Digital Strategist & Software Engineer',
+    siteName: 'Anthony Coffey | Solutions Architect & Software Engineer',
     locale: 'en_US',
     type: 'website',
   },

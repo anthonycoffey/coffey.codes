@@ -47,7 +47,7 @@ export async function GET() {
   <rss version="2.0">
     <channel>
         <title>${escapeXml(
-          'Anthony Coffey - Digital Strategist & Software Engineer',
+          'Anthony Coffey - Solutions Architect & Software Engineer',
         )}</title>
         <link>${escapeXml(baseUrl)}</link>
         <description>${escapeXml('This is my portfolio RSS feed')}</description>

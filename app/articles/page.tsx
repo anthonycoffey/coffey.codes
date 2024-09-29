@@ -13,7 +13,7 @@ export default async function Page({ searchParams }) {
   const allBlogs = getBlogPosts(page, itemsPerPage);
 
   return (
-    <section className="blog-page">
+    <section className="article-page">
       <h1 className="font-semibold text-2xl mb-2 tracking-tighter">
         <DocumentTextIcon className="w-4 h-4 inline" /> Articles
       </h1>

@@ -24,19 +24,13 @@ export default function Page() {
         <SocialIcons />
 
         <p className="leading-loose line-">
-          In 2012, fresh out of college, I decided to take a leap and turn my
-          passion for web development into a full-time business. I started
-          small, knocking on doors and offering WordPress websites, which
-          surprisingly helped me land my first few clients. It was a humble
-          beginning, but it paved the way for everything that came after.
-        </p>
-        <p className="leading-loose">
-          By 2014, encouraged by my mentors, I joined E-lance (which later
-          became UpWork), and my freelance career truly took off. Since then,
-          I've worked with hundreds of clients, developing custom software
-          solutions tailored to their unique needs. Along the way, I've honed my
-          skills in systems architecture, cloud computing, AI/ML and product
-          management.
+          Experienced Solutions Architect and Full Stack Developer with over a
+          decade of expertise in cloud computing (AWS, Google Cloud), business
+          strategy, and software engineering. Proven track record in building
+          scalable, secure systems using modern web technologies and DevOps
+          practices. Deep knowledge of cybersecurity and AI integration,
+          delivering robust, real-world solutions through effective project
+          management and technical leadership.
         </p>
         <p className="leading-loose">
           Most importantly, I’ve learned how to be a great collaborator —

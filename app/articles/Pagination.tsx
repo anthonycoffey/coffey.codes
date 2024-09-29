@@ -7,10 +7,10 @@ export default function Pagination({ currentPage, totalPages }) {
       {currentPage > 1 && (
         <Link
           href={`?page=${currentPage - 1}`}
-          className="px-4 py-2 bg-gray-700 rounded flex items-center"
+          className="px-4 py-2 bg-gray-700 rounded flex items-center text-sm"
         >
           <ArrowLeftIcon className="h-5 w-5 mr-2" />
-          <span>Back</span>
+          <span>Prev</span>
         </Link>
       )}
       <span className="absolute left-1/2 transform -translate-x-1/2">
@@ -19,7 +19,7 @@ export default function Pagination({ currentPage, totalPages }) {
       {currentPage < totalPages && (
         <Link
           href={`?page=${currentPage + 1}`}
-          className="px-4 py-2 bg-gray-700 rounded flex items-center float-right"
+          className="px-4 py-2 bg-gray-700 rounded flex items-center float-right text-sm"
         >
           <span>Next</span>
           <ArrowRightIcon className="h-5 w-5 ml-2" />

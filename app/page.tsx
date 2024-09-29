@@ -9,7 +9,7 @@ import SocialIcons from './components/SocialIcons';
 
 export const metadata = {
   title:
-    'Anthony Coffey | Digital Strategist & Software Engineer in Austin, Texas',
+    'Anthony Coffey | Solutions Architect & Software Engineer in Austin, Texas',
   description:
     'Portfolio blog site for Austin based artist and software engineer Anthony Coffey.',
 };
@@ -19,7 +19,7 @@ export default function Page() {
       <div className="page-content space-y-4">
         <h1 className="leading-1 text-3xl mb-0">Anthony Coffey</h1>
         <span className="block mt-1 text-xl p-0 italic">
-          Digital Strategist & Software Engineer
+          Solutions Architect & Software Engineer
         </span>
         <SocialIcons />
 

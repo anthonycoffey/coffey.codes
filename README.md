@@ -26,3 +26,16 @@ pnpm dev
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/templates) ([Documentation](https://nextjs.org/docs/app/building-your-application/deploying)).
+
+
+#### Sentry Error Reporting
+
+To report errors to Sentry, you need to initialize Sentry in your project and then use the `captureException` method to log errors. Below is an example of how to do this:
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+
+
+// Capture an exception
+Sentry.captureException(new Error("This is a reported error."));
+```

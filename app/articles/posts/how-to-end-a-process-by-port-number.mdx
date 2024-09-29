@@ -20,9 +20,19 @@ npx kill-port 5000
 
 That's it! Now you can start your service on port 5000. I should mention that this isn't the only way to end a process by port number, but the npx command is quite convenient as it doesn't require you to install anything globally. I've seen it fail on rare occasions, and in those cases, I had to terminate the process another way. But in my experience, it works most of the time! 🤣
 
+<Image
+  src={'/npx-kill-port.png'}
+  width={480}
+  height={55}
+  alt="npx kill port success"
+  className="mx-auto w-full p-2"
+/>
+
+
+### What if kill-port doesn't work? 🤔
 If you do run into a situation where kill-port doesn't work, you can look up how to terminate a process by port number on your operating system. I won't go into the specifics here, but the key takeaway is: if kill-port doesn't work, there are always alternative methods to terminate the process!
 
-### What if I want to see which process is running on that port before terminating it? 🤔
+### ...and if I want to see which process is running on that port before terminating it? 😟
 
 Naturally, you might want to see which process is running on a given port before you terminate it. If so, you can use the following commands to see which process is running on a given port.
 

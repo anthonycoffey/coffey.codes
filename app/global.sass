@@ -117,15 +117,14 @@ table
 .title
   text-wrap: balance
 
-
-
-
-
 @layer components
   .logo-grid
-    @apply grid justify-items-center items-center content-center
+    @apply grid justify-items-center items-center content-center px-2
     img
-        min-width: 75px
+      min-width: 50px
+      @screen md
+        min-width: 100px
+
 
   .Chip
     @apply relative inline-block select-none whitespace-nowrap rounded-lg bg-blue-600 py-3 px-4 align-baseline font-sans text-sm font-bold uppercase leading-none text-white m-1
@@ -135,17 +134,14 @@ table
     display: flex
     gap: 10px
 
+    .icon
+      width: 24px
+      height: auto
+      fill: #fff
+      transition: fill 0.3s
 
-
-
-  .icon
-    width: 24px
-    height: auto
-    fill: #fff
-    transition: fill 0.3s
-
-  .icon:hover
-    fill: #4c97f8
+    .icon:hover
+      fill: #4c97f8
 
 .scroll-to-top
   @apply cursor-pointer
@@ -155,9 +151,8 @@ table
   transform: translateY(100%)
   transition: transform 0.3s ease-in-out
 
-.scroll-to-top.visible
-  transform: translateY(0)
-
+  &.visible
+    transform: translateY(0)
 
 .article-page, .contact-page
   position: relative

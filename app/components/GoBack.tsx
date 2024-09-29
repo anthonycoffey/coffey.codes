@@ -4,7 +4,7 @@ import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
 export default function GoBack() {
   return (
     <a
-      className="flex items-center align-items cursor-pointer mb-4 -ml-4 text-sm hover:underline"
+      className="flex items-center align-items cursor-pointer mb-4 md:-ml-4 text-sm hover:underline"
       onClick={() => {
         history.back();
       }}

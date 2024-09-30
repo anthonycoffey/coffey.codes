@@ -6,6 +6,7 @@ export default function Pagination({ currentPage, totalPages }) {
     <div className="pagination flex justify-between mb-10">
       {currentPage > 1 && (
         <Link
+          id="prev-page"
           href={`?page=${currentPage - 1}`}
           className="px-4 py-2 bg-gray-700 rounded flex items-center text-sm"
         >
@@ -18,8 +19,9 @@ export default function Pagination({ currentPage, totalPages }) {
       </span>
       {currentPage < totalPages && (
         <Link
+          id="next-page"
           href={`?page=${currentPage + 1}`}
-          className="px-4 py-2 bg-gray-700 rounded flex items-center float-right text-sm"
+          className="px-4 py-2 bg-gray-700 rounded flex items-center text-sm"
         >
           <span>Next</span>
           <ArrowRightIcon className="h-5 w-5 ml-2" />

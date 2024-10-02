@@ -86,7 +86,7 @@ export default function Footer() {
           </p>
         </a>
       </div>
-      <div className="justify-center mt-8 text-neutral-600 dark:text-neutral-300 flex items-center space-x-2">
+      <div className="justify-center mt-8 text-neutral-200 flex items-center space-x-2">
         <span>© {new Date().getFullYear()} MIT Licensed</span>
         <span> &#183; </span>
         <a

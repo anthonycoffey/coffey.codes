@@ -14,10 +14,10 @@ export function BlogPosts({ allBlogs }) {
           href={`/articles/${post.slug}`}
         >
           <div className="w-full flex flex-col">
-            <p className="text-neutral-900 dark:text-neutral-100 tracking-tight font-bold">
+            <p className="text-neutral-100 tracking-tight font-bold">
               {post.metadata.title}
             </p>
-            <p className="text-neutral-600 dark:text-neutral-400">
+            <p className="text-neutral-300">
               {formatDate(post.metadata.publishedAt, false)}
             </p>
             <p>{post.metadata.summary}</p>

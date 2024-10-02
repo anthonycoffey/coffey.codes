@@ -4,7 +4,6 @@ import {
   DocumentTextIcon,
   EnvelopeIcon,
 } from '@heroicons/react/20/solid';
-import SocialIcons from './SocialIcons';
 
 const navItems = {
   '/': {

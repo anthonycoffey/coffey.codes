@@ -63,6 +63,7 @@ export default function RootLayout({
           autoPlay
           loop
           muted
+          playsInline
           className="fixed top-0 left-0 w-full h-full object-cover -z-10"
         >
           <source src="/deskloop.mp4" type="video/mp4" />

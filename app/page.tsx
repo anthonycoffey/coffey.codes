@@ -23,20 +23,26 @@ export default function Page() {
         </span>
         <SocialIcons />
 
-        <p className="leading-loose line-">
-          Experienced Solutions Architect and Full Stack Developer with over a
-          decade of expertise in cloud computing (AWS, Google Cloud), business
-          strategy, and software engineering. Proven track record in building
-          scalable, secure systems using modern web technologies and DevOps
-          practices. Deep knowledge of cybersecurity and AI integration,
-          delivering robust, real-world solutions through effective project
-          management and technical leadership.
-        </p>
-        <p className="leading-loose">
-          Most importantly, I’ve learned how to be a great collaborator —
-          committed to every project I take on and passionate about delivering
-          high value work.
-        </p>
+        <article className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-xl 2xl:prose-2xl">
+          <p>
+            Austin, Texas-based Solutions Architect and Full Stack Developer
+            with over a decade of experience in cloud computing (AWS, Google
+            Cloud), software engineering, and business strategy.
+          </p>
+          <p>
+            Specializing in delivering innovative, scalable solutions that solve
+            complex real-world challenges. Whether optimizing cloud
+            infrastructure or architecting full-stack applications, I leverage
+            modern technologies and best practices in DevOps to build systems
+            that are secure, efficient, and tailored to business needs.
+          </p>
+          <p>
+            Proven ability to drive projects from concept to deployment,
+            ensuring they align with strategic goals while maintaining
+            flexibility for growth and innovation.
+          </p>
+        </article>
+
         <div className="flex flex-col justify-center bg-gray-900 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
           <p className="text-xl md:text-2xl font-bold mb-4 text-center">
             Want to learn more about my expertise?

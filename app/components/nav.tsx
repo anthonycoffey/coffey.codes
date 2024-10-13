@@ -24,7 +24,9 @@ export function Navbar() {
   return (
     <aside className="-ml-[8px] tracking-tight">
       <div className="flex justify-center">
-        <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+        <a href="/">
+          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+        </a>
       </div>
       <div className="flex justify-between">
         <nav

@@ -8,8 +8,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
 
-import * as Sentry from '@sentry/nextjs';
-
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -53,7 +51,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        'text-white bg-black',
+        'text-white bg-black ',
         GeistSans.variable,
         GeistMono.variable,
       )}

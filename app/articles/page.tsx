@@ -14,8 +14,8 @@ export default async function Page({ searchParams }) {
 
   return (
     <section className="article-page">
-      <h1 className="font-semibold text-2xl mb-2 tracking-tighter">
-        <DocumentTextIcon className="w-4 h-4 inline" /> Articles
+      <h1 className="font-semibold text-3xl my-4 tracking-tighter">
+        <DocumentTextIcon className="w-6 h-6 inline mr-2" /> Articles
       </h1>
       <BlogPosts allBlogs={allBlogs} />
     </section>

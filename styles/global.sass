@@ -6,32 +6,24 @@
   background-color: #47a3f3
   color: #fefefe
 
-\:root
-  --sh-class: #2d5e9d
-  --sh-identifier: #354150
+:root
+  --sh-class: #4c97f8
+  --sh-identifier: white
+  --sh-keyword: #f47067
+  --sh-string: #0fa295
   --sh-sign: #8996a3
-  --sh-string: #007f7a
-  --sh-keyword: #e02518
   --sh-comment: #a19595
   --sh-jsxliterals: #6266d1
   --sh-property: #e25a1c
   --sh-entity: #e25a1c
-@media (prefers-color-scheme: dark)
-  \:root
-    --sh-class: #4c97f8
-    --sh-identifier: white
-    --sh-keyword: #f47067
-    --sh-string: #0fa295
 
-  html
-    color-scheme: dark
 
 html
   min-width: 360px
   scroll-behavior: smooth
 
 .prose .anchor
-  @apply absolute invisible no-underline
+  @apply absolute invisible no-underline text-neutral-200
   margin-left: -1em
   padding-right: 0.5em
   width: 80%
@@ -42,10 +34,12 @@ html
   @apply visible underline
 
 .prose a
-  @apply underline transition-all decoration-neutral-600 underline-offset-2 decoration-[0.1em]
+  @apply underline transition-all text-neutral-200 underline-offset-4 decoration-[0.1em]
+  &:hover
+    @apply text-neutral-100 no-underline
 
 .prose .anchor:after
-  @apply text-neutral-700
+  @apply text-neutral-200
   content: '#'
 
 .prose *:hover > .anchor
@@ -55,7 +49,7 @@ html
   @apply bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-900 py-2 px-3 text-sm
 
 .prose code
-  @apply px-1 py-0.5 rounded-lg
+  @apply px-1 py-0.5 rounded-lg text-rose-400
 
 .prose pre code
   @apply p-0
@@ -72,22 +66,25 @@ html
   @apply my-4 text-neutral-200
 
 .prose h1
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2
+  @apply text-4xl font-semibold tracking-tight mt-6 mb-2 text-neutral-200
 
 .prose h2
-  @apply text-xl font-medium tracking-tight mt-6 mb-2
+  @apply text-xl font-semibold tracking-tight mt-6 mb-2 text-neutral-200
 
 .prose h3
-  @apply text-xl font-medium tracking-tight mt-6 mb-2
+  @apply text-xl font-semibold tracking-tight mt-6 mb-2 text-neutral-300 underline
 
 .prose h4
-  @apply text-lg font-medium tracking-tight mt-6 mb-2
+  @apply text-lg font-semibold tracking-tight mt-6 mb-2 text-neutral-300
 
 .prose strong
-  @apply font-medium
+  @apply font-semibold text-neutral-200
 
 .prose ul
   @apply list-disc pl-6
+
+.prose li
+  @apply text-neutral-200
 
 .prose ol
   @apply list-decimal pl-6
@@ -124,7 +121,7 @@ table
     img
       min-width: 50px
       @screen md
-        min-width: 70px
+        min-width: 75px
 
 
   .Chip
@@ -142,7 +139,7 @@ table
       transition: fill 0.3s
 
     .icon:hover
-      @apply  fill-blue-600
+      fill: #4c97f8
 
 .scroll-to-top
   @apply cursor-pointer

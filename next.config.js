@@ -16,11 +16,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/articles/my-markdown-resume',
-        destination: '/articles/markdown-resume',
-        permanent: true,
-      },
-      {
         source:
           '/articles/unveiling-nested-objects-enhanced-console-logging-node-js',
         destination: '/articles/logging-deep-nested-objects-in-nodejs',
@@ -31,6 +26,21 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/articles/my-markdown-resume',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/articles/whats-new-in-expo-sdk-50',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/articles/markdown-resume',
+        destination: '/',
+        permanent: true,
+      }
     ];
   },
   sassOptions: {

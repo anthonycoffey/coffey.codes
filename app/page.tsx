@@ -17,32 +17,39 @@ export default function Page() {
   return (
     <section>
       <div className="page-content">
-        <div className="grid grid-cols-2 gap-2 items-center bg-gray-800 rounded-xl p-4">
-          <div>
-            <h1 className="leading-1 text-3xl m-0">Anthony Coffey</h1>
-            <p className="text-xl m-0 p-0 mb-2">Solutions Architect</p>
+        <div className="my-6 grid grid-cols-2 gap-2 items-center bg-blue-600 rounded-xl p-2">
+          <div className="px-2">
+            <h1 className="leading-1 text-2xl md:text-3xl m-0">
+              Anthony Coffey
+            </h1>
+            <p className="md:text-xl m-0 p-0 mb-2">Solutions Architect</p>
             <SocialIcons />
           </div>
-          <div>
+          <div className="flex justify-end">
             <img
               src="/headshot.jpg"
               alt="Anthony Coffey"
-              className="rounded-full w-48 mx-auto shadow-lg"
+              className="rounded-xl w-40 shadow-2xl border-2 border-blue-500"
             />
           </div>
         </div>
-        <article className="prose lg:prose-lg xl:prose-xl 2xl:prose-2xl">
+        <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p>
-            Austin, Texas-based Solutions Architect and Full Stack Developer
-            with over a decade of experience in cloud computing (AWS, Google
-            Cloud), software engineering, and business strategy.
+            Austin, Texas based Solutions Architect and Full Stack Engineer with
+            over a decade of experience in cloud computing, software
+            engineering, and systems design.
           </p>
           <p>
-            Specializing in delivering innovative, scalable solutions that solve
-            complex real-world challenges. Whether optimizing cloud
-            infrastructure or architecting full-stack applications, I leverage
-            modern technologies and best practices in DevOps to build systems
-            that are secure, efficient, and tailored to business needs.
+            Problem-solving is at the core of what I do, leveraging technology
+            to overcome challenges and deliver lasting impact.
+          </p>
+
+          <p>
+            Check out my{' '}
+            <a href="/case-studies" className="underline">
+              case studies
+            </a>{' '}
+            for insights on how I've helped clients achieve their goals.
           </p>
         </article>
 

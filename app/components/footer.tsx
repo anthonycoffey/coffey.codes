@@ -100,7 +100,9 @@ export default function Footer() {
         </a>
       </div>
       <div className="flex justify-center mt-8">
-        <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+        <a href="/">
+          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+        </a>
       </div>
     </footer>
   );

@@ -12,7 +12,6 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@sentry/nextjs": "^8.32.0",
-    "@tailwindcss/postcss": "4.0.0-alpha.13",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "20.11.17",
     "@types/react": "18.2.55",
@@ -26,13 +25,12 @@
     "postcss": "^8.4.35",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.78.0",
     "sugar-high": "^0.6.0",
-    "tailwindcss": "4.0.0-alpha.13",
     "typescript": "5.3.3"
   },
   "devDependencies": {
+    "tailwindcss": "^3.4.13",
+    "sass": "^1.78.0",
     "autoprefixer": "^10.4.20"
-  },
-  "packageManager": "pnpm@9.10.0+sha1.216899f511c8dfde183c7cb50b69009c779534a8"
+  }
 }

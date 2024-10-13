@@ -99,6 +99,9 @@ export default function Footer() {
           <CodeBracketIcon className="h-4 w-4 ml-1" />
         </a>
       </div>
+      <div className="flex justify-center mt-8">
+        <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+      </div>
     </footer>
   );
 }

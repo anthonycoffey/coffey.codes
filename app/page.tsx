@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <section>
       <div className="page-content">
-        <div className="grid grid-cols-2 gap-2 items-center bg-gray-800 rounded-xl py-2 px-4">
+        <div className="grid grid-cols-2 gap-2 items-center bg-gray-800 rounded-xl p-4">
           <div>
             <h1 className="leading-1 text-3xl m-0">Anthony Coffey</h1>
             <p className="text-xl m-0 p-0 mb-2">Solutions Architect</p>

@@ -44,13 +44,6 @@ export default function Page() {
             to overcome challenges and deliver lasting impact.
           </p>
 
-          {/*<p>*/}
-          {/*  Check out my{' '}*/}
-          {/*  <a href="/case-studies" className="underline">*/}
-          {/*    case studies*/}
-          {/*  </a>{' '}*/}
-          {/*  for insights on how I've helped clients achieve their goals.*/}
-          {/*</p>*/}
         </article>
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">

@@ -39,6 +39,18 @@ export default function Page() {
             over a decade of experience in cloud computing, software
             engineering, and systems design.
           </p>
+          <p>
+            Problem-solving is at the core of what I do, leveraging technology
+            to overcome challenges and deliver lasting impact.
+          </p>
+
+          <p>
+            Check out my{' '}
+            <a href="/case-studies" className="underline">
+              case studies
+            </a>{' '}
+            for insights on how I've helped clients achieve their goals.
+          </p>
         </article>
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">

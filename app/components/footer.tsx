@@ -50,7 +50,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mb-16">
+    <footer className="my-16">
       <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 text-neutral-100">
         {links.map((link, index) => (
           <li key={index}>
@@ -97,6 +97,11 @@ export default function Footer() {
         >
           View on GitHub
           <CodeBracketIcon className="h-4 w-4 ml-1" />
+        </a>
+      </div>
+      <div className="flex justify-center mt-8">
+        <a href="/">
+          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
         </a>
       </div>
     </footer>

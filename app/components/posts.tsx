@@ -6,21 +6,21 @@ export function BlogPosts({ allBlogs }) {
   const { currentPage, totalPages } = allBlogs.pagination;
 
   return (
-    <div className="space-y-2">
+    <div>
       {allBlogs.posts.map((post) => (
         <Link
           key={post.slug}
-          className="flex flex-col mb-2"
+          className="flex flex-col mb-4"
           href={`/articles/${post.slug}`}
         >
           <div className="w-full flex flex-col">
-            <p className="text-neutral-100 tracking-tight font-bold">
+            <p className="text-neutral-100 tracking-tight font-bold underline text-xl">
               {post.metadata.title}
             </p>
-            <p className="text-neutral-300">
+            <p className="text-neutral-400 m-0 italic">
               {formatDate(post.metadata.publishedAt, false)}
             </p>
-            <p>{post.metadata.summary}</p>
+            <p className="mt-1">{post.metadata.summary}</p>
           </div>
         </Link>
       ))}

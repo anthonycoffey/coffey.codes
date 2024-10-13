@@ -23,7 +23,10 @@ const navItems = {
 export function Navbar() {
   return (
     <aside className="-ml-[8px] tracking-tight">
-      <div className="lg:sticky lg:top-20 flex justify-between">
+      <div className="flex justify-center">
+        <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+      </div>
+      <div className="flex justify-between">
         <nav
           className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"

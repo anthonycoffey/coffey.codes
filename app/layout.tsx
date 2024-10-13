@@ -1,4 +1,4 @@
-import './global.sass';
+import '/styles/global.sass';
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';

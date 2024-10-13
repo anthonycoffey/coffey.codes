@@ -32,6 +32,5 @@
     "tailwindcss": "^3.4.13",
     "sass": "^1.78.0",
     "autoprefixer": "^10.4.20"
-  },
-  "packageManager": "pnpm@9.10.0+sha1.216899f511c8dfde183c7cb50b69009c779534a8"
+  }
 }

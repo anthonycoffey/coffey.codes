@@ -21,6 +21,12 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source:
+          '/articles/unveiling-nested-objects-enhanced-console-logging-node-js',
+        destination: '/articles/logging-deep-nested-objects-in-nodejs',
+        permanent: true,
+      },
+      {
         source: '/about',
         destination: '/',
         permanent: true,

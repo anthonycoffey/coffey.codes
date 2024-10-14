@@ -91,7 +91,7 @@ export default function Page() {
         <div className="flex flex-col md:flex-row justify-between w-full space-y-4 md:space-y-0 md:space-x-4">
           <a
             href="/contact"
-            className="px-6 py-3 md:px-10 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-blue-600 hover:bg-blue-800 no-underline flex items-center justify-center"
+            className="px-6 py-3 md:px-8 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-blue-600 hover:bg-blue-800 no-underline flex items-center justify-center"
           >
             Let's chat!{' '}
             <ChatBubbleOvalLeftIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />
@@ -99,7 +99,7 @@ export default function Page() {
           <a
             target="_blank"
             href="/Anthony%20Coffey%20-%20Resume.pdf"
-            className="px-6 py-3 md:px-10 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-gray-600 hover:bg-gray-800 hover:border-white no-underline flex items-center justify-center"
+            className="px-6 py-3 md:px-8 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-gray-600 hover:bg-gray-800 hover:border-white no-underline flex items-center justify-center"
           >
             Download Resume{' '}
             <DocumentArrowDownIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />

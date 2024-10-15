@@ -8,7 +8,7 @@ export const metadata = {
 export default async function Page({ searchParams }) {
   return (
     <section className="contact-page">
-      <div className="page flex flex-col">
+      <div className="page-content flex flex-col">
         <div className="p-6 md:p-10 flex flex-col justify-center items-center">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0 text-center">
             Have a question for me?

@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <section>
       <div className="page-content">
-        <div className="my-6 grid grid-cols-2 gap-2 items-center bg-blue-600 rounded-xl p-2">
+        <div className="grid grid-cols-2 gap-2 items-center bg-blue-600 rounded-xl p-2">
           <div className="px-2">
             <h1 className="leading-1 text-2xl md:text-3xl m-0">
               Anthony Coffey
@@ -43,7 +43,6 @@ export default function Page() {
             Problem-solving is at the core of what I do, leveraging technology
             to overcome challenges and deliver lasting impact.
           </p>
-
         </article>
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">

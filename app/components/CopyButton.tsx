@@ -17,8 +17,8 @@ function CopyButton({ text }) {
       onClick={handleCopy}
       style={{
         position: 'absolute',
-        top: '-5px',
-        right: '0',
+        top: '-10px',
+        right: '-10px',
         background: 'none',
         border: 'none',
         cursor: 'pointer',

@@ -18,7 +18,7 @@ export default async function Page({ searchParams }) {
           <ClipboardDocumentCheckIcon className="w-6 h-6 inline mr-2" /> Case
           Studies
         </h1>
-        <span className="prose lg:prose-xl text-neutral-200">
+        <span className="text-neutral-200">
           Explore detailed case studies that showcase my expertise and approach
           to solving complex challenges.
         </span>

@@ -54,7 +54,6 @@ export async function GET() {
         ${itemsXml}
     </channel>
   </rss>`;
-  console.log({ rssFeed });
 
   return new Response(rssFeed, {
     headers: {

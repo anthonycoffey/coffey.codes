@@ -34,7 +34,7 @@ export default function Page() {
           </div>
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
-          <p>
+          <p className="pt-4">
             Austin, Texas based Solutions Architect and Full Stack Engineer with
             over a decade of experience in cloud computing, software
             engineering, and systems design.

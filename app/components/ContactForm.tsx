@@ -16,6 +16,7 @@ export default function ContactForm() {
   const [messageSent, setMessageSent] = useState<boolean>(false);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     setFormData({
@@ -34,6 +35,7 @@ export default function ContactForm() {
   };
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
     try {
       const response = await fetch(
@@ -60,6 +62,8 @@ export default function ContactForm() {
       }
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,7 +96,7 @@ export default function ContactForm() {
                       Name <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
                       id="name"
                       name="name"
                       type="text"
@@ -107,7 +111,7 @@ export default function ContactForm() {
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
                       id="email"
                       name="email"
                       type="email"
@@ -124,7 +128,7 @@ export default function ContactForm() {
                     Message <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
                     id="message"
                     name="message"
                     placeholder="Your message"
@@ -134,12 +138,15 @@ export default function ContactForm() {
                   ></textarea>
                 </div>
                 <div>
-                  <button
-                    className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit"
-                  >
-                    Send
-                  </button>
+                  {loading && <p>Sending...</p>}
+                  {!loading && (
+                    <button
+                      className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >
+                      Send
+                    </button>
+                  )}
                 </div>
               </form>
             </>

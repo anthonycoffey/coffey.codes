@@ -87,7 +87,7 @@ export default function Footer() {
         </a>
       </div>
       <div className="justify-center mt-8 text-neutral-200 flex items-center space-x-2">
-        <span>© {new Date().getFullYear()} MIT Licensed</span>
+        <span>© {new Date().getFullYear()} </span>
         <span> &#183; </span>
         <a
           href="https://github.com/anthonycoffey/coffey.codes"

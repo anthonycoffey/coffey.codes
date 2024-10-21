@@ -23,7 +23,7 @@ export default function WorkHistory() {
         'AI/ML',
         'Project Estimation',
         'Google Cloud',
-        'Gemini',
+        'Gemini AI',
         'Video Intelligence API',
       ],
     },

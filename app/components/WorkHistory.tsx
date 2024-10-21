@@ -22,6 +22,7 @@ export default function WorkHistory() {
         'Cloud Computing',
         'AI/ML',
         'Project Estimation',
+        'Google Cloud',
       ],
     },
     {

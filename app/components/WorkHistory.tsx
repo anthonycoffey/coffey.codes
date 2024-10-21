@@ -11,6 +11,20 @@ type WorkHistory = {
 export default function WorkHistory() {
   const data: WorkHistory[] = [
     {
+      company: 'Southern Made',
+      title: 'Staff Engineer',
+      location: 'Nashville, Tennessee (Remote)',
+      start: 'May, 2024',
+      skills: [
+        'AWS',
+        'Heroku',
+        'Project Management',
+        'Cloud Computing',
+        'AI/ML',
+        'Project Estimation',
+      ],
+    },
+    {
       company: '24hrcarunlocking.com',
       title: 'Solutions Architect',
       location: 'Austin, Texas',
@@ -24,20 +38,6 @@ export default function WorkHistory() {
         'Sequelize',
         'PostGIS',
         'SalesAI',
-      ],
-    },
-    {
-      company: 'Southern Made',
-      title: 'Staff Engineer',
-      location: 'Nashville, Tennessee (Remote)',
-      start: 'May, 2024',
-      skills: [
-        'AWS',
-        'Heroku',
-        'Project Management',
-        'Cloud Computing',
-        'AI/ML',
-        'Project Estimation',
       ],
     },
     {

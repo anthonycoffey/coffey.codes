@@ -7,12 +7,12 @@ import GoogleAnalyticsClient from './components/GoogleAnalyticsClient';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default:
-      'Anthony Coffey | Solutions Architect in Austin, Texas',
+    default: 'Anthony Coffey | Solutions Architect in Austin, Texas',
     template: '%s - Anthony Coffey | Solutions Architect in Austin, Texas',
   },
   description: 'Welcome to my portfolio blog site!',
@@ -82,6 +82,26 @@ export default function RootLayout({
           <Footer />
           <SpeedInsights />
         </main>
+        <Script
+          id="iubenda-configuration"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            var _iub = _iub || [];
+            _iub.csConfiguration = {"siteId":3791967,"cookiePolicyId":63442989,"lang":"en","storage":{"useSiteId":true}};
+          `,
+          }}
+        />
+        <Script
+          src="https://cs.iubenda.com/autoblocking/3791967.js"
+          strategy="lazyOnload"
+        />
+        <Script src="//cdn.iubenda.com/cs/gpp/stub.js" strategy="lazyOnload" />
+        <Script
+          src="//cdn.iubenda.com/cs/iubenda_cs.js"
+          charSet="UTF-8"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

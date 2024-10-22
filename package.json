@@ -23,8 +23,11 @@
     "next-mdx-remote": "^4.4.1",
     "nextjs-google-analytics": "^2.3.7",
     "postcss": "^8.4.35",
+    "prettier": "^3.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
     "sugar-high": "^0.6.0",
     "typescript": "5.3.3"
   },

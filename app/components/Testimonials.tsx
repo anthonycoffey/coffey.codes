@@ -36,8 +36,8 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="bg-gray-900 pt-4 rounded-xl -mx-0  md:-mx-20">
-      <div className="max-w-screen-xl px-8 mx-auto text-center">
+    <section className="bg-gradient-to-b from-gray-700 to-gray-800  pt-4 rounded-xl -mx-0  md:-mx-20">
+      <div className="p-8 text-center">
         <Slider {...settings}>
           {testimonials.map((testimonial, index) => (
             <figure key={index} className="max-w-screen-md mx-auto">

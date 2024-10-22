@@ -6,6 +6,7 @@ import {
   DocumentArrowDownIcon,
 } from '@heroicons/react/24/solid';
 import SocialIcons from './components/SocialIcons';
+import Testimonials from './components/Testimonials';
 
 export const metadata = {
   title:
@@ -67,6 +68,10 @@ export default function Page() {
             </a>
           </div>
         </div>
+      </div>
+
+      <div className="mb-10 px-4 mx-auto">
+        <Testimonials />
       </div>
 
       <div className="mb-10 px-4 mx-auto">

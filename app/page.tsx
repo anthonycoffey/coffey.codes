@@ -71,11 +71,11 @@ export default function Page() {
       </div>
 
       <div className="mb-10 px-4 mx-auto">
-        <WorkHistory />
+        <Testimonials />
       </div>
 
       <div className="mb-10 px-4 mx-auto">
-        <Testimonials />
+        <WorkHistory />
       </div>
 
       <div className="mb-10 px-4 text-center md:text-left mx-auto">

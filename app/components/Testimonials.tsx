@@ -37,7 +37,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-700 to-gray-800 pt-4 rounded-xl -mx-0 md:-mx-20">
+    <section className="bg-gradient-to-b from-gray-800 to-gray-900 pt-4 rounded-xl -mx-0 md:-mx-20 border-2 border-blue-600">
       <div className="p-8 text-center">
         <Slider {...settings}>
           {testimonials.map((testimonial, index) => (

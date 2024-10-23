@@ -2,17 +2,18 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { StarIcon } from '@heroicons/react/20/solid';
 
 const testimonials = [
   {
     text: 'Anthony is highly professional, has a great sense of urgency and over-delivered on my project. He was very responsive on some tight deadlines and helped me resolve multiple WordPress site improvements and optimization. I highly recommend Anthony. His work and finished product was my best Upwork/Elance experience to date.',
     author: 'Doug Wilks',
-    link: 'https://strengthslauncher.com/',
+    link: 'strengthslauncher.com',
   },
   {
     text: 'Fantastic work! Anthony had my site up and running within a few hours. Extremely professional and highly recommended. I will definitely do business with him again in the future. Thanks again!',
     author: 'Jonathan - Owner Plane Schemer LLC',
-    link: 'http://www.planeschemer.com/',
+    link: 'planeschemer.com',
   },
   {
     text: 'Anthony was awesome. He did a great job. He has a good command of the required skills and what he did not have at the tip of his fingers - he took the time to research and was a quick study. Takes instruction well - no ego issues. Just wants the job done well. I recommend him for your next gig!',
@@ -36,7 +37,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-gray-700 to-gray-800  pt-4 rounded-xl -mx-0  md:-mx-20">
+    <section className="bg-gradient-to-b from-gray-700 to-gray-800 pt-4 rounded-xl -mx-0 md:-mx-20">
       <div className="p-8 text-center">
         <Slider {...settings}>
           {testimonials.map((testimonial, index) => (
@@ -47,6 +48,11 @@ export default function Testimonials() {
                 </p>
               </blockquote>
               <figcaption className="flex flex-col items-center justify-center mt-6 space-y-2">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon key={i} className="h-5 w-5 text-yellow-500" />
+                  ))}
+                </div>
                 <div className="font-medium text-white">
                   {testimonial.author}
                 </div>

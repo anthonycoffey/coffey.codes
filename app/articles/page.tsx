@@ -1,6 +1,7 @@
 import { BlogPosts } from 'app/components/posts';
 import { getBlogPosts } from 'app/articles/utils';
 import { DocumentTextIcon } from '@heroicons/react/20/solid';
+
 export const metadata = {
   title: 'Articles',
   description:
@@ -8,7 +9,8 @@ export const metadata = {
 };
 
 export default async function Page({ searchParams }) {
-  const page = searchParams.page ? Number(searchParams.page) : 1;
+  const params = await searchParams;
+  const page = params.page ? Number(params.page) : 1;
   const itemsPerPage = 5;
   const allBlogs = getBlogPosts(page, itemsPerPage);
 

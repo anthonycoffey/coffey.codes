@@ -23,7 +23,9 @@ export default function Page() {
             <h1 className="leading-1 text-2xl md:text-3xl m-0">
               Anthony Coffey
             </h1>
-            <p className="md:text-xl m-0 p-0 mb-2">Solutions Architect</p>
+            <p className="md:text-xl m-0 p-0 mb-2">
+              Full-Stack Software Engineer
+            </p>
             <SocialIcons />
           </div>
           <div className="flex justify-end">
@@ -36,13 +38,18 @@ export default function Page() {
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p className="pt-4">
-            Austin, Texas based Solutions Architect and Full Stack Engineer with
-            over a decade of experience in cloud computing, software
-            engineering, and systems design.
+            I’m a Full Stack Engineer based in Austin, Texas, with over a decade
+            of experience building reliable, scalable software that drives
+            business growth. I partner with SMBs, agencies, and product owners
+            to create digital products or improve existing ones, leveraging
+            event-driven architecture, serverless computing, and cloud-native
+            technologies.
           </p>
           <p>
-            Problem-solving is at the core of what I do, leveraging technology
-            to overcome challenges and deliver lasting impact.
+            My approach starts with one question: “Why?” By digging deep into
+            the problem, I uncover the next best move — whether code or no-code.
+            It’s all about using the best tools for the job and delivering
+            results that work the first time, without unnecessary complexity.
           </p>
         </article>
 

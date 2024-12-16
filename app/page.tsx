@@ -42,14 +42,14 @@ export default function Page() {
             with over a decade of experience building reliable, scalable
             software that drives business growth. I partner with SMBs, agencies,
             and product owners to create digital products or improve existing
-            ones, leveraging event-driven architecture, serverless computing,
+            ones by leveraging event-driven architecture, serverless computing,
             and cloud-native technologies.
           </p>
           <p>
-            My approach starts with one question: “Why?” By digging deep into
-            the problem, I uncover the next best move — whether code or no-code.
-            It’s all about using the best tools for the job and delivering
-            results that work the first time, without unnecessary complexity.
+            My approach begins with an important question: <b>“Why?”</b>
+          </p>
+          <p>By digging deep into the problem, I uncover the next best move — whether code or no-code. It’s all about using the right tool for the job and delivering
+            results that work, without unnecessary complexity.
           </p>
         </article>
 

@@ -1,7 +1,13 @@
 'use client';
 
 import { GoogleAnalytics } from 'nextjs-google-analytics';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 export default function GoogleAnalyticsClient() {
-  return <GoogleAnalytics trackPageViews />;
+  return (
+    <>
+      <GoogleTagManager gtmId={'GTM-KJC6Q389'} />
+      <GoogleAnalytics trackPageViews />
+    </>
+  );
 }

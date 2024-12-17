@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "@next/third-parties": "^15.1.0",
     "@sentry/nextjs": "^8.32.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "20.11.17",

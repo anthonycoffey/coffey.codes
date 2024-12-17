@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-// import { X, Check } from 'lucide-react';
 import { XMarkIcon, CheckIcon } from '@heroicons/react/20/solid';
 
 const ConsentManager = () => {
@@ -10,12 +9,6 @@ const ConsentManager = () => {
   useEffect(() => {
     // Check if consent was previously given
     const existingConsent = localStorage.getItem('google-consent');
-    
-    // Load Google Tag Manager script
-    const script = document.createElement('script');
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=GTM-KJC6Q389';
-    script.async = true;
-    document.head.appendChild(script);
 
     // Initial consent setup
     window.dataLayer = window.dataLayer || [];
@@ -27,30 +20,26 @@ const ConsentManager = () => {
     gtag('consent', 'default', {
       ad_storage: 'denied',
       analytics_storage: 'denied',
-      wait_for_update: 500
+      wait_for_update: 500,
     });
 
     // Show consent dialog if no previous consent
     if (!existingConsent) {
       setIsVisible(true);
     }
-
-    return () => {
-      document.head.removeChild(script);
-    };
   }, []);
 
   const handleAcceptConsent = () => {
     // Update consent state
     window.dataLayer.push({
-      'consent': 'update',
-      'ad_storage': 'granted',
-      'analytics_storage': 'granted'
+      consent: 'update',
+      ad_storage: 'granted',
+      analytics_storage: 'granted',
     });
 
     // Store consent preference
     localStorage.setItem('google-consent', 'accepted');
-    
+
     setHasConsented(true);
     setIsVisible(false);
   };
@@ -58,14 +47,14 @@ const ConsentManager = () => {
   const handleRejectConsent = () => {
     // Update consent state
     window.dataLayer.push({
-      'consent': 'update',
-      'ad_storage': 'denied',
-      'analytics_storage': 'denied'
+      consent: 'update',
+      ad_storage: 'denied',
+      analytics_storage: 'denied',
     });
 
     // Store consent preference
     localStorage.setItem('google-consent', 'rejected');
-    
+
     setHasConsented(false);
     setIsVisible(false);
   };
@@ -74,8 +63,8 @@ const ConsentManager = () => {
   if (hasConsented || !isVisible) return null;
 
   return (
-    <div 
-      className="dark fixed bottom-0 left-0 right-0 z-50 p-3 bg-blue-600 shadow-2xl border-t-2 border-gray-100 
+    <div
+      className="dark fixed bottom-0 left-0 right-0 z-50 p-3 bg-blue-600 shadow-2xl border-t-2 border-gray-100
       animate-slide-up transform transition-all duration-500 ease-in-out"
     >
       <div className="max-w-md mx-auto">
@@ -83,26 +72,26 @@ const ConsentManager = () => {
           <h2 className="text-lg font-semibold text-neutral-1 text-center md:text-left">
             We use cookies to improve your experience
           </h2>
-          
+
           <p className="text-sm text-neutral-2 text-center md:text-left">
-            We use cookies to enhance site navigation, analyze site usage, 
-            and assist in our marketing efforts.
+            We use cookies to enhance site navigation, analyze site usage, and
+            assist in our marketing efforts.
           </p>
-          
+
           <div className="flex space-x-3">
             <button
               onClick={handleRejectConsent}
-              className="flex-1 flex items-center justify-center 
-              bg-red-100 text-red-700 px-4 py-2 rounded-md 
+              className="flex-1 flex items-center justify-center
+              bg-red-100 text-red-700 px-4 py-2 rounded-md
               hover:bg-red-500 transition-colors duration-200"
             >
               <XMarkIcon className="mr-2 h-5 w-5" /> Reject
             </button>
-            
+
             <button
               onClick={handleAcceptConsent}
-              className="flex-1 flex items-center justify-center 
-              bg-green-100 text-green-700 px-4 py-2 rounded-md 
+              className="flex-1 flex items-center justify-center
+              bg-green-100 text-green-700 px-4 py-2 rounded-md
               hover:bg-green-500 transition-colors duration-200"
             >
               <CheckIcon className="mr-2 h-5 w-5" /> Accept

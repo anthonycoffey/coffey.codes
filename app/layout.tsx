@@ -8,6 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
 import Script from 'next/script';
+import ConsentManager from './components/ConsentManager';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -81,6 +82,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <SpeedInsights />
+          <ConsentManager/>
         </main>
       </body>
     </html>

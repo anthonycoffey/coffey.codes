@@ -81,17 +81,17 @@ const ConsentManager = () => {
       animate-slide-up transform transition-all duration-500 ease-in-out"
     >
       <div className="max-w-md mx-auto">
-        <div className="flex flex-col space-y-4 px-1">
-          <h2 className="text-lg font-semibold text-neutral-1 text-center md:text-left">
+        <div className="flex flex-col space-y-3 px-1">
+          <h2 className="text-lg font-semibold text-neutral-1 text-center md:text-left mb-0">
             We use cookies to improve your experience
           </h2>
 
           <p className="text-sm text-neutral-2 text-center md:text-left">
             We use cookies to enhance site navigation, analyze site usage, and
-            assist in our marketing efforts.
+            assist in marketing efforts.
           </p>
 
-          <div className="flex space-x-3">
+          <div className="flex space-x-3 mt-2">
             <button
               onClick={handleRejectConsent}
               className="flex-1 flex items-center justify-center

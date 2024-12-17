@@ -46,10 +46,7 @@ export default function Page() {
             and cloud-native technologies.
           </p>
           <p>
-            My approach begins with an important question: <b>“Why?”</b>
-          </p>
-          <p>By digging deep into the problem, I uncover the next best move — whether code or no-code. It’s all about using the right tool for the job and delivering
-            results that work, without unnecessary complexity.
+            My approach begins with an important question, "Why?", and focuses on identifying the most suitable tools and strategies to drive clear, efficient results, cutting through unnecessary complexity at every stage of development.
           </p>
         </article>
 

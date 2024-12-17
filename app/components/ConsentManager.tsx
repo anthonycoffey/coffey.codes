@@ -13,9 +13,6 @@ const ConsentManager = () => {
 
       // Initial consent setup
       window.dataLayer = window.dataLayer || [];
-      function gtag(...args: any[]) {
-        window.dataLayer?.push(args);
-      }
 
       // Default to denied
       gtag('consent', 'default', {
@@ -32,6 +29,10 @@ const ConsentManager = () => {
       console.error(error);
     }
   }, []);
+
+  const gtag = (...args: any[]) => {
+    window.dataLayer?.push(args);
+  };
 
   const handleAcceptConsent = () => {
     try {

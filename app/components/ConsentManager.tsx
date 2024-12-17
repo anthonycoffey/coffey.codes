@@ -8,55 +8,67 @@ const ConsentManager = () => {
 
   useEffect(() => {
     // Check if consent was previously given
-    const existingConsent = localStorage.getItem('google-consent');
+    try {
+      const existingConsent = localStorage.getItem('google-consent');
 
-    // Initial consent setup
-    window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
+      // Initial consent setup
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args: any[]) {
+        window.dataLayer?.push(args);
+      }
 
-    // Default to denied
-    gtag('consent', 'default', {
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-      wait_for_update: 500,
-    });
+      // Default to denied
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500,
+      });
 
-    // Show consent dialog if no previous consent
-    if (!existingConsent) {
-      setIsVisible(true);
+      // Show consent dialog if no previous consent
+      if (!existingConsent) {
+        setIsVisible(true);
+      }
+    } catch (error) {
+      console.error(error);
     }
   }, []);
 
   const handleAcceptConsent = () => {
-    // Update consent state
-    window.dataLayer.push({
-      consent: 'update',
-      ad_storage: 'granted',
-      analytics_storage: 'granted',
-    });
+    try {
+      // Update consent state
+      window.dataLayer?.push({
+        consent: 'update',
+        ad_storage: 'granted',
+        analytics_storage: 'granted',
+      });
 
-    // Store consent preference
-    localStorage.setItem('google-consent', 'accepted');
+      // Store consent preference
+      localStorage.setItem('google-consent', 'accepted');
 
-    setHasConsented(true);
-    setIsVisible(false);
+      setHasConsented(true);
+      setIsVisible(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleRejectConsent = () => {
-    // Update consent state
-    window.dataLayer.push({
-      consent: 'update',
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-    });
+    try {
+      // Update consent state
+      window.dataLayer?.push({
+        consent: 'update',
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+      });
 
-    // Store consent preference
-    localStorage.setItem('google-consent', 'rejected');
+      // Store consent preference
+      localStorage.setItem('google-consent', 'rejected');
 
-    setHasConsented(false);
-    setIsVisible(false);
+      setHasConsented(false);
+      setIsVisible(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Don't render if already consented or not visible

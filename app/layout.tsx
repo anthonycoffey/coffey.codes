@@ -13,16 +13,18 @@ import ConsentManager from './components/ConsentManager';
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Anthony Coffey | Solutions Architect in Austin, Texas',
-    template: '%s - Anthony Coffey | Solutions Architect in Austin, Texas',
+    default:
+      'Anthony Coffey, SWE, DevOps | Full Stack Engineer based in Austin, Texas',
+    template: '%s - Anthony Coffey, SWE, DevOps | Full Stack Engineer',
   },
   description: 'Welcome to my portfolio blog site!',
   openGraph: {
-    title: 'Anthony Coffey | Solutions Architect & Software Engineer',
+    title:
+      'Anthony Coffey, SWE, DevOps | Full Stack Engineer based in Austin, Texas',
     description:
-      'Portfolio blog site for Austin based solutions architect and software engineer, Anthony Coffey.',
+      'Portfolio blog site for Austin based artist and software engineer, Anthony Coffey.',
     url: baseUrl,
-    siteName: 'Anthony Coffey | Solutions Architect & Software Engineer',
+    siteName: 'Anthony Coffey | Full Stack Engineer based in Austin, Texas',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Anthony Coffey | Solutions Architect in Austin, Texas',
+        alt: 'Anthony Coffey | Full Stack Engineer based in Austin, Texas',
       },
     ],
   },
@@ -82,7 +84,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <SpeedInsights />
-          <ConsentManager/>
+          <ConsentManager />
         </main>
       </body>
     </html>

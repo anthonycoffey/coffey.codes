@@ -43,7 +43,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <figure key={index} className="max-w-screen-md mx-auto">
               <blockquote>
-                <p className="text-xl font-medium text-gray-900 dark:text-white">
+                <p className="text-xl font-medium text-gray-900 text-white">
                   "{testimonial.text}"
                 </p>
               </blockquote>

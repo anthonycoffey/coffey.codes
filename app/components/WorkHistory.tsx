@@ -29,18 +29,16 @@ export default function WorkHistory() {
     },
     {
       company: '24hrcarunlocking.com',
-      title: 'Solutions Architect',
+      title: 'Full Stack Engineer',
       location: 'Austin, Texas',
       start: 'August, 2023',
       skills: [
         'AWS',
         'Heroku',
         'Nuxt',
-        'Zapier',
         'Twilio',
-        'Sequelize',
+        'Twilio Flex',
         'PostGIS',
-        'SalesAI',
       ],
     },
     {

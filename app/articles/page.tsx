@@ -6,7 +6,7 @@ import { Fragment } from 'react';
 export const metadata = {
   title: 'Articles',
   description:
-    'Articles on software development, engineering, product management, and more.',
+    'Unpacking the strategies, challenges, and breakthroughs in software development, project management, and cloud technology.',
 };
 
 export default async function Page({ searchParams }) {
@@ -21,8 +21,7 @@ export default async function Page({ searchParams }) {
         <DocumentTextIcon className="w-6 h-6 inline mr-2" /> Articles
       </h1>
       <p className="text-neutral-200 mb-4">
-        Welcome to my blog! Discover articles on software engineering, systems
-        design and product management.
+      Unpacking the strategies, challenges, and breakthroughs in software development, project management, and cloud technology.
       </p>
       <BlogPosts allBlogs={allBlogs} />
     </section>

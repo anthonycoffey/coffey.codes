@@ -36,10 +36,10 @@ export default async function Page({ searchParams }) {
               Precision
             </a>
             <p className="text-neutral-200 text-sm mt-1">
-              I integrated PostGIS to optimize the client's technician dispatch
-              by leveraging existing location data for efficient, scalable
+              Integrated PostGIS extension for PostgreSQL in order to optimize technician dispatch
+              by leveraging pre-existing location data for efficient, scalable
               geospatial queries. This solution streamlined operations without
-              disrupting current workflows.
+              disrupting legacy workflows.
             </p>
 
             <Link

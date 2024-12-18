@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
 export default function CounterComponent() {
   const [count, setCount] = useState<number>(0);
@@ -19,7 +19,7 @@ export default function CounterComponent() {
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
             onClick={incrementCount}
           >
-            Increment
+            Press Me
           </button>
           <span className="text-sm text-black font-semibold p-2 border border-2 rounded">
             {count}

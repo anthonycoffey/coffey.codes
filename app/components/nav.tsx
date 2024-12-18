@@ -1,9 +1,13 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   HomeIcon,
   DocumentTextIcon,
   EnvelopeIcon,
   ClipboardDocumentCheckIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from '@heroicons/react/20/solid';
 
 const navItems = {
@@ -26,19 +30,40 @@ const navItems = {
 };
 
 export function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <aside className="-ml-[8px] tracking-tight">
-      <div className="flex justify-center">
+      <div className="flex justify-between items-center">
         <a href="/">
           <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
         </a>
+        <button
+          className="md:hidden p-2"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <XMarkIcon className="h-6 w-6" />
+          ) : (
+            <Bars3Icon className="h-6 w-6" />
+          )}
+        </button>
       </div>
-      <div className="flex justify-between">
+      <div
+        className={`${
+          isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden transition-all duration-500 ease-in-out md:flex justify-between`}
+      >
         <nav
-          className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-4"
+          className="flex flex-col md:flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-4"
           id="nav"
         >
-          <div className="flex flex-row space-x-1">
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-1">
             {Object.entries(navItems).map(([path, { name, icon }]) => {
               return (
                 <Link
@@ -53,7 +78,6 @@ export function Navbar() {
                 </Link>
               );
             })}
-            {/* <SocialIcons /> */}
           </div>
         </nav>
       </div>

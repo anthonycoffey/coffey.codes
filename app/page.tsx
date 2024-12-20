@@ -38,15 +38,17 @@ export default function Page() {
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p className="pt-4">
-            Howdy Y'all! 🤠 I’m a Full Stack Engineer based in Austin, Texas,
-            with over a decade of experience building reliable, scalable
-            software that drives business growth. I partner with SMBs, agencies,
-            and product owners to create digital products or improve existing
-            ones by leveraging event-driven architecture, serverless computing,
-            and cloud-native technologies.
+            Austin, Texas based Full Stack Engineer with over a decade of
+            experience building reliable, scalable software that drives business
+            growth. I partner with SMBs, agencies, and product owners to create
+            digital products or improve existing ones by leveraging event-driven
+            architecture, serverless computing, and cloud-native technologies.
           </p>
           <p>
-            My approach begins with an important question, "Why?", and focuses on identifying the most suitable tools and strategies to drive clear, efficient results, cutting through unnecessary complexity at every stage of development.
+            My approach begins with an important question, "Why?", and focuses
+            on identifying the most suitable tools and strategies to drive
+            clear, efficient results, cutting through unnecessary complexity at
+            every stage of development.
           </p>
         </article>
 

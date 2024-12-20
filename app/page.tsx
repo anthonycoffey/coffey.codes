@@ -38,10 +38,10 @@ export default function Page() {
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p className="pt-4">
-            Austin, Texas based Full Stack Engineer with over a decade of
-            experience building reliable, scalable software that drives business
-            growth. I partner with SMBs, agencies, and product owners to create
-            digital products or improve existing ones by leveraging event-driven
+            Austin, Texas — Full Stack Engineer with over a decade of experience
+            building reliable, scalable software that drives business growth. I
+            partner with SMBs, agencies, and product owners to create digital
+            products or improve existing ones by leveraging event-driven
             architecture, serverless computing, and cloud-native technologies.
           </p>
           <p>

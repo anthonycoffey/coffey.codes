@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // Import usePathname
 import {
   HomeIcon,
   DocumentTextIcon,
@@ -36,23 +37,11 @@ const navItems = {
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get the current route
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(true);
-      } else {
-        setIsMenuOpen(false);
-      }
-    };
-
-    handleResize(); // Set initial state
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    setIsMenuOpen(false); // Close the menu when the route changes
+  }, [pathname]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -85,13 +74,16 @@ export function Navbar() {
           className="flex flex-col md:flex-row relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-4"
           id="nav"
         >
-          <div className="flex flex-col md:flex-row  space-y-2 md:space-y-0 md:space-x-4">
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
             {Object.entries(navItems).map(([path, { name, icon }]) => {
+              const isActive = path === pathname; // Check if the current route matches
               return (
                 <Link
                   key={path}
                   href={path}
-                  className="transition-all hover:underline flex align-middle relative"
+                  className={`transition-all hover:underline flex align-middle relative ${
+                    isActive ? 'font-bold text-blue-500' : ''
+                  }`}
                 >
                   <span className="flex items-center space-x-1">
                     {icon}

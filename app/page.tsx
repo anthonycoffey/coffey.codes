@@ -24,7 +24,7 @@ export default function Page() {
               Anthony Coffey
             </h1>
             <p className="md:text-xl m-0 p-0 mb-2">
-              Full-Stack Software Engineer
+              Full Stack Software Engineer
             </p>
             <SocialIcons />
           </div>

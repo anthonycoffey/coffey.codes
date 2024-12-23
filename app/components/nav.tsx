@@ -8,6 +8,7 @@ import {
   ClipboardDocumentCheckIcon,
   Bars3Icon,
   XMarkIcon,
+  BriefcaseIcon,
 } from '@heroicons/react/20/solid';
 
 const navItems = {
@@ -22,6 +23,10 @@ const navItems = {
   '/case-studies': {
     name: 'case studies',
     icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
+  },
+  '/portfolio': {
+    name: 'portfolio',
+    icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
   },
   '/contact': {
     name: 'contact',
@@ -55,7 +60,7 @@ export function Navbar() {
 
   return (
     <aside className="-ml-[8px] tracking-tight">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center mb-4 justify-between">
         <a href="/">
           <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
         </a>
@@ -74,13 +79,13 @@ export function Navbar() {
       <div
         className={`${
           isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden transition-all duration-500 ease-in-out md:flex justify-between`}
+        } overflow-hidden transition-all duration-500 ease-in-out md:flex justify-between md:justify-center`}
       >
         <nav
-          className="flex flex-col md:flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-4"
+          className="flex flex-col md:flex-row relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-4"
           id="nav"
         >
-          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-1">
+          <div className="flex flex-col md:flex-row  space-y-2 md:space-y-0 md:space-x-4">
             {Object.entries(navItems).map(([path, { name, icon }]) => {
               return (
                 <Link

@@ -40,17 +40,6 @@ export default function Footer() {
       icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
     },
     {
-      href: '/case-studies',
-      text: 'case studies',
-      icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/portfolio',
-      text: 'portfolio',
-      icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
-    },
-
-    {
       href: '/contact',
       text: 'contact',
       icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,
@@ -64,7 +53,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-16">
-      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 text-neutral-100">
+      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 text-neutral-100 md:justify-center">
         {links.map((link, index) => (
           <li key={index}>
             <a

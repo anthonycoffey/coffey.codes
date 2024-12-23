@@ -7,6 +7,8 @@ import {
   RssIcon,
   ArrowUpCircleIcon,
   CodeBracketIcon,
+  ClipboardDocumentCheckIcon,
+  BriefcaseIcon,
 } from '@heroicons/react/20/solid';
 
 export default function Footer() {
@@ -37,6 +39,17 @@ export default function Footer() {
       text: 'articles',
       icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
     },
+    {
+      href: '/case-studies',
+      text: 'case studies',
+      icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
+    },
+    {
+      href: '/portfolio',
+      text: 'portfolio',
+      icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
+    },
+
     {
       href: '/contact',
       text: 'contact',

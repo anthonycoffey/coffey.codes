@@ -22,7 +22,7 @@ export default async function Page({ searchParams }) {
           Explore detailed case studies that showcase my expertise and approach
           to solving complex challenges.
         </span>
-        <div className="mt-4 bg-gray-800 p-2 rounded-xl flex items-start space-x-4">
+        <div className="mt-4 bg-gray-800 p-4 py-6 rounded-xl flex items-start space-x-4">
           <div className="flex-shrink-0">
             <ArrowDownTrayIcon className="w-6 h-6 text-blue-500" />
           </div>
@@ -35,20 +35,20 @@ export default async function Page({ searchParams }) {
               PostGIS in Action: Streamlining Fleet Operations with Geospatial
               Precision
             </a>
-            <p className="text-neutral-200 text-sm mt-1">
-              Integrated PostGIS extension for PostgreSQL in order to optimize technician dispatch
-              by leveraging pre-existing location data for efficient, scalable
-              geospatial queries. This solution streamlined operations without
-              disrupting legacy workflows.
+            <p className="text-neutral-200 text-sm my-2">
+              Integrated PostGIS extension for PostgreSQL in order to optimize
+              technician dispatch by leveraging pre-existing location data for
+              efficient, scalable geospatial queries. This solution streamlined
+              operations without disrupting legacy workflows.
             </p>
 
             <Link
               href="/case-studies/Case%20Study%20-%20PostGIS%20in%20Action.pdf"
-              className="btn"
+              className="btn float-right"
               target="_blank"
             >
               <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                View Case Study
+                Download PDF
               </button>
             </Link>
           </div>

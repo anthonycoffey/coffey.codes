@@ -97,7 +97,7 @@ export default function Footer() {
           rel="noopener noreferrer"
           className="flex items-center hover:underline"
         >
-          View on GitHub
+          View Code on GitHub
           <CodeBracketIcon className="h-4 w-4 ml-1" />
         </a>
       </div>

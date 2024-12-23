@@ -14,7 +14,7 @@ export default function PortfolioGrid({ items }) {
           <button
             key={index}
             onClick={() => setSelectedItem(item)}
-            className="block p-6 bg-neutral-800 rounded-lg shadow hover:shadow-lg hover:bg-neutral-700 transition"
+            className="text-left block p-6 bg-neutral-800 rounded-lg shadow hover:shadow-lg hover:bg-neutral-700 transition"
           >
             <h2 className="text-lg font-semibold text-white mb-2">
               {item.title}
@@ -41,11 +41,17 @@ export default function PortfolioGrid({ items }) {
               ✕
             </button>
             <h2 className="text-xl font-bold mb-4">{selectedItem.title}</h2>
-            <p className="text-neutral-300">{selectedItem.details}</p>
+            <p className="text-neutral-300 mb-4">{selectedItem.details}</p>
             {selectedItem?.playStoreLink && (
-              <a href={selectedItem.playStoreLink} target="_blank">
-                View App
-              </a>
+              <>
+                <a
+                  href={selectedItem.playStoreLink}
+                  className="hover:underline"
+                  target="_blank"
+                >
+                  View App in Play Store
+                </a>
+              </>
             )}
           </div>
         </div>

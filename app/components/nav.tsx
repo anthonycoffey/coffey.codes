@@ -40,7 +40,9 @@ export function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    setIsMenuOpen(false);
+    if (window.innerWidth < 768) {
+      setIsMenuOpen(false);
+    }
   }, [pathname]);
 
   useEffect(() => {

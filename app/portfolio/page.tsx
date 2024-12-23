@@ -1,12 +1,9 @@
 import SocialIcons from '../components/SocialIcons';
-import {
-  ChatBubbleOvalLeftIcon,
-  DocumentArrowDownIcon,
-} from '@heroicons/react/24/solid';
 
 export const metadata = {
-  title: 'Portfolio',
-  description: 'Work portfolio of current and past projects',
+  title: 'Work Portfolio',
+  description:
+    'Work portfolio of current and past projects completed by Anthony Coffey, SWE',
 };
 
 export default async function Page({ searchParams }) {

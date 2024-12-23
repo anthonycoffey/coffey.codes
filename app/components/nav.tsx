@@ -37,10 +37,10 @@ const navItems = {
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get the current route
+  const pathname = usePathname();
 
   useEffect(() => {
-    setIsMenuOpen(false); // Close the menu when the route changes
+    setIsMenuOpen(false);
   }, [pathname]);
 
   const toggleMenu = () => {

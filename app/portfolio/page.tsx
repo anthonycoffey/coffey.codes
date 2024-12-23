@@ -3,8 +3,7 @@ import PortfolioGrid from './components/PortfolioGrid';
 
 export const metadata = {
   title: 'Portfolio',
-  description:
-    ' Explore a selection of my recent web and mobile software projects.',
+  description: 'Explore some of my recent web and mobile software projects.',
 };
 
 export default async function Page({ searchParams }) {
@@ -29,7 +28,7 @@ export default async function Page({ searchParams }) {
             <BriefcaseIcon className="w-6 h-6 inline mr-2" /> Portfolio
           </h1>
           <span className="text-neutral-200">
-            Explore a selection of my recent web and mobile software projects.
+            Explore some of my recent web and mobile software projects.
           </span>
         </header>
         <PortfolioGrid items={portfolioItems} />

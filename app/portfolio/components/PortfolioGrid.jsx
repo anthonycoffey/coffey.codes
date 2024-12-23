@@ -9,7 +9,7 @@ export default function PortfolioGrid({ items }) {
   return (
     <>
       {/* Content Grid */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="mt-8 grid gap-6">
         {items.map((item, index) => (
           <button
             key={index}
@@ -42,6 +42,11 @@ export default function PortfolioGrid({ items }) {
             </button>
             <h2 className="text-xl font-bold mb-4">{selectedItem.title}</h2>
             <p className="text-neutral-300">{selectedItem.details}</p>
+            {selectedItem?.playStoreLink && (
+              <a href={selectedItem.playStoreLink} target="_blank">
+                View App
+              </a>
+            )}
           </div>
         </div>
       )}

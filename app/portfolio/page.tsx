@@ -15,6 +15,8 @@ export default async function Page({ searchParams }) {
         'React Native mobile app that leverages an API provided by a custom CRM to give technicians the same job management features found in web app.',
       link: '#',
       details: 'Under Construction! :)',
+      playStoreLink:
+        'https://play.google.com/store/apps/details?id=com.phoenix_mobile.app',
     },
   ];
 

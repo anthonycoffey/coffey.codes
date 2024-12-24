@@ -55,7 +55,7 @@ export default function Page() {
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
           <p className="text-xl md:text-2xl font-bold mb-4 text-center">
-            Interested in working together? Let's connect!
+            Need a hand? Let's Connect!
           </p>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a
@@ -105,7 +105,7 @@ export default function Page() {
             className="px-6 py-3 border border-transparent text-base rounded-md text-white bg-blue-600 no-underline flex items-center justify-center"
           >
             <ChatBubbleOvalLeftIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
-            Contact Me
+            Message Me
           </a>
           <a
             target="_blank"
@@ -113,7 +113,7 @@ export default function Page() {
             className="px-6 py-3 border border-transparent text-base rounded-md text-white bg-gray-800 border-white no-underline flex items-center justify-center"
           >
             <CalendarDaysIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
-            Book Free Consultation
+            Book Interview
           </a>
         </div>
       </div>

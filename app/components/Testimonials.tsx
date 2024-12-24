@@ -89,7 +89,7 @@ const Testimonials = () => {
             >
               <figure className="max-w-screen-md mx-auto">
                 <blockquote>
-                  <p className="text-xl font-medium text-white">
+                  <p className="text-xl font-medium text-white text-center">
                     "{testimonial.text}"
                   </p>
                 </blockquote>

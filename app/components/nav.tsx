@@ -68,7 +68,7 @@ export function Navbar() {
 
   return (
     <aside className="-ml-[8px] tracking-tight">
-      <div className="flex items-center mb-4 justify-between">
+      <div className="flex items-center mb-4 justify-between md:justify-center">
         <a href="/">
           <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
         </a>

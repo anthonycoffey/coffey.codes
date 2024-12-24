@@ -94,7 +94,7 @@ export default function ContactForm() {
         </button>
       )}
       {showForm && (
-        <div className="rounded overflow-hidden shadow-lg p-4">
+        <>
           {!messageSent ? (
             <form onSubmit={handleFormSubmit}>
               <div className="grid md:grid-cols-2 text-left">
@@ -196,7 +196,7 @@ export default function ContactForm() {
                   </div>
                 ) : (
                   <button
-                    className="cursor-pointer bg-blue-600 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-600 flex justify-center items-center disabled:opacity-50"
+                    className="cursor-pointer bg-blue-600 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-600 flex justify-center items-center disabled:opacity-75 disabled:cursor-not-allowed"
                     type="submit"
                     disabled={!consentChecked}
                   >
@@ -228,7 +228,7 @@ export default function ContactForm() {
               </div>
             )
           )}
-        </div>
+        </>
       )}
     </>
   );

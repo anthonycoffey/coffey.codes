@@ -10,21 +10,21 @@ export default async function Page({ searchParams }) {
   return (
     <section className="contact-page">
       <div className="page-content flex flex-col">
-        <div className="p-6 md:p-10 flex flex-col justify-center items-center">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0 text-center">
-            Have a question for me?
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 mt-6 text-center">
+            Send a Message
           </h1>
-          <p className="mb-4 text-center">
+          <p className="mb-4 text-center px-6">
             Fill out the form below and send a message straight to my inbox! 🎯
           </p>
 
           <ContactForm />
         </div>
-        <div className="p-6 md:p-10 flex flex-col justify-center items-center bg-gray-100 rounded">
+        <div className="p-6 md:p-10 mt-6 flex flex-col justify-center items-center bg-gray-100 rounded">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0 text-blue-500 text-center">
-            Interested in Connecting?
+            Schedule Your Free Consultation!
           </h1>
-          <p className="mb-4 text-gray-600 text-center">
+          <p className="mb-4 text-gray-600 text-center px-6">
             Check out my availability and book a time that suits you!
           </p>
           <a

@@ -101,7 +101,7 @@ export function Navbar() {
                   key={path}
                   href={path}
                   className={`transition-all hover:underline flex align-middle relative ${
-                    isActive ? 'font-bold text-blue-500' : ''
+                    isActive ? 'underline' : ''
                   }`}
                 >
                   <span className="flex items-center space-x-1">

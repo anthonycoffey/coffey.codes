@@ -64,14 +64,6 @@ export default function Page() {
               Let's chat!{' '}
               <ChatBubbleOvalLeftIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />
             </a>
-            <a
-              target="_blank"
-              href="/Anthony%20Coffey%20-%20Resume.pdf"
-              className="px-6 py-3 md:px-8 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-gray-600 hover:bg-gray-800 hover:border-white no-underline flex items-center justify-center"
-            >
-              Download Resume{' '}
-              <DocumentArrowDownIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />
-            </a>
           </div>
         </div>
       </div>
@@ -105,14 +97,6 @@ export default function Page() {
           >
             Let's chat!{' '}
             <ChatBubbleOvalLeftIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />
-          </a>
-          <a
-            target="_blank"
-            href="/Anthony%20Coffey%20-%20Resume.pdf"
-            className="px-6 py-3 md:px-8 md:py-4 border border-transparent text-base md:text-lg rounded-md text-white bg-gray-600 hover:bg-gray-800 hover:border-white no-underline flex items-center justify-center"
-          >
-            Download Resume{' '}
-            <DocumentArrowDownIcon className="ml-1 h-6 w-6 md:h-8 md:w-8" />
           </a>
         </div>
       </div>

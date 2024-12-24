@@ -87,8 +87,9 @@ export default function ContactForm() {
       {!showForm && (
         <button
           onClick={handleFormToggle}
-          className="cursor-pointer border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline"
+          className="flex justify-center items-center cursor-pointer border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline"
         >
+          <ChatBubbleOvalLeftIcon className="mr-2 h-6 w-6" />
           Send Message
         </button>
       )}
@@ -163,8 +164,8 @@ export default function ContactForm() {
                     required
                   />
                   <span className="ml-2 pl-2 text-neutral-200">
-                    I consent to the collection of my personal data and agree to
-                    be contacted.
+                    I consent to the collection of my data and to being
+                    contacted via email.
                   </span>
                 </label>
               </div>
@@ -199,7 +200,7 @@ export default function ContactForm() {
                     type="submit"
                     disabled={!consentChecked}
                   >
-                    <ChatBubbleOvalLeftIcon className="mr-2 h-6 w-6" />
+                    <ChatBubbleOvalLeftIcon className="mr-4 h-6 w-6" />
                     Send Message
                   </button>
                 )}

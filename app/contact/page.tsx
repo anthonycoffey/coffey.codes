@@ -33,7 +33,7 @@ export default async function Page({ searchParams }) {
             rel="noopener noreferrer"
           >
             <button className="flex justify-center items-center bg-blue-500 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer">
-              <CalendarDaysIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
+              <CalendarDaysIcon className="mr-4 h-6 w-6" />
               Book Now
             </button>
           </a>

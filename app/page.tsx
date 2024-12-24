@@ -55,7 +55,7 @@ export default function Page() {
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
           <p className="text-xl md:text-2xl font-bold mb-4 text-center">
-            Want to learn more about my expertise?
+            Interested in working together? Let's connect!
           </p>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a
@@ -97,7 +97,7 @@ export default function Page() {
 
       <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
         <p className="text-xl md:text-2xl font-bold mb-4 text-center">
-          How can I help?
+          Recruiting? I'm open to offers!
         </p>
         <div className="flex flex-col justify-between w-full space-y-4 ">
           <a

@@ -1,4 +1,5 @@
 import ContactForm from '../components/ContactForm';
+import { CalendarDaysIcon } from '@heroicons/react/24/solid';
 
 export const metadata = {
   title: 'Contact',
@@ -14,9 +15,9 @@ export default async function Page({ searchParams }) {
             Have a question for me?
           </h1>
           <p className="mb-4 text-center">
-            Fill out the form below to shoot me a message straight to my inbox!
-            🎯
+            Fill out the form below and send a message straight to my inbox! 🎯
           </p>
+
           <ContactForm />
         </div>
         <div className="p-6 md:p-10 flex flex-col justify-center items-center bg-gray-100 rounded">
@@ -31,7 +32,8 @@ export default async function Page({ searchParams }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+            <button className="flex justify-center items-center bg-blue-500 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+              <CalendarDaysIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
               Book Now
             </button>
           </a>

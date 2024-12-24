@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid';
 
 type FormData = {
   name: string;
@@ -17,6 +18,7 @@ export default function ContactForm() {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [consentChecked, setConsentChecked] = useState<boolean>(false);
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     setFormData({
@@ -32,6 +34,10 @@ export default function ContactForm() {
       ...formData,
       message: event.currentTarget.value,
     });
+  };
+
+  const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setConsentChecked(event.target.checked);
   };
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -50,6 +56,7 @@ export default function ContactForm() {
             name: formData.name,
             email: formData.email,
             message: formData.message,
+            consent: consentChecked,
           }),
         },
       );
@@ -86,70 +93,118 @@ export default function ContactForm() {
         </button>
       )}
       {showForm && (
-        <>
+        <div className="rounded overflow-hidden shadow-lg p-4">
           {!messageSent ? (
-            <>
-              <form onSubmit={handleFormSubmit}>
-                <div className="grid md:grid-cols-2 text-left">
-                  <div className="pr-2">
-                    <label className="block font-bold mb-2" htmlFor="name">
-                      Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required={true}
-                    />
-                  </div>
-                  <div className="mb-2">
-                    <label className="block font-bold mb-2" htmlFor="email">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Your email address"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required={true}
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-2 text-left">
-                  <label className="block font-bold mb-2" htmlFor="message">
-                    Message <span className="text-red-500">*</span>
+            <form onSubmit={handleFormSubmit}>
+              <div className="grid md:grid-cols-2 text-left">
+                <div className="pr-2">
+                  <label
+                    className="text-sm block font-bold mb-2"
+                    htmlFor="name"
+                  >
+                    Name <span className="text-red-500">*</span>
                   </label>
-                  <textarea
+                  <input
                     className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
-                    id="message"
-                    name="message"
-                    placeholder="Your message"
-                    value={formData.message}
-                    onChange={handleTextAreaChange}
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     required={true}
-                  ></textarea>
+                  />
                 </div>
-                <div>
-                  {loading && <p>Sending...</p>}
-                  {!loading && (
-                    <button
-                      className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      type="submit"
+                <div className="mb-2">
+                  <label
+                    className="text-sm block font-bold mb-2"
+                    htmlFor="email"
+                  >
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Your email address"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required={true}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-2 text-left">
+                <label
+                  className="text-sm block font-bold mb-2"
+                  htmlFor="message"
+                >
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
+                  id="message"
+                  name="message"
+                  placeholder="Your message"
+                  value={formData.message}
+                  onChange={handleTextAreaChange}
+                  required={true}
+                ></textarea>
+              </div>
+
+              <div className="mb-4">
+                <label className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    checked={consentChecked}
+                    onChange={handleConsentChange}
+                    required
+                  />
+                  <span className="ml-2 pl-2 text-neutral-200">
+                    I consent to the collection of my personal data and agree to
+                    be contacted.
+                  </span>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-center">
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <svg
+                      className="animate-spin h-5 w-5 text-blue-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
                     >
-                      Send
-                    </button>
-                  )}
-                </div>
-              </form>
-            </>
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                      ></path>
+                    </svg>
+                  </div>
+                ) : (
+                  <button
+                    className="cursor-pointer bg-blue-600 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-600 flex justify-center items-center disabled:opacity-50"
+                    type="submit"
+                    disabled={!consentChecked}
+                  >
+                    <ChatBubbleOvalLeftIcon className="mr-2 h-6 w-6" />
+                    Send Message
+                  </button>
+                )}
+              </div>
+            </form>
           ) : (
             showMessage && (
               <div
@@ -172,7 +227,7 @@ export default function ContactForm() {
               </div>
             )
           )}
-        </>
+        </div>
       )}
     </>
   );

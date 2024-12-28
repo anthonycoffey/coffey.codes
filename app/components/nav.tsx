@@ -25,10 +25,10 @@ const navItems = {
     name: 'case studies',
     icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
   },
-  '/portfolio': {
-    name: 'portfolio',
-    icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
-  },
+  // '/portfolio': {
+  //   name: 'portfolio',
+  //   icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
+  // },
   '/contact': {
     name: 'contact',
     icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,

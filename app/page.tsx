@@ -40,11 +40,11 @@ export default function Page() {
         <article>
           <p className="pt-4">
             Full Stack Engineer and Solutions Architect with over 10 years of
-            professional experience designing and developing reliable, scalable
-            software solutions that drive business growth. I collaborate with
-            SMBs, agencies, and product owners to create digital products or
-            enhance existing applications by leveraging modern tooling,
-            event-driven architecture, and cloud-native technology to deliver
+            professional experience designing and developing scalable software
+            solutions that drive business growth. I collaborate with SMBs,
+            agencies, and product owners to create digital products and enhance
+            existing applications by leveraging modern tooling, event-driven
+            architecture, and cloud-native technology to deliver
             high-performing, cost-effective solutions.
           </p>
           <p>

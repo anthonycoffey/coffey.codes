@@ -39,12 +39,12 @@ export default function Page() {
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p className="pt-4">
-            Full Stack Engineer with over 10 years of experience designing and
-            developing reliable, scalable software solutions that drive business
-            growth. Skilled in collaborating with SMBs, agencies, and product
-            owners to create new digital products or enhance existing ones.
-            Proficient in leveraging event-driven architecture, serverless
-            computing, and modern cloud-based technologies to deliver
+            Full Stack Engineer and Solutions Architect with over 10 years of
+            experience designing and developing reliable, scalable software
+            solutions that drive business growth. I collaborate with SMBs,
+            agencies, and product owners to create digital products or enhance
+            existing applications by leveraging modern tooling, event-driven
+            architecture, and modern cloud technologies to deliver
             high-performing, cost-effective solutions.
           </p>
           <p>

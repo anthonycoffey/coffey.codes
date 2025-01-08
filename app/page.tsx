@@ -39,11 +39,13 @@ export default function Page() {
         </div>
         <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
           <p className="pt-4">
-            Austin, Texas — Full Stack Engineer with over a decade of experience
-            building reliable, scalable software that drives business growth. I
-            partner with SMBs, agencies, and product owners to create digital
-            products or improve existing ones by leveraging event-driven
-            architecture, serverless computing, and cloud-native technologies.
+            Full Stack Engineer with over 10 years of experience designing and
+            developing reliable, scalable software solutions that drive business
+            growth. Skilled in collaborating with SMBs, agencies, and product
+            owners to create new digital products or enhance existing ones.
+            Proficient in leveraging event-driven architecture, serverless
+            computing, and modern cloud-based technologies to deliver
+            high-performing, cost-effective solutions.
           </p>
           <p>
             My approach begins with an important question, "Why?", and focuses
@@ -55,7 +57,7 @@ export default function Page() {
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
           <p className="text-xl md:text-2xl font-bold mb-4 text-center">
-            Need a hand? Let's Chat!
+            Hiring Engineers? Let's Chat!
           </p>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a

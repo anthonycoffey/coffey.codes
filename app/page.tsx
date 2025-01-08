@@ -44,7 +44,7 @@ export default function Page() {
             solutions that drive business growth. I collaborate with SMBs,
             agencies, and product owners to create digital products or enhance
             existing applications by leveraging modern tooling, event-driven
-            architecture, and modern cloud technologies to deliver
+            architecture, and cloud-native technology to deliver
             high-performing, cost-effective solutions.
           </p>
           <p>

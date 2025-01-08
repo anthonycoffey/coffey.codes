@@ -106,32 +106,7 @@ export default function Footer() {
           <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
         </a>
       </div>
-      <div className="flex justify-center mt-8">
-        <a
-          href="https://www.iubenda.com/privacy-policy/63442989"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-2 hover:underline"
-        >
-          Privacy Policy
-        </a>
-        <a
-          href="https://www.iubenda.com/privacy-policy/63442989/cookie-policy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-2 hover:underline"
-        >
-          Cookie Policy
-        </a>
-        <a
-          href="https://www.iubenda.com/terms-and-conditions/63442989"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-2 hover:underline"
-        >
-          Terms and Conditions
-        </a>
-      </div>
+      <div className="flex justify-center mt-8"></div>
     </footer>
   );
 }

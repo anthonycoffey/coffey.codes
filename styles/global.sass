@@ -22,6 +22,9 @@ html
   min-width: 360px
   scroll-behavior: smooth
 
+article
+  @apply prose-lg xl:prose-xl 2xl:prose-2xl
+
 .prose .anchor
   @apply absolute invisible no-underline text-neutral-200
   margin-left: -1em
@@ -114,6 +117,9 @@ table
 
 .title
   text-wrap: balance
+
+.homepage-avatar
+  @apply rounded-xl w-40 shadow-2xl border-2 border-blue-500
 
 @layer components
   .logo-grid

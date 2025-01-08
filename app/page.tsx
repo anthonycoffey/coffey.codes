@@ -33,18 +33,18 @@ export default function Page() {
             <img
               src="/headshot.jpg"
               alt="Anthony Coffey"
-              className="rounded-xl w-40 shadow-2xl border-2 border-blue-500"
+              className="homepage-avatar"
             />
           </div>
         </div>
-        <article className="prose-lg xl:prose-xl 2xl:prose-2xl">
+        <article>
           <p className="pt-4">
             Full Stack Engineer and Solutions Architect with over 10 years of
-            experience designing and developing reliable, scalable software
-            solutions that drive business growth. I collaborate with SMBs,
-            agencies, and product owners to create digital products or enhance
-            existing applications by leveraging modern tooling, event-driven
-            architecture, and cloud-native technology to deliver
+            professional experience designing and developing reliable, scalable
+            software solutions that drive business growth. I collaborate with
+            SMBs, agencies, and product owners to create digital products or
+            enhance existing applications by leveraging modern tooling,
+            event-driven architecture, and cloud-native technology to deliver
             high-performing, cost-effective solutions.
           </p>
           <p>

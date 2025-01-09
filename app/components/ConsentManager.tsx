@@ -18,7 +18,7 @@ const ConsentManager = () => {
       gtag('consent', 'default', {
         ad_storage: 'denied',
         analytics_storage: 'denied',
-        wait_for_update: 500,
+        wait_for_update: 3000,
       });
 
       // Show consent dialog if no previous consent
@@ -40,6 +40,8 @@ const ConsentManager = () => {
       window.dataLayer?.push({
         consent: 'update',
         ad_storage: 'granted',
+        ad_personalization: 'granted',
+        ad_user_data: 'granted',
         analytics_storage: 'granted',
       });
 
@@ -59,6 +61,8 @@ const ConsentManager = () => {
       window.dataLayer?.push({
         consent: 'update',
         ad_storage: 'denied',
+        ad_personalization: 'denied',
+        ad_user_data: 'denied',
         analytics_storage: 'denied',
       });
 

@@ -39,12 +39,13 @@ export default function Page() {
         </div>
         <article>
           <p className="pt-4">
-            Austin, Texas — Full-Stack Software Engineer and Solutions Architect
-            with 12 years of professional experience designing and developing
-            software solutions that drive business growth. I collaborate with
-            SMBs, agencies, and product owners to create digital products and
-            enhance existing applications by leveraging modern tooling,
-            event-driven architecture, and cloud-native technology.
+            Austin, Texas — Software Engineer specializing in JavaScript and
+            Python ecosystems with 12 years of professional experience
+            architecting cloud-native applications. Expert in delivering
+            FDA-approved healthcare platforms, fintech solutions, and enterprise
+            SaaS products at scale. Proven track record of leading technical
+            initiatives from concept to production while maintaining security
+            and compliance standards.
           </p>
           <p>
             My approach begins with an important question, "Why?", and focuses

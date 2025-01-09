@@ -49,7 +49,7 @@ export default function Page() {
             My approach begins with an important question, "Why?", and focuses
             on identifying the most suitable tools and strategies to drive
             clear, efficient results, cutting through unnecessary complexity at
-            every stage of development.
+            every stage of the software development lifecycle.
           </p>
         </article>
 

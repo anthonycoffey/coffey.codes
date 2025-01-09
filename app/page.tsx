@@ -40,12 +40,10 @@ export default function Page() {
         <article>
           <p className="pt-4">
             Austin, Texas — Software Engineer specializing in JavaScript and
-            Python ecosystems with 12 years of professional experience
-            architecting cloud-native applications. Expert in delivering
-            FDA-approved healthcare platforms, fintech solutions, and enterprise
-            SaaS products at scale. Proven track record of leading technical
-            initiatives from concept to production while maintaining security
-            and compliance standards.
+            Python ecosystems with 12 years of experience architecting
+            cloud-native applications for web and mobile platforms. Proven track
+            record of leading technical initiatives from concept to production,
+            with a focus on security, performance, and compliance.
           </p>
           <p>
             My approach begins with an important question, "Why?", and focuses

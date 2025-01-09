@@ -17,6 +17,8 @@ const ConsentManager = () => {
       // Default to denied
       gtag('consent', 'default', {
         ad_storage: 'denied',
+        ad_personalization: 'denied',
+        ad_user_data: 'denied',
         analytics_storage: 'denied',
         wait_for_update: 3000,
       });

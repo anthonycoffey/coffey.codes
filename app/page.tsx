@@ -61,8 +61,6 @@ export default function Page() {
           <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <li>Web Application Development</li>
             <li>Mobile Application Development</li>
-            <li>Google Cloud Platform (GCP) Solutions</li>
-            <li>AWS Solutions</li>
             <li>System Architecture Design</li>
             <li>Performance Optimization</li>
             <li>JavaScript/TypeScript Development</li>

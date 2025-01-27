@@ -45,12 +45,6 @@ export default function Page() {
             record of leading technical initiatives from concept to production,
             with a focus on security, performance, and compliance.
           </p>
-          <p>
-            My approach begins with an important question, "Why?", and focuses
-            on identifying the most suitable tools and strategies to drive
-            clear, efficient results, cutting through unnecessary complexity at
-            every stage of the software development lifecycle.
-          </p>
         </article>
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">

@@ -57,8 +57,8 @@ export default function Page() {
           <h2 className="text-xl md:text-2xl font-bold text-center">
             Hiring? Let's Chat!
           </h2>
-          <p className="text-2xl font-bold mb-4 subtitle-1">My Services</p>
-          <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <p className="font-bold mb-4 text-center subtitle-1">Services:</p>
+          <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <li>Web Application Development</li>
             <li>Mobile Application Development</li>
             <li>System Architecture Design</li>

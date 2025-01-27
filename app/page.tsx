@@ -54,10 +54,10 @@ export default function Page() {
         </article>
 
         <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
-          <h2 className="text-xl md:text-2xl font-bold text-center">
+          <h2 className="text-xl md:text-2xl font-bold text-center mb-4">
             Hiring? Let's Chat!
           </h2>
-          <p className="font-bold mb-4 text-center subtitle-1">Services:</p>
+          <p className="font-bold mb-2 text-center subtitle-1">Services</p>
           <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <li>Web Application Development</li>
             <li>Mobile Application Development</li>

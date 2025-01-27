@@ -57,6 +57,17 @@ export default function Page() {
           <p className="text-xl md:text-2xl font-bold mb-4 text-center">
             Hiring? Let's Chat!
           </p>
+          <h2 className="text-2xl font-bold mb-4 text-center">My Services</h2>
+          <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li>Web Application Development</li>
+            <li>Mobile Application Development</li>
+            <li>Google Cloud Platform (GCP) Solutions</li>
+            <li>AWS Solutions</li>
+            <li>System Architecture Design</li>
+            <li>Performance Optimization</li>
+            <li>JavaScript/TypeScript Development</li>
+            <li>Python Development</li>
+          </ul>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a
               href="/contact"
@@ -97,7 +108,7 @@ export default function Page() {
 
       <div className="flex flex-col justify-center bg-gray-800 p-6 md:p-10 rounded-lg items-center my-6 md:my-10">
         <p className="text-xl md:text-2xl font-bold mb-4 text-center">
-          Recruiting? Let's Connect!
+          Planning a Project? Let's Connect!
         </p>
         <div className="flex flex-col justify-between w-full space-y-4 ">
           <a

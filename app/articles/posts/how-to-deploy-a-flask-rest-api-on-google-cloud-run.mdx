@@ -9,12 +9,12 @@ Deploying a Flask REST API to Google Cloud Run allows you to run your applicatio
 ### Prerequisites
 
 Before deploying, ensure you have the following:
-- A Google Cloud account with billing enabled
-- The Google Cloud SDK installed and authenticated
+- Google Cloud account with billing enabled
+- Google Cloud SDK installed and authenticated
 
 ### Setting Up the Flask API
 
-You can setup the Flask API however you like, and in the root directory create a `Dockerfile` and a `requirements.txt` file.
+You can setup the Flask API however you like, and in the root directory create a Dockerfile and requirements.txt file
 
 ```
 api/
@@ -62,10 +62,10 @@ Notice the `apt-get install` command. This is optional and should only be used t
     ```
 
     This command does the following:
-    - Deploys the API from the current directory `--source`
-    - Sets the region to us-central1 `--region`
-    - Uses the managed Cloud Run platform `--platform`
-    - Allows unauthenticated access (optional, depends on your security needs) `--allow-unauthenticated`
+    - Deploys the API from the current directory
+    - Sets the region to us-central1
+    - Uses the managed Cloud Run platform
+    - Allows unauthenticated access (optional, depends on your security needs)
 
 3. **Wait for the deployment to complete.** Google Cloud Run will provide a public URL upon success.
 
@@ -85,9 +85,9 @@ One common issue is getting the Gunicorn command to correctly call the Flask app
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "8", "app:create_app()"]
 ```
 
-However, app:create_app() may vary depending on your file structure and function name. If your application is structured differently, you may need to adjust this command. For example:
+However, the `app:create_app()` command may vary based on your file structure and function name. If your application is organized differently, you might need to modify this command.
 
-If your app instance is directly in app.py, use:
+For example, if your app instance is directly in app.py, use:
 
 ```Dockerfile
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]

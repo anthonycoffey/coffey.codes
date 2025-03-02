@@ -61,11 +61,11 @@ Notice the `apt-get install` command. This is optional and should only be used t
     gcloud run deploy flask-api --source ./ --region us-central1 --platform managed --allow-unauthenticated
     ```
 
-This command does the following:
-- Deploys the API from the current directory `--source`
-- Sets the region to us-central1 `--region`
-- Uses the managed Cloud Run platform `--platform`
-- Allows unauthenticated access (optional, depends on your security needs) `--allow-unauthenticated`
+    This command does the following:
+    - Deploys the API from the current directory `--source`
+    - Sets the region to us-central1 `--region`
+    - Uses the managed Cloud Run platform `--platform`
+    - Allows unauthenticated access (optional, depends on your security needs) `--allow-unauthenticated`
 
 3. **Wait for the deployment to complete.** Google Cloud Run will provide a public URL upon success.
 

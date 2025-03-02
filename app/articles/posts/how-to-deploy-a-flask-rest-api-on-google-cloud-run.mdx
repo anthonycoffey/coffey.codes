@@ -72,9 +72,9 @@ This command does the following:
 
 4. Test the API:
     ```bash
-    curl https://YOUR_CLOUD_RUN_URL/
+    curl https://YOUR_CLOUD_RUN_URL/hello-world
     ```
-    > **Note:**Replace YOUR_CLOUD_RUN_URL with the actual URL from the deployment.
+**Note:** Replace YOUR_CLOUD_RUN_URL with the actual URL from the deployment, and `hello-world` with the API endpoint your testing.
 
 ### Troubleshooting Common Pitfalls
 
@@ -100,7 +100,7 @@ If your factory function is named differently, adjust accordingly:
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "myapp:create_app()"]
 ```
 
-Check your Flask application's entry point to ensure Gunicorn can locate and run it properly.
+If you are having issues after deploying, check your Flask application's entry point to ensure Gunicorn can locate and run it properly. Use `gcloud functions logs read` to view logs for debugging, or navigate to the Cloud Run service in the Google Cloud Console to view the logs for your service.
 
 ### Conclusion
 

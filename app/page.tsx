@@ -52,13 +52,16 @@ export default function Page() {
             Hiring? Let's Chat!
           </h2>
           <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <li>Web Application Development</li>
-            <li>Mobile Application Development</li>
+            <li>Application Development</li>
             <li>System Architecture Design</li>
             <li>Performance Optimization</li>
+            <li>Security Hardening</li>
             <li>JavaScript/TypeScript</li>
+            <li>Next.js</li>
+            <li>React Native</li>
             <li>Python</li>
             <li>AI/ML</li>
+            <li>DevOps</li>
           </ul>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a

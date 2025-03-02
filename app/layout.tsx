@@ -68,16 +68,16 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl px-4 mt-8 mx-auto">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
-        >
-          <source src="/deskloop.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/*<video*/}
+        {/*  autoPlay*/}
+        {/*  loop*/}
+        {/*  muted*/}
+        {/*  playsInline*/}
+        {/*  className="fixed top-0 left-0 w-full h-full object-cover -z-10"*/}
+        {/*>*/}
+        {/*  <source src="/deskloop.mp4" type="video/mp4" />*/}
+        {/*  Your browser does not support the video tag.*/}
+        {/*</video>*/}
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <GoogleAnalyticsClient />
           <Navbar />

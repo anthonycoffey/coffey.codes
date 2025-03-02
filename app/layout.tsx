@@ -67,7 +67,7 @@ export default function RootLayout({
         GeistMono.variable,
       )}
     >
-      <body className="antialiased max-w-2xl px-4 mt-8 mx-auto">
+      <body className="antialiased max-w-xl px-4 mt-8 mx-auto">
         <video
           autoPlay
           loop

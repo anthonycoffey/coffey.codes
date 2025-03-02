@@ -4,7 +4,6 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { Navbar } from './components/nav';
 import GoogleAnalyticsClient from './components/GoogleAnalyticsClient';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
 import ConsentManager from './components/ConsentManager';

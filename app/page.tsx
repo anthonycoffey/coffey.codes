@@ -3,8 +3,8 @@ import LogoGrid from './components/LogoGrid';
 import WorkHistory from './components/WorkHistory';
 import {
   ChatBubbleOvalLeftIcon,
-  DocumentArrowDownIcon,
   CalendarDaysIcon,
+  ArrowDownTrayIcon,
 } from '@heroicons/react/24/solid';
 import SocialIcons from './components/SocialIcons';
 import Testimonials from './components/Testimonials';
@@ -56,8 +56,9 @@ export default function Page() {
             <li>Mobile Application Development</li>
             <li>System Architecture Design</li>
             <li>Performance Optimization</li>
-            <li>JavaScript/TypeScript Development</li>
-            <li>Python Development</li>
+            <li>JavaScript/TypeScript</li>
+            <li>Python</li>
+            <li>AI/ML</li>
           </ul>
           <div className="flex flex-col justify-between w-full space-y-4">
             <a
@@ -111,11 +112,11 @@ export default function Page() {
           </a>
           <a
             target="_blank"
-            href="https://calendly.com/antcoffpersonal/meet"
+            href="/Anthony%20Coffey%20-%20Resume.pdf"
             className="px-6 py-3 border border-transparent text-base rounded-md text-white bg-gray-800 border-white no-underline flex items-center justify-center"
           >
-            <CalendarDaysIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
-            Book Interview
+            <ArrowDownTrayIcon className="mr-4 h-6 w-6 md:h-8 md:w-8" />
+            Download Resume
           </a>
         </div>
       </div>

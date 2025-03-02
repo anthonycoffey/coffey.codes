@@ -1,0 +1,107 @@
+---
+title: 'How to Deploy a Flask REST API on Google Cloud Run'
+publishedAt: '2025-03-02'
+summary: 'Deploying a Flask REST API to Google Cloud Run allows you to run your application in a fully managed serverless environment. This guide will walk you through deploying a Flask API from a source directory using the gcloud command-line tool.'
+---
+
+# How to Deploy a Flask REST API on Google Cloud Run
+
+Deploying a Flask REST API to Google Cloud Run allows you to run your application in a fully managed serverless environment. This guide will walk you through deploying a Flask API from a source directory using the gcloud command-line tool.
+
+### Prerequisites
+
+- Before deploying, ensure you have the following:
+- A Google Cloud account with billing enabled
+- The Google Cloud SDK installed and authenticated
+
+Docker installed (optional but useful for testing locally)
+
+### Setting Up the Flask API
+
+You can setup the Flask API however you like, and in the root directory create a `Dockerfile` and a `requirements.txt` file.
+
+```
+api/
+│-- app/              # Flask application directory
+│-- Dockerfile        # Containerization instructions
+│-- requirements.txt  # Dependencies
+│-- README.md         # Documentation
+```
+
+### Understanding the Dockerfile
+
+The Dockerfile defines how the application is containerized:
+
+```dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# optional, if your requirements have dependencies that need to be installed on the OS. If not, just remove this line
+RUN apt-get update && apt-get install -y package-name-here
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+EXPOSE 8080
+
+COPY . /app
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "8", "app:create_app()"]
+```
+This sets up a minimal Python environment, installs dependencies, exposes port 8080, and runs the API using Gunicorn.
+
+### Deploying to Google Cloud Run
+
+1. Navigate to the API directory:
+    ```
+    cd api
+    ```
+2. Deploy the API using Google Cloud Run:
+
+    ```bash
+    gcloud run deploy flask-api --source ./ --region us-central1 --platform managed --allow-unauthenticated
+    ```
+This command does the following:
+- Deploys the API from the current directory (--source ./)
+- Sets the region to us-central1
+- Uses the managed Cloud Run platform
+- Allows unauthenticated access (optional, depends on your security needs)
+
+3. **Wait for the deployment to complete.** Google Cloud Run will provide a public URL upon success.
+
+4. Test the API:
+    ```bash
+    curl https://YOUR_CLOUD_RUN_URL/
+    ```
+    > **Note:**Replace YOUR_CLOUD_RUN_URL with the actual URL from the deployment.
+
+### Troubleshooting Common Pitfalls
+
+#### Gunicorn Command Issues
+
+One common issue is getting the Gunicorn command to correctly call the Flask application. The CMD in the Dockerfile is defined as:
+
+```Dockerfile
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "8", "app:create_app()"]
+```
+
+However, app:create_app() may vary depending on your file structure and function name. If your application is structured differently, you may need to adjust this command. For example:
+
+If your app instance is directly in app.py, use:
+
+```Dockerfile
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
+```
+
+If your factory function is named differently, adjust accordingly:
+
+```Dockerfile
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "myapp:create_app()"]
+```
+
+Check your Flask application's entry point to ensure Gunicorn can locate and run it properly.
+
+### Conclusion
+
+Deploying a Flask API to Google Cloud Run is straightforward using the `gcloud run deploy` command. This method ensures scalability, security, and minimal infrastructure management. You can further configure authentication and monitoring for a production-ready setup.

@@ -40,7 +40,7 @@ const nextConfig = {
         source: '/articles/markdown-resume',
         destination: '/',
         permanent: true,
-      }
+      },
     ];
   },
   sassOptions: {
@@ -49,18 +49,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
-const { withSentryConfig } = require('@sentry/nextjs');
-
-module.exports = withSentryConfig(module.exports, {
-  // https://github.com/getsentry/sentry-webpack-plugin#options
-  org: 'coffeywebdevcom',
-  project: 'coffeycodes',
-  silent: !process.env.CI,
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-  widenClientFileUpload: true,
-  tunnelRoute: '/monitoring',
-  hideSourceMaps: true,
-  disableLogger: true,
-  automaticVercelMonitors: false,
-});

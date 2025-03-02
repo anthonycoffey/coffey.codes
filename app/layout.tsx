@@ -7,7 +7,6 @@ import GoogleAnalyticsClient from './components/GoogleAnalyticsClient';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from './components/footer';
 import { baseUrl } from './sitemap';
-import Script from 'next/script';
 import ConsentManager from './components/ConsentManager';
 
 export const metadata: Metadata = {
@@ -83,7 +82,6 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
-          <SpeedInsights />
           <ConsentManager />
         </main>
       </body>

@@ -25,7 +25,6 @@ api/
 │-- app/              # Flask application directory
 │-- Dockerfile        # Containerization instructions
 │-- requirements.txt  # Dependencies
-│-- README.md         # Documentation
 ```
 
 ### Understanding the Dockerfile
@@ -63,8 +62,8 @@ This sets up a minimal Python environment, installs dependencies, exposes port 8
     gcloud run deploy flask-api --source ./ --region us-central1 --platform managed --allow-unauthenticated
     ```
 This command does the following:
-- Deploys the API from the current directory (--source ./)
-- Sets the region to us-central1
+- Deploys the API from the current directory (`--source ./`)
+- Sets the region to `us-central1`
 - Uses the managed Cloud Run platform
 - Allows unauthenticated access (optional, depends on your security needs)
 

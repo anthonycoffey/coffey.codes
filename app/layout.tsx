@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title:
       'Anthony Coffey, SWE, DevOps | Full Stack Engineer based in Austin, Texas',
     description:
-      'Portfolio blog site for Austin based artist and software engineer, Anthony Coffey.',
+      'Portfolio blog site for Anthony Coffey, Austin Texas based software engineer.',
     url: baseUrl,
     siteName: 'Anthony Coffey | Full Stack Engineer based in Austin, Texas',
     locale: 'en_US',

@@ -36,7 +36,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# optional, if your requirements have dependencies that need to be installed on the OS. If not, just remove this line
+# OPTIONAL - Install additional packages required by dependencies listed in requirements.tx
 RUN apt-get update && apt-get install -y package-name-here
 
 COPY requirements.txt requirements.txt
@@ -48,7 +48,10 @@ COPY . /app
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "8", "app:create_app()"]
 ```
+
 This sets up a minimal Python environment, installs dependencies, exposes port 8080, and runs the API using Gunicorn.
+
+Notice the `apt-get install` command. This is optional and should only be used to install any additional packages required by dependencies listed in `requirements.txt`.
 
 ### Deploying to Google Cloud Run
 

@@ -32,7 +32,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# OPTIONAL - Install additional packages required by dependencies listed in requirements.tx
+# *OPTIONAL* Install additional packages required by dependencies listed in requirements.tx
 RUN apt-get update && apt-get install -y package-name-here
 
 COPY requirements.txt requirements.txt

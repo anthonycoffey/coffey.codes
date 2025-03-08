@@ -135,13 +135,16 @@ table
     gap: 1rem
 
     .icon
+      transition-all
       width: 24px
       height: auto
-      fill: #fff
-      transition: fill 0.3s
+      fill: #3488f7
+      transition: fill 0.3s, transform 0.3s
 
     .icon:hover
       fill: #4c97f8
+      transform: translateY(-5px)
+      transition: transform 0.3s, fill 0.3s
 
 .scroll-to-top
   @apply cursor-pointer

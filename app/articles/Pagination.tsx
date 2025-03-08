@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
 
 export default function Pagination({ currentPage, totalPages }) {
   return (
-    <div className="pagination flex justify-between mt-16">
+    <div className="pagination flex justify-between my-16">
       {currentPage > 1 && (
         <Link
           id="prev-page"

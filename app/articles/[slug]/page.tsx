@@ -3,6 +3,7 @@ import { CustomMDX } from 'app/components/mdx';
 import { formatDate, getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
 import GoBack from 'app/components/GoBack';
+import Breadcrumbs from 'app/components/Breadcrumbs';
 export async function generateStaticParams() {
   let posts = getRSSBlogPosts();
 
@@ -82,7 +83,7 @@ export default function Blog({ params }) {
           }),
         }}
       />
-      <GoBack title={post.metadata.title} />
+      <Breadcrumbs title={post.metadata.title} />
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>

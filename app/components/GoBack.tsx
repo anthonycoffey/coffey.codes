@@ -1,37 +1,20 @@
 'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { HomeIcon } from '@heroicons/react/20/solid';
+import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
 
-interface BreadcrumbsProps {
-  title?: string;
-}
-
-export default function Breadcrumbs({ title }: BreadcrumbsProps) {
-  const pathname = usePathname();
-  const isArticlePage = pathname.startsWith('/articles/');
-
+export default function GoBack() {
   return (
-    <nav className="flex items-center text-sm my-4 border-b pb-6 mb-6">
-      <Link href="/" className="flex items-center hover:underline">
-        <HomeIcon className="h-4 w-4 mr-1" />
-        <span>Home</span>
-      </Link>
-
-      <span className="mx-2">•</span>
-
-      <Link href="/articles" className="hover:underline">
-        Articles
-      </Link>
-
-      {isArticlePage && (
-        <>
-          <span className="mx-2">•</span>
-          <span className="truncate max-w-xs md:max-w-sm" title={title}>
-            {title || pathname.split('/').pop()}
-          </span>
-        </>
-      )}
-    </nav>
+    <div className="border-t mt-8 pt-6">
+      <a
+        className="flex items-center align-items cursor-pointer my-4 mb-4 md:-ml-4 hover:underline"
+        onClick={() => {
+          history.back();
+        }}
+      >
+        <span>
+          <ArrowLongLeftIcon className="h-4 w-4 mr-2" />
+        </span>
+        Back
+      </a>
+    </div>
   );
 }

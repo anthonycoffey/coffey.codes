@@ -11,9 +11,25 @@ import {
   CodeBracketSquareIcon,
 } from '@heroicons/react/24/solid';
 
-const PortfolioSection = () => {
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  mainImage: string;
+  gallery: string[];
+  link: string;
+  client: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  year: string;
+  featured: boolean;
+}
+
+const PortfolioSection: React.FC = () => {
   // Sample portfolio data - replace with your actual projects
-  const portfolioProjects = [
+  const portfolioProjects: Project[] = [
     {
       id: 1,
       title: 'React Drum Machine',
@@ -37,11 +53,11 @@ const PortfolioSection = () => {
     },
   ];
 
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [showAllProjects, setShowAllProjects] = useState(false);
 
-  const openProject = (project) => {
+  const openProject = (project: Project) => {
     setSelectedProject(project);
     setActiveImageIndex(0);
   };

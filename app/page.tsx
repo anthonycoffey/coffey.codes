@@ -204,7 +204,7 @@ export default function Page() {
             </div>
 
             {/* CTA Area - spans 3 cells */}
-            <div className="col-span-1 lg:col-span-3 bg-gray-50 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 bg-gray-50 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-gray-800 font-medium">
                 Ready to transform your business?
               </p>

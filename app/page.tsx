@@ -1,7 +1,7 @@
 import { backend, frontend } from './logos';
-import LogoGrid from '../components/LogoGrid';
-import Testimonials from '../components/Testimonials';
-import SocialIcons from '../components/SocialIcons';
+import LogoGrid from './components/LogoGrid';
+import Testimonials from './components/Testimonials';
+import SocialIcons from './components/SocialIcons';
 import {
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
@@ -17,6 +17,7 @@ import {
   CommandLineIcon,
   AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/solid';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Anthony Coffey | Software Solutions for Business | Austin, Texas',
@@ -74,16 +75,24 @@ export default function Page() {
           </div>
           <div className="flex justify-center md:justify-end">
             <div className="relative w-64 h-64 md:w-72 md:h-72">
-              <img
+              <Image
+                width={330}
+                height={330}
                 src="/headshot.jpg"
                 alt="Anthony Coffey"
                 className="w-full h-full object-cover rounded-lg shadow-md"
               />
               <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-md border border-gray-200">
-                <p className="font-bold text-blue-600 text-base m-0">
+                <p className="font-bold text-blue-600 text-base m-0 text-right">
                   Anthony Coffey
                 </p>
-                <p className="text-gray-700 text-sm m-0">Solutions Architect</p>
+                <p className="text-gray-700 text-sm m-0 font-semibold">
+                  Solutions Architect & Full Stack SWE
+                </p>
+                <p className="text-gray-700 text-xs m-0 text-right">
+                  Austin, Texas
+                </p>
+                <SocialIcons />
               </div>
             </div>
           </div>
@@ -225,7 +234,7 @@ export default function Page() {
       </Section>
 
       {/* Expertise & Testimonials Section */}
-      <Section background="bg-white" maxWidth="max-w-7xl">
+      <Section background="bg-white" maxWidth="max-w-3xl">
         {/* Technology Stack */}
         <div className="mb-20">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-gray-900">
@@ -287,7 +296,7 @@ export default function Page() {
         {/* Testimonials */}
         <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center text-gray-900">
-            What Clients Say
+            Don't Just Take My Word For It!
           </h2>
           <Testimonials />
         </div>

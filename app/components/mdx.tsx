@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
 import React, { useState } from 'react';
-import Counter from 'components/Counter';
+import Counter from 'app/components/Counter';
 import CopyButton from './CopyButton';
 
 function Table({ data }) {

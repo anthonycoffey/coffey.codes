@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { formatDate } from 'app/articles/utils';
-import Pagination from '../app/articles/Pagination';
+import Pagination from '../articles/Pagination';
 
 export function BlogPosts({ allBlogs }) {
   const { currentPage, totalPages } = allBlogs.pagination;

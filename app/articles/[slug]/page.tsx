@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { CustomMDX } from 'components/mdx';
+import { CustomMDX } from 'app/components/mdx';
 import { formatDate, getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
-import GoBack from 'components/GoBack';
+import GoBack from 'app/components/GoBack';
 export async function generateStaticParams() {
   let posts = getRSSBlogPosts();
 

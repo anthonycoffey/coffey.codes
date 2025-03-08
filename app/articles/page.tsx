@@ -1,4 +1,4 @@
-import { BlogPosts } from 'components/posts';
+import { BlogPosts } from 'app/components/posts';
 import { getBlogPosts } from 'app/articles/utils';
 import { DocumentTextIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';

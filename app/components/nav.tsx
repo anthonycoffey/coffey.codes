@@ -36,20 +36,23 @@ const navItems = {
 };
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
   const pathname = usePathname();
 
   // Close menu on mobile when navigating to a new page
   useEffect(() => {
-    if (window.innerWidth < 768) {
+    if (isMobile) {
       setIsMenuOpen(false);
     }
-  }, [pathname]);
+  }, [pathname, isMobile]);
 
   // Set initial menu state based on screen size
   useEffect(() => {
     const handleResize = () => {
-      setIsMenuOpen(window.innerWidth >= 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setIsMenuOpen(!mobile);
     };
 
     // Call once on mount
@@ -81,31 +84,29 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Navigation items */}
-        {isMenuOpen && (
-          <div className="py-4">
-            <nav className="flex flex-col md:flex-row md:justify-center md:items-center">
-              <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
-                {Object.entries(navItems).map(([path, { name, icon }]) => {
-                  const isActive = path === pathname;
+        {/* Navigation items - Always visible on desktop, toggle on mobile */}
+        <div className={`py-4 ${isMobile && !isMenuOpen ? 'hidden' : 'block'}`}>
+          <nav className="flex flex-col md:flex-row md:justify-center md:items-center">
+            <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
+              {Object.entries(navItems).map(([path, { name, icon }]) => {
+                const isActive = path === pathname;
 
-                  return (
-                    <Link
-                      key={path}
-                      href={path}
-                      className={`flex items-center text-sm transition-all hover:text-gray-300 ${
-                        isActive ? 'font-bold' : 'font-normal'
-                      }`}
-                    >
-                      {icon}
-                      <span>{name}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </nav>
-          </div>
-        )}
+                return (
+                  <Link
+                    key={path}
+                    href={path}
+                    className={`flex items-center text-sm transition-all hover:text-gray-300 ${
+                      isActive ? 'font-bold' : 'font-normal'
+                    }`}
+                  >
+                    {icon}
+                    <span>{name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
       </div>
     </aside>
   );

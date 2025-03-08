@@ -54,7 +54,7 @@ const PortfolioSection: React.FC = () => {
     {
       id: 2,
       title: 'Simply Voice',
-      description: 'Simple Speech-to-Text app',
+      description: 'No Fuss Speech-to-Text app',
       tags: ['React', 'Supabase', 'Firebase', 'Gcloud TTS API'],
       mainImage: 'portfolio/tts-home.jpg',
       gallery: ['portfolio/tts-created.jpg', 'portfolio/tts-history.jpg'],
@@ -203,7 +203,7 @@ const PortfolioSection: React.FC = () => {
                 {/* Main Content - 3 columns */}
                 <div className="lg:col-span-3">
                   {/* Main Image */}
-                  <div className="mb-6 rounded-lg overflow-hidden max-h-80">
+                  <div className="mb-6">
                     <img
                       src={
                         activeImageIndex === 0
@@ -216,7 +216,7 @@ const PortfolioSection: React.FC = () => {
                   </div>
 
                   {/* Thumbnail Gallery */}
-                  <div className="grid grid-cols-5 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     <div
                       className={`cursor-pointer rounded overflow-hidden border-2 ${activeImageIndex === 0 ? 'border-blue-600' : 'border-transparent'}`}
                       onClick={() => setActiveImageIndex(0)}
@@ -224,7 +224,7 @@ const PortfolioSection: React.FC = () => {
                       <img
                         src={selectedProject.mainImage}
                         alt="Main"
-                        className="w-full h-16 object-cover"
+                        className="w-full h-32 object-fit"
                       />
                     </div>
 
@@ -237,7 +237,7 @@ const PortfolioSection: React.FC = () => {
                         <img
                           src={image}
                           alt={`Detail ${index + 1}`}
-                          className="w-full h-16 object-cover"
+                          className="w-full h-32 object-fit"
                         />
                       </div>
                     ))}

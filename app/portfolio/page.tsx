@@ -35,7 +35,7 @@ const PortfolioSection: React.FC = () => {
       title: 'React Drum Machine',
       description: 'A retro-inspired step sequencer built with React.js',
       tags: ['React', 'Node.js', 'Vite', 'Tailwind'],
-      mainImage: 'portfolio/drum-machine.png',
+      mainImage: 'portfolio/drum-machine-2.jpg',
       gallery: [],
       link: 'https://anthonycoffey.github.io/React-Drum-Kit',
       client: 'Hobby Project',
@@ -68,7 +68,7 @@ const PortfolioSection: React.FC = () => {
       challenge:
         'Create a simple web app that allows users to generate .wav files from text input using Google Cloud Text-to-Speech API, with user authentication and storage.',
       solution:
-        'Implemented Supabase for Auth, Storage, and Database. Used Firebase Hosting and Functions for service account management and Gcloud API integration.',
+        'Implemented Supabase for Auth, Storage, and Database. Used Firebase Hosting and Functions for easy service account management and Google Cloud API integration.',
       results: [
         'User authentication and storage with Supabase',
         'Text to Speech conversion using Google Cloud Text-to-Speech API',

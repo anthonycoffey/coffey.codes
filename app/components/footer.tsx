@@ -129,7 +129,7 @@ export default function Footer() {
           ))}
         </ul>
 
-        <div className="relative max-w-xl mx-4 mt-8 lg:mx-auto">
+        <div className="relative right-8 bottom-8">
           <a
             className={`scroll-to-top ${
               showScrollToTop ? 'visible' : 'invisible'

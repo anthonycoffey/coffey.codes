@@ -55,18 +55,23 @@ const PortfolioSection: React.FC = () => {
       id: 2,
       title: 'Simply Voice',
       description: 'No Fuss Speech-to-Text app',
-      tags: ['React', 'Supabase', 'Firebase', 'Gcloud TTS API'],
+      tags: [
+        'React',
+        'Supabase',
+        'Firebase',
+        'Google Cloud Text-to-Speech API',
+      ],
       mainImage: 'portfolio/tts-home.jpg',
       gallery: ['portfolio/tts-created.jpg', 'portfolio/tts-history.jpg'],
       link: 'https://simply-voice-452800.web.app/',
       client: 'Hobby Project',
       challenge:
-        'Create a simple web app that allows users to generate .wav files from text input using Gcloud TTS API, with user authentication and storage.',
+        'Create a simple web app that allows users to generate .wav files from text input using Google Cloud Text-to-Speech API, with user authentication and storage.',
       solution:
         'Implemented Supabase for Auth, Storage, and Database. Used Firebase Hosting and Functions for service account management and Gcloud API integration.',
       results: [
         'User authentication and storage with Supabase',
-        'Text to Speech conversion using Gcloud TTS API',
+        'Text to Speech conversion using Google Cloud Text-to-Speech API',
         'Downloadable .wav files',
         'History feature to view, play, download, or delete generated files',
       ],
@@ -333,7 +338,7 @@ const PortfolioSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gray-800 p-6 rounded-lg text-white">
+                  <div className="bg-gray-800 p-6 rounded-lg text-white ">
                     <h4 className="text-lg font-bold mb-4">
                       Interested in a similar solution?
                     </h4>

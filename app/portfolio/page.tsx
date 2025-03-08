@@ -51,6 +51,28 @@ const PortfolioSection: React.FC = () => {
       year: '2025',
       featured: true,
     },
+    {
+      id: 2,
+      title: 'Simply Voice',
+      description: 'A simple Speech to Text web app powered by Gcloud TTS API',
+      tags: ['React', 'Supabase', 'Firebase', 'Gcloud TTS API'],
+      mainImage: 'portfolio/tts-home.jpg',
+      gallery: ['portfolio/tts-created.jpg', 'portfolio/tts-history.jpg'],
+      link: 'https://simply-voice-452800.web.app/',
+      client: 'Hobby Project',
+      challenge:
+        'Create a simple web app that allows users to generate .wav files from text input using Gcloud TTS API, with user authentication and storage.',
+      solution:
+        'Implemented Supabase for Auth, Storage, and Database. Used Firebase Hosting and Functions for service account management and Gcloud API integration.',
+      results: [
+        'User authentication and storage with Supabase',
+        'Text to Speech conversion using Gcloud TTS API',
+        'Downloadable .wav files',
+        'History feature to view, play, download, or delete generated files',
+      ],
+      year: '2025',
+      featured: true,
+    },
   ];
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -89,7 +111,7 @@ const PortfolioSection: React.FC = () => {
           {displayedProjects.map((project) => (
             <div
               key={project.id}
-              className="bg-gray-50 rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg cursor-pointer"
+              className="border bg-gray-50 rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg cursor-pointer"
               onClick={() => openProject(project)}
             >
               <div className="h-64 overflow-hidden">
@@ -130,7 +152,7 @@ const PortfolioSection: React.FC = () => {
         </div>
 
         {/* View More/Less Button */}
-        {!showAllProjects && (
+        {/* {!showAllProjects && (
           <div className="text-center mb-12">
             <button
               onClick={() => setShowAllProjects(!showAllProjects)}
@@ -139,7 +161,7 @@ const PortfolioSection: React.FC = () => {
               {showAllProjects ? 'Show Featured Projects' : 'View All Projects'}
             </button>
           </div>
-        )}
+        )} */}
 
         {/* Project Detail Modal */}
         {selectedProject && (
@@ -181,7 +203,7 @@ const PortfolioSection: React.FC = () => {
                 {/* Main Content - 3 columns */}
                 <div className="lg:col-span-3">
                   {/* Main Image */}
-                  <div className="mb-6 rounded-lg overflow-hidden">
+                  <div className="mb-6 rounded-lg overflow-hidden max-h-80">
                     <img
                       src={
                         activeImageIndex === 0
@@ -189,7 +211,7 @@ const PortfolioSection: React.FC = () => {
                           : selectedProject.gallery[activeImageIndex - 1]
                       }
                       alt={selectedProject.title}
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-fit"
                     />
                   </div>
 

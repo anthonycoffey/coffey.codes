@@ -33,7 +33,7 @@ export default function Page() {
     {
       id: 'hero',
       background: 'bg-white',
-      maxWidth: 'max-w-5xl',
+      maxWidth: 'max-w-4xl',
       content: (
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
           <div>
@@ -48,7 +48,7 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
                 href="/contact"
-                className="px-6 py-3 text-base rounded-md text-white bg-blue-600 font-medium no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
+                className="px-6 py-3 text-base text-center rounded-md text-white bg-blue-600 font-medium no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
               >
                 <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
                 Start Your Project
@@ -56,14 +56,14 @@ export default function Page() {
               <a
                 target="_blank"
                 href="https://calendly.com/antcoffpersonal/meet"
-                className="px-6 py-3 border border-blue-600 text-base rounded-md text-blue-600 bg-white no-underline flex items-center justify-center hover:bg-blue-50 transition-colors"
+                className="px-6 py-3 border border-blue-600 text-base text-center rounded-md text-blue-600 bg-white no-underline flex items-center justify-center hover:bg-blue-50 transition-colors"
               >
                 <CalendarDaysIcon className="mr-2 h-5 w-5" />
                 Book Free Consultation
               </a>
             </div>
           </div>
-          <div className="hidden md:flex justify-center md:justify-end">
+          <div className="hidden md:flex justify-center md:justify-end mr-2">
             <div className="relative w-64 h-64 md:w-72 md:h-72">
               <Image
                 width={330}

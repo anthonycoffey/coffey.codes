@@ -6,7 +6,6 @@ import {
   ChevronRightIcon,
   PauseIcon,
   PlayIcon,
-  QuoteIcon,
 } from '@heroicons/react/24/solid';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -14,33 +13,27 @@ const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
-  const autoPlayRef = useRef(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const testimonials = [
     {
       text: 'Anthony is highly professional, has a great sense of urgency and over-delivered on my project. He was very responsive on some tight deadlines and helped me resolve multiple WordPress site improvements and optimization. I highly recommend Anthony. His work and finished product was my best Upwork/Elance experience to date.',
       author: 'Doug Wilks',
-      role: 'Founder',
       link: 'strengthslauncher.com',
     },
     {
       text: 'Fantastic work! Anthony had my site up and running within a few hours. Extremely professional and highly recommended. I will definitely do business with him again in the future. Thanks again!',
-      author: 'Jonathan',
-      role: 'Owner, Plane Schemer LLC',
+      author: 'Jonathan Schemer',
       link: 'planeschemer.com',
-      avatar: '/api/placeholder/40/40',
     },
     {
       text: 'Anthony was awesome. He did a great job. He has a good command of the required skills and what he did not have at the tip of his fingers - he took the time to research and was a quick study. Takes instruction well - no ego issues. Just wants the job done well. I recommend him for your next gig!',
       author: 'YourWorkBuddy',
-      role: 'Client',
-      avatar: '/api/placeholder/40/40',
+      link: 'yourworkbuddy.com',
     },
     {
       text: "Anthony was AWESOME to work with. He got the job done quickly and actually communicated with me regularly. I was pleasantly surprised to finally find a programmer that knew what he was talking about. I'll definitely be using Anthony again in the future.",
       author: 'Doug Hermansen',
-      role: 'Client',
-      avatar: '/api/placeholder/40/40',
     },
   ];
 
@@ -215,11 +208,6 @@ const Testimonials = () => {
                     <div className="font-medium text-white text-lg">
                       {testimonials[currentIndex].author}
                     </div>
-                    {testimonials[currentIndex].role && (
-                      <div className="text-sm font-light text-blue-300">
-                        {testimonials[currentIndex].role}
-                      </div>
-                    )}
                   </div>
 
                   {testimonials[currentIndex].link && (

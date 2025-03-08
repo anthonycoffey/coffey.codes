@@ -42,7 +42,7 @@ const PortfolioSection: React.FC = () => {
       challenge:
         'Originally built in 2016, this drum kit needed an update to become a fully functional step sequencer drum machine.',
       solution:
-        'Implemented Howler.js for audio playback and used a 2D array to manage the step sequencer functionality.',
+        'Implemented Howler.js for audio playback and used a two-dimensional array to manage the step sequencer functionality.',
       results: [
         'Fully functional step sequencer with tempo and volume controls',
         'Includes a demo pattern',

@@ -54,7 +54,7 @@ const PortfolioSection: React.FC = () => {
     {
       id: 2,
       title: 'Simply Voice',
-      description: 'A simple Speech to Text web app powered by Gcloud TTS API',
+      description: 'Simple Speech-to-Text app',
       tags: ['React', 'Supabase', 'Firebase', 'Gcloud TTS API'],
       mainImage: 'portfolio/tts-home.jpg',
       gallery: ['portfolio/tts-created.jpg', 'portfolio/tts-history.jpg'],

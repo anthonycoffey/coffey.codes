@@ -368,7 +368,7 @@ const PortfolioSection: React.FC = () => {
         )}
 
         {/* CTA Section */}
-        <div className="bg-blue-600 p-8 rounded-lg text-white">
+        {/* <div className="bg-blue-600 p-8 rounded-lg text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
             Ready to Build Your Next Great Project?
           </h2>
@@ -392,7 +392,7 @@ const PortfolioSection: React.FC = () => {
               Book Free Consultation
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

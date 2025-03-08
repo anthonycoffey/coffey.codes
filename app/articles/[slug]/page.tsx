@@ -89,7 +89,7 @@ export default function Blog({ params }) {
       <div className="flex justify-between items-center text-sm">
         <p className="text-sm">{formatDate(post.metadata.publishedAt)}</p>
       </div>
-      <article className="prose prose-lg xl:prose-xl">
+      <article className="mx-auto prose prose-lg xl:prose-xl">
         <CustomMDX source={post.content} />
       </article>
       <GoBack />

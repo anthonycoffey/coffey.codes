@@ -12,6 +12,8 @@ import {
   BriefcaseIcon,
 } from '@heroicons/react/20/solid';
 
+import Image from 'next/image';
+
 const navItems = {
   '/': {
     name: 'home',
@@ -68,7 +70,13 @@ export function Navbar() {
         {/* Logo and mobile menu button */}
         <div className="flex items-center justify-between md:justify-center">
           <Link href="/" className="block">
-            <img src="/logo-horizontal.svg" alt="logo" className="h-16" />
+            <Image
+              width={300}
+              height={82}
+              src="/logo-horizontal.svg"
+              alt="logo"
+              className="h-16"
+            />
           </Link>
 
           <button

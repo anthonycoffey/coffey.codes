@@ -7,9 +7,8 @@ import {
   RssIcon,
   ArrowUpCircleIcon,
   CodeBracketIcon,
-  ClipboardDocumentCheckIcon,
-  BriefcaseIcon,
 } from '@heroicons/react/20/solid';
+import Image from 'next/image';
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -91,7 +90,13 @@ export default function Footer() {
 
       <div className="flex justify-center mt-8">
         <a href="/">
-          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+          <Image
+            width={300}
+            height={82}
+            src="/logo-horizontal.svg"
+            alt="logo"
+            className="h-20"
+          />
         </a>
       </div>
       <div className="justify-center mt-8 flex items-center space-x-2">

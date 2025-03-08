@@ -33,19 +33,19 @@ const PortfolioSection: React.FC = () => {
     {
       id: 1,
       title: 'React Drum Machine',
-      description: 'Retro-inspired step sequencer built with React.js',
+      description: 'A retro-inspired step sequencer built with React.js',
       tags: ['React', 'Node.js', 'Vite', 'Tailwind'],
       mainImage: 'portfolio/drum-machine.png',
       gallery: [],
       link: 'https://anthonycoffey.github.io/React-Drum-Kit',
       client: 'Hobby Project',
       challenge:
-        'Back in 2016, I built a drum kit using React. Recently, I updated it to be a fully functional step sequencer.',
+        'Originally built in 2016, this drum kit needed an update to become a fully functional step sequencer drum machine.',
       solution:
-        'I utilized Howler.js for audio playback and a 2d array to manage the step sequencer functionality.',
+        'Implemented Howler.js for audio playback and used a 2D array to manage the step sequencer functionality.',
       results: [
-        'Fully functional step sequencer, with tempo and volume controls',
-        'Can load demo pattern',
+        'Fully functional step sequencer with tempo and volume controls',
+        'Includes a demo pattern',
         'Reset button for easy restarting',
       ],
       year: '2025',

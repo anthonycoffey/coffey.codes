@@ -80,7 +80,7 @@ export default async function Page({ searchParams }) {
     <section>
       <div className="page-content">
         <div className="border-b pb-4 mb-8">
-          <h1 className="font-semibold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
             <ClipboardDocumentCheckIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Case Studies
           </h1>

@@ -17,13 +17,16 @@ export default async function Page({ searchParams }) {
 
   return (
     <section className="article-page">
-      <h1 className="font-semibold text-2xl lg:text-3xl tracking-tighter">
-        <DocumentTextIcon className="w-6 h-6 inline mr-2" /> Articles
-      </h1>
-      <p className="mb-4">
-        Unpacking the strategies, challenges, and breakthroughs in software
-        development, project management, and cloud technology.
-      </p>
+      <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
+        <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+          <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+          Articles
+        </h1>
+        <p className="text-gray-600">
+          Unpacking the strategies, challenges, and breakthroughs in software
+          development, project management, and cloud technology.
+        </p>
+      </div>
       <BlogPosts allBlogs={allBlogs} />
     </section>
   );

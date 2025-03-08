@@ -1,5 +1,6 @@
 import ContactForm from '../../components/ContactForm';
 import {
+  ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
   EnvelopeIcon,
   PhoneIcon,
@@ -17,9 +18,19 @@ export default async function Page({ searchParams }) {
   return (
     <section className="contact-page">
       <div className="page-content">
-        <div className="text-center mb-10">
+        {/* <div className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
+            Have a project in mind or need technical expertise? I'm here to help
+            turn your ideas into reality.
+          </p>
+        </div> */}
+        <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
+          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+            <ChatBubbleOvalLeftIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+            Contact Me
+          </h1>
+          <p className="text-gray-600">
             Have a project in mind or need technical expertise? I'm here to help
             turn your ideas into reality.
           </p>

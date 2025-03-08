@@ -10,7 +10,7 @@ export function BlogPosts({ allBlogs }) {
       {allBlogs.posts.map((post) => (
         <Link
           key={post.slug}
-          className="block p-6 mt-4 bg-white rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
+          className="block p-6 mb-4 bg-white rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
           href={`/articles/${post.slug}`}
         >
           <div className="w-full flex flex-col space-y-2">

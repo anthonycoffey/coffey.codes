@@ -288,6 +288,19 @@ const PortfolioSection: React.FC = () => {
 
                     <div className="space-y-4">
                       <div>
+                        {selectedProject.link && (
+                          <a
+                            href={selectedProject.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 text-base rounded-md font-medium no-underline flex items-center justify-center  transition-colors"
+                          >
+                            <ArrowTopRightOnSquareIcon className="mr-2 h-5 w-5" />
+                            View Live Project
+                          </a>
+                        )}
+                      </div>
+                      <div>
                         <p className="font-medium text-gray-700 mb-1">
                           Client:
                         </p>
@@ -347,18 +360,6 @@ const PortfolioSection: React.FC = () => {
                         <CalendarDaysIcon className="mr-2 h-5 w-5" />
                         Schedule Consultation
                       </a>
-
-                      {selectedProject.link && (
-                        <a
-                          href={selectedProject.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full px-6 py-3 border border-gray-500 text-base rounded-md text-white bg-transparent font-medium no-underline flex items-center justify-center hover:bg-gray-700 transition-colors"
-                        >
-                          <ArrowTopRightOnSquareIcon className="mr-2 h-5 w-5" />
-                          View Live Project
-                        </a>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -368,7 +369,7 @@ const PortfolioSection: React.FC = () => {
         )}
 
         {/* CTA Section */}
-        {/* <div className="bg-blue-600 p-8 rounded-lg text-white">
+        <div className="bg-blue-600 p-8 rounded-lg text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
             Ready to Build Your Next Great Project?
           </h2>
@@ -392,7 +393,7 @@ const PortfolioSection: React.FC = () => {
               Book Free Consultation
             </a>
           </div>
-        </div> */}
+        </div>
       </div>
     </section>
   );

@@ -12,6 +12,7 @@ import {
   ArrowDownTrayIcon,
 } from '@heroicons/react/20/solid';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -55,42 +56,44 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-900 text-white">
-      {/* CTA Section */}
-      <div className="bg-blue-600 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
-            Ready to Transform Your Business?
-          </h2>
-          <p className="text-center text-xl mb-10 text-blue-100">
-            Let's discuss how tech can solve your challenges and drive growth
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="/contact"
-              className="px-6 py-3 text-base rounded-md text-blue-600 bg-white font-medium no-underline flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
-              Start a Conversation
-            </a>
-            <a
-              target="_blank"
-              href="https://calendly.com/antcoffpersonal/meet"
-              className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
-              <CalendarDaysIcon className="mr-2 h-5 w-5" />
-              Schedule 30-Min Consultation
-            </a>
-            <a
-              target="_blank"
-              href="/Anthony%20Coffey%20-%20Resume.pdf"
-              className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
-              <ArrowDownTrayIcon className="mr-2 h-5 w-5" />
-              Download Resume
-            </a>
+      {/* CTA Section - Hidden on portfolio page */}
+      {usePathname() !== '/portfolio' && (
+        <div className="bg-blue-600 py-12">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-center text-xl mb-10 text-blue-100">
+              Let's discuss how tech can solve your challenges and drive growth
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="/contact"
+                className="px-6 py-3 text-base rounded-md text-blue-600 bg-white font-medium no-underline flex items-center justify-center hover:bg-gray-100 transition-colors"
+              >
+                <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
+                Start a Conversation
+              </a>
+              <a
+                target="_blank"
+                href="https://calendly.com/antcoffpersonal/meet"
+                className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
+              >
+                <CalendarDaysIcon className="mr-2 h-5 w-5" />
+                Schedule 30-Min Consultation
+              </a>
+              <a
+                target="_blank"
+                href="/Anthony%20Coffey%20-%20Resume.pdf"
+                className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
+              >
+                <ArrowDownTrayIcon className="mr-2 h-5 w-5" />
+                Download Resume
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Original Footer Content */}
       <div className="py-12">

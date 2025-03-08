@@ -16,110 +16,24 @@ const PortfolioSection = () => {
   const portfolioProjects = [
     {
       id: 1,
-      title: 'E-Commerce Platform Overhaul',
-      description:
-        'Complete redesign and development of an e-commerce system, focusing on performance optimization and improved conversion rates.',
-      tags: ['React', 'Node.js', 'AWS', 'Redis'],
-      mainImage: '/api/placeholder/800/500',
-      gallery: [
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-      ],
-      link: 'https://example.com/project1',
-      client: 'Retail Solutions Inc.',
+      title: 'React Drum Machine',
+      description: 'Retro-inspired step sequencer built with React.js',
+      tags: ['React', 'Node.js', 'Vite', 'Tailwind'],
+      mainImage: 'portfolio/drum-machine.png',
+      gallery: [],
+      link: 'https://anthonycoffey.github.io/React-Drum-Kit',
+      client: 'Hobby Project',
       challenge:
-        "The client's existing platform was struggling with scalability issues during peak sales periods, resulting in lost revenue and customer frustration.",
+        'Back in 2016, I built a drum kit using React. Recently, I updated it to be a fully functional step sequencer.',
       solution:
-        'Implemented a microservices architecture with Redis caching, AWS auto-scaling, and optimized React frontend to handle 10x the previous traffic volume.',
+        'I utilized Howler.js for audio playback and a 2d array to manage the step sequencer functionality.',
       results: [
-        '53% improvement in page load times',
-        '27% increase in conversion rate',
-        '99.99% uptime during Black Friday sales event',
+        'Fully functional step sequencer, with tempo and volume controls',
+        'Can load demo pattern',
+        'Reset button for easy restarting',
       ],
-      year: '2023',
+      year: '2025',
       featured: true,
-    },
-    {
-      id: 2,
-      title: 'Healthcare Data Integration System',
-      description:
-        'Secure data integration platform connecting multiple healthcare providers with real-time patient information sharing capabilities.',
-      tags: ['Python', 'Django', 'PostgreSQL', 'Docker'],
-      mainImage: '/api/placeholder/800/500',
-      gallery: [
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-      ],
-      link: 'https://example.com/project2',
-      client: 'Regional Medical Network',
-      challenge:
-        'Disparate systems across multiple healthcare facilities were causing delays in patient care and creating data silos.',
-      solution:
-        'Built a HIPAA-compliant centralized data platform with secure APIs and real-time synchronization across facilities.',
-      results: [
-        'Reduced patient transfer times by 62%',
-        'Eliminated duplicate testing by 47%',
-        'Improved overall patient satisfaction scores by 28%',
-      ],
-      year: '2023',
-      featured: true,
-    },
-    {
-      id: 3,
-      title: 'AI-Powered Financial Analysis Tool',
-      description:
-        'Machine learning solution for financial data analysis and automated reporting, providing predictive insights for investment decisions.',
-      tags: ['Python', 'TensorFlow', 'React', 'AWS'],
-      mainImage: '/api/placeholder/800/500',
-      gallery: [
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-      ],
-      link: 'https://example.com/project3',
-      client: 'Investment Management Firm',
-      challenge:
-        "Manual analysis of financial data was time-consuming and prone to human error, limiting the firm's ability to make timely investment decisions.",
-      solution:
-        'Developed an AI-powered platform that automates data collection, performs advanced analytics, and generates actionable insights.',
-      results: [
-        '85% reduction in analysis time',
-        '22% improvement in investment performance',
-        'Expanded client portfolio by 40% within one year',
-      ],
-      year: '2022',
-      featured: false,
-    },
-    {
-      id: 4,
-      title: 'Enterprise Resource Planning System',
-      description:
-        'Custom ERP solution for manufacturing business with integrated inventory management, production scheduling, and financial reporting.',
-      tags: ['C#', '.NET Core', 'SQL Server', 'Azure'],
-      mainImage: '/api/placeholder/800/500',
-      gallery: [
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-        '/api/placeholder/600/400',
-      ],
-      link: 'https://example.com/project4',
-      client: 'Global Manufacturing Corp',
-      challenge:
-        'Inefficient processes and lack of system integration were causing production delays and inventory management issues.',
-      solution:
-        "Built a comprehensive ERP system tailored to the client's specific manufacturing processes with real-time dashboards and reporting.",
-      results: [
-        '32% reduction in production lead times',
-        '18% decrease in inventory carrying costs',
-        'Improved forecast accuracy from 65% to 91%',
-      ],
-      year: '2022',
-      featured: false,
     },
   ];
 

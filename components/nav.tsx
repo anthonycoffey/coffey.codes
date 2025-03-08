@@ -17,18 +17,19 @@ const navItems = {
     name: 'home',
     icon: <HomeIcon className="h-4 w-4 ml-1" />,
   },
+  '/portfolio': {
+    name: 'portfolio',
+    icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
+  },
   '/articles': {
     name: 'articles',
     icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
   },
+
   '/case-studies': {
     name: 'case studies',
     icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
   },
-  // '/portfolio': {
-  //   name: 'portfolio',
-  //   icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
-  // },
   '/contact': {
     name: 'contact',
     icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,

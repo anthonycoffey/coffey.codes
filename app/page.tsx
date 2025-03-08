@@ -66,9 +66,6 @@ export default function Page() {
                 Book Free Consultation
               </a>
             </div>
-            <div className="hidden md:block">
-              <SocialIcons />
-            </div>
           </div>
           <div className="hidden md:flex justify-center md:justify-end">
             <div className="relative w-64 h-64 md:w-72 md:h-72">

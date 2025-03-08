@@ -66,11 +66,11 @@ export default function Page() {
                 Book Free Consultation
               </a>
             </div>
-            <div>
+            <div className="hidden md:block">
               <SocialIcons />
             </div>
           </div>
-          <div className="flex justify-center md:justify-end">
+          <div className="hidden md:flex justify-center md:justify-end">
             <div className="relative w-64 h-64 md:w-72 md:h-72">
               <Image
                 width={330}
@@ -291,7 +291,7 @@ export default function Page() {
         </div>
 
         {/* Testimonials */}
-        <div>
+        <div className="max-w-md mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center text-gray-900">
             Don't Just Take My Word For It!
           </h2>

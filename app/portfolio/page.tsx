@@ -73,7 +73,7 @@ const PortfolioSection: React.FC = () => {
 
   return (
     <section>
-      <div className="page-content pt-8">
+      <div className="page-content">
         {/* Portfolio Section Header */}
 
         <div className="border-b pb-4 mb-8 max-w-6xl mx-auto">

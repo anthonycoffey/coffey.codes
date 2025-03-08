@@ -5,7 +5,7 @@ import {
   PhoneIcon,
   MapPinIcon,
 } from '@heroicons/react/24/outline';
-import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid';
+import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 
 export const metadata = {
   title: 'Contact | Get in Touch',
@@ -26,7 +26,7 @@ export default async function Page({ searchParams }) {
         </div> */}
         <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
-            <ChatBubbleOvalLeftIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+            <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Contact Me
           </h1>
           <p className="text-gray-600">

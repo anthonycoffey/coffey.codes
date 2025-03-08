@@ -1,42 +1,102 @@
-import ContactForm from '../components/ContactForm';
-import { CalendarDaysIcon } from '@heroicons/react/24/solid';
+import ContactForm from '../../components/ContactForm';
+import {
+  CalendarDaysIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export const metadata = {
-  title: 'Contact',
-  description: 'Need a hand with a project? Get in touch with me here.',
+  title: 'Contact | Get in Touch',
+  description:
+    "Need assistance with a project or have a question? Reach out and let's discuss how I can help you achieve your goals.",
 };
 
 export default async function Page({ searchParams }) {
   return (
     <section className="contact-page">
-      <div className="page-content flex flex-col">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 mt-6 text-center">
-            Send a Message
-          </h1>
-          <p className="mb-4 text-center px-6">
-            Fill out the form below and send a message straight to my inbox! 🎯
+      <div className="page-content">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Have a project in mind or need technical expertise? I'm here to help
+            turn your ideas into reality.
           </p>
+        </div>
 
+        {/* Calendar Section - First */}
+        <div className="bg-blue-50 border border-blue-100 rounded-lg shadow-sm p-6 md:p-8 mb-8">
+          <div className="flex items-center mb-4">
+            <CalendarDaysIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
+            <h2 className="text-xl font-semibold text-blue-800">
+              Schedule a Free Consultation
+            </h2>
+          </div>
+          <p className="text-blue-700 mb-6">
+            The fastest way to discuss your project is to book a free 30-minute
+            consultation. We can discuss your needs and determine if my
+            expertise is the right fit for your goals.
+          </p>
+          <div className="flex justify-center">
+            <a
+              href="https://calendly.com/antcoffpersonal/meet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition-colors"
+            >
+              <CalendarDaysIcon className="h-5 w-5 mr-2" />
+              Book Your Free Session
+            </a>
+          </div>
+        </div>
+
+        {/* Contact Form Section - Second */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+          <div className="flex items-center mb-4">
+            <EnvelopeIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
+            <h2 className="text-xl font-semibold">Send a Message</h2>
+          </div>
+          <p className="text-gray-600 mb-6">
+            Prefer to send a message? Fill out the form below to contact me
+            directly. I typically respond to all inquiries within 24 hours.
+          </p>
           <ContactForm />
         </div>
-        <div className="p-6 md:p-10 mt-6 flex flex-col justify-center items-center bg-gray-100 rounded">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0 text-blue-500 text-center">
-            Schedule Your Free Consultation!
-          </h1>
-          <p className="mb-4 text-gray-600 text-center px-6">
-            Check out my availability and book a time that suits you!
-          </p>
-          <a
-            href="https://calendly.com/antcoffpersonal/meet"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="flex justify-center items-center bg-blue-500 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline cursor-pointer">
-              <CalendarDaysIcon className="mr-4 h-6 w-6" />
-              Book Now
-            </button>
-          </a>
+
+        {/* Additional Contact Info */}
+        <div className="bg-gray-50 rounded-lg p-6 mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold">Contact Information</h2>
+            <p className="text-gray-600">
+              Interested in connecting? Feel free to reach out!
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <PhoneIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Phone</h3>
+              <p className="text-gray-600">(737) 932-4565</p>
+            </div>
+
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <EnvelopeIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Email</h3>
+              <p className="text-gray-600">anthony@coffey.codes</p>
+            </div>
+
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <MapPinIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Location</h3>
+              <p className="text-gray-600">Austin, Texas</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

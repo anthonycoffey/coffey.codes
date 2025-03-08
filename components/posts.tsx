@@ -1,26 +1,26 @@
 import Link from 'next/link';
 import { formatDate } from 'app/articles/utils';
-import Pagination from '../articles/Pagination';
+import Pagination from '../app/articles/Pagination';
 
 export function BlogPosts({ allBlogs }) {
   const { currentPage, totalPages } = allBlogs.pagination;
 
   return (
-    <div>
+    <div className="space-y-8">
       {allBlogs.posts.map((post) => (
         <Link
           key={post.slug}
-          className="flex flex-col mb-4"
+          className="block p-6 mt-4 bg-white rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
           href={`/articles/${post.slug}`}
         >
-          <div className="w-full flex flex-col">
-            <p className="text-neutral-100 tracking-tight font-bold underline text-xl">
+          <div className="w-full flex flex-col space-y-2">
+            <p className="text-2xl font-bold text-gray-900">
               {post.metadata.title}
             </p>
-            <p className="text-neutral-400 m-0 italic">
+            <p className="text-sm text-gray-500">
               {formatDate(post.metadata.publishedAt, false)}
             </p>
-            <p className="mt-1">{post.metadata.summary}</p>
+            <p className="text-base text-gray-700">{post.metadata.summary}</p>
           </div>
         </Link>
       ))}

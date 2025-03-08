@@ -26,7 +26,7 @@ article
   @apply prose-lg xl:prose-xl 2xl:prose-2xl
 
 .prose .anchor
-  @apply absolute invisible no-underline text-neutral-200
+  @apply absolute invisible no-underline
   margin-left: -1em
   padding-right: 0.5em
   width: 80%
@@ -37,12 +37,11 @@ article
   @apply visible underline
 
 .prose a
-  @apply underline transition-all text-neutral-200 underline-offset-2 decoration-[0.1em]
+  @apply underline transition-all underline-offset-2 decoration-[0.1em]
   &:hover
-    @apply text-neutral-100 no-underline
+    @apply no-underline
 
 .prose .anchor:after
-  @apply text-neutral-200
   content: '#'
 
 .prose *:hover > .anchor
@@ -66,28 +65,28 @@ article
   @apply m-0
 
 .prose p
-  @apply my-4 text-neutral-200
+  @apply my-4
 
 .prose h1
-  @apply text-4xl font-semibold tracking-tight mt-6 mb-2 text-neutral-200
+  @apply text-4xl font-semibold tracking-tight mt-6 mb-2
 
 .prose h2
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2 text-neutral-200
+  @apply text-xl font-semibold tracking-tight mt-6 mb-2
 
 .prose h3
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2 text-neutral-300 underline
+  @apply text-xl font-semibold tracking-tight mt-6 mb-2
 
 .prose h4
-  @apply text-lg font-semibold tracking-tight mt-6 mb-2 text-neutral-300
+  @apply text-lg font-semibold tracking-tight mt-6 mb-2
 
 .prose strong
-  @apply font-semibold text-neutral-200
+  @apply font-semibold
 
 .prose ul
   @apply list-disc pl-6
 
 .prose li
-  @apply text-neutral-200
+  
 
 .prose ol
   @apply list-decimal pl-6

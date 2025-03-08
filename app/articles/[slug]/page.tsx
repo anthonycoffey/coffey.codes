@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { CustomMDX } from 'app/components/mdx';
+import { CustomMDX } from 'components/mdx';
 import { formatDate, getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
-import GoBack from 'app/components/GoBack';
+import GoBack from 'components/GoBack';
 export async function generateStaticParams() {
   let posts = getRSSBlogPosts();
 
@@ -87,9 +87,7 @@ export default function Blog({ params }) {
         {post.metadata.title}
       </h1>
       <div className="flex justify-between items-center text-sm">
-        <p className="text-sm text-neutral-300">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
+        <p className="text-sm">{formatDate(post.metadata.publishedAt)}</p>
       </div>
       <article className="prose prose-lg xl:prose-xl">
         <CustomMDX source={post.content} />

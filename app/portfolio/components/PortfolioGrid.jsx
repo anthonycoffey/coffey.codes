@@ -19,7 +19,7 @@ export default function PortfolioGrid({ items }) {
             <h2 className="text-lg font-semibold text-white mb-2">
               {item.title}
             </h2>
-            <p className="text-neutral-400">{item.description}</p>
+            <p className="">{item.description}</p>
           </button>
         ))}
       </div>
@@ -35,13 +35,35 @@ export default function PortfolioGrid({ items }) {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-3 right-3 text-neutral-400 hover:text-white"
+              className="absolute top-3 right-3 hover:text-white"
               onClick={closeModal}
             >
               ✕
             </button>
             <h2 className="text-xl font-bold mb-4">{selectedItem.title}</h2>
-            <p className="text-neutral-300 mb-4">{selectedItem.details}</p>
+            <p className="mb-4">{selectedItem.details}</p>
+
+            <div className="flex flex-col justify-center items-center">
+              {selectedItem?.projectUrl && (
+                <a
+                  href={selectedItem.projectUrl}
+                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                  target="_blank"
+                >
+                  View Project
+                </a>
+              )}
+
+              {selectedItem?.githubUrl && (
+                <a
+                  href={selectedItem.githubUrl}
+                  className="bg-transparent text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                  target="_blank"
+                >
+                  View Source Code
+                </a>
+              )}
+            </div>
             {selectedItem?.playStoreLink && (
               <>
                 <a

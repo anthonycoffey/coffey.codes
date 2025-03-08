@@ -52,8 +52,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mb-16">
-      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 text-neutral-100 md:justify-center">
+    <footer className="bg-gray-900 py-12 text-white">
+      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 md:justify-center">
         {links.map((link, index) => (
           <li key={index}>
             <a
@@ -88,7 +88,13 @@ export default function Footer() {
           </p>
         </a>
       </div>
-      <div className="justify-center mt-8 text-neutral-200 flex items-center space-x-2">
+
+      <div className="flex justify-center mt-8">
+        <a href="/">
+          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
+        </a>
+      </div>
+      <div className="justify-center mt-8 flex items-center space-x-2">
         <span>© {new Date().getFullYear()} </span>
         <span> &#183; </span>
         <a
@@ -101,12 +107,6 @@ export default function Footer() {
           <CodeBracketIcon className="h-4 w-4 ml-1" />
         </a>
       </div>
-      <div className="flex justify-center mt-8">
-        <a href="/">
-          <img src="/logo-horizontal.svg" alt="logo" className="h-20" />
-        </a>
-      </div>
-      <div className="flex justify-center mt-8"></div>
     </footer>
   );
 }

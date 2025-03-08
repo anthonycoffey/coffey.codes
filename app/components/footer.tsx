@@ -10,6 +10,8 @@ import {
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
   ArrowDownTrayIcon,
+  BriefcaseIcon,
+  ClipboardDocumentCheckIcon,
 } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -38,6 +40,11 @@ export default function Footer() {
       icon: <HomeIcon className="h-4 w-4 ml-1" />,
     },
     {
+      href: '/portfolio',
+      text: 'portfolio',
+      icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
+    },
+    {
       href: '/articles',
       text: 'articles',
       icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
@@ -46,6 +53,11 @@ export default function Footer() {
       href: '/contact',
       text: 'contact',
       icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,
+    },
+    {
+      href: '/case-studies',
+      text: 'case studies',
+      icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
     },
     {
       href: '/rss',

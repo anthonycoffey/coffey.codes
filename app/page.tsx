@@ -288,7 +288,7 @@ export default function Page() {
         </div>
 
         {/* Testimonials */}
-        <div className="max-w-md mx-auto">
+        <div className="max-w-lg mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center text-gray-900">
             Don't Just Take My Word For It!
           </h2>

@@ -152,7 +152,7 @@ export default function Page() {
             </div>
 
             {/* Application Development */}
-            <div className="border-b md:border-r border-gray-200 p-6 hover:bg-blue-50 transition-colors">
+            <div className="border-b border-gray-200 p-6 hover:bg-blue-50 transition-colors">
               <div className="flex items-center mb-3">
                 <CodeBracketIcon className="h-6 w-6 text-blue-600 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900">
@@ -180,7 +180,7 @@ export default function Page() {
             </div>
 
             {/* AI/ML Integration */}
-            <div className="border-b border-gray-200 p-6 hover:bg-blue-50 transition-colors">
+            <div className="border-b lg:border-r border-gray-200 p-6 hover:bg-blue-50 transition-colors">
               <div className="flex items-center mb-3">
                 <AdjustmentsHorizontalIcon className="h-6 w-6 text-blue-600 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900">
@@ -194,7 +194,7 @@ export default function Page() {
             </div>
 
             {/* DevOps Implementation */}
-            <div className="md:border-l border-gray-200 p-6 hover:bg-blue-50 transition-colors">
+            <div className="border-b border-gray-200 p-6 hover:bg-blue-50 transition-colors">
               <div className="flex items-center mb-3">
                 <CommandLineIcon className="h-6 w-6 text-blue-600 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900">
@@ -206,7 +206,7 @@ export default function Page() {
               </p>
             </div>
 
-            {/* CTA Area - spans 2 cells */}
+            {/* CTA Area - spans 3 cells */}
             <div className="col-span-1 lg:col-span-3 bg-gray-50 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-gray-800 font-medium">
                 Ready to transform your business?

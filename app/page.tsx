@@ -9,18 +9,15 @@ import {
   CheckCircleIcon,
   BoltIcon,
   ShieldCheckIcon,
-  CubeTransparentIcon,
-  ArrowRightIcon,
   CodeBracketIcon,
   ServerIcon,
-  Cog6ToothIcon,
   CommandLineIcon,
   AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Anthony Coffey | Software Solutions for Business | Austin, Texas',
+  title: 'Anthony Coffey - Full Stack Software Engineer | Austin, Texas',
   description:
     'Expert software development and consulting services - building scalable, secure, and high-performance applications for businesses of all sizes.',
 };

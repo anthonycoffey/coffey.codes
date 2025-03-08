@@ -114,12 +114,12 @@ export default function Page() {
                 Transform sluggish systems into lightning-fast solutions that
                 scale with your business growth.
               </p>
-              <a
+              {/* <a
                 href="/optimization"
                 className="text-blue-600 font-medium flex items-center text-sm hover:text-blue-800"
               >
                 Learn more <ArrowRightIcon className="h-3 w-3 ml-1" />
-              </a>
+              </a> */}
             </div>
 
             {/* Security Hardening */}
@@ -134,12 +134,12 @@ export default function Page() {
                 Protect your business with enterprise-grade security practices
                 and compliance-ready architecture.
               </p>
-              <a
+              {/* <a
                 href="/security"
                 className="text-blue-600 font-medium flex items-center text-sm hover:text-blue-800"
               >
                 Learn more <ArrowRightIcon className="h-3 w-3 ml-1" />
-              </a>
+              </a> */}
             </div>
 
             {/* Application Development */}

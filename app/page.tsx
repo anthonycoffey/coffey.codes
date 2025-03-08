@@ -282,9 +282,9 @@ export default function Page() {
             </div>
           </div>
 
-          <LogoGrid logos={frontend} />
+          <LogoGrid logos={[...frontend, ...backend]} />
 
-          <LogoGrid logos={backend} />
+          {/* <LogoGrid logos={backend} /> */}
         </div>
 
         {/* Testimonials */}

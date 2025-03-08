@@ -63,16 +63,16 @@ export default function Page() {
               </a>
             </div>
           </div>
-          <div className="hidden md:flex justify-center md:justify-end mr-2">
+          <div className="hidden md:flex justify-center md:justify-end mr-4">
             <div className="relative w-64 h-64 md:w-72 md:h-72">
               <Image
                 width={330}
                 height={330}
                 src="/headshot.jpg"
                 alt="Anthony Coffey"
-                className="w-full h-full object-cover rounded-lg shadow-md"
+                className="w-full h-full object-cover rounded-lg shadow-md "
               />
-              <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-md border border-gray-200">
+              <div className="absolute -bottom-12 -right-6 bg-white p-3 rounded-lg shadow-md border border-gray-200">
                 <p className="font-bold text-blue-600 text-base m-0 text-right">
                   Anthony Coffey
                 </p>

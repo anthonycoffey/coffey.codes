@@ -1,12 +1,11 @@
 import ContactForm from '../components/ContactForm';
 import {
-  ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
   EnvelopeIcon,
   PhoneIcon,
   MapPinIcon,
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid';
 
 export const metadata = {
   title: 'Contact | Get in Touch',

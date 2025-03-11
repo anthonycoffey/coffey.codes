@@ -83,10 +83,10 @@ const ConsentManager = () => {
 
   return (
     <div
-      className="dark fixed bottom-0 left-0 right-0 z-50 p-3 bg-blue-600 shadow-2xl border-t-2 border-gray-100
+      className="dark fixed bottom-0 left-0 right-0 z-50 p-3 bg-blue-600 shadow-2xl border-t-2 border-gray-200
       animate-slide-up transform transition-all duration-500 ease-in-out"
     >
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto text-white">
         <div className="flex flex-col space-y-3 px-1">
           <h2 className="text-lg font-semibold text-neutral-1 text-center md:text-left mb-0">
             We use cookies to improve your experience

@@ -9,6 +9,7 @@ Deploying a Flask REST API to Google Cloud Run allows you to run your applicatio
 ### Prerequisites
 
 Before deploying, ensure you have the following:
+
 - Google Cloud account with billing enabled
 - Google Cloud SDK installed and authenticated
 
@@ -52,28 +53,29 @@ Notice the `apt-get install` command. This is optional and should only be used t
 ### Deploying to Google Cloud Run
 
 1. Navigate to the API directory:
-    ```
-    cd api
-    ```
+   ```
+   cd api
+   ```
 2. Deploy the API using Google Cloud Run:
 
-    ```bash
-    gcloud run deploy flask-api --source ./ --region us-central1 --platform managed --allow-unauthenticated
-    ```
+   ```bash
+   gcloud run deploy flask-api --source ./ --region us-central1 --platform managed --allow-unauthenticated
+   ```
 
-    This command does the following:
-    - Deploys the API from the current directory
-    - Sets the region to us-central1
-    - Uses the managed Cloud Run platform
-    - Allows unauthenticated access (optional, depends on your security needs)
+   This command does the following:
+
+   - Deploys the API from the current directory
+   - Sets the region to us-central1
+   - Uses the managed Cloud Run platform
+   - Allows unauthenticated access (optional, depends on your security needs)
 
 3. **Wait for the deployment to complete.** Google Cloud Run will provide a public URL upon success.
 
 4. Test the API:
-    ```bash
-    curl https://YOUR_CLOUD_RUN_URL/hello-world
-    ```
-Simply replace `YOUR_CLOUD_RUN_URL` with the actual URL provided after deployment and substitute `hello-world` with the specific API endpoint you are testing.
+   `bash
+ curl https://YOUR_CLOUD_RUN_URL/hello-world
+ `
+   Simply replace `YOUR_CLOUD_RUN_URL` with the actual URL provided after deployment and substitute `hello-world` with the specific API endpoint you are testing.
 
 ### Troubleshooting Common Pitfalls
 
@@ -105,6 +107,6 @@ Use `gcloud functions logs read` to view logs for debugging, or navigate to the 
 
 ### Conclusion
 
-Deploying a Flask API to Google Cloud Run is simple with the `gcloud run deploy` command. For a production-ready setup, consider setting the minimum instance to 1 to avoid cold starts and optimize performance.
+Deploying a Flask API to Google Cloud Run is simple with the gcloud command line tool. For a production-ready setup, consider setting the minimum instance to 1 to avoid cold starts and optimize performance.
 
 For information on pricing, visit the [Google Cloud Run Pricing](https://cloud.google.com/run/pricing) page.

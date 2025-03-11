@@ -39,7 +39,7 @@ const navItems = {
 
 export function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
   // Close menu on mobile when navigating to a new page
@@ -54,7 +54,6 @@ export function Navbar() {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      setIsMenuOpen(!mobile);
     };
 
     // Call once on mount
@@ -63,6 +62,26 @@ export function Navbar() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Navigation item rendering function
+  const renderNavItems = () => {
+    return Object.entries(navItems).map(([path, { name, icon }]) => {
+      const isActive = path === pathname;
+
+      return (
+        <Link
+          key={path}
+          href={path}
+          className={`flex items-center text-sm transition-all hover:text-gray-300 ${
+            isActive ? 'font-bold' : 'font-normal'
+          }`}
+        >
+          {icon}
+          <span>{name}</span>
+        </Link>
+      );
+    });
+  };
 
   return (
     <aside className="bg-gray-900 text-white tracking-tight w-full">
@@ -79,6 +98,7 @@ export function Navbar() {
             />
           </Link>
 
+          {/* Mobile menu button - only visible on mobile */}
           <button
             className="md:hidden p-2 text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -92,29 +112,21 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Navigation items - Always visible on desktop, toggle on mobile */}
-        <div className={`py-4 ${isMobile && !isMenuOpen ? 'hidden' : 'block'}`}>
-          <nav className="flex flex-col md:flex-row md:justify-center md:items-center">
-            <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
-              {Object.entries(navItems).map(([path, { name, icon }]) => {
-                const isActive = path === pathname;
-
-                return (
-                  <Link
-                    key={path}
-                    href={path}
-                    className={`flex items-center text-sm transition-all hover:text-gray-300 ${
-                      isActive ? 'font-bold' : 'font-normal'
-                    }`}
-                  >
-                    {icon}
-                    <span>{name}</span>
-                  </Link>
-                );
-              })}
-            </div>
+        {/* Desktop Navigation - Always visible on desktop, hidden on mobile */}
+        <div className="hidden md:block py-4">
+          <nav className="flex justify-center items-center">
+            <div className="flex flex-row space-x-6">{renderNavItems()}</div>
           </nav>
         </div>
+
+        {/* Mobile Navigation - Only visible when menu is open on mobile */}
+        {isMobile && isMenuOpen && (
+          <div className="py-4 md:hidden">
+            <nav className="flex flex-col">
+              <div className="flex flex-col space-y-3">{renderNavItems()}</div>
+            </nav>
+          </div>
+        )}
       </div>
     </aside>
   );

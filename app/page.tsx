@@ -16,6 +16,7 @@ import {
   ServerIcon,
   CommandLineIcon,
   AdjustmentsHorizontalIcon,
+  ChevronDownIcon,
 } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
@@ -61,6 +62,9 @@ export default function Page() {
                 <CalendarDaysIcon className="mr-2 h-5 w-5" />
                 Book Free Consultation
               </a>
+            </div>
+            <div className="flex justify-center md:hidden mt-12">
+              <ChevronDownIcon className="h-8 w-8 text-blue-600 animate-bounce" />
             </div>
           </div>
           <div className="hidden md:flex justify-center md:justify-end mr-4">

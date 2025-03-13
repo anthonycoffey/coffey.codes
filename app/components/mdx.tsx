@@ -57,8 +57,10 @@ function Code({ children, ...props }) {
   if (isMultiline) {
     return (
       <span style={{ position: 'relative', display: 'block' }}>
-        <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-        <CopyButton text={children} />
+        <pre className="multiline">
+          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          <CopyButton text={children} />
+        </pre>
       </span>
     );
   } else {

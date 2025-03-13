@@ -173,12 +173,12 @@ table
   text-decoration: none!important
 
 
-pre code
+pre.multiline code
   counter-reset: sh-line-number
 
-.sh__line::before
-  counter-increment: sh-line-number 1
-  content: counter(sh-line-number)
-  margin-right: 24px
-  text-align: right
-  color: #a4a4a4
+  .sh__line::before
+    counter-increment: sh-line-number 1
+    content: counter(sh-line-number)
+    margin-right: 24px
+    text-align: right
+    color: #a4a4a4

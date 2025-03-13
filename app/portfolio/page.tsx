@@ -93,7 +93,7 @@ const PortfolioSection: React.FC = () => {
       solution:
         'Developed an interactive virtual piano with visual highlighting for scales and real-time audio feedback using the Web Audio API.',
       results: [
-        'Visual representation of 12 root notes and multiple scale types',
+        'Visual representation of scales in all 12 keys',
         'Interactive piano keyboard with audio playback',
         'Support for common scales, jazz scales, blues scales, and modes',
         'Responsive design accessible on various devices',

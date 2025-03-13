@@ -4,9 +4,9 @@ publishedAt: '2025-03-11'
 summary: 'In this article, I'll share a minimalist yet effective GitHub Actions workflow for deploying Firebase Functions, along with setup instructions and solutions for common issues you might encounter.'
 ---
 
-In the world of CI/CD, simpler is often better. While many blog posts offer complex GitHub Actions workflows for 
-Firebase Functions deployment, I discovered that a more streamlined approach works perfectly well. In this article, I'll 
-share a minimalist yet effective GitHub Actions workflow for deploying Firebase Functions, along with setup instructions 
+In the world of CI/CD, simpler is often better. While many blog posts offer complex GitHub Actions workflows for
+Firebase Functions deployment, I discovered that a more streamlined approach works perfectly well. In this article, I'll
+share a minimalist yet effective GitHub Actions workflow for deploying Firebase Functions, along with setup instructions
 and solutions for common issues you might encounter.
 
 ## The Minimalist Workflow
@@ -19,6 +19,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'functions/**'
 
 jobs:
   build_and_deploy:
@@ -46,7 +48,8 @@ jobs:
 ```
 
 This workflow does exactly what's needed without unnecessary complexity:
-1. Triggers on pushes to the master branch
+
+1. Triggers on pushes to the master branch that contain changes to the functions directory
 2. Checks out the repo
 3. Sets up Node.js with the latest LTS version
 4. Installs dependencies for the functions directory
@@ -103,6 +106,7 @@ Ensure your `firebase.json` file is correctly configured. Here's a real-world ex
 ```
 
 This configuration:
+
 - Specifies "functions" as the source directory
 - Identifies it as the default codebase
 - Lists files to ignore during deployment
@@ -123,6 +127,7 @@ If your workflow isn't running when you push code, double check the branch name 
 ### 3. Authentication and Permission Issues
 
 If you see authentication errors, verify:
+
 - Your GCP_SA_KEY contains the complete JSON service account key
 - The PROJECT_ID secret matches your Firebase project ID exactly
 
@@ -133,14 +138,16 @@ Error: HTTP Error: 403, The caller does not have permission
 ```
 
 When this happens:
+
 1. Check your workflow logs carefully to identify which specific permissions are missing
 2. Go to the Google Cloud Console IAM section
 3. Find your service account and grant only the necessary additional roles
 4. Follow the least-privilege principle - only grant what's absolutely required
 
 Common roles needed for Firebase Functions deployment include:
+
 - Firebase Admin (`roles/firebase.admin`)
-- Cloud Functions Admin (`roles/cloudfunctions.admin`) 
+- Cloud Functions Admin (`roles/cloudfunctions.admin`)
 - Cloud Build Editor (`roles/cloudbuild.builds.editor`)
 - Service Account User (`roles/iam.serviceAccountUser`)
 

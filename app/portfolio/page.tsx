@@ -96,7 +96,6 @@ const PortfolioSection: React.FC = () => {
         'Visual representation of scales in all 12 keys',
         'Interactive piano keyboard with audio playback',
         'Support for common scales, jazz scales, blues scales, and modes',
-        'Responsive design accessible on various devices',
       ],
       year: '2025',
       featured: true,

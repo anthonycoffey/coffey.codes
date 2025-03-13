@@ -78,6 +78,29 @@ const PortfolioSection: React.FC = () => {
       year: '2025',
       featured: true,
     },
+    {
+      id: 3,
+      title: 'Piano Scale Visualizer',
+      description:
+        'Interactive musical scale visualizer for learning piano scales',
+      tags: ['React', 'TailwindCSS'],
+      mainImage: 'portfolio/piano-scale-visualizer.png',
+      gallery: [],
+      link: 'https://anthonycoffey.github.io/piano-scale-visualizer/',
+      client: 'Hobby Project',
+      challenge:
+        'Create an educational tool for musicians to visualize and interact with various piano scales in an intuitive, engaging interface.',
+      solution:
+        'Developed an interactive virtual piano with visual highlighting for scales and real-time audio feedback using the Web Audio API.',
+      results: [
+        'Visual representation of 12 root notes and multiple scale types',
+        'Interactive piano keyboard with audio playback',
+        'Support for common scales, jazz scales, blues scales, and modes',
+        'Responsive design accessible on various devices',
+      ],
+      year: '2025',
+      featured: true,
+    },
   ];
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);

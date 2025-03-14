@@ -1,14 +1,11 @@
-// app/page.jsx - Server Component
 import { backend, frontend } from './logos';
 import LogoGrid from './components/LogoGrid';
 import Testimonials from './components/Testimonials';
 import SocialIcons from './components/SocialIcons';
-import StaticSection from './components/StaticSection';
 import ClientSections from './components/ClientSections';
 import {
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
-  ArrowDownTrayIcon,
   CheckCircleIcon,
   BoltIcon,
   ShieldCheckIcon,
@@ -27,9 +24,7 @@ export const metadata = {
 };
 
 export default function Page() {
-  // This will be a Server Component
-
-  // Content that will be passed to client component
+ 
   const sectionsContent = [
     {
       id: 'hero',

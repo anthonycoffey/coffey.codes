@@ -8,7 +8,7 @@ const frontend: string[] = [
   "vue.svg",
   "angular-icon.svg",
   "bootstrap.svg",
-  "materializecss.svg",
+  "material-ui.svg",
   "tailwindcss.svg",
   "greensock.svg",
 ];

@@ -23,15 +23,24 @@ TBD is particularly useful in DevOps and high-paced agile teams where rapid iter
 
 Git stash is a powerful yet often underutilized feature that allows you to temporarily store changes without committing them. This is useful when you need to switch branches, pull updates, or experiment with different approaches without affecting your working directory.
 
+This is personally one of my favorite git features, and if you aren't familiar with it here are some commands to get you started:
+
 ##  **Common Git Stash Commands:**
 
-- **Save your work:** `git stash` (stores uncommitted changes)
-- **View stashed changes:** `git stash list`
-- **Apply the most recent stash:** `git stash pop` (removes stash after applying)
-- **Apply without deleting stash:** `git stash apply`
-- **Create a named stash:** `git stash save "WIP: Refactoring login module"`
-- **Drop a specific stash:** `git stash drop stash@{n}` (where `n` is the stash index)
-- **Clear all stashes:** `git stash clear`
+- **Save your work:**
+  - `git stash` (stores uncommitted changes)
+- **View stashed changes:**
+  - `git stash list`
+- **Apply the most recent stash:**
+  - `git stash pop` (removes stash after applying)
+- **Apply without deleting stash:**
+  - `git stash apply`
+- **Create a named stash:**
+  - `git stash save "WIP: Refactoring login module"`
+- **Drop a specific stash:**
+  - `git stash drop stash@{n}` (where `n` is the stash index)
+- **Clear all stashes:**
+  - `git stash clear`
 
 ##  **When to Use Git Stash:**
 

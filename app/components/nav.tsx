@@ -73,7 +73,7 @@ export function Navbar() {
           key={path}
           href={path}
           className={`flex items-center text-sm transition-all hover:text-gray-300 ${
-            isActive ? 'font-bold' : 'font-normal'
+            isActive ? 'font-normal' : 'font-normal'
           }`}
         >
           {icon}

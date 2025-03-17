@@ -6,8 +6,9 @@ export default function NotFound() {
     <div className="prose mx-auto max-w-3xl px-4 md:pb-16 min-h-[500px]">
       <section>
         <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-          Alas! The Path is Lost
+          Page Not Found
         </h1>
+        <p className="subtitle"> </p>
         <p className="mb-4">
           Not all those who wander are lost, but this path exists not in these
           realms.

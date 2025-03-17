@@ -42,7 +42,7 @@ const nextConfig = {
       permanent: true,
       },
       {
-      source: '/articles/mitigating-risk-and-reducing-delays-in-ai-and-software-development-projects',
+      source: '/articles/mitigating-risk-reducing-delays-in-ai-software-development-projects',
       destination: '/articles',
       permanent: true,
       },

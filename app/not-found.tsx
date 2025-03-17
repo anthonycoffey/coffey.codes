@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NotFound() {
   return (
@@ -11,6 +12,15 @@ export default function NotFound() {
           Not all those who wander are lost, but this path exists not in these
           realms.
         </p>
+        <div>
+          <Image
+            src="/wizard-404.jpg"
+            alt="404 Not Found"
+            width={1440}
+            height={580}
+            className="rounded-lg"
+          />
+        </div>
         <div className="mt-8">
           <h2 className="mb-4 text-xl font-medium">
             Choose Your Path, Brave Wanderer!

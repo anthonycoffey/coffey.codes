@@ -78,7 +78,7 @@ export default function Blog({ params }) {
             url: `${baseUrl}/articles/${post.slug}`,
             author: {
               '@type': 'Person',
-              name: 'Anthony Coffey - Portfolio',
+              name: 'Anthony Coffey',
             },
           }),
         }}
@@ -87,8 +87,10 @@ export default function Blog({ params }) {
       <h1 className="title font-semibold text-2xl tracking-tighter">
         {post.metadata.title}
       </h1>
-      <div className="flex justify-between items-center text-sm">
-        <p className="text-sm">{formatDate(post.metadata.publishedAt)}</p>
+      <div className="flex flex-col ml-2">
+        <p>
+          <em>{formatDate(post.metadata.publishedAt)}</em>
+        </p>
       </div>
       <article className="mx-auto prose prose-lg xl:prose-xl">
         <CustomMDX source={post.content} />

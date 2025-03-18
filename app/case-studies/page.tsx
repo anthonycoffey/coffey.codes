@@ -11,7 +11,7 @@ import Image from 'next/image';
 export const metadata = {
   title: 'Case Studies | Professional Portfolio',
   description:
-    'Explore detailed case studies that showcase my expertise and approach to solving complex technical challenges across various industries.',
+    'Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology.',
 };
 
 const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
@@ -85,11 +85,7 @@ export default async function Page({ searchParams }) {
             Case Studies
           </h1>
           <p className="text-gray-600 max-w-2xl">
-            Explore detailed case studies that showcase my expertise and
-            approach to solving complex technical challenges. Each case study
-            demonstrates my problem-solving methodology and the measurable
-            results delivered.
-          </p>
+          Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology.</p>
         </div>
 
         <div className="space-y-6">
@@ -110,7 +106,7 @@ export default async function Page({ searchParams }) {
             Need a custom solution?
           </h2>
           <p className="text-blue-800 mb-4">
-            I specialize in solving complex technical challenges. Let's discuss
+            I specialize in solving problems with tech. Let's discuss
             how my expertise can help your business.
           </p>
           <Link

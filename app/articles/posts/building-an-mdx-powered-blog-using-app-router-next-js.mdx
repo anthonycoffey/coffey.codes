@@ -24,8 +24,6 @@ Check out the code for this website <a href="https://github.com/anthonycoffey/co
 
 MDX is a file format that lets you write JSX embedded inside markdown. It's pretty cool, and it's what I'm using to write this article.
 
-### Ay ton', you 'ere what I said?
-
 Now I have a quick and easy way to blog with code snippets on the fly! I can even import components directly into my article!
 
 <small className="text-center block">
@@ -33,13 +31,13 @@ Now I have a quick and easy way to blog with code snippets on the fly! I can eve
 </small>
 
 <div className="grid grid-cols-2 prose lg:prose-xl">
-  <blockquote className="lg:text-2xl lg:mt-10 pr-4">
-    Ay ton', you hear what I said? ... I said I can import components directly
-    into my article.. heh heh
-  </blockquote>
   <div>
     <Image src={'/paulie.gif'} alt="Paulie Walnuts" width={300} height={300} />
   </div>
+    <blockquote className="lg:text-2xl lg:mt-10 pr-4">
+    Ay ton', you hear what I said? ... I said I can import components directly
+    into my article.. heh heh
+  </blockquote>
 </div>
 
 ## Counter Component Example
@@ -47,8 +45,8 @@ Now I have a quick and easy way to blog with code snippets on the fly! I can eve
 This is an arbitrary example, but nonetheless a cool demonstration of my new blogging tool! 😎
 
 ```jsx
-"use client"; // this is required for the embedded component to work within the .mdx file
-import React, { useState } from "react";
+'use client'; // this is required for the embedded component to work within the .mdx file
+import React, { useState } from 'react';
 
 export default function CounterComponent() {
   const [count, setCount] = useState < number > 0;

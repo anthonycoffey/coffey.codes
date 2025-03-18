@@ -64,7 +64,11 @@ function Code({ children, ...props }) {
       </span>
     );
   } else {
-    return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
+    return (
+    <span className="singleline">
+        <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+    </span>
+    );
   }
 }
 

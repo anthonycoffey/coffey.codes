@@ -12,7 +12,7 @@ export const metadata = {
 export default async function Page({ searchParams }) {
   const params = await searchParams;
   const page = params.page ? Number(params.page) : 1;
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const allBlogs = getBlogPosts(page, itemsPerPage);
 
   return (

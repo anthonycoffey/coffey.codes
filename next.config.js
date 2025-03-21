@@ -27,6 +27,11 @@ const nextConfig = {
       permanent: true,
       },
       {
+      source: '/articles/logging-deep-nested-objects-in-nodejs',
+      destination: '/articles',
+      permanent: true,
+      },
+      {
       source: '/articles/my-markdown-resume',
       destination: '/articles',
       permanent: true,

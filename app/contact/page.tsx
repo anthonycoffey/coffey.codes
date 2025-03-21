@@ -62,6 +62,19 @@ export default async function Page({ searchParams }) {
           </div>
         </div>
 
+        {/* Contact Form Section - Second */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+          <div className="flex items-center mb-4">
+            <EnvelopeIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
+            <h2 className="text-xl font-semibold">Send a Message</h2>
+          </div>
+          <p className="text-gray-600 mb-6">
+            Prefer to send a message? Fill out the form below to contact me
+            directly. I typically respond to all inquiries within 24 hours.
+          </p>
+          <ContactForm />
+        </div>
+
         {/* Calendar Section - First */}
         <div className="bg-blue-50 border border-blue-100 rounded-lg shadow-sm p-6 md:p-8 mb-8">
           <div className="flex items-center mb-4">
@@ -86,19 +99,6 @@ export default async function Page({ searchParams }) {
               Book Your Free Session
             </a>
           </div>
-        </div>
-
-        {/* Contact Form Section - Second */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
-          <div className="flex items-center mb-4">
-            <EnvelopeIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
-            <h2 className="text-xl font-semibold">Send a Message</h2>
-          </div>
-          <p className="text-gray-600 mb-6">
-            Prefer to send a message? Fill out the form below to contact me
-            directly. I typically respond to all inquiries within 24 hours.
-          </p>
-          <ContactForm />
         </div>
       </div>
     </section>

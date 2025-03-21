@@ -17,22 +17,49 @@ export default async function Page({ searchParams }) {
   return (
     <section className="contact-page">
       <div className="page-content">
-        {/* <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Have a project in mind or need technical expertise? I'm here to help
-            turn your ideas into reality.
-          </p>
-        </div> */}
         <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
             <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Contact Me
           </h1>
           <p className="text-gray-600">
-            Have a project in mind or need technical expertise? I'm here to help
-            turn your ideas into reality.
+            Have a project in mind or need technical expertise? Let's chat!
           </p>
+        </div>
+
+        {/* Additional Contact Info */}
+        <div className="bg-gray-50 rounded-lg p-6 mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold">Contact Information</h2>
+            <p className="text-gray-600">
+              Interested in connecting? Feel free to reach out!
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <PhoneIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Phone</h3>
+              <p className="text-gray-600">(737) 932-4565</p>
+            </div>
+
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <EnvelopeIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Email</h3>
+              <p className="text-gray-600">anthony@coffey.codes</p>
+            </div>
+
+            <div className="text-center p-4">
+              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+                <MapPinIcon className="h-5 w-5 text-blue-600" />
+              </div>
+              <h3 className="font-medium mb-1">Location</h3>
+              <p className="text-gray-600">Austin, Texas</p>
+            </div>
+          </div>
         </div>
 
         {/* Calendar Section - First */}
@@ -72,41 +99,6 @@ export default async function Page({ searchParams }) {
             directly. I typically respond to all inquiries within 24 hours.
           </p>
           <ContactForm />
-        </div>
-
-        {/* Additional Contact Info */}
-        <div className="bg-gray-50 rounded-lg p-6 mb-8">
-          <div className="text-center mb-6">
-            <h2 className="text-xl font-semibold">Contact Information</h2>
-            <p className="text-gray-600">
-              Interested in connecting? Feel free to reach out!
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <PhoneIcon className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-medium mb-1">Phone</h3>
-              <p className="text-gray-600">(737) 932-4565</p>
-            </div>
-
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <EnvelopeIcon className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-medium mb-1">Email</h3>
-              <p className="text-gray-600">anthony@coffey.codes</p>
-            </div>
-
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <MapPinIcon className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-medium mb-1">Location</h3>
-              <p className="text-gray-600">Austin, Texas</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

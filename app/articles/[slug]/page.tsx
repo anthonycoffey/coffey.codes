@@ -4,6 +4,7 @@ import { formatDate, getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
 import GoBack from 'app/components/GoBack';
 import Breadcrumbs from 'app/components/Breadcrumbs';
+import Link from 'next/link';
 export async function generateStaticParams() {
   let posts = getRSSBlogPosts();
 
@@ -80,6 +81,8 @@ export default function Blog({ params }) {
               '@type': 'Person',
               name: 'Anthony Coffey',
             },
+            keywords: post.metadata.tags ? post.metadata.tags.join(', ') : '',
+            articleSection: post.metadata.category || '',
           }),
         }}
       />
@@ -91,6 +94,35 @@ export default function Blog({ params }) {
         <p>
           <em>{formatDate(post.metadata.publishedAt)}</em>
         </p>
+        
+        {post.metadata.category && (
+          <div className="mt-2">
+            <span className="font-semibold">Category: </span>
+            <Link 
+              href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
+              className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full"
+            >
+              {post.metadata.category}
+            </Link>
+          </div>
+        )}
+        
+        {post.metadata.tags && post.metadata.tags.length > 0 && (
+          <div className="mt-2">
+            <span className="font-semibold">Tags: </span>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {post.metadata.tags.map((tag) => (
+                <Link 
+                  key={tag}
+                  href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                  className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <article className="mx-auto prose prose-lg xl:prose-xl">
         <CustomMDX source={post.content} />

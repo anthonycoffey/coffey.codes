@@ -6,6 +6,8 @@ type Metadata = {
   publishedAt: string;
   summary: string;
   image?: string;
+  tags?: string[];
+  category?: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -20,7 +22,21 @@ function parseFrontmatter(fileContent: string) {
     let [key, ...valueArr] = line.split(': ');
     let value = valueArr.join(': ').trim();
     value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value;
+    
+    const trimmedKey = key.trim();
+    
+    // Handle tags (comma-separated list)
+    if (trimmedKey === 'tags') {
+      metadata.tags = value.split(',').map(tag => tag.trim());
+    } 
+    // Handle category (single string)
+    else if (trimmedKey === 'category') {
+      metadata.category = value;
+    }
+    // Handle other metadata fields
+    else {
+      metadata[trimmedKey as keyof Metadata] = value;
+    }
   });
 
   return { metadata: metadata as Metadata, content };
@@ -101,6 +117,139 @@ export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {
   );
 }
 
+export function getBlogPostsByTag(tag: string, page: number = 1, itemsPerPage: number = 10) {
+  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  
+  let mdxFiles = getMDXFiles(postsDir).map((file) => {
+    let { metadata, content } = readMDXFile(path.join(postsDir, file));
+    let slug = path.basename(file, path.extname(file));
+
+    return {
+      metadata,
+      slug,
+      content,
+    };
+  });
+
+  // Filter posts by tag
+  mdxFiles = mdxFiles.filter(post => {
+    if (!post.metadata.tags) return false;
+    
+    return post.metadata.tags.some(t => {
+      const normalizedTag = t.toLowerCase().trim();
+      const normalizedSearchTag = tag.toLowerCase().trim();
+      return normalizedTag === normalizedSearchTag;
+    });
+  });
+
+  mdxFiles.sort((a, b) => {
+    if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
+      return -1;
+    }
+    return 1;
+  });
+
+  const totalItems = mdxFiles.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginatedFiles = mdxFiles.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage,
+  );
+
+  return {
+    posts: paginatedFiles,
+    pagination: {
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage,
+    },
+  };
+}
+
+export function getBlogPostsByCategory(category: string, page: number = 1, itemsPerPage: number = 10) {
+  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  
+  let mdxFiles = getMDXFiles(postsDir).map((file) => {
+    let { metadata, content } = readMDXFile(path.join(postsDir, file));
+    let slug = path.basename(file, path.extname(file));
+
+    return {
+      metadata,
+      slug,
+      content,
+    };
+  });
+
+  // Filter posts by category
+  mdxFiles = mdxFiles.filter(post => {
+    if (!post.metadata.category) return false;
+    
+    // Debug info
+    console.log(`Comparing: '${post.metadata.category.toLowerCase().trim()}' with '${category.toLowerCase().trim()}'`);
+    
+    return post.metadata.category.toLowerCase().trim() === category.toLowerCase().trim();
+  });
+
+  mdxFiles.sort((a, b) => {
+    if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
+      return -1;
+    }
+    return 1;
+  });
+
+  const totalItems = mdxFiles.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginatedFiles = mdxFiles.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage,
+  );
+
+  return {
+    posts: paginatedFiles,
+    pagination: {
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage,
+    },
+  };
+}
+
+export function getAllTags() {
+  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  
+  const allTags = new Set<string>();
+  
+  getMDXFiles(postsDir).forEach((file) => {
+    const { metadata } = readMDXFile(path.join(postsDir, file));
+    
+    if (metadata.tags) {
+      metadata.tags.forEach(tag => {
+        allTags.add(tag.trim());
+      });
+    }
+  });
+  
+  return Array.from(allTags).sort();
+}
+
+export function getAllCategories() {
+  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  
+  const allCategories = new Set<string>();
+  
+  getMDXFiles(postsDir).forEach((file) => {
+    const { metadata } = readMDXFile(path.join(postsDir, file));
+    
+    if (metadata.category) {
+      allCategories.add(metadata.category);
+    }
+  });
+  
+  return Array.from(allCategories).sort();
+}
+
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date();
   if (!date.includes('T')) {
@@ -135,4 +284,11 @@ export function formatDate(date: string, includeRelative = false) {
   }
 
   return `${fullDate} (${formattedDate})`;
+}
+
+export function capitalizeWords(text: string): string {
+  return text
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

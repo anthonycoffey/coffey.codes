@@ -4,8 +4,6 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   MagnifyingGlassIcon,
-  TagIcon,
-  FolderIcon,
   DocumentTextIcon,
   XCircleIcon,
 } from '@heroicons/react/20/solid';
@@ -13,15 +11,25 @@ import { formatDate } from '@/utils/date';
 import SearchBox from '@/components/SearchBox';
 import Pagination from '@/components/Pagination';
 
+// Define the Post interface
+interface Post {
+  slug: string;
+  title: string;
+  publishedAt: string;
+  category?: string;
+  summary: string;
+  tags?: string[];
+}
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get('q') || '';
   const pageParam = searchParams.get('page');
   const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
   const itemsPerPage = 5; // Same as other pages
-  
+
   const [currentQuery, setCurrentQuery] = useState(urlQuery);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Function to perform the search
@@ -165,58 +173,61 @@ export default function SearchPage() {
           <div className="space-y-6">
             {/* Paginate the results */}
             {results
-              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-              .map((post) => (
+              .slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage,
+              )
+              .map((post: Post) => (
                 <div
                   key={post.slug}
                   className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
                 >
-              <Link href={`/articles/${post.slug}`} className="block">
-                <h2 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">
-                  {post.title}
-                </h2>
-              </Link>
-
-              <div className="flex flex-wrap items-center gap-2 mt-2 mb-3">
-                <span className="text-sm text-gray-500">
-                  {formatDate(post.publishedAt)}
-                </span>
-
-                {post.category && (
-                  <Link
-                    href={`/articles/category/${encodeURIComponent(post.category.toLowerCase())}`}
-                    className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full hover:bg-blue-200"
-                  >
-                    {post.category}
+                  <Link href={`/articles/${post.slug}`} className="block">
+                    <h2 className="text-xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                      {post.title}
+                    </h2>
                   </Link>
-                )}
-              </div>
 
-              <p className="text-gray-700 mb-3">{post.summary}</p>
+                  <div className="flex flex-wrap items-center gap-2 mt-2 mb-3">
+                    <span className="text-sm text-gray-500">
+                      {formatDate(post.publishedAt)}
+                    </span>
 
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1">
-                  {post.tags.map((tag) => (
-                    <Link
-                      key={tag}
-                      href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                      className="inline-block bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded hover:bg-gray-200"
-                    >
-                      {tag}
-                    </Link>
-                  ))}
+                    {post.category && (
+                      <Link
+                        href={`/articles/category/${encodeURIComponent(post.category.toLowerCase())}`}
+                        className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full hover:bg-blue-200"
+                      >
+                        {post.category}
+                      </Link>
+                    )}
+                  </div>
+
+                  <p className="text-gray-700 mb-3">{post.summary}</p>
+
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {post.tags.map((tag) => (
+                        <Link
+                          key={tag}
+                          href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                          className="inline-block bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded hover:bg-gray-200"
+                        >
+                          {tag}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              ))}
           </div>
-          
+
           {/* Pagination */}
           {results.length > itemsPerPage && (
             <div className="w-full mt-8 flex justify-center">
-              <Pagination 
-                totalPages={Math.ceil(results.length / itemsPerPage)} 
-                initialPage={currentPage} 
+              <Pagination
+                totalPages={Math.ceil(results.length / itemsPerPage)}
+                initialPage={currentPage}
               />
             </div>
           )}

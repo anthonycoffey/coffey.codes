@@ -13,7 +13,12 @@ type Metadata = {
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
   let match = frontmatterRegex.exec(fileContent);
-  let frontMatterBlock = match![1];
+
+  if (!match) {
+    throw new Error('No frontmatter found');
+  }
+
+  let frontMatterBlock = match[1];
   let content = fileContent.replace(frontmatterRegex, '').trim();
   let frontMatterLines = frontMatterBlock.trim().split('\n');
   let metadata: Partial<Metadata> = {};
@@ -22,26 +27,36 @@ function parseFrontmatter(fileContent: string) {
     let [key, ...valueArr] = line.split(': ');
     let value = valueArr.join(': ').trim();
     value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
-    
+
     const trimmedKey = key.trim();
-    
+
     // Handle tags (comma-separated list)
     if (trimmedKey === 'tags') {
-      metadata.tags = value.split(',').map(tag => tag.trim());
-    } 
+      metadata.tags = value.split(',').map((tag) => tag.trim());
+    }
     // Handle category (single string)
     else if (trimmedKey === 'category') {
       metadata.category = value;
     }
-    // Handle other metadata fields
-    else {
-      metadata[trimmedKey as keyof Metadata] = value;
+    // Handle the required fields
+    else if (
+      trimmedKey === 'title' ||
+      trimmedKey === 'publishedAt' ||
+      trimmedKey === 'summary' ||
+      trimmedKey === 'image'
+    ) {
+      (metadata as Record<string, string>)[trimmedKey] = value;
     }
+    // Ignore unknown keys
   });
+
+  // Validate required fields
+  if (!metadata.title || !metadata.publishedAt || !metadata.summary) {
+    throw new Error('Missing required metadata fields');
+  }
 
   return { metadata: metadata as Metadata, content };
 }
-
 function getMDXFiles(dir) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
 }
@@ -117,9 +132,13 @@ export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {
   );
 }
 
-export function getBlogPostsByTag(tag: string, page: number = 1, itemsPerPage: number = 10) {
+export function getBlogPostsByTag(
+  tag: string,
+  page: number = 1,
+  itemsPerPage: number = 10,
+) {
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
-  
+
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
     let { metadata, content } = readMDXFile(path.join(postsDir, file));
     let slug = path.basename(file, path.extname(file));
@@ -132,10 +151,10 @@ export function getBlogPostsByTag(tag: string, page: number = 1, itemsPerPage: n
   });
 
   // Filter posts by tag
-  mdxFiles = mdxFiles.filter(post => {
+  mdxFiles = mdxFiles.filter((post) => {
     if (!post.metadata.tags) return false;
-    
-    return post.metadata.tags.some(t => {
+
+    return post.metadata.tags.some((t) => {
       const normalizedTag = t.toLowerCase().trim();
       const normalizedSearchTag = tag.toLowerCase().trim();
       return normalizedTag === normalizedSearchTag;
@@ -167,9 +186,13 @@ export function getBlogPostsByTag(tag: string, page: number = 1, itemsPerPage: n
   };
 }
 
-export function getBlogPostsByCategory(category: string, page: number = 1, itemsPerPage: number = 10) {
+export function getBlogPostsByCategory(
+  category: string,
+  page: number = 1,
+  itemsPerPage: number = 10,
+) {
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
-  
+
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
     let { metadata, content } = readMDXFile(path.join(postsDir, file));
     let slug = path.basename(file, path.extname(file));
@@ -182,13 +205,18 @@ export function getBlogPostsByCategory(category: string, page: number = 1, items
   });
 
   // Filter posts by category
-  mdxFiles = mdxFiles.filter(post => {
+  mdxFiles = mdxFiles.filter((post) => {
     if (!post.metadata.category) return false;
-    
+
     // Debug info
-    console.log(`Comparing: '${post.metadata.category.toLowerCase().trim()}' with '${category.toLowerCase().trim()}'`);
-    
-    return post.metadata.category.toLowerCase().trim() === category.toLowerCase().trim();
+    console.log(
+      `Comparing: '${post.metadata.category.toLowerCase().trim()}' with '${category.toLowerCase().trim()}'`,
+    );
+
+    return (
+      post.metadata.category.toLowerCase().trim() ===
+      category.toLowerCase().trim()
+    );
   });
 
   mdxFiles.sort((a, b) => {
@@ -218,35 +246,35 @@ export function getBlogPostsByCategory(category: string, page: number = 1, items
 
 export function getAllTags() {
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
-  
+
   const allTags = new Set<string>();
-  
+
   getMDXFiles(postsDir).forEach((file) => {
     const { metadata } = readMDXFile(path.join(postsDir, file));
-    
+
     if (metadata.tags) {
-      metadata.tags.forEach(tag => {
+      metadata.tags.forEach((tag) => {
         allTags.add(tag.trim());
       });
     }
   });
-  
+
   return Array.from(allTags).sort();
 }
 
 export function getAllCategories() {
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
-  
+
   const allCategories = new Set<string>();
-  
+
   getMDXFiles(postsDir).forEach((file) => {
     const { metadata } = readMDXFile(path.join(postsDir, file));
-    
+
     if (metadata.category) {
       allCategories.add(metadata.category);
     }
   });
-  
+
   return Array.from(allCategories).sort();
 }
 

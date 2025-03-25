@@ -4,8 +4,10 @@ import {
   DocumentTextIcon,
   TagIcon,
   FolderIcon,
+  MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+// import SearchBox from 'app/components/SearchBox';
 
 export const metadata = {
   title: 'Articles',
@@ -19,77 +21,107 @@ export default async function Page({ searchParams }) {
   const itemsPerPage = 5;
   const allBlogs = getBlogPosts(page, itemsPerPage);
 
-  // Get the 5 most used tags and categories
-  const allTags = getAllTags().slice(0, 5);
-  const allCategories = getAllCategories().slice(0, 5);
+  // Get the popular tags and categories
+  const popularTags = getAllTags().slice(0, 24);
+  const allCategories = getAllCategories();
 
   return (
-    <section className="article-page">
-      <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
-        <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+    <div className="article-page max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="border-b pb-4 mb-6">
+        <h1 className="font-bold text-xl lg:text-2xl tracking-tighter mb-2 flex items-center">
           <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
           Articles
         </h1>
-        <p className="text-gray-600 mb-4">
+        <p className="text-gray-600">
           Unpacking the strategies, challenges, and breakthroughs in software
           development, project management, and cloud technology.
         </p>
+      </div>
 
-        <div className="flex flex-wrap gap-6 mt-4">
-          {allCategories.length > 0 && (
-            <div>
-              <h2 className="text-sm font-semibold flex items-center mb-2">
-                <FolderIcon className="w-4 h-4 mr-1" />
-                Popular Categories
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {allCategories.map((category) => (
+      {/* Main content with sidebar layout */}
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Main content area */}
+        <div className="md:w-2/3">
+          <BlogPosts allBlogs={allBlogs} />
+        </div>
+
+        {/* Sidebar */}
+        <aside className="md:w-1/3 space-y-6">
+          {/* Search box */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center">
+              <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500" />
+              Search Articles
+            </h2>
+            {/* <SearchBox /> */}
+          </div>
+
+          {/* Categories section */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center">
+              <FolderIcon className="w-5 h-5 mr-2 text-blue-500" />
+              Categories
+            </h2>
+            <div className="space-y-2">
+              {allCategories.map((category) => (
+                <div
+                  key={category}
+                  className="flex justify-between items-center"
+                >
                   <Link
-                    key={category}
-                    href={`/articles/category/${category.toLowerCase()}`}
-                    className="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2 py-1 rounded-full transition-colors"
+                    href={`/articles/category/${encodeURIComponent(category.toLowerCase())}`}
+                    className="text-gray-700 hover:text-blue-600 transition-colors"
                   >
                     {category}
                   </Link>
-                ))}
-                <Link
-                  href="/articles/categories"
-                  className="text-xs text-blue-600 hover:underline flex items-center"
-                >
-                  View all categories →
-                </Link>
-              </div>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                    {
+                      getBlogPosts(1, 100).posts.filter(
+                        (post) =>
+                          post.metadata.category &&
+                          post.metadata.category.toLowerCase() ===
+                            category.toLowerCase(),
+                      ).length
+                    }
+                  </span>
+                </div>
+              ))}
+              <Link
+                href="/articles/categories"
+                className="text-sm text-blue-600 hover:underline flex items-center mt-2"
+              >
+                View all categories →
+              </Link>
             </div>
-          )}
+          </div>
 
-          {allTags.length > 0 && (
-            <div>
-              <h2 className="text-sm font-semibold flex items-center mb-2">
-                <TagIcon className="w-4 h-4 mr-1" />
-                Popular Tags
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {allTags.map((tag) => (
-                  <Link
-                    key={tag}
-                    href={`/articles/tag/${tag.toLowerCase()}`}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium px-2 py-1 rounded transition-colors"
-                  >
-                    {tag}
-                  </Link>
-                ))}
+          {/* Tags section */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center">
+              <TagIcon className="w-5 h-5 mr-2 text-blue-500" />
+              Popular Tags
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {popularTags.map((tag) => (
                 <Link
-                  href="/articles/tags"
-                  className="text-xs text-blue-600 hover:underline flex items-center"
+                  key={tag}
+                  href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-1.5 rounded transition-colors"
                 >
-                  View all tags →
+                  {tag}
                 </Link>
-              </div>
+              ))}
+              <Link
+                href="/articles/tags"
+                className="text-sm text-blue-600 hover:underline flex items-center mt-2"
+              >
+                View all tags →
+              </Link>
             </div>
-          )}
-        </div>
+          </div>
+        </aside>
       </div>
-      <BlogPosts allBlogs={allBlogs} />
-    </section>
+    </div>
   );
 }

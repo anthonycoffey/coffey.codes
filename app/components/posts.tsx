@@ -15,7 +15,7 @@ export function BlogPosts({ allBlogs }) {
                 href={`/articles/${post.slug}`}
                 className="block"
               >
-                <p className="text-2xl font-bold text-gray-900 hover:text-blue-600">
+                <p className="text-lg font-bold text-gray-900 hover:text-blue-600">
                   {post.metadata.title}
                 </p>
               </Link>

@@ -1,5 +1,6 @@
 import { BlogPosts } from 'app/components/posts';
 import { getBlogPosts, getAllTags, getAllCategories } from 'app/articles/utils';
+import Pagination from './Pagination';
 import {
   DocumentTextIcon,
   TagIcon,
@@ -125,6 +126,11 @@ export default async function Page({ searchParams }) {
             </div>
           </div>
         </aside>
+      </div>
+
+      {/* Centered Pagination */}
+      <div className="w-full mt-8 flex justify-center">
+        <Pagination totalPages={allBlogs.pagination.totalPages} initialPage={page} />
       </div>
     </div>
   );

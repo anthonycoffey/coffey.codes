@@ -54,7 +54,7 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
   );
 };
 
-export default async function CaseStudiesPage({ searchParams }) {
+export default async function CaseStudiesPage() {
   const caseStudies = [
     {
       icon: CpuChipIcon,

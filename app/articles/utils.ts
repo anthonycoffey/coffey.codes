@@ -289,8 +289,6 @@ export function formatDate(date: string, includeRelative = false) {
   return `${fullDate} (${formattedDate})`;
 }
 
-
-
 export function capitalizeWords(text: string): string {
   return text
     .split(' ')

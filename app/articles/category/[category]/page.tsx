@@ -38,7 +38,6 @@ export function generateMetadata({ params }) {
 export default function CategoryPage({ params }) {
   const category = params.category;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
-  
   // Get other categories for sidebar (excluding current category)
   const otherCategories = getAllCategories()
     .filter(c => c.toLowerCase() !== decodedCategory.toLowerCase());
@@ -49,10 +48,12 @@ export default function CategoryPage({ params }) {
   const posts = getBlogPostsByCategory(decodedCategory);
 
   if (posts.posts.length === 0) {
+    console.log(`No posts found for category: '${decodedCategory}'`);
     notFound();
   }
 
   return (
+
     <div className="article-page max-w-6xl mx-auto">
       <div className="border-b pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center">

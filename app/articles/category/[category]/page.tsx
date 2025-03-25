@@ -46,21 +46,17 @@ export default function CategoryPage({ params, searchParams }) {
   const category = params.category;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
 
-  // Get other categories for sidebar (excluding current category)
   const otherCategories = getAllCategories().filter(
     (c) => c.toLowerCase() !== decodedCategory.toLowerCase(),
   );
 
-  // Get popular tags for sidebar
   const popularTags = getAllTags().slice(0, 24);
 
   const posts = getBlogPostsByCategory(decodedCategory, page, itemsPerPage);
 
-  // Get pagination data
   const { totalPages } = posts.pagination;
 
   if (posts.posts.length === 0) {
-    console.log(`No posts found for category: '${decodedCategory}'`);
     notFound();
   }
 
@@ -78,16 +74,12 @@ export default function CategoryPage({ params, searchParams }) {
         </div>
       </div>
 
-      {/* Main content with sidebar layout */}
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Main content area */}
         <div className="md:w-2/3">
           <BlogPosts allBlogs={posts} />
         </div>
 
-        {/* Sidebar */}
         <aside className="md:w-1/3 space-y-6">
-          {/* Search box */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500" />
@@ -96,7 +88,6 @@ export default function CategoryPage({ params, searchParams }) {
             <SearchBox />
           </div>
 
-          {/* Other categories section */}
           {otherCategories.length > 0 && (
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
               <h2 className="text-lg font-semibold mb-3 flex items-center">
@@ -133,7 +124,6 @@ export default function CategoryPage({ params, searchParams }) {
             </div>
           )}
 
-          {/* Tags section */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <TagIcon className="w-5 h-5 mr-2 text-blue-500" />
@@ -160,7 +150,6 @@ export default function CategoryPage({ params, searchParams }) {
         </aside>
       </div>
 
-      {/* Centered Pagination */}
       <div className="w-full mt-8 flex justify-center">
         <Pagination totalPages={totalPages} initialPage={page} />
       </div>

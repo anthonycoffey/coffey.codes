@@ -204,14 +204,8 @@ export function getBlogPostsByCategory(
     };
   });
 
-  // Filter posts by category
   mdxFiles = mdxFiles.filter((post) => {
     if (!post.metadata.category) return false;
-
-    // Debug info
-    console.log(
-      `Comparing: '${post.metadata.category.toLowerCase().trim()}' with '${category.toLowerCase().trim()}'`,
-    );
 
     return (
       post.metadata.category.toLowerCase().trim() ===

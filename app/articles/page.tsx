@@ -22,13 +22,11 @@ export default async function Page({ searchParams }) {
   const itemsPerPage = 5;
   const allBlogs = getBlogPosts(page, itemsPerPage);
 
-  // Get the popular tags and categories
   const popularTags = getAllTags().slice(0, 24);
   const allCategories = getAllCategories();
 
   return (
     <div className="article-page max-w-6xl mx-auto">
-      {/* Header */}
       <div className="border-b pb-4 mb-6">
         <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
           <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
@@ -40,16 +38,12 @@ export default async function Page({ searchParams }) {
         </p>
       </div>
 
-      {/* Main content with sidebar layout */}
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Main content area */}
         <div className="md:w-2/3">
           <BlogPosts allBlogs={allBlogs} />
         </div>
 
-        {/* Sidebar */}
         <aside className="md:w-1/3 space-y-6">
-          {/* Search box */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500" />
@@ -58,7 +52,6 @@ export default async function Page({ searchParams }) {
             <SearchBox />
           </div>
 
-          {/* Categories section */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <FolderIcon className="w-5 h-5 mr-2 text-blue-500" />
@@ -97,7 +90,6 @@ export default async function Page({ searchParams }) {
             </div>
           </div>
 
-          {/* Tags section */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <TagIcon className="w-5 h-5 mr-2 text-blue-500" />
@@ -124,7 +116,6 @@ export default async function Page({ searchParams }) {
         </aside>
       </div>
 
-      {/* Centered Pagination */}
       <div className="w-full mt-8 flex justify-center">
         <Pagination
           totalPages={allBlogs.pagination.totalPages}

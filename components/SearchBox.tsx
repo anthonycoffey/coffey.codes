@@ -38,12 +38,10 @@ export default function SearchBox({
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  // Set initial value when prop changes
   useEffect(() => {
     setQuery(initialValue);
   }, [initialValue]);
 
-  // Auto-focus if needed
   useEffect(() => {
     if (autofocus && inputRef.current) {
       inputRef.current.focus();
@@ -74,7 +72,6 @@ export default function SearchBox({
         return;
       }
 
-      // If hideDropdown is true, don't fetch results or show dropdown
       if (hideDropdown) {
         return;
       }
@@ -88,7 +85,6 @@ export default function SearchBox({
         setResults(data.posts);
         setShowResults(true);
       } catch (error) {
-        console.error('Search error:', error);
       } finally {
         setIsLoading(false);
       }
@@ -143,7 +139,6 @@ export default function SearchBox({
         )}
       </div>
 
-      {/* No results message or view all results */}
       {!hideDropdown && showResults && query.length >= 2 && !isLoading && (
         <div className="w-full mt-1 bg-white">
           {results.length === 0 ? (
@@ -170,7 +165,6 @@ export default function SearchBox({
         </div>
       )}
 
-      {/* Search results dropdown */}
       {!hideDropdown && showResults && results.length > 0 && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-80 overflow-y-auto">
           {results.map((post) => (
@@ -201,25 +195,20 @@ export default function SearchBox({
         </div>
       )}
 
-      {/* Loading indicator */}
       {!hideDropdown && isLoading && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg p-4">
           <p className="text-sm text-gray-500 text-center">Searching...</p>
         </div>
       )}
 
-      {/* Handle Enter key for search */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
           if (query.trim().length >= 2) {
-            // If we're already on the search page, don't navigate again
             if (hideDropdown) {
-              // Force the URL update without navigation
               const newUrl = window.location.pathname + `?q=${encodeURIComponent(query)}`;
               window.history.pushState({ path: newUrl }, '', newUrl);
               
-              // Trigger a search (we need to dispatch an event that the search page can listen to)
               window.dispatchEvent(new CustomEvent('search-query-updated', { 
                 detail: { query }
               }));
@@ -228,7 +217,6 @@ export default function SearchBox({
             }
           }
         }}
-        // Make sure the form is visible to DOM but not to the user
         style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
       >
         <input type="submit" />

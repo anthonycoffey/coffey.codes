@@ -61,13 +61,9 @@ export default function ContactForm() {
       );
 
       if (response.ok) {
-        console.log('Email sent successfully');
         setMessageSent(true);
-      } else {
-        console.error('Failed to send email');
       }
     } catch (error) {
-      console.error('Error:', error);
     } finally {
       setLoading(false);
     }

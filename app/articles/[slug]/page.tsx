@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 import { CustomMDX } from 'app/components/mdx';
-import { getRSSBlogPosts, formatDate } from 'app/articles/utils';
+import { getRSSBlogPosts } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
 import GoBack from 'app/components/GoBack';
 import Breadcrumbs from 'app/components/Breadcrumbs';
 import Link from 'next/link';
+import { formatDate } from '@/utils/date';
 export async function generateStaticParams() {
   let posts = getRSSBlogPosts();
 

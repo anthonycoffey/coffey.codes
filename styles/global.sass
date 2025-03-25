@@ -184,3 +184,36 @@ pre.multiline code
     margin-right: 24px
     text-align: right
     color: #a4a4a4
+    
+// Custom scrollbar styling
+.custom-scrollbar
+  // Firefox scrollbar styling
+  scrollbar-width: thin
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(229, 231, 235, 0.1)
+  
+  // Chrome, Edge, and Safari scrollbar styling
+  &::-webkit-scrollbar
+    width: 8px
+    height: 8px
+    
+  &::-webkit-scrollbar-track
+    background: rgba(229, 231, 235, 0.1)
+    border-radius: 8px
+    margin: 2px
+    
+  &::-webkit-scrollbar-thumb
+    background: linear-gradient(to bottom, #3b82f6, #1d4ed8)
+    border-radius: 8px
+    
+    &:hover
+      background: linear-gradient(to bottom, #2563eb, #1e40af)
+      
+  // Dark mode adjustments
+  .dark &::-webkit-scrollbar-track
+    background: rgba(17, 24, 39, 0.3)
+    
+  .dark &::-webkit-scrollbar-thumb
+    background: linear-gradient(to bottom, #3b82f6, #1d4ed8)
+    
+    &:hover
+      background: linear-gradient(to bottom, #60a5fa, #3b82f6)

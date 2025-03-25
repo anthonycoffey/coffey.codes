@@ -35,8 +35,8 @@ const PortfolioSection: React.FC = () => {
       title: 'Personal Blog & Portfolio',
       description: 'MDX-powered blog with advanced SEO features and modern design',
       tags: ['Next.js', 'TypeScript', 'MDX', 'Tailwind CSS', 'React'],
-      mainImage: '/og-image.jpg',
-      gallery: ['/og-image.jpg'],
+      mainImage: '/portfolio/coffey.codes-portfolio.png',
+      gallery: ['/portfolio/coffey.codes-articles.png','/portfolio/coffey.codes-home.png', '/portfolio/coffey.codes-contact.png'],
       link: 'https://coffey.codes',
       client: 'Personal Project',
       challenge:
@@ -75,7 +75,7 @@ const PortfolioSection: React.FC = () => {
       featured: true,
     },
     {
-      id: 2,
+      id: 3,
       title: 'Simply Voice',
       description: 'No Fuss Speech-to-Text app',
       tags: [
@@ -103,7 +103,7 @@ const PortfolioSection: React.FC = () => {
       featured: true,
     },
     {
-      id: 3,
+      id: 4,
       title: 'Piano Scale Visualizer',
       description:
         'Interactive musical scale visualizer for learning piano scales',
@@ -217,25 +217,26 @@ const PortfolioSection: React.FC = () => {
         {/* Project Detail Modal */}
         {selectedProject && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-sm transition-all duration-300"
             onClick={closeProject}
           >
             <div
-              className="bg-white rounded-lg overflow-hidden max-w-6xl w-full max-h-screen overflow-y-auto"
+              className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700 custom-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header */}
-              <div className="flex justify-between items-center p-6 border-b">
-                <h3 className="text-2xl font-bold text-gray-800">
+              {/* Modal Header with gradient background */}
+              <div className="flex justify-between items-center p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+                <h3 className="text-2xl font-bold tracking-tight">
                   {selectedProject.title}
                 </h3>
                 <button
                   onClick={closeProject}
-                  className="p-2 rounded-full hover:bg-gray-100"
+                  className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  aria-label="Close modal"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-600"
+                    className="h-5 w-5 text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -252,9 +253,9 @@ const PortfolioSection: React.FC = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 p-6">
                 {/* Main Content - 3 columns */}
-                <div className="lg:col-span-3">
-                  {/* Main Image */}
-                  <div className="mb-6">
+                <div className="lg:col-span-3 space-y-6">
+                  {/* Main Image with shadow and rounded corners */}
+                  <div className="overflow-hidden rounded-lg shadow-lg">
                     <img
                       src={
                         activeImageIndex === 0
@@ -266,63 +267,82 @@ const PortfolioSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* Thumbnail Gallery */}
-                  <div className="grid grid-cols-3 gap-2">
-                    <div
-                      className={`cursor-pointer rounded overflow-hidden border-2 ${activeImageIndex === 0 ? 'border-blue-600' : 'border-transparent'}`}
-                      onClick={() => setActiveImageIndex(0)}
-                    >
-                      <img
-                        src={selectedProject.mainImage}
-                        alt="Main"
-                        className="w-full h-32 object-fit"
-                      />
-                    </div>
-
-                    {selectedProject.gallery.map((image, index) => (
+                  {/* Improved Thumbnail Gallery */}
+                  {(selectedProject.gallery.length > 0 || true) && (
+                    <div className="grid grid-cols-4 gap-3">
                       <div
-                        key={index}
-                        className={`cursor-pointer rounded overflow-hidden border-2 ${activeImageIndex === index + 1 ? 'border-blue-600' : 'border-transparent'}`}
-                        onClick={() => setActiveImageIndex(index + 1)}
+                        className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
+                          activeImageIndex === 0 
+                            ? 'ring-2 ring-blue-600 scale-[1.02]' 
+                            : 'opacity-80 hover:opacity-100'
+                        }`}
+                        onClick={() => setActiveImageIndex(0)}
                       >
                         <img
-                          src={image}
-                          alt={`Detail ${index + 1}`}
-                          className="w-full h-32 object-fit"
+                          src={selectedProject.mainImage}
+                          alt="Main"
+                          className="w-full h-20 object-cover"
                         />
                       </div>
-                    ))}
-                  </div>
 
-                  {/* Challenge & Solution Section */}
-                  <div className="mt-8">
-                    <div className="mb-6">
-                      <h4 className="text-lg font-bold text-blue-600 mb-2">
+                      {selectedProject.gallery.map((image, index) => (
+                        <div
+                          key={index}
+                          className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
+                            activeImageIndex === index + 1 
+                              ? 'ring-2 ring-blue-600 scale-[1.02]' 
+                              : 'opacity-80 hover:opacity-100'
+                          }`}
+                          onClick={() => setActiveImageIndex(index + 1)}
+                        >
+                          <img
+                            src={image}
+                            alt={`Detail ${index + 1}`}
+                            className="w-full h-20 object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Enhanced Challenge & Solution Section */}
+                  <div className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                    <div>
+                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
                         Challenge
                       </h4>
-                      <p className="text-gray-700">
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                         {selectedProject.challenge}
                       </p>
                     </div>
 
-                    <div className="mb-6">
-                      <h4 className="text-lg font-bold text-blue-600 mb-2">
+                    <div>
+                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
                         Solution
                       </h4>
-                      <p className="text-gray-700">
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                         {selectedProject.solution}
                       </p>
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-bold text-blue-600 mb-2">
+                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                         Results
                       </h4>
-                      <ul className="space-y-2">
+                      <ul className="space-y-3">
                         {selectedProject.results.map((result, index) => (
-                          <li key={index} className="flex items-start">
-                            <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-1" />
-                            <span>{result}</span>
+                          <li key={index} className="flex items-start bg-white dark:bg-gray-700 p-3 rounded-lg shadow-sm">
+                            <CheckCircleIcon className="h-5 w-5 text-green-500 dark:text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                            <span className="text-gray-700 dark:text-gray-300">{result}</span>
                           </li>
                         ))}
                       </ul>
@@ -330,50 +350,60 @@ const PortfolioSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Project Details - 2 columns */}
-                <div className="lg:col-span-2">
-                  <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                    <h4 className="text-lg font-bold text-gray-800 mb-4">
+                {/* Project Details - 2 columns with improved styling */}
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                       Project Details
                     </h4>
 
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
                         {selectedProject.link && (
                           <a
                             href={selectedProject.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 text-base rounded-md font-medium no-underline flex items-center justify-center  transition-colors"
+                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 dark:text-blue-400 text-base rounded-lg font-medium no-underline flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors shadow-sm"
                           >
                             <ArrowTopRightOnSquareIcon className="mr-2 h-5 w-5" />
                             View Live Project
                           </a>
                         )}
                       </div>
-                      <div>
-                        <p className="font-medium text-gray-700 mb-1">
-                          Client:
-                        </p>
-                        <p className="text-gray-600">
-                          {selectedProject.client}
-                        </p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Client:
+                          </p>
+                          <p className="text-gray-600 dark:text-gray-400 font-semibold">
+                            {selectedProject.client}
+                          </p>
+                        </div>
+
+                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Year:
+                          </p>
+                          <p className="text-gray-600 dark:text-gray-400 font-semibold">
+                            {selectedProject.year}
+                          </p>
+                        </div>
                       </div>
 
                       <div>
-                        <p className="font-medium text-gray-700 mb-1">Year:</p>
-                        <p className="text-gray-600">{selectedProject.year}</p>
-                      </div>
-
-                      <div>
-                        <p className="font-medium text-gray-700 mb-1">
+                        <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">
                           Technologies:
                         </p>
-                        <div className="flex flex-wrap gap-2 mt-2">
+                        <div className="flex flex-wrap gap-2">
                           {selectedProject.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full flex items-center"
+                              className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center shadow-sm"
                             >
                               <TagIcon className="h-3 w-3 mr-1" />
                               {tag}
@@ -384,33 +414,36 @@ const PortfolioSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gray-800 p-6 rounded-lg text-white ">
-                    <h4 className="text-lg font-bold mb-4">
-                      Interested in a similar solution?
-                    </h4>
-                    <p className="mb-6">
-                      Let's discuss how I can help you achieve similar results
-                      for your business.
-                    </p>
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg text-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-blue-600 opacity-10 mix-blend-multiply"></div>
+                    <div className="relative z-10">
+                      <h4 className="text-xl font-bold mb-4 tracking-tight">
+                        Interested in a similar solution?
+                      </h4>
+                      <p className="mb-6 text-gray-200 leading-relaxed">
+                        Let's discuss how I can help you achieve similar results
+                        for your business.
+                      </p>
 
-                    <div className="space-y-3">
-                      <a
-                        href="/contact"
-                        className="w-full px-6 py-3 border border-transparent text-base rounded-md text-white bg-blue-600 font-medium no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
-                      >
-                        <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
-                        Discuss Your Project
-                      </a>
+                      <div className="space-y-3">
+                        <a
+                          href="/contact"
+                          className="w-full px-6 py-3 border border-transparent text-base rounded-lg text-white bg-blue-600 font-medium no-underline flex items-center justify-center hover:bg-blue-700 transition-colors shadow-md"
+                        >
+                          <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
+                          Discuss Your Project
+                        </a>
 
-                      <a
-                        target="_blank"
-                        href="https://calendly.com/antcoffpersonal/meet"
-                        rel="noopener noreferrer"
-                        className="w-full px-6 py-3 border border-gray-500 text-base rounded-md text-white bg-transparent font-medium no-underline flex items-center justify-center hover:bg-gray-700 transition-colors"
-                      >
-                        <CalendarDaysIcon className="mr-2 h-5 w-5" />
-                        Schedule Consultation
-                      </a>
+                        <a
+                          target="_blank"
+                          href="https://calendly.com/antcoffpersonal/meet"
+                          rel="noopener noreferrer"
+                          className="w-full px-6 py-3 border border-gray-300 text-base rounded-lg text-white bg-transparent font-medium no-underline flex items-center justify-center hover:bg-white/10 transition-colors shadow-md"
+                        >
+                          <CalendarDaysIcon className="mr-2 h-5 w-5" />
+                          Schedule Consultation
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -15,9 +15,9 @@ export function BlogPosts({ allBlogs }) {
                 href={`/articles/${post.slug}`}
                 className="block"
               >
-                <p className="text-2xl font-bold text-gray-900 hover:text-blue-600">
+                <h4 className="text-lg font-bold text-gray-900 hover:text-blue-600">
                   {post.metadata.title}
-                </p>
+                </h4>
               </Link>
               <p className="text-sm text-gray-500">
                 {formatDate(post.metadata.publishedAt, false)}

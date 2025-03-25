@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { CustomMDX } from 'app/components/mdx';
-import { formatDate, getRSSBlogPosts } from 'app/articles/utils';
+import { getRSSBlogPosts, formatDate } from 'app/articles/utils';
 import { baseUrl } from 'app/sitemap';
 import GoBack from 'app/components/GoBack';
 import Breadcrumbs from 'app/components/Breadcrumbs';

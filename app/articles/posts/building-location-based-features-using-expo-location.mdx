@@ -1,0 +1,457 @@
+---
+title: 'Building Location-Based Features Using Expo Location'
+publishedAt: '2025-03-24'
+summary: 'A comprehensive guide to implementing GPS and location tracking features in React Native apps using Expo Location.'
+tags: GPS, React Native, Expo, Mobile Development, Geolocation
+category: Mobile Development
+---
+
+Location-based features have become essential for modern mobile applications. Whether you're building a fitness tracker, a food delivery app, or a social network with location sharing, the ability to access and utilize device GPS is crucial. In this guide, I'll walk through implementing location features using Expo Location in React Native applications.
+
+## What is Expo Location?
+
+Expo Location is a library that allows you to access the device's location system in a React Native app. It provides a consistent API for location services across iOS and Android, handling many of the platform-specific implementation details for you.
+
+Key features include:
+
+- Requesting permission to access device location
+- Getting the current position
+- Tracking position changes in real-time
+- Geofencing capabilities
+- Geocoding and reverse geocoding
+
+## Installation
+
+If you're using the managed Expo workflow, you can install expo-location with:
+
+```bash
+npx expo install expo-location
+```
+
+If you're using a bare React Native project with Expo modules:
+
+```bash
+yarn add expo-location
+npx pod-install
+```
+
+## Basic Usage: Getting the Current Location
+
+Let's start with a simple example that gets the user's current location:
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
+
+export default function LocationExample() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      // Request permission to access location
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      // Get the current position
+      const currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+
+      setLocation(currentLocation);
+    })();
+  }, []);
+
+  let text = 'Waiting for location...';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.paragraph}>{text}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  paragraph: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
+});
+```
+
+## Location Permissions
+
+Properly handling location permissions is crucial. Expo Location provides different permission types:
+
+- **Foreground Location Permission**: For accessing location while the app is in use
+- **Background Location Permission**: For accessing location even when the app is in the background
+
+Here's how to request background permissions:
+
+```jsx
+async function requestBackgroundPermissions() {
+  const { status: foregroundStatus } =
+    await Location.requestForegroundPermissionsAsync();
+
+  if (foregroundStatus !== 'granted') {
+    return 'Foreground permission denied';
+  }
+
+  const { status: backgroundStatus } =
+    await Location.requestBackgroundPermissionsAsync();
+
+  if (backgroundStatus !== 'granted') {
+    return 'Background permission denied';
+  }
+
+  return 'All permissions granted';
+}
+```
+
+## Real-Time Location Tracking
+
+For many apps, you'll want to subscribe to location updates rather than just getting the current position once:
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
+
+export default function LocationTracking() {
+  const [position, setPosition] = useState(null);
+  const [subscription, setSubscription] = useState(null);
+
+  // Start location tracking
+  const startLocationTracking = async () => {
+    // Request permissions
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== 'granted') {
+      alert('Permission to access location was denied');
+      return;
+    }
+
+    // Set up the location subscription
+    const locationSubscription = await Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.High,
+        timeInterval: 5000, // Update every 5 seconds
+        distanceInterval: 10, // Update if moved by 10 meters
+      },
+      (newLocation) => {
+        setPosition(newLocation);
+      },
+    );
+
+    setSubscription(locationSubscription);
+  };
+
+  // Stop location tracking
+  const stopLocationTracking = () => {
+    subscription?.remove();
+    setSubscription(null);
+  };
+
+  // Start tracking when component mounts
+  useEffect(() => {
+    startLocationTracking();
+
+    // Clean up subscription on unmount
+    return () => {
+      stopLocationTracking();
+    };
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Location Tracking Demo</Text>
+
+      {position ? (
+        <View style={styles.card}>
+          <Text style={styles.text}>Latitude: {position.coords.latitude}</Text>
+          <Text style={styles.text}>
+            Longitude: {position.coords.longitude}
+          </Text>
+          <Text style={styles.text}>Altitude: {position.coords.altitude}</Text>
+          <Text style={styles.text}>Speed: {position.coords.speed}</Text>
+          <Text style={styles.text}>
+            Timestamp: {new Date(position.timestamp).toLocaleString()}
+          </Text>
+        </View>
+      ) : (
+        <Text>Waiting for location updates...</Text>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  card: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    padding: 20,
+    width: '100%',
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+});
+```
+
+## Accuracy Settings
+
+Expo Location offers different accuracy settings that balance battery usage with location precision:
+
+```jsx
+const accuracySettings = {
+  lowest: Location.Accuracy.Lowest, // 3000m
+  low: Location.Accuracy.Low, // 1000m
+  balanced: Location.Accuracy.Balanced, // 100m
+  high: Location.Accuracy.High, // 10m
+  highest: Location.Accuracy.Highest, // ~0m
+  bestForNavigation: Location.Accuracy.BestForNavigation, // Best accuracy using all available sensors
+};
+```
+
+Choose the appropriate accuracy level based on your app's needs:
+
+- Use `Balanced` for general location awareness
+- Use `High` or `Highest` for precise location tracking
+- Use `BestForNavigation` for turn-by-turn navigation (highest battery usage)
+
+## Geocoding: Converting Coordinates to Addresses
+
+Converting coordinates to human-readable addresses is a common requirement:
+
+```jsx
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
+
+export default function GeocodingExample() {
+  const [address, setAddress] = useState(null);
+  const [error, setError] = useState(null);
+
+  const getAddressFromCoordinates = async () => {
+    try {
+      // Get current location
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== 'granted') {
+        setError('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+
+      // Reverse geocode the coordinates
+      const reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+
+      if (reverseGeocode.length > 0) {
+        setAddress(reverseGeocode[0]);
+      } else {
+        setError('No address found');
+      }
+    } catch (err) {
+      setError(`Error: ${err.message}`);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Get Current Address" onPress={getAddressFromCoordinates} />
+
+      {error && <Text style={styles.error}>{error}</Text>}
+
+      {address && (
+        <View style={styles.addressContainer}>
+          <Text style={styles.addressText}>
+            {address.name || ''}
+            {'\n'}
+            {address.street || ''}
+            {'\n'}
+            {address.city || ''}, {address.region || ''}{' '}
+            {address.postalCode || ''}
+            {'\n'}
+            {address.country || ''}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  error: {
+    color: 'red',
+    marginTop: 20,
+  },
+  addressContainer: {
+    marginTop: 20,
+    backgroundColor: '#f0f0f0',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+  },
+  addressText: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+});
+```
+
+## Geofencing
+
+Geofencing allows you to detect when the user enters or exits a predefined geographical region:
+
+```jsx
+import * as Location from 'expo-location';
+import * as TaskManager from 'expo-task-manager';
+
+const LOCATION_GEOFENCING_TASK = 'LOCATION_GEOFENCING_TASK';
+
+// Define the task that will handle geofencing events
+TaskManager.defineTask(
+  LOCATION_GEOFENCING_TASK,
+  ({ data: { eventType, region }, error }) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    if (eventType === Location.GeofencingEventType.Enter) {
+      console.log(`You've entered region: ${region.identifier}`);
+      // Handle enter event (e.g., display notification)
+    } else if (eventType === Location.GeofencingEventType.Exit) {
+      console.log(`You've left region: ${region.identifier}`);
+      // Handle exit event
+    }
+  },
+);
+
+// Start geofencing
+export async function startGeofencing() {
+  // Request permissions
+  const { status } = await Location.requestBackgroundPermissionsAsync();
+
+  if (status !== 'granted') {
+    console.log('Background location permission not granted');
+    return;
+  }
+
+  // Define regions to monitor
+  const regions = [
+    {
+      identifier: 'my-home',
+      latitude: 37.33233141,
+      longitude: -122.0312186,
+      radius: 100, // meters
+      notifyOnEnter: true,
+      notifyOnExit: true,
+    },
+    {
+      identifier: 'work-office',
+      latitude: 37.422,
+      longitude: -122.084,
+      radius: 200, // meters
+      notifyOnEnter: true,
+      notifyOnExit: true,
+    },
+  ];
+
+  // Start the geofencing task
+  await Location.startGeofencingAsync(LOCATION_GEOFENCING_TASK, regions);
+  console.log('Geofencing started');
+}
+
+// Stop geofencing
+export async function stopGeofencing() {
+  await Location.stopGeofencingAsync(LOCATION_GEOFENCING_TASK);
+  console.log('Geofencing stopped');
+}
+```
+
+## Best Practices and Performance Considerations
+
+1. **Battery Usage**: Location tracking can significantly impact battery life. Use the minimum accuracy level and update frequency that meets your app's needs.
+
+2. **User Experience**: Always inform users why you need their location and how it will be used.
+
+3. **Handle Permission Denials**: Provide clear instructions on how to enable location permissions if the user denies them.
+
+4. **Background Tracking**: If you need background location updates, make sure to:
+
+   - Request background permission
+   - Configure your app.json for background mode
+   - Use a reasonable update interval (not too frequent)
+
+5. **Fallback Strategies**: Have fallback options if location services are unavailable or disabled.
+
+```jsx
+// app.json configuration for background location
+{
+  "expo": {
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ],
+    "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": ["location", "fetch"]
+      }
+    },
+    "android": {
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"]
+    }
+  }
+}
+```
+
+## Conclusion
+
+The Expo Location API makes it easy to add powerful location-based features to your React Native applications. By following the examples and best practices outlined in this guide, you can create engaging location-aware experiences while respecting user privacy and device battery life.
+
+For more advanced use cases and detailed API documentation, check out the [official Expo Location documentation](https://docs.expo.dev/versions/latest/sdk/location/).
+
+Remember that with location data comes responsibility - always be transparent with your users about how their location information is being used and stored!

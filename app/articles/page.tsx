@@ -1,5 +1,4 @@
 import { BlogPosts } from 'app/components/posts';
-import Pagination from './Pagination';
 import { getBlogPosts, getAllTags, getAllCategories } from 'app/articles/utils';
 import {
   DocumentTextIcon,
@@ -9,6 +8,7 @@ import {
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import SearchBox from 'app/components/SearchBox';
+
 
 export const metadata = {
   title: 'Articles',
@@ -26,8 +26,6 @@ export default async function Page({ searchParams }) {
   const popularTags = getAllTags().slice(0, 24);
   const allCategories = getAllCategories();
 
-  // Get pagination data
-  const { totalPages } = allBlogs.pagination;
 
   return (
     <div className="article-page max-w-6xl mx-auto">
@@ -41,6 +39,8 @@ export default async function Page({ searchParams }) {
           Unpacking the strategies, challenges, and breakthroughs in software
           development, project management, and cloud technology.
         </p>
+
+
       </div>
 
       {/* Main content with sidebar layout */}
@@ -125,11 +125,6 @@ export default async function Page({ searchParams }) {
             </div>
           </div>
         </aside>
-      </div>
-      
-      {/* Centered Pagination */}
-      <div className="w-full mt-8 flex justify-center">
-        <Pagination totalPages={totalPages} initialPage={page} />
       </div>
     </div>
   );

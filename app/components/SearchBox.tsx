@@ -51,13 +51,38 @@ function formatDate(date: string, includeRelative = false): string {
   return `${fullDate} (${formattedDate})`;
 }
 
-export default function SearchBox() {
-  const [query, setQuery] = useState('');
+interface SearchBoxProps {
+  initialValue?: string;
+  autofocus?: boolean;
+  placeholder?: string;
+  hideDropdown?: boolean; // New prop to hide dropdown results
+}
+
+export default function SearchBox({ 
+  initialValue = '', 
+  autofocus = false, 
+  placeholder = "Search articles...",
+  hideDropdown = false
+}: SearchBoxProps) {
+  const [query, setQuery] = useState(initialValue);
   const [results, setResults] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // Set initial value when prop changes
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue]);
+
+  // Auto-focus if needed
+  useEffect(() => {
+    if (autofocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autofocus]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -83,6 +108,11 @@ export default function SearchBox() {
         return;
       }
 
+      // If hideDropdown is true, don't fetch results or show dropdown
+      if (hideDropdown) {
+        return;
+      }
+
       setIsLoading(true);
       try {
         const response = await fetch(
@@ -99,16 +129,34 @@ export default function SearchBox() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, hideDropdown]);
 
   return (
     <div className="relative" ref={searchRef}>
       <div className="relative">
         <input
+          ref={inputRef}
           type="text"
-          placeholder="Search articles..."
+          placeholder={placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && query.trim().length >= 2) {
+              e.preventDefault();
+              if (hideDropdown) {
+                // Force the URL update without navigation
+                const newUrl = window.location.pathname + `?q=${encodeURIComponent(query)}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+                
+                // Trigger a search event
+                window.dispatchEvent(new CustomEvent('search-query-updated', { 
+                  detail: { query }
+                }));
+              } else {
+                router.push(`/articles/search?q=${encodeURIComponent(query)}`);
+              }
+            }
+          }}
           className="w-full px-3 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           onFocus={() => {
             if (results.length > 0) setShowResults(true);
@@ -130,7 +178,7 @@ export default function SearchBox() {
       </div>
 
       {/* No results message or view all results */}
-      {showResults && query.length >= 2 && !isLoading && (
+      {!hideDropdown && showResults && query.length >= 2 && !isLoading && (
         <div className="w-full mt-1 bg-white">
           {results.length === 0 ? (
             <p className="text-sm text-gray-500 text-center">
@@ -157,7 +205,7 @@ export default function SearchBox() {
       )}
 
       {/* Search results dropdown */}
-      {showResults && results.length > 0 && (
+      {!hideDropdown && showResults && results.length > 0 && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-80 overflow-y-auto">
           {results.map((post) => (
             <Link
@@ -188,7 +236,7 @@ export default function SearchBox() {
       )}
 
       {/* Loading indicator */}
-      {isLoading && (
+      {!hideDropdown && isLoading && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg p-4">
           <p className="text-sm text-gray-500 text-center">Searching...</p>
         </div>
@@ -199,10 +247,23 @@ export default function SearchBox() {
         onSubmit={(e) => {
           e.preventDefault();
           if (query.trim().length >= 2) {
-            router.push(`/articles/search?q=${encodeURIComponent(query)}`);
+            // If we're already on the search page, don't navigate again
+            if (hideDropdown) {
+              // Force the URL update without navigation
+              const newUrl = window.location.pathname + `?q=${encodeURIComponent(query)}`;
+              window.history.pushState({ path: newUrl }, '', newUrl);
+              
+              // Trigger a search (we need to dispatch an event that the search page can listen to)
+              window.dispatchEvent(new CustomEvent('search-query-updated', { 
+                detail: { query }
+              }));
+            } else {
+              router.push(`/articles/search?q=${encodeURIComponent(query)}`);
+            }
           }
         }}
-        className="hidden"
+        // Make sure the form is visible to DOM but not to the user
+        style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
       >
         <input type="submit" />
       </form>

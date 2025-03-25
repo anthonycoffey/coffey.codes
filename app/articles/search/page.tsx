@@ -10,35 +10,58 @@ import {
   DocumentTextIcon,
   XCircleIcon
 } from '@heroicons/react/20/solid';
-import { formatDate } from 'app/articles/utils';
+import {formatDate} from '@/utils/date';
+import SearchBox from 'app/components/SearchBox';
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
+  const urlQuery = searchParams.get('q') || '';
+  const [currentQuery, setCurrentQuery] = useState(urlQuery);
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    async function performSearch() {
-      if (!query.trim()) {
-        setResults([]);
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-        const data = await response.json();
-        setResults(data.posts);
-      } catch (error) {
-        console.error('Search error:', error);
-      } finally {
-        setIsLoading(false);
-      }
+  // Function to perform the search
+  const performSearch = async (searchQuery: string) => {
+    if (!searchQuery.trim()) {
+      setResults([]);
+      return;
     }
 
-    performSearch();
-  }, [query]);
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+      const data = await response.json();
+      setResults(data.posts);
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Initialize currentQuery when URL query changes
+  useEffect(() => {
+    setCurrentQuery(urlQuery);
+  }, [urlQuery]);
+
+  // Perform search when currentQuery changes
+  useEffect(() => {
+    performSearch(currentQuery);
+  }, [currentQuery]);
+  
+  // Listen for custom search events from the SearchBox component
+  useEffect(() => {
+    const handleSearchEvent = (event: CustomEvent) => {
+      const { query: newQuery } = event.detail;
+      setCurrentQuery(newQuery);
+    };
+
+    window.addEventListener('search-query-updated', handleSearchEvent as EventListener);
+    
+    return () => {
+      window.removeEventListener('search-query-updated', handleSearchEvent as EventListener);
+    };
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -54,10 +77,37 @@ export default function SearchPage() {
           </Link>
         </div>
         
-        {query && (
+        <div className="mb-6">
+          <div className="relative max-w-2xl mx-auto flex">
+            <div className="flex-grow">
+              <SearchBox 
+                initialValue={currentQuery} 
+                autofocus={true} 
+                placeholder="Search for articles..."
+                hideDropdown={true}
+              />
+            </div>
+            <button 
+              onClick={() => {
+                // Find the input element and submit its form
+                const input = document.querySelector('input[type="text"]');
+                if (input) {
+                  const form = input.closest('form');
+                  if (form) form.dispatchEvent(new Event('submit', { cancelable: true }));
+                }
+              }}
+              className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center"
+            >
+              <MagnifyingGlassIcon className="h-5 w-5 mr-1" />
+              Search
+            </button>
+          </div>
+        </div>
+
+        {currentQuery && (
           <div className="bg-gray-100 p-3 rounded mb-6 flex justify-between items-center">
             <p className="text-gray-700">
-              Showing results for: <span className="font-semibold">"{query}"</span>
+              Showing results for: <span className="font-semibold">"{currentQuery}"</span>
             </p>
             <Link href="/articles/search" className="text-blue-600 hover:text-blue-800 flex items-center">
               <XCircleIcon className="w-4 h-4 mr-1" />
@@ -118,12 +168,12 @@ export default function SearchPage() {
             </div>
           ))}
         </div>
-      ) : query ? (
+      ) : currentQuery ? (
         <div className="text-center py-12 bg-white rounded-lg border border-gray-200 shadow-sm">
           <DocumentTextIcon className="h-16 w-16 mx-auto text-gray-300" />
           <h2 className="mt-4 text-xl font-medium text-gray-900">No articles found</h2>
           <p className="mt-2 text-gray-500">
-            We couldn't find any articles matching "{query}".
+            We couldn't find any articles matching "{currentQuery}".
           </p>
           <div className="mt-6">
             <Link
@@ -139,10 +189,14 @@ export default function SearchPage() {
           <MagnifyingGlassIcon className="h-16 w-16 mx-auto text-gray-300" />
           <h2 className="mt-4 text-xl font-medium text-gray-900">Search articles</h2>
           <p className="mt-2 text-gray-500">
-            Enter a search term to find articles.
+            Use the search box above to find articles.
           </p>
         </div>
       )}
+
+
+      
+
     </div>
   );
 }

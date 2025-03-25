@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getRSSBlogPosts } from '../../articles/utils';
+import { getRSSBlogPosts } from '@/app/articles/utils';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

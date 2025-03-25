@@ -2,10 +2,10 @@ import {
   getBlogPostsByTag,
   getAllTags,
   getAllCategories,
-  capitalizeWords
-} from 'app/articles/utils';
-import { BlogPosts } from 'app/components/posts';
-import Pagination from 'app/articles/Pagination';
+  capitalizeWords,
+} from '@/app/articles/utils';
+import { BlogPosts } from '@/components/posts';
+import Pagination from '@/components/Pagination';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -13,8 +13,7 @@ import {
   FolderIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
-import SearchBox from 'app/components/SearchBox';
-
+import SearchBox from '@/components/SearchBox';
 
 export const dynamicParams = true;
 
@@ -157,7 +156,7 @@ export default function TagPage({ params, searchParams }) {
           )}
         </aside>
       </div>
-      
+
       {/* Centered Pagination */}
       <div className="w-full mt-8 flex justify-center">
         <Pagination totalPages={totalPages} initialPage={page} />

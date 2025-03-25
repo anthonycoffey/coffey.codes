@@ -1,4 +1,4 @@
-import ContactForm from '../components/ContactForm';
+import ContactForm from '../../components/ContactForm';
 import {
   CalendarDaysIcon,
   EnvelopeIcon,

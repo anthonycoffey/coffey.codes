@@ -1,8 +1,8 @@
 import { backend, frontend } from './logos';
-import LogoGrid from './components/LogoGrid';
-import Testimonials from './components/Testimonials';
-import SocialIcons from './components/SocialIcons';
-import ClientSections from './components/ClientSections';
+import LogoGrid from '../components/LogoGrid';
+import Testimonials from '../components/Testimonials';
+import SocialIcons from '../components/SocialIcons';
+import ClientSections from '../components/ClientSections';
 import {
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
@@ -24,7 +24,6 @@ export const metadata = {
 };
 
 export default function Page() {
- 
   const sectionsContent = [
     {
       id: 'hero',

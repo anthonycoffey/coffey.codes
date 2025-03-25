@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
 import React from 'react';
-import Counter from 'app/components/Counter';
+import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
 
 function Table({ data }) {
@@ -65,9 +65,9 @@ function Code({ children, ...props }) {
     );
   } else {
     return (
-    <span className="singleline">
+      <span className="singleline">
         <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-    </span>
+      </span>
     );
   }
 }

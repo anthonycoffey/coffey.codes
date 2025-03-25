@@ -2,14 +2,18 @@ import {
   getBlogPostsByCategory,
   getAllCategories,
   getAllTags,
-  capitalizeWords
-} from 'app/articles/utils';
-import { BlogPosts } from 'app/components/posts';
-import Pagination from 'app/articles/Pagination';
+  capitalizeWords,
+} from '@/app/articles/utils';
+import { BlogPosts } from '@/components/posts';
+import Pagination from '@/components/Pagination';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { TagIcon, FolderIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import SearchBox from 'app/components/SearchBox';
+import {
+  TagIcon,
+  FolderIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/20/solid';
+import SearchBox from '@/components/SearchBox';
 
 export const dynamicParams = true;
 
@@ -41,16 +45,17 @@ export default function CategoryPage({ params, searchParams }) {
   const itemsPerPage = 5;
   const category = params.category;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
-  
+
   // Get other categories for sidebar (excluding current category)
-  const otherCategories = getAllCategories()
-    .filter(c => c.toLowerCase() !== decodedCategory.toLowerCase());
-  
+  const otherCategories = getAllCategories().filter(
+    (c) => c.toLowerCase() !== decodedCategory.toLowerCase(),
+  );
+
   // Get popular tags for sidebar
   const popularTags = getAllTags().slice(0, 8);
 
   const posts = getBlogPostsByCategory(decodedCategory, page, itemsPerPage);
-  
+
   // Get pagination data
   const { totalPages } = posts.pagination;
 
@@ -79,7 +84,7 @@ export default function CategoryPage({ params, searchParams }) {
         <div className="md:w-2/3">
           <BlogPosts allBlogs={posts} />
         </div>
-        
+
         {/* Sidebar */}
         <aside className="md:w-1/3 space-y-6">
           {/* Search box */}
@@ -90,7 +95,7 @@ export default function CategoryPage({ params, searchParams }) {
             </h2>
             <SearchBox />
           </div>
-          
+
           {/* Other categories section */}
           {otherCategories.length > 0 && (
             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
@@ -100,7 +105,10 @@ export default function CategoryPage({ params, searchParams }) {
               </h2>
               <div className="space-y-2">
                 {otherCategories.map((otherCategory) => (
-                  <div key={otherCategory} className="flex justify-between items-center">
+                  <div
+                    key={otherCategory}
+                    className="flex justify-between items-center"
+                  >
                     <Link
                       href={`/articles/category/${encodeURIComponent(otherCategory.toLowerCase())}`}
                       className="text-gray-700 hover:text-blue-600 transition-colors"
@@ -108,7 +116,10 @@ export default function CategoryPage({ params, searchParams }) {
                       {otherCategory}
                     </Link>
                     <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                      {getBlogPostsByCategory(otherCategory, 1, 100).posts.length}
+                      {
+                        getBlogPostsByCategory(otherCategory, 1, 100).posts
+                          .length
+                      }
                     </span>
                   </div>
                 ))}
@@ -121,7 +132,7 @@ export default function CategoryPage({ params, searchParams }) {
               </div>
             </div>
           )}
-          
+
           {/* Tags section */}
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
@@ -148,7 +159,7 @@ export default function CategoryPage({ params, searchParams }) {
           </div>
         </aside>
       </div>
-      
+
       {/* Centered Pagination */}
       <div className="w-full mt-8 flex justify-center">
         <Pagination totalPages={totalPages} initialPage={page} />

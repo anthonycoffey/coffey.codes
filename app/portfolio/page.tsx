@@ -32,6 +32,29 @@ const PortfolioSection: React.FC = () => {
   const portfolioProjects: Project[] = [
     {
       id: 1,
+      title: 'Personal Blog & Portfolio',
+      description: 'MDX-powered blog with advanced SEO features and modern design',
+      tags: ['Next.js', 'TypeScript', 'MDX', 'Tailwind CSS', 'React'],
+      mainImage: '/og-image.jpg',
+      gallery: ['/og-image.jpg'],
+      link: 'https://coffey.codes',
+      client: 'Personal Project',
+      challenge:
+        'Build a performant, SEO-friendly blog and portfolio site with dynamic content, image optimization, and a modern design. Implement features like search, taxonomy (categories/tags), and pagination.',
+      solution:
+        'Leveraged Next.js App Router architecture with server components and MDX for content management. Implemented a custom hook-based pagination system, search API, and dynamic OpenGraph image generation.',
+      results: [
+        'Fast page loads with server-side rendering and static generation',
+        'Semantic HTML and accessibility features for better SEO',
+        'Full-text search across all blog content',
+        'Taxonomy system with categories and tags',
+        'Responsive design that works on all devices',
+      ],
+      year: '2023',
+      featured: true,
+    },
+    {
+      id: 2,
       title: 'React Drum Machine',
       description: 'A retro-inspired step sequencer built with React.js',
       tags: ['React', 'Node.js', 'Vite', 'Tailwind'],
@@ -59,6 +82,7 @@ const PortfolioSection: React.FC = () => {
         'React',
         'Supabase',
         'Firebase',
+        'Cloud Functions',
         'Google Cloud Text-to-Speech API',
       ],
       mainImage: 'portfolio/tts-home.jpg',
@@ -83,7 +107,7 @@ const PortfolioSection: React.FC = () => {
       title: 'Piano Scale Visualizer',
       description:
         'Interactive musical scale visualizer for learning piano scales',
-      tags: ['React', 'TailwindCSS'],
+      tags: ['React', 'TailwindCSS', 'Howler.js'],
       mainImage: 'portfolio/piano-scale-visualizer.png',
       gallery: [],
       link: 'https://anthonycoffey.github.io/piano-scale-visualizer/',
@@ -125,7 +149,7 @@ const PortfolioSection: React.FC = () => {
       <div className="page-content">
         {/* Portfolio Section Header */}
 
-        <div className="border-b pb-4 mb-8 max-w-6xl mx-auto">
+        <div className="border-b border-gray-300 pb-6 mb-8 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Portfolio
@@ -138,7 +162,7 @@ const PortfolioSection: React.FC = () => {
           {displayedProjects.map((project) => (
             <div
               key={project.id}
-              className="border bg-gray-50 rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg cursor-pointer"
+              className="border border-gray-200 bg-gray-50 rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg cursor-pointer"
               onClick={() => openProject(project)}
             >
               <div className="h-64 overflow-hidden">

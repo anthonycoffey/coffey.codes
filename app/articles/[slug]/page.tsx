@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
-import { CustomMDX } from 'app/components/mdx';
-import { getRSSBlogPosts } from 'app/articles/utils';
-import { baseUrl } from 'app/sitemap';
-import GoBack from 'app/components/GoBack';
-import Breadcrumbs from 'app/components/Breadcrumbs';
+import { CustomMDX } from '@/components/mdx';
+import { getRSSBlogPosts } from '@/app/articles/utils';
+import { baseUrl } from '@/app/sitemap';
+import GoBack from '@/components/GoBack';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 export async function generateStaticParams() {
@@ -14,8 +14,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
-  let post = getRSSBlogPosts().find((post) => post.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  let post = getRSSBlogPosts().find((post) => post.slug === slug);
   if (!post) {
     return;
   }
@@ -54,8 +55,10 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function Blog({ params }) {
-  let post = getRSSBlogPosts().find((post) => post.slug === params.slug);
+export default async function Blog({ params }) {
+  const { slug } = await params;
+
+  let post = getRSSBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     notFound();
@@ -95,11 +98,11 @@ export default function Blog({ params }) {
         <p>
           <em>{formatDate(post.metadata.publishedAt)}</em>
         </p>
-        
+
         {post.metadata.category && (
           <div className="mt-2">
             <span className="font-semibold">Category: </span>
-            <Link 
+            <Link
               href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
               className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full"
             >
@@ -107,13 +110,13 @@ export default function Blog({ params }) {
             </Link>
           </div>
         )}
-        
+
         {post.metadata.tags && post.metadata.tags.length > 0 && (
           <div className="mt-2">
             <div className="flex flex-wrap gap-2 mt-1">
-            <span className="font-semibold">Tags: </span>
+              <span className="font-semibold">Tags: </span>
               {post.metadata.tags.map((tag) => (
-                <Link 
+                <Link
                   key={tag}
                   href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
                   className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded"

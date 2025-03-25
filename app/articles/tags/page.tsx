@@ -1,4 +1,4 @@
-import { getAllTags } from 'app/articles/utils';
+import { getAllTags } from '@/app/articles/utils';
 import Link from 'next/link';
 
 export function generateMetadata() {

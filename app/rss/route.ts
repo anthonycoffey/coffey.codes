@@ -1,5 +1,5 @@
-import { baseUrl } from 'app/sitemap';
-import { getRSSBlogPosts } from 'app/articles/utils';
+import { baseUrl } from '@/app/sitemap';
+import { getRSSBlogPosts } from '@/app/articles/utils';
 
 function escapeXml(unsafe: string): string {
   return unsafe.replace(/[<>&'"]/g, function (c) {

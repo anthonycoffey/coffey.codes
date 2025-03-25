@@ -19,26 +19,29 @@ export default [
       'react-hooks': reactHooksPlugin,
       import: importPlugin,
       'jsx-a11y': jsxA11yPlugin,
-      next: nextPlugin
+      next: nextPlugin,
     },
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
     settings: {
       react: {
-        version: 'detect'
-      }
+        version: 'detect',
+      },
     },
-    ignores: ['node_modules/**', '.next/**', 'public/**', '**/*.d.ts']
+    ignores: ['node_modules/**', '.next/**', 'public/**', '**/*.d.ts'],
   },
   {
     files: ['**/*.mdx'],
     rules: {
-      'react/jsx-no-undef': 'off'
-    }
-  }
+      'react/jsx-no-undef': 'off',
+    },
+  },
 ];

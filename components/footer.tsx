@@ -131,7 +131,7 @@ export default function Footer() {
         </ul>
 
         <div className="relative right-8 bottom-8">
-          <Link
+          <a
             className={`scroll-to-top ${
               showScrollToTop ? 'visible' : 'invisible'
             }`}
@@ -143,7 +143,7 @@ export default function Footer() {
                 <ArrowUpCircleIcon className="h-4 w-4 ml-1" />
               </span>
             </p>
-          </Link>
+          </a>
         </div>
 
         <div className="flex justify-center mt-8">

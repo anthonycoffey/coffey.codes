@@ -113,7 +113,7 @@ export default function Footer() {
         <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 md:justify-center">
           {links.map((link, index) => (
             <li key={index}>
-              <a
+              <Link
                 className="flex items-center transition-all  hover:underline"
                 rel={link.href.endsWith('rss') ? 'noopener noreferrer' : ''}
                 target={link.href.endsWith('rss') ? '_blank' : '_self'}
@@ -125,13 +125,13 @@ export default function Footer() {
                     <span>{link.text}</span>
                   </span>
                 </p>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="relative right-8 bottom-8">
-          <a
+          <Link
             className={`scroll-to-top ${
               showScrollToTop ? 'visible' : 'invisible'
             }`}
@@ -143,11 +143,11 @@ export default function Footer() {
                 <ArrowUpCircleIcon className="h-4 w-4 ml-1" />
               </span>
             </p>
-          </a>
+          </Link>
         </div>
 
         <div className="flex justify-center mt-8">
-          <a href="/">
+          <Link href="/">
             <Image
               width={300}
               height={82}
@@ -155,12 +155,12 @@ export default function Footer() {
               alt="logo"
               className="h-20"
             />
-          </a>
+          </Link>
         </div>
         <div className="justify-center mt-8 flex items-center space-x-2">
           <span>© {new Date().getFullYear()} </span>
           <span> &#183; </span>
-          <a
+          <Link
             href="https://github.com/anthonycoffey/coffey.codes"
             target="_blank"
             rel="noopener noreferrer"
@@ -168,7 +168,7 @@ export default function Footer() {
           >
             View Code on GitHub
             <CodeBracketIcon className="h-4 w-4 ml-1" />
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

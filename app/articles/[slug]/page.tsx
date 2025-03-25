@@ -110,8 +110,8 @@ export default function Blog({ params }) {
         
         {post.metadata.tags && post.metadata.tags.length > 0 && (
           <div className="mt-2">
-            <span className="font-semibold">Tags: </span>
             <div className="flex flex-wrap gap-2 mt-1">
+            <span className="font-semibold">Tags: </span>
               {post.metadata.tags.map((tag) => (
                 <Link 
                   key={tag}

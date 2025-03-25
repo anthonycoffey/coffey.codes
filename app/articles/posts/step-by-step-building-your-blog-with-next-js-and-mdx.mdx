@@ -1,0 +1,257 @@
+---
+title: Step-by-Step: Building Your Blog With Next.js and MDX
+publishedAt: 2025-03-25
+summary: "Learn how to build a fully featured blog with Next.js and MDX, including how to solve the notorious React version conflict errors that can occur with next-mdx-remote."
+tags: Next.js, MDX, React, Server Components, SEO
+category: Web Development
+---
+
+Next.js has become the go-to framework for building modern React applications, especially when it comes to content-heavy sites like blogs. In this article, I'll walk you through how I built my blog using Next.js App Router and MDX, and how I solved an annoying React version conflict error that might be plaguing your MDX implementation.
+
+## The Architecture of an MDX-Powered Blog
+
+My blog is built on a straightforward yet powerful architecture:
+
+1. **Next.js App Router**: For server-side rendering and routing
+2. **MDX files**: For writing blog content with React components
+3. **next-mdx-remote**: For rendering MDX content securely
+4. **Tailwind CSS**: For styling
+
+The content flow looks like this:
+
+1. MDX files are stored in the `/app/articles/posts` directory
+2. When a user visits a post URL, the blog fetches the corresponding MDX file
+3. The content is processed through the MDX parser
+4. The resulting HTML (with React components) is rendered on the page
+
+## The Magic of MDX Rendering
+
+MDX combines the best of Markdown and JSX, allowing you to write content in a familiar Markdown format while embedding React components when needed.
+
+Here's a simplified version of my MDX rendering component:
+
+```tsx
+// app/components/mdx.tsx
+'use client';
+
+import { MDXRemote } from 'next-mdx-remote';
+import { components } from './mdx-components';
+
+export function CustomMDX({ source }) {
+  return (
+    <div className="prose prose-lg dark:prose-invert">
+      <MDXRemote {...source} components={components} />
+    </div>
+  );
+}
+```
+
+And the components that can be used within MDX:
+
+```tsx
+// app/components/mdx-components.tsx
+import Link from 'next/link';
+import Image from 'next/image';
+import { CodeBlock } from './CodeBlock';
+
+export const components = {
+  h1: ({ children }) => <h1 className="text-3xl font-bold mb-6">{children}</h1>,
+  h2: ({ children }) => (
+    <h2 className="text-2xl font-bold mt-8 mb-4">{children}</h2>
+  ),
+  a: ({ href, children }) => (
+    <Link href={href} className="text-blue-600 hover:underline">
+      {children}
+    </Link>
+  ),
+  img: ({ src, alt }) => (
+    <Image
+      src={src}
+      alt={alt}
+      width={700}
+      height={400}
+      className="rounded-lg"
+    />
+  ),
+  code: ({ children, className }) => {
+    // Check if the code block has a language defined
+    const language = className ? className.replace('language-', '') : 'text';
+    return <CodeBlock code={children} language={language} />;
+  },
+  // Add more component overrides as needed
+};
+```
+
+## Troubleshooting React Version Conflict Errors
+
+If you've implemented MDX in a Next.js project, you might have encountered this frustrating error:
+
+```
+Error: A React Element from an older version of React was rendered. This is not supported. It can happen if:
+- Multiple copies of the "react" package is used.
+- A library pre-bundled an old copy of "react" or "react/jsx-runtime".
+- A compiler tries to "inline" JSX instead of using the runtime.
+```
+
+This error typically occurs when working with `next-mdx-remote` in a Next.js App Router project. The root cause is that `next-mdx-remote` might be bundling its own version of React, which conflicts with the version used by Next.js.
+
+## The Solution: Transpile Packages
+
+The simplest solution to this problem is to tell Next.js to transpile the `next-mdx-remote` package. This ensures that the React version used by `next-mdx-remote` is compatible with your project's React version.
+
+Add this to your `next.config.js`:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ['next-mdx-remote'], // Add this line
+  // other config options...
+};
+
+module.exports = nextConfig;
+```
+
+This configuration tells Next.js to process the `next-mdx-remote` package through its own transpilation pipeline, ensuring that it uses the same React version as the rest of your application.
+
+## Adding OpenGraph and SEO Integration
+
+A modern blog isn't complete without proper SEO and social sharing capabilities. My blog implements these features through Next.js's built-in metadata API:
+
+```tsx
+// app/articles/[slug]/page.tsx
+export async function generateMetadata({ params }) {
+  const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    return {};
+  }
+
+  return {
+    title: post.metadata.title,
+    description: post.metadata.summary,
+    openGraph: {
+      title: post.metadata.title,
+      description: post.metadata.summary,
+      type: 'article',
+      url: `https://coffey.codes/articles/${post.slug}`,
+      images: [
+        {
+          url: post.metadata.image || 'https://coffey.codes/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: post.metadata.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.metadata.title,
+      description: post.metadata.summary,
+      images: [post.metadata.image || 'https://coffey.codes/og-image.jpg'],
+    },
+  };
+}
+```
+
+I also generate dynamic OpenGraph images for each post using Next.js's API routes:
+
+```tsx
+// app/og/route.tsx
+import { ImageResponse } from 'next/server';
+
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const title = searchParams.get('title') || 'My Blog';
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: 'flex',
+          fontSize: 60,
+          color: 'white',
+          background: 'linear-gradient(to bottom, #3b82f6, #1e40af)',
+          width: '100%',
+          height: '100%',
+          padding: '50px 200px',
+          textAlign: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h1>{title}</h1>
+      </div>
+    ),
+    {
+      width: 1200,
+      height: 630,
+    },
+  );
+}
+```
+
+## Taxonomy and Search
+
+To make content discoverable, I implemented a taxonomy system with categories and tags, along with a search function:
+
+```tsx
+// Storing post metadata in frontmatter
+---
+title: Article Title
+publishedAt: 2023-06-15
+summary: Brief summary about the article.
+tags: Next.js, MDX, React
+category: Web Development
+---
+```
+
+The search functionality works by indexing all posts and making them searchable via an API endpoint:
+
+```tsx
+// app/api/search/route.ts
+import { getBlogPosts } from 'app/articles/utils';
+
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const query = searchParams.get('q');
+
+  if (!query || query.length < 2) {
+    return new Response(JSON.stringify({ posts: [] }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const allPosts = getBlogPosts(1, 100).posts;
+
+  const results = allPosts.filter((post) => {
+    const titleMatch = post.metadata.title
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const contentMatch = post.content
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const tagMatch = post.metadata.tags?.some((tag) =>
+      tag.toLowerCase().includes(query.toLowerCase()),
+    );
+    const categoryMatch = post.metadata.category
+      ?.toLowerCase()
+      .includes(query.toLowerCase());
+
+    return titleMatch || contentMatch || tagMatch || categoryMatch;
+  });
+
+  return new Response(JSON.stringify({ posts: results }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+```
+
+## Conclusion
+
+Building a blog with Next.js and MDX provides a powerful and flexible platform for publishing content. While you might encounter some integration challenges like React version conflicts, the solutions are straightforward once you understand the problem.
+
+By using the `transpilePackages` option in Next.js config or switching to client components, you can easily overcome these challenges and focus on creating great content for your readers.
+
+Remember that MDX is not just about rendering Markdown—it's about extending your content with the full power of React components, enabling interactive and dynamic blog posts that stand out from traditional static content.
+
+If you have any questions about implementing MDX in your Next.js project or resolving React version conflicts, feel free to reach out!

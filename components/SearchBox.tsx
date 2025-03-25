@@ -21,7 +21,7 @@ interface SearchBoxProps {
   initialValue?: string;
   autofocus?: boolean;
   placeholder?: string;
-  hideDropdown?: boolean; // New prop to hide dropdown results
+  hideDropdown?: boolean;
 }
 
 export default function SearchBox({ 

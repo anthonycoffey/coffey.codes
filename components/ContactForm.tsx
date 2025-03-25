@@ -15,7 +15,7 @@ export default function ContactForm() {
     message: '',
   });
   const [messageSent, setMessageSent] = useState<boolean>(false);
-  const [showMessage, setShowMessage] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [consentChecked, setConsentChecked] = useState<boolean>(false);
 
@@ -41,15 +41,15 @@ export default function ContactForm() {
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
+    setError(null);
     event.preventDefault();
     try {
       const response = await fetch(
-        'https://us-central1-coffeywebdev-d0487.cloudfunctions.net/sendContactFormEmail',
+        '/functions/sendContactFormEmail',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
           },
           body: JSON.stringify({
             name: formData.name,
@@ -64,6 +64,10 @@ export default function ContactForm() {
         setMessageSent(true);
       }
     } catch (error) {
+      console.log(error);
+      setError(
+        'An error occurred while sending your message, please try again.',
+      );
     } finally {
       setLoading(false);
     }
@@ -139,6 +143,15 @@ export default function ContactForm() {
               </span>
             </label>
           </div>
+
+          {error && (
+            <div
+              className="w-full flex bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              role="alert"
+            >
+              <span>{error}</span>
+            </div>
+          )}
 
           <div className="flex items-center justify-center">
             {loading ? (

@@ -56,6 +56,15 @@ const nextConfig = {
   sassOptions: {
     includePaths: ['styles'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/functions/:path*',
+        destination: 'https://us-central1-coffeywebdev-d0487.cloudfunctions.net/:path*',
+        basePath: false,
+      },
+    ];
+  }
 };
 
 module.exports = nextConfig;

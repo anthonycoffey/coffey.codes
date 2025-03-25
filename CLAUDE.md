@@ -1,9 +1,11 @@
 # CLAUDE.md - Development Guidelines
 
 ## Build Commands
-- `yarn dev` - Start development server on port 3000
-- `yarn build` - Build for production
-- `yarn start` - Start production server
+- `bun dev` - Start development server on port 3000
+- `bun build` - Build for production
+- `bun start` - Start production server
+- `bun lint` - Run ESLint on JS/TS files
+- `bun lint:fix` - Fix linting issues automatically
 
 ## Code Style
 - **TypeScript**: Strict type checking with interfaces for component props
@@ -21,3 +23,4 @@
 - Next.js App Router architecture
 - MDX-powered blog using next-mdx-remote
 - Mobile-first responsive design
+- ESLint with flat config (eslint.config.js)

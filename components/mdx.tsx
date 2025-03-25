@@ -7,10 +7,10 @@ import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
 
 function Table({ data }) {
-  let headers = data.headers.map((header, index) => (
+  const headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
   ));
-  let rows = data.rows.map((row, index) => (
+  const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex}>{cell}</td>
@@ -29,7 +29,7 @@ function Table({ data }) {
 }
 
 function CustomLink(props) {
-  let href = props.href;
+  const href = props.href;
 
   if (href.startsWith('/')) {
     return (
@@ -52,7 +52,7 @@ function RoundedImage(props) {
 
 function Code({ children, ...props }) {
   const isMultiline = children.includes('\n');
-  let codeHTML = highlight(children);
+  const codeHTML = highlight(children);
 
   if (isMultiline) {
     return (
@@ -85,7 +85,7 @@ function slugify(str) {
 
 function createHeading(level) {
   const Heading = ({ children }) => {
-    let slug = slugify(children);
+    const slug = slugify(children);
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -105,7 +105,7 @@ function createHeading(level) {
   return Heading;
 }
 
-let components = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),

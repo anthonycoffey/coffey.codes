@@ -7,7 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 export async function generateStaticParams() {
-  let posts = getRSSBlogPosts();
+  const posts = getRSSBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -16,18 +16,18 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  let post = getRSSBlogPosts().find((post) => post.slug === slug);
+  const post = getRSSBlogPosts().find((post) => post.slug === slug);
   if (!post) {
     return;
   }
 
-  let {
+  const {
     title,
     publishedAt: publishedTime,
     summary: description,
     image,
   } = post.metadata;
-  let ogImage = image
+  const ogImage = image
     ? image
     : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
 
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
 export default async function Blog({ params }) {
   const { slug } = await params;
 
-  let post = getRSSBlogPosts().find((post) => post.slug === slug);
+  const post = getRSSBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     notFound();

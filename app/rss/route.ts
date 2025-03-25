@@ -21,7 +21,7 @@ function escapeXml(unsafe: string): string {
 }
 
 export async function GET() {
-  let articles = getRSSBlogPosts();
+  const articles = getRSSBlogPosts();
 
   const itemsXml = articles
     .sort((a, b) => {

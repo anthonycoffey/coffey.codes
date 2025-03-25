@@ -11,20 +11,20 @@ type Metadata = {
 };
 
 function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
-  let match = frontmatterRegex.exec(fileContent);
+  const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
+  const match = frontmatterRegex.exec(fileContent);
 
   if (!match) {
     throw new Error('No frontmatter found');
   }
 
-  let frontMatterBlock = match[1];
-  let content = fileContent.replace(frontmatterRegex, '').trim();
-  let frontMatterLines = frontMatterBlock.trim().split('\n');
-  let metadata: Partial<Metadata> = {};
+  const frontMatterBlock = match[1];
+  const content = fileContent.replace(frontmatterRegex, '').trim();
+  const frontMatterLines = frontMatterBlock.trim().split('\n');
+  const metadata: Partial<Metadata> = {};
 
   frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(': ');
+    const [key, ...valueArr] = line.split(': ');
     let value = valueArr.join(': ').trim();
     value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
 
@@ -62,7 +62,7 @@ function getMDXFiles(dir) {
 }
 
 function readMDXFile(filePath) {
-  let rawContent = fs.readFileSync(filePath, 'utf-8');
+  const rawContent = fs.readFileSync(filePath, 'utf-8');
   return parseFrontmatter(rawContent);
 }
 
@@ -72,8 +72,8 @@ function getRSSMDXData(
   itemsPerPage: number = 10,
 ) {
   return getMDXFiles(dir).map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
+    const { metadata, content } = readMDXFile(path.join(dir, file));
+    const slug = path.basename(file, path.extname(file));
 
     return {
       metadata,
@@ -84,9 +84,9 @@ function getRSSMDXData(
 }
 
 function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
-  let mdxFiles = getMDXFiles(dir).map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
+  const mdxFiles = getMDXFiles(dir).map((file) => {
+    const { metadata, content } = readMDXFile(path.join(dir, file));
+    const slug = path.basename(file, path.extname(file));
 
     return {
       metadata,
@@ -140,8 +140,8 @@ export function getBlogPostsByTag(
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
 
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
-    let { metadata, content } = readMDXFile(path.join(postsDir, file));
-    let slug = path.basename(file, path.extname(file));
+    const { metadata, content } = readMDXFile(path.join(postsDir, file));
+    const slug = path.basename(file, path.extname(file));
 
     return {
       metadata,
@@ -194,8 +194,8 @@ export function getBlogPostsByCategory(
   const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
 
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
-    let { metadata, content } = readMDXFile(path.join(postsDir, file));
-    let slug = path.basename(file, path.extname(file));
+    const { metadata, content } = readMDXFile(path.join(postsDir, file));
+    const slug = path.basename(file, path.extname(file));
 
     return {
       metadata,

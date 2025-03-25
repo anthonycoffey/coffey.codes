@@ -7,7 +7,7 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
-// import SearchBox from 'app/components/SearchBox';
+import SearchBox from 'app/components/SearchBox';
 
 export const metadata = {
   title: 'Articles',
@@ -29,7 +29,7 @@ export default async function Page({ searchParams }) {
     <div className="article-page max-w-6xl mx-auto">
       {/* Header */}
       <div className="border-b pb-4 mb-6">
-        <h1 className="font-bold text-xl lg:text-2xl tracking-tighter mb-2 flex items-center">
+        <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
           <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
           Articles
         </h1>
@@ -52,9 +52,9 @@ export default async function Page({ searchParams }) {
           <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center">
               <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500" />
-              Search Articles
+              Search
             </h2>
-            {/* <SearchBox /> */}
+            <SearchBox />
           </div>
 
           {/* Categories section */}

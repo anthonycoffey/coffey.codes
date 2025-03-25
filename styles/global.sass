@@ -1,6 +1,5 @@
-@tailwind base
-@tailwind components
-@tailwind utilities
+@use "tailwindcss";
+
 
 ::selection
   background-color: #47a3f3
@@ -91,9 +90,6 @@ html
 .prose ol
   @apply list-decimal pl-6
 
-.prose li
-
-
 .prose > :first-child
   margin-top: 1.25em !important
   margin-bottom: 1.25em !important
@@ -141,7 +137,7 @@ table
     gap: 1rem
 
     .icon
-      transition-all
+      @apply transition-all
       width: 24px
       height: auto
       fill: #3488f7

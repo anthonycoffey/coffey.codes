@@ -8,6 +8,7 @@ import { BlogPosts } from 'app/components/posts';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { TagIcon, FolderIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import SearchBox from 'app/components/SearchBox';
 
 export const dynamicParams = true;
 

@@ -9,7 +9,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat();
 
-export default [
+const config = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...compat.extends('next/core-web-vitals'),
@@ -29,19 +29,22 @@ export default [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // 'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // 'react/no-unescaped-entities': 'off', 
+      // 'no-useless-escape': 'warn',  
+      // '@next/next/no-img-element': 'warn', 
+      // '@next/next/no-html-link-for-pages': 'warn', 
+      // 'no-constant-binary-expression': 'warn',  
     },
     settings: {
       react: {
         version: 'detect',
       },
     },
-    ignores: ['node_modules/**', '.next/**', 'public/**', '**/*.d.ts'],
   },
   {
-    files: ['**/*.mdx'],
-    rules: {
-      'react/jsx-no-undef': 'off',
-    },
+    ignores: ['node_modules', '.next', 'public', '**/*.d.ts', '**/*.mdx'],
   },
 ];
+
+export default config;

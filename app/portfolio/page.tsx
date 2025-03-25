@@ -28,7 +28,6 @@ interface Project {
 }
 
 const PortfolioSection: React.FC = () => {
-  // Sample portfolio data - replace with your actual projects
   const portfolioProjects: Project[] = [
     {
       id: 1,
@@ -128,7 +127,7 @@ const PortfolioSection: React.FC = () => {
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [showAllProjects, setShowAllProjects] = useState(false);
+  // const [showAllProjects, setShowAllProjects] = useState(false);
 
   const openProject = (project: Project) => {
     setSelectedProject(project);
@@ -139,15 +138,15 @@ const PortfolioSection: React.FC = () => {
     setSelectedProject(null);
   };
 
-  // Filter projects based on featured status and showAllProjects state
-  const displayedProjects = showAllProjects
-    ? portfolioProjects
-    : portfolioProjects.filter((project) => project.featured);
+  // const displayedProjects = showAllProjects
+  //   ? portfolioProjects
+  //   : portfolioProjects.filter((project) => project.featured);  
+    const displayedProjects = portfolioProjects
+
 
   return (
     <section>
       <div className="page-content">
-        {/* Portfolio Section Header */}
 
         <div className="border-b border-gray-300 pb-6 mb-8 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
@@ -157,7 +156,6 @@ const PortfolioSection: React.FC = () => {
           <p className="text-gray-600">Check out some of my recent work!</p>
         </div>
 
-        {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-6xl mx-auto">
           {displayedProjects.map((project) => (
             <div
@@ -214,7 +212,6 @@ const PortfolioSection: React.FC = () => {
           </div>
         )} */}
 
-        {/* Project Detail Modal */}
         {selectedProject && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-sm transition-all duration-300"
@@ -224,7 +221,6 @@ const PortfolioSection: React.FC = () => {
               className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700 custom-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header with gradient background */}
               <div className="flex justify-between items-center p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
                 <h3 className="text-2xl font-bold tracking-tight">
                   {selectedProject.title}
@@ -252,9 +248,7 @@ const PortfolioSection: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 p-6">
-                {/* Main Content - 3 columns */}
                 <div className="lg:col-span-3 space-y-6">
-                  {/* Main Image with shadow and rounded corners */}
                   <div className="overflow-hidden rounded-lg shadow-lg">
                     <img
                       src={
@@ -267,7 +261,6 @@ const PortfolioSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* Improved Thumbnail Gallery */}
                   {(selectedProject.gallery.length > 0 || true) && (
                     <div className="grid grid-cols-4 gap-3">
                       <div
@@ -305,7 +298,6 @@ const PortfolioSection: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Enhanced Challenge & Solution Section */}
                   <div className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
                     <div>
                       <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
@@ -350,7 +342,6 @@ const PortfolioSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Project Details - 2 columns with improved styling */}
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
@@ -452,7 +443,6 @@ const PortfolioSection: React.FC = () => {
           </div>
         )}
 
-        {/* CTA Section */}
         <div className="bg-blue-600 p-8 rounded-lg text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
             Ready to Build Your Next Great Project?

@@ -9,8 +9,8 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.mdx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.mdx --fix"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

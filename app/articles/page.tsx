@@ -16,7 +16,7 @@ export const metadata = {
     'Unpacking the strategies, challenges, and breakthroughs in software development, project management, and cloud technology.',
 };
 
-export default async function Page({ searchParams }) {
+export default async function ArticlesPage({ searchParams }) {
   const params = await searchParams;
   const page = params.page ? Number(params.page) : 1;
   const itemsPerPage = 5;

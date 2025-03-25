@@ -28,29 +28,26 @@ function parseFrontmatter(fileContent: string) {
     let value = valueArr.join(': ').trim();
     value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
 
-    const trimmedKey = key.trim();
+    // trim key
+    const x = key.trim();
 
-    // Handle tags (comma-separated list)
-    if (trimmedKey === 'tags') {
+    if (x === 'tags') {
       metadata.tags = value.split(',').map((tag) => tag.trim());
     }
-    // Handle category (single string)
-    else if (trimmedKey === 'category') {
+    else if (x === 'category') {
       metadata.category = value;
     }
-    // Handle the required fields
     else if (
-      trimmedKey === 'title' ||
-      trimmedKey === 'publishedAt' ||
-      trimmedKey === 'summary' ||
-      trimmedKey === 'image'
+      x === 'title' ||
+      x === 'publishedAt' ||
+      x === 'summary' ||
+      x === 'image'
     ) {
-      (metadata as Record<string, string>)[trimmedKey] = value;
+      (metadata as Record<string, string>)[x] = value;
     }
-    // Ignore unknown keys
   });
 
-  // Validate required fields
+  // Validate
   if (!metadata.title || !metadata.publishedAt || !metadata.summary) {
     throw new Error('Missing required metadata fields');
   }
@@ -68,8 +65,6 @@ function readMDXFile(filePath) {
 
 function getRSSMDXData(
   dir: string,
-  page: number = 1,
-  itemsPerPage: number = 10,
 ) {
   return getMDXFiles(dir).map((file) => {
     const { metadata, content } = readMDXFile(path.join(dir, file));

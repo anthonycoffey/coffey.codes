@@ -13,7 +13,7 @@ export const metadata = {
     "Need assistance with a project or have a question? Reach out and let's discuss how I can help you achieve your goals.",
 };
 
-export default async function Page({ searchParams }) {
+export default async function ContactPage() {
   return (
     <section className="contact-page">
       <div className="page-content">

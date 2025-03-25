@@ -1,12 +1,9 @@
 import {
   ClipboardDocumentCheckIcon,
   ArrowDownTrayIcon,
-  LightBulbIcon,
-  BuildingLibraryIcon,
   CpuChipIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export const metadata = {
   title: 'Case Studies | Professional Portfolio',
@@ -57,7 +54,7 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
   );
 };
 
-export default async function Page({ searchParams }) {
+export default async function CaseStudiesPage({ searchParams }) {
   const caseStudies = [
     {
       icon: CpuChipIcon,

@@ -65,7 +65,7 @@ const Testimonials = () => {
         clearInterval(autoPlayRef.current);
       }
     };
-  }, [currentIndex, isAutoPlaying, isHovering, next]);
+  }, [currentIndex, isAutoPlaying, isHovering]);
 
   const slideVariants = {
     enter: (direction) => ({

@@ -5,6 +5,7 @@ import {
   capitalizeWords
 } from 'app/articles/utils';
 import { BlogPosts } from 'app/components/posts';
+import Pagination from 'app/articles/Pagination';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { TagIcon, FolderIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
@@ -35,9 +36,12 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function CategoryPage({ params }) {
+export default function CategoryPage({ params, searchParams }) {
+  const page = searchParams?.page ? Number(searchParams.page) : 1;
+  const itemsPerPage = 5;
   const category = params.category;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
+  
   // Get other categories for sidebar (excluding current category)
   const otherCategories = getAllCategories()
     .filter(c => c.toLowerCase() !== decodedCategory.toLowerCase());
@@ -45,7 +49,10 @@ export default function CategoryPage({ params }) {
   // Get popular tags for sidebar
   const popularTags = getAllTags().slice(0, 8);
 
-  const posts = getBlogPostsByCategory(decodedCategory);
+  const posts = getBlogPostsByCategory(decodedCategory, page, itemsPerPage);
+  
+  // Get pagination data
+  const { totalPages } = posts.pagination;
 
   if (posts.posts.length === 0) {
     console.log(`No posts found for category: '${decodedCategory}'`);
@@ -53,7 +60,6 @@ export default function CategoryPage({ params }) {
   }
 
   return (
-
     <div className="article-page max-w-6xl mx-auto">
       <div className="border-b pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center">
@@ -141,6 +147,11 @@ export default function CategoryPage({ params }) {
             </div>
           </div>
         </aside>
+      </div>
+      
+      {/* Centered Pagination */}
+      <div className="w-full mt-8 flex justify-center">
+        <Pagination totalPages={totalPages} initialPage={page} />
       </div>
     </div>
   );

@@ -34,11 +34,8 @@ function parseFrontmatter(fileContent: string) {
       metadata.category = value;
     }
     // Handle other metadata fields
-    else if (trimmedKey in metadata) {
-      const keyTyped = trimmedKey as keyof Metadata;
-      if (keyTyped === 'title' || keyTyped === 'publishedAt' || keyTyped === 'summary' || keyTyped === 'image') {
-        metadata[keyTyped] = value;
-      }
+    else {
+      metadata[trimmedKey as keyof Metadata] = value;
     }
   });
 

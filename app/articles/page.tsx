@@ -1,4 +1,5 @@
 import { BlogPosts } from 'app/components/posts';
+import Pagination from './Pagination';
 import { getBlogPosts, getAllTags, getAllCategories } from 'app/articles/utils';
 import {
   DocumentTextIcon,
@@ -8,7 +9,6 @@ import {
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import SearchBox from 'app/components/SearchBox';
-
 
 export const metadata = {
   title: 'Articles',
@@ -26,6 +26,8 @@ export default async function Page({ searchParams }) {
   const popularTags = getAllTags().slice(0, 24);
   const allCategories = getAllCategories();
 
+  // Get pagination data
+  const { totalPages } = allBlogs.pagination;
 
   return (
     <div className="article-page max-w-6xl mx-auto">
@@ -39,60 +41,6 @@ export default async function Page({ searchParams }) {
           Unpacking the strategies, challenges, and breakthroughs in software
           development, project management, and cloud technology.
         </p>
-
-        <div className="flex flex-wrap gap-6 mt-4">
-          {allCategories.length > 0 && (
-            <div>
-              <h2 className="text-sm font-semibold flex items-center mb-2">
-                <FolderIcon className="w-4 h-4 mr-1" />
-                Popular Categories
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {allCategories.map((category) => (
-                  <Link
-                    key={category}
-                    href={`/articles/category/${category.toLowerCase()}`}
-                    className="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-medium px-2 py-1 rounded-full transition-colors"
-                  >
-                    {category}
-                  </Link>
-                ))}
-                <Link
-                  href="/articles/categories"
-                  className="text-xs text-blue-600 hover:underline flex items-center"
-                >
-                  View all categories →
-                </Link>
-              </div>
-            </div>
-          )}
-
-          {allTags.length > 0 && (
-            <div>
-              <h2 className="text-sm font-semibold flex items-center mb-2">
-                <TagIcon className="w-4 h-4 mr-1" />
-                Popular Tags
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {allTags.map((tag) => (
-                  <Link
-                    key={tag}
-                    href={`/articles/tag/${tag.toLowerCase()}`}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium px-2 py-1 rounded transition-colors"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-                <Link
-                  href="/articles/tags"
-                  className="text-xs text-blue-600 hover:underline flex items-center"
-                >
-                  View all tags →
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Main content with sidebar layout */}
@@ -177,6 +125,11 @@ export default async function Page({ searchParams }) {
             </div>
           </div>
         </aside>
+      </div>
+      
+      {/* Centered Pagination */}
+      <div className="w-full mt-8 flex justify-center">
+        <Pagination totalPages={totalPages} initialPage={page} />
       </div>
     </div>
   );

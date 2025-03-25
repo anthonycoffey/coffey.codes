@@ -1,7 +1,16 @@
-import Link from 'next/link';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+'use client';
 
-export default function Pagination({ currentPage, totalPages }) {
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { usePagination } from './usePagination';
+
+interface PaginationProps {
+  totalPages: number;
+  initialPage?: number;
+}
+
+export default function Pagination({ totalPages, initialPage = 1 }: PaginationProps) {
+  const { currentPage, changePage, hasPrevPage, hasNextPage } = usePagination(totalPages, initialPage);
+  
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -47,15 +56,15 @@ export default function Pagination({ currentPage, totalPages }) {
       <ul className="flex items-center -space-x-px">
         {/* Previous button */}
         <li>
-          {currentPage > 1 ? (
-            <Link
-              href={`?page=${currentPage - 1}`}
+          {hasPrevPage ? (
+            <button
+              onClick={() => changePage(currentPage - 1)}
               className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
               aria-label="Previous page"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="w-5 h-5" />
-            </Link>
+            </button>
           ) : (
             <span className="block px-3 py-2 ml-0 leading-tight text-gray-300 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed">
               <span className="sr-only">Previous</span>
@@ -72,8 +81,8 @@ export default function Pagination({ currentPage, totalPages }) {
                 ...
               </span>
             ) : (
-              <Link
-                href={`?page=${page}`}
+              <button
+                onClick={() => changePage(Number(page))}
                 className={`px-3 py-2 leading-tight border ${
                   currentPage === page
                     ? 'text-blue-600 border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700'
@@ -81,22 +90,22 @@ export default function Pagination({ currentPage, totalPages }) {
                 }`}
               >
                 {page}
-              </Link>
+              </button>
             )}
           </li>
         ))}
         
         {/* Next button */}
         <li>
-          {currentPage < totalPages ? (
-            <Link
-              href={`?page=${currentPage + 1}`}
+          {hasNextPage ? (
+            <button
+              onClick={() => changePage(currentPage + 1)}
               className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
               aria-label="Next page"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="w-5 h-5" />
-            </Link>
+            </button>
           ) : (
             <span className="block px-3 py-2 leading-tight text-gray-300 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed">
               <span className="sr-only">Next</span>

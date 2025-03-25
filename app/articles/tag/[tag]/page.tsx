@@ -5,6 +5,7 @@ import {
   capitalizeWords
 } from 'app/articles/utils';
 import { BlogPosts } from 'app/components/posts';
+import Pagination from 'app/articles/Pagination';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -35,10 +36,15 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function TagPage({ params }) {
+export default function TagPage({ params, searchParams }) {
+  const page = searchParams?.page ? Number(searchParams.page) : 1;
+  const itemsPerPage = 5;
   const tag = params.tag;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
-  const posts = getBlogPostsByTag(decodedTag);
+  const posts = getBlogPostsByTag(decodedTag, page, itemsPerPage);
+
+  // Get pagination data
+  const { totalPages } = posts.pagination;
 
   // Get popular tags for sidebar (excluding current tag)
   const popularTags = getAllTags()
@@ -53,7 +59,6 @@ export default function TagPage({ params }) {
   }
 
   return (
-
     <div className="article-page max-w-6xl mx-auto">
       <div className="border-b pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center">
@@ -151,6 +156,11 @@ export default function TagPage({ params }) {
             </div>
           )}
         </aside>
+      </div>
+      
+      {/* Centered Pagination */}
+      <div className="w-full mt-8 flex justify-center">
+        <Pagination totalPages={totalPages} initialPage={page} />
       </div>
     </div>
   );

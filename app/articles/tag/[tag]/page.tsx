@@ -3,6 +3,7 @@ import {
   getAllTags,
   getAllCategories,
   capitalizeWords,
+  getBlogPosts,
 } from '@/app/articles/utils';
 import { BlogPosts } from '@/components/posts';
 import Pagination from '@/components/Pagination';
@@ -48,7 +49,7 @@ export default function TagPage({ params, searchParams }) {
   // Get popular tags for sidebar (excluding current tag)
   const popularTags = getAllTags()
     .filter((t) => t.toLowerCase() !== decodedTag.toLowerCase())
-    .slice(0, 8);
+    .slice(0, 24);
 
   // Get categories for sidebar
   const allCategories = getAllCategories();
@@ -107,9 +108,10 @@ export default function TagPage({ params, searchParams }) {
                   >
                     {category}
                   </Link>
+
                   <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                     {
-                      getBlogPostsByTag(decodedTag, 1, 100).posts.filter(
+                      getBlogPosts(1, 100).posts.filter(
                         (post) =>
                           post.metadata.category &&
                           post.metadata.category.toLowerCase() ===

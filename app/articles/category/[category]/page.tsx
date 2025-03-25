@@ -52,7 +52,7 @@ export default function CategoryPage({ params, searchParams }) {
   );
 
   // Get popular tags for sidebar
-  const popularTags = getAllTags().slice(0, 8);
+  const popularTags = getAllTags().slice(0, 24);
 
   const posts = getBlogPostsByCategory(decodedCategory, page, itemsPerPage);
 

@@ -85,6 +85,7 @@ export default function SearchBox({
         setResults(data.posts);
         setShowResults(true);
       } catch (error) {
+        console.error(error);
       } finally {
         setIsLoading(false);
       }

@@ -2,6 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { XMarkIcon, CheckIcon } from '@heroicons/react/20/solid';
 
+// Add type definitions for gtag
+type ConsentMode = 'default' | 'update';
+type ConsentStatus = 'granted' | 'denied';
+
+interface ConsentSettings {
+  ad_storage: ConsentStatus;
+  ad_personalization: ConsentStatus;
+  ad_user_data: ConsentStatus;
+  analytics_storage: ConsentStatus;
+  wait_for_update?: number;
+}
+
 const ConsentManager = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasConsented, setHasConsented] = useState(false);
@@ -32,8 +44,12 @@ const ConsentManager = () => {
     }
   }, []);
 
-  const gtag = (...args: any[]) => {
-    window.dataLayer?.push(args);
+  const gtag = (
+    command: string,
+    type: ConsentMode,
+    settings: ConsentSettings,
+  ) => {
+    window.dataLayer?.push([command, type, settings]);
   };
 
   const handleAcceptConsent = () => {

@@ -132,7 +132,7 @@ function SearchPageContent() {
           <div className="bg-gray-100 p-3 rounded mb-6 flex justify-between items-center">
             <p className="text-gray-700">
               Showing results for:{' '}
-              <span className="font-semibold">"{currentQuery}"</span>
+              <span className="font-semibold">&quot;{currentQuery}&quot;</span>
             </p>
             <Link
               href="/articles/search"
@@ -240,7 +240,7 @@ function SearchPageContent() {
             No articles found
           </h2>
           <p className="mt-2 text-gray-500">
-            We couldn't find any articles matching "{currentQuery}".
+            We couldn&apos;t find any articles matching &quot;{currentQuery}&quot;.
           </p>
           <div className="mt-6">
             <Link

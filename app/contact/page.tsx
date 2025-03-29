@@ -23,7 +23,7 @@ export default async function ContactPage() {
             Contact Me
           </h1>
           <p className="text-gray-600">
-            Have a project in mind or need technical expertise? Let's chat!
+            Have a project in mind or need technical expertise? Let&apos;s chat!
           </p>
         </div>
 

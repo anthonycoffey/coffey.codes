@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   StarIcon,
   ChevronLeftIcon,
@@ -37,9 +37,9 @@ const Testimonials = () => {
     },
   ];
 
-  const next = () => {
+  const next = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
   const prev = () => {
     setCurrentIndex(
@@ -65,7 +65,7 @@ const Testimonials = () => {
         clearInterval(autoPlayRef.current);
       }
     };
-  }, [currentIndex, isAutoPlaying, isHovering]);
+  }, [currentIndex, isAutoPlaying, isHovering, next]);
 
   const slideVariants = {
     enter: (direction) => ({
@@ -194,7 +194,7 @@ const Testimonials = () => {
               <figure className="max-w-3xl mx-auto bg-gray-800/40 p-6 rounded-lg border-b border-blue-800/30">
                 <blockquote>
                   <p className="text-lg md:text-xl italic font-light text-white text-center leading-relaxed">
-                    "{testimonials[currentIndex].text}"
+                  &quot;{testimonials[currentIndex].text}&quot;
                   </p>
                 </blockquote>
                 <figcaption className="flex flex-col items-center justify-center mt-6 space-y-2">

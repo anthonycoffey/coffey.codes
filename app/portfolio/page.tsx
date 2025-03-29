@@ -11,6 +11,8 @@ import {
   CodeBracketSquareIcon,
 } from '@heroicons/react/24/solid';
 
+import Image from 'next/image';
+
 interface Project {
   id: number;
   title: string;
@@ -164,7 +166,7 @@ const PortfolioSection: React.FC = () => {
               onClick={() => openProject(project)}
             >
               <div className="h-64 overflow-hidden">
-                <img
+                <Image
                   src={project.mainImage}
                   alt={project.title}
                   className="w-full h-full object-cover"
@@ -250,7 +252,7 @@ const PortfolioSection: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 p-6">
                 <div className="lg:col-span-3 space-y-6">
                   <div className="overflow-hidden rounded-lg shadow-lg">
-                    <img
+                    <Image
                       src={
                         activeImageIndex === 0
                           ? selectedProject.mainImage
@@ -261,7 +263,7 @@ const PortfolioSection: React.FC = () => {
                     />
                   </div>
 
-                  {(selectedProject.gallery.length > 0 || true) && (
+                  {(selectedProject.gallery.length > 0) && (
                     <div className="grid grid-cols-4 gap-3">
                       <div
                         className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
@@ -271,7 +273,7 @@ const PortfolioSection: React.FC = () => {
                         }`}
                         onClick={() => setActiveImageIndex(0)}
                       >
-                        <img
+                        <Image
                           src={selectedProject.mainImage}
                           alt="Main"
                           className="w-full h-20 object-cover"
@@ -288,7 +290,7 @@ const PortfolioSection: React.FC = () => {
                           }`}
                           onClick={() => setActiveImageIndex(index + 1)}
                         >
-                          <img
+                          <Image
                             src={image}
                             alt={`Detail ${index + 1}`}
                             className="w-full h-20 object-cover"
@@ -412,7 +414,7 @@ const PortfolioSection: React.FC = () => {
                         Interested in a similar solution?
                       </h4>
                       <p className="mb-6 text-gray-200 leading-relaxed">
-                        Let's discuss how I can help you achieve similar results
+                        Let&apos;s discuss how I can help you achieve similar results
                         for your business.
                       </p>
 
@@ -448,7 +450,7 @@ const PortfolioSection: React.FC = () => {
             Ready to Build Your Next Great Project?
           </h2>
           <p className="text-center text-xl mb-8">
-            Let's create a custom solution that achieves your business goals
+            Let&apos;s create a custom solution that achieves your business goals
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a

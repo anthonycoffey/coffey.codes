@@ -63,7 +63,7 @@ export default function TagPage({ params, searchParams }) {
       <div className="border-b pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center">
           <TagIcon className="w-6 h-6 inline mr-2 text-blue-500" />
-          Articles tagged with "{decodedTag}"
+          Articles tagged with &quot;{decodedTag}&quot;
         </h1>
         <div className="mb-4">
           <Link href="/articles" className="text-blue-600 hover:underline">

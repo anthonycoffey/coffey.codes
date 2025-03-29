@@ -144,7 +144,7 @@ export default function SearchBox({
         <div className="w-full mt-1 bg-white">
           {results.length === 0 ? (
             <p className="text-sm text-gray-500 text-center">
-              No articles found for "{query}"
+              No articles found for &quot;{query}&quot;
             </p>
           ) : (
             <div className="flex justify-between items-center border-t border-gray-100 mt-2 pt-2">

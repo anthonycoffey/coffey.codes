@@ -77,7 +77,7 @@ export default function Footer() {
               Ready to Transform Your Business?
             </h2>
             <p className="text-center text-xl mb-10 text-blue-100">
-              Let's discuss how tech can solve your challenges and drive growth
+              Let&apos;s discuss how tech can solve your problems and drive growth
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link

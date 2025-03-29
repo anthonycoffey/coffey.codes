@@ -103,7 +103,7 @@ export default async function CaseStudiesPage() {
             Need a custom solution?
           </h2>
           <p className="text-blue-800 mb-4">
-            I specialize in solving problems with tech. Let's discuss
+            I specialize in solving problems with tech. Let&apos;s discuss
             how my expertise can help your business.
           </p>
           <Link

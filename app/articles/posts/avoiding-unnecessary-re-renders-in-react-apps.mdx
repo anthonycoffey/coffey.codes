@@ -61,6 +61,11 @@ It's worth mentioning that declaring functions in the component body is generall
 
 When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
  
+However, in React v19, the React team has implemented an "automatic memoization" feature which intelligently handles function references and derived values behind the scenes, making this less of a concern.
+
+
+```jsx
+
 2. **Creating Objects/Arrays in Render**: Similar to functions, inline objects and arrays create new references each render.
 
 ```jsx

@@ -16,7 +16,6 @@ interface Post {
   category?: string;
 }
 
-
 interface SearchBoxProps {
   initialValue?: string;
   autofocus?: boolean;
@@ -24,11 +23,11 @@ interface SearchBoxProps {
   hideDropdown?: boolean;
 }
 
-export default function SearchBox({ 
-  initialValue = '', 
-  autofocus = false, 
-  placeholder = "Search articles...",
-  hideDropdown = false
+export default function SearchBox({
+  initialValue = '',
+  autofocus = false,
+  placeholder = 'Search articles...',
+  hideDropdown = false,
 }: SearchBoxProps) {
   const [query, setQuery] = useState(initialValue);
   const [results, setResults] = useState<Post[]>([]);
@@ -96,7 +95,7 @@ export default function SearchBox({
 
   return (
     <div className="relative" ref={searchRef}>
-      <div className="relative">
+      <div className="relative flex" >
         <input
           ref={inputRef}
           type="text"
@@ -108,13 +107,16 @@ export default function SearchBox({
               e.preventDefault();
               if (hideDropdown) {
                 // Force the URL update without navigation
-                const newUrl = window.location.pathname + `?q=${encodeURIComponent(query)}`;
+                const newUrl =
+                  window.location.pathname + `?q=${encodeURIComponent(query)}`;
                 window.history.pushState({ path: newUrl }, '', newUrl);
-                
+
                 // Trigger a search event
-                window.dispatchEvent(new CustomEvent('search-query-updated', { 
-                  detail: { query }
-                }));
+                window.dispatchEvent(
+                  new CustomEvent('search-query-updated', {
+                    detail: { query },
+                  }),
+                );
               } else {
                 router.push(`/articles/search?q=${encodeURIComponent(query)}`);
               }
@@ -129,6 +131,7 @@ export default function SearchBox({
         {query && (
           <button
             onClick={() => {
+              router.push(`/articles/search`);
               setQuery('');
               setResults([]);
               setShowResults(false);
@@ -136,6 +139,21 @@ export default function SearchBox({
             className="absolute right-3 top-2.5"
           >
             <XMarkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+          </button>
+        )}
+
+        {hideDropdown && (
+          <button
+            onClick={() => {
+              // Force the URL update without navigation
+              const newUrl =
+                window.location.pathname + `?q=${encodeURIComponent(query)}`;
+              window.history.pushState({ path: newUrl }, '', newUrl);
+            }}
+            className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center"
+          >
+            <MagnifyingGlassIcon className="h-5 w-5 mr-1" />
+            Search
           </button>
         )}
       </div>
@@ -207,12 +225,15 @@ export default function SearchBox({
           e.preventDefault();
           if (query.trim().length >= 2) {
             if (hideDropdown) {
-              const newUrl = window.location.pathname + `?q=${encodeURIComponent(query)}`;
+              const newUrl =
+                window.location.pathname + `?q=${encodeURIComponent(query)}`;
               window.history.pushState({ path: newUrl }, '', newUrl);
-              
-              window.dispatchEvent(new CustomEvent('search-query-updated', { 
-                detail: { query }
-              }));
+
+              window.dispatchEvent(
+                new CustomEvent('search-query-updated', {
+                  detail: { query },
+                }),
+              );
             } else {
               router.push(`/articles/search?q=${encodeURIComponent(query)}`);
             }

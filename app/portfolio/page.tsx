@@ -170,8 +170,8 @@ const PortfolioSection: React.FC = () => {
             >
               <div className="h-64 overflow-hidden">
                 <Image
-                  width={500}
-                  height={500}
+                  width={1200}
+                  height={1200}
                   src={project.mainImage}
                   alt={project.title}
                   className="w-full h-full object-cover"
@@ -258,8 +258,8 @@ const PortfolioSection: React.FC = () => {
                 <div className="lg:col-span-3 space-y-6">
                   <div className="overflow-hidden rounded-lg shadow-lg">
                     <Image
-                      width={500}
-                      height={500}
+                      width={1200}
+                      height={1200}
                       src={
                         activeImageIndex === 0
                           ? selectedProject.mainImage
@@ -281,8 +281,8 @@ const PortfolioSection: React.FC = () => {
                         onClick={() => setActiveImageIndex(0)}
                       >
                         <Image
-                          width={500}
-                          height={500}
+                          width={1200}
+                          height={1200}
                           src={selectedProject.mainImage}
                           alt="Main"
                           className="w-full h-20 object-cover"
@@ -300,8 +300,8 @@ const PortfolioSection: React.FC = () => {
                           onClick={() => setActiveImageIndex(index + 1)}
                         >
                           <Image
-                            width={500}
-                            height={500}
+                            width={1200}
+                            height={1200}
                             src={image}
                             alt={`Detail ${index + 1}`}
                             className="w-full h-20 object-cover"

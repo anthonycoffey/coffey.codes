@@ -173,12 +173,12 @@ export default function Page() {
               </p>
             </div>
 
-            {/* DevOps Implementation */}
+            {/* DevOps */}
             <div className="border-b border-gray-200 p-6 hover:bg-blue-50 transition-colors">
               <div className="flex items-center mb-3">
                 <CommandLineIcon className="h-6 w-6 text-blue-600 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900">
-                  DevOps Implementation
+                  DevOps
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">

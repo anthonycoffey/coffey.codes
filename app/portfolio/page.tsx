@@ -34,10 +34,15 @@ const PortfolioSection: React.FC = () => {
     {
       id: 1,
       title: 'Personal Blog & Portfolio',
-      description: 'MDX-powered blog with advanced SEO features and modern design',
+      description:
+        'MDX-powered blog with advanced SEO features and modern design',
       tags: ['Next.js', 'TypeScript', 'MDX', 'Tailwind CSS', 'React'],
       mainImage: '/portfolio/coffey.codes-portfolio.png',
-      gallery: ['/portfolio/coffey.codes-articles.png','/portfolio/coffey.codes-home.png', '/portfolio/coffey.codes-contact.png'],
+      gallery: [
+        '/portfolio/coffey.codes-articles.png',
+        '/portfolio/coffey.codes-home.png',
+        '/portfolio/coffey.codes-contact.png',
+      ],
       link: 'https://coffey.codes',
       client: 'Personal Project',
       challenge:
@@ -59,7 +64,7 @@ const PortfolioSection: React.FC = () => {
       title: 'React Drum Machine',
       description: 'A retro-inspired step sequencer built with React.js',
       tags: ['React', 'Node.js', 'Vite', 'Tailwind'],
-      mainImage: 'portfolio/drum-machine-2.jpg',
+      mainImage: '/portfolio/drum-machine-2.jpg',
       gallery: [],
       link: 'https://anthonycoffey.github.io/React-Drum-Kit',
       client: 'Hobby Project',
@@ -86,8 +91,8 @@ const PortfolioSection: React.FC = () => {
         'Cloud Functions',
         'Google Cloud Text-to-Speech API',
       ],
-      mainImage: 'portfolio/tts-home.jpg',
-      gallery: ['portfolio/tts-created.jpg', 'portfolio/tts-history.jpg'],
+      mainImage: '/portfolio/tts-home.jpg',
+      gallery: ['/portfolio/tts-created.jpg', '/portfolio/tts-history.jpg'],
       link: 'https://simply-voice-452800.web.app/',
       client: 'Hobby Project',
       challenge:
@@ -109,7 +114,7 @@ const PortfolioSection: React.FC = () => {
       description:
         'Interactive musical scale visualizer for learning piano scales',
       tags: ['React', 'TailwindCSS', 'Howler.js'],
-      mainImage: 'portfolio/piano-scale-visualizer.png',
+      mainImage: '/portfolio/piano-scale-visualizer.png',
       gallery: [],
       link: 'https://anthonycoffey.github.io/piano-scale-visualizer/',
       client: 'Hobby Project',
@@ -142,14 +147,12 @@ const PortfolioSection: React.FC = () => {
 
   // const displayedProjects = showAllProjects
   //   ? portfolioProjects
-  //   : portfolioProjects.filter((project) => project.featured);  
-    const displayedProjects = portfolioProjects
-
+  //   : portfolioProjects.filter((project) => project.featured);
+  const displayedProjects = portfolioProjects;
 
   return (
     <section>
       <div className="page-content">
-
         <div className="border-b border-gray-300 pb-6 mb-8 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-blue-600" />
@@ -167,6 +170,8 @@ const PortfolioSection: React.FC = () => {
             >
               <div className="h-64 overflow-hidden">
                 <Image
+                  width={500}
+                  height={500}
                   src={project.mainImage}
                   alt={project.title}
                   className="w-full h-full object-cover"
@@ -253,6 +258,8 @@ const PortfolioSection: React.FC = () => {
                 <div className="lg:col-span-3 space-y-6">
                   <div className="overflow-hidden rounded-lg shadow-lg">
                     <Image
+                      width={500}
+                      height={500}
                       src={
                         activeImageIndex === 0
                           ? selectedProject.mainImage
@@ -263,17 +270,19 @@ const PortfolioSection: React.FC = () => {
                     />
                   </div>
 
-                  {(selectedProject.gallery.length > 0) && (
+                  {selectedProject.gallery.length > 0 && (
                     <div className="grid grid-cols-4 gap-3">
                       <div
                         className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
-                          activeImageIndex === 0 
-                            ? 'ring-2 ring-blue-600 scale-[1.02]' 
+                          activeImageIndex === 0
+                            ? 'ring-2 ring-blue-600 scale-[1.02]'
                             : 'opacity-80 hover:opacity-100'
                         }`}
                         onClick={() => setActiveImageIndex(0)}
                       >
                         <Image
+                          width={500}
+                          height={500}
                           src={selectedProject.mainImage}
                           alt="Main"
                           className="w-full h-20 object-cover"
@@ -284,13 +293,15 @@ const PortfolioSection: React.FC = () => {
                         <div
                           key={index}
                           className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
-                            activeImageIndex === index + 1 
-                              ? 'ring-2 ring-blue-600 scale-[1.02]' 
+                            activeImageIndex === index + 1
+                              ? 'ring-2 ring-blue-600 scale-[1.02]'
                               : 'opacity-80 hover:opacity-100'
                           }`}
                           onClick={() => setActiveImageIndex(index + 1)}
                         >
                           <Image
+                            width={500}
+                            height={500}
                             src={image}
                             alt={`Detail ${index + 1}`}
                             className="w-full h-20 object-cover"
@@ -303,8 +314,19 @@ const PortfolioSection: React.FC = () => {
                   <div className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
                     <div>
                       <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
                         </svg>
                         Challenge
                       </h4>
@@ -315,8 +337,19 @@ const PortfolioSection: React.FC = () => {
 
                     <div>
                       <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                          />
                         </svg>
                         Solution
                       </h4>
@@ -327,16 +360,32 @@ const PortfolioSection: React.FC = () => {
 
                     <div>
                       <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                         Results
                       </h4>
                       <ul className="space-y-3">
                         {selectedProject.results.map((result, index) => (
-                          <li key={index} className="flex items-start bg-white dark:bg-gray-700 p-3 rounded-lg shadow-sm">
+                          <li
+                            key={index}
+                            className="flex items-start bg-white dark:bg-gray-700 p-3 rounded-lg shadow-sm"
+                          >
                             <CheckCircleIcon className="h-5 w-5 text-green-500 dark:text-green-400 mr-3 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-700 dark:text-gray-300">{result}</span>
+                            <span className="text-gray-700 dark:text-gray-300">
+                              {result}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -347,8 +396,19 @@ const PortfolioSection: React.FC = () => {
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                     <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 mr-2 text-blue-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       Project Details
                     </h4>
@@ -367,7 +427,7 @@ const PortfolioSection: React.FC = () => {
                           </a>
                         )}
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                           <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -414,8 +474,8 @@ const PortfolioSection: React.FC = () => {
                         Interested in a similar solution?
                       </h4>
                       <p className="mb-6 text-gray-200 leading-relaxed">
-                        Let&apos;s discuss how I can help you achieve similar results
-                        for your business.
+                        Let&apos;s discuss how I can help you achieve similar
+                        results for your business.
                       </p>
 
                       <div className="space-y-3">
@@ -450,7 +510,8 @@ const PortfolioSection: React.FC = () => {
             Ready to Build Your Next Great Project?
           </h2>
           <p className="text-center text-xl mb-8">
-            Let&apos;s create a custom solution that achieves your business goals
+            Let&apos;s create a custom solution that achieves your business
+            goals
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a

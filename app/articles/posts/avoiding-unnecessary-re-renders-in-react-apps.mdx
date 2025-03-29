@@ -54,6 +54,13 @@ function UserProfile({ user }) {
 }
 ```
 
+It's worth mentioning that declaring functions in the component body is generally fine for most use cases, especially when:
+- The function is simple and doesn't render frequently
+- The function doesn't create complex objects or calculations on every render
+- The function isn't passed as a prop to child components that might re-render unnecessarily
+
+When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
+ 
 2. **Creating Objects/Arrays in Render**: Similar to functions, inline objects and arrays create new references each render.
 
 ```jsx

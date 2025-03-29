@@ -128,7 +128,7 @@ export default function SearchBox({
           }}
         />
         <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" />
-        {query && (
+        {query && !hideDropdown && (
           <button
             onClick={() => {
               router.push(`/articles/search`);

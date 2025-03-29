@@ -55,9 +55,18 @@ function Sphere(props) {
 export default function BasicScene() {
   return (
     <div className="h-64 w-full rounded-lg overflow-hidden shadow-lg">
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
+      <Canvas camera={{ position: [0, 0, 5], fov: 75 }} gl={{ clearColor: 'black', alpha: false }}>
+        <ambientLight intensity={1.2} />
+        <pointLight position={[10, 10, 10]} intensity={1.5} />
+        <spotLight 
+          position={[-10, 2, 4]} 
+          angle={0.3} 
+          penumbra={0.8} 
+          intensity={2} 
+          castShadow
+          color="purple" 
+        />
+        <directionalLight position={[0, 5, 5]} intensity={1.2} color="cyan" />
         <Box position={[-1.2, 0, 0]} />
         <Sphere position={[1.2, 0, 0]} />
         <OrbitControls enableZoom={false} />

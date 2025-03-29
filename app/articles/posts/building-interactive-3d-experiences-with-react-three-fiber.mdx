@@ -1,7 +1,7 @@
 ---
 title: Building Interactive 3D Experiences with React Three Fiber
-publishedAt: 2025-03-30
-summary: 'Learn how to create captivating 3D experiences on the web by combining the power of Three.js with React using React Three Fiber - a declarative way to build 3D scenes in your React applications.'
+publishedAt: 2025-03-29
+summary: 'Learn how to create captivating 3D experiences on the web by combining the power of Three.js with React using React Three Fiber.'
 tags: React, Three.js, React Three Fiber, 3D Graphics, WebGL, Interactive Web
 category: Web Development
 ---
@@ -13,6 +13,7 @@ Three.js has transformed how developers create 3D content for the web, but integ
 ## Table of Contents
 
 - [Introduction to React Three Fiber](#introduction-to-react-three-fiber)
+- [Interactive Examples](#interactive-examples)
 - [Getting Started with React Three Fiber](#getting-started-with-react-three-fiber)
 - [Creating Basic 3D Elements](#creating-basic-3d-elements)
 - [Animations and Interactions](#animations-and-interactions)
@@ -20,7 +21,6 @@ Three.js has transformed how developers create 3D content for the web, but integ
 - [Camera Controls](#camera-controls)
 - [Performance Optimization](#performance-optimization)
 - [Advanced Techniques](#advanced-techniques)
-- [Interactive Examples](#interactive-examples)
 - [Conclusion](#conclusion)
 
 ## Introduction to React Three Fiber
@@ -35,6 +35,22 @@ React Three Fiber (R3F) is a React renderer for Three.js that allows you to crea
 4. **Hooks**: Use React hooks for animations, interactions, and state management
 5. **Ecosystem**: Access to a growing collection of tools and extensions like drei
 
+## Interactive Examples
+
+Below are some interactive examples that demonstrate React Three Fiber in action.
+
+### Basic Shapes Example
+
+This example shows two simple 3D shapes that rotate continuously. Click on a shape to increase its size, or click and drag to control the camera.
+
+<ThreeScene />
+
+### Interactive Model with Controls
+
+This interactive torus allows you to adjust its rotation speed using the slider:
+
+<InteractiveModel />
+
 ### Core Concepts
 
 React Three Fiber translates React components into Three.js objects:
@@ -44,7 +60,7 @@ React Three Fiber translates React components into Three.js objects:
 <mesh position={[0, 0, 0]}>
   <boxGeometry args={[1, 1, 1]} />
   <meshStandardMaterial color="hotpink" />
-</mesh>
+</mesh>;
 
 // Equivalent Three.js code
 const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -69,7 +85,7 @@ npm install three @react-three/fiber @react-three/drei
 Creating a 3D scene requires a canvas element where Three.js can render:
 
 ```jsx
-import { Canvas } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber';
 
 function App() {
   return (
@@ -81,7 +97,7 @@ function App() {
         <meshStandardMaterial color="orange" />
       </mesh>
     </Canvas>
-  )
+  );
 }
 ```
 
@@ -116,9 +132,9 @@ React Three Fiber provides primitives that map directly to Three.js objects:
 You can position and transform objects using props:
 
 ```jsx
-<mesh 
-  position={[x, y, z]} 
-  rotation={[rotX, rotY, rotZ]} 
+<mesh
+  position={[x, y, z]}
+  rotation={[rotX, rotY, rotZ]}
   scale={[scaleX, scaleY, scaleZ]}
 >
   {/* geometry and material */}
@@ -134,23 +150,23 @@ React Three Fiber provides hooks for creating animations and handling interactio
 The `useFrame` hook gives you access to the animation loop:
 
 ```jsx
-import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
 
 function RotatingBox() {
-  const meshRef = useRef()
-  
+  const meshRef = useRef();
+
   useFrame((state, delta) => {
-    meshRef.current.rotation.x += delta
-    meshRef.current.rotation.y += delta * 0.5
-  })
-  
+    meshRef.current.rotation.x += delta;
+    meshRef.current.rotation.y += delta * 0.5;
+  });
+
   return (
     <mesh ref={meshRef}>
       <boxGeometry />
       <meshNormalMaterial />
     </mesh>
-  )
+  );
 }
 ```
 
@@ -160,11 +176,11 @@ You can use standard React event handlers for interactions:
 
 ```jsx
 function InteractiveCube() {
-  const [active, setActive] = useState(false)
-  const [hovered, setHovered] = useState(false)
-  
+  const [active, setActive] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <mesh 
+    <mesh
       onClick={() => setActive(!active)}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
@@ -173,7 +189,7 @@ function InteractiveCube() {
       <boxGeometry />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
     </mesh>
-  )
+  );
 }
 ```
 
@@ -199,16 +215,16 @@ You can use any Three.js material:
 <meshBasicMaterial color="red" wireframe />
 
 // Standard material (with light reactions)
-<meshStandardMaterial 
-  color="blue" 
-  roughness={0.5} 
-  metalness={0.5} 
+<meshStandardMaterial
+  color="blue"
+  roughness={0.5}
+  metalness={0.5}
 />
 
 // Physical material (more parameters)
-<meshPhysicalMaterial 
-  color="green" 
-  roughness={0.1} 
+<meshPhysicalMaterial
+  color="green"
+  roughness={0.1}
   metalness={0.8}
   clearcoat={1}
   clearcoatRoughness={0.2}
@@ -220,7 +236,7 @@ You can use any Three.js material:
 The `@react-three/drei` package provides helpful controls:
 
 ```jsx
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei';
 
 function Scene() {
   return (
@@ -228,11 +244,12 @@ function Scene() {
       <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
       {/* Your 3D objects */}
     </Canvas>
-  )
+  );
 }
 ```
 
 Other camera controls include:
+
 - `TrackballControls`
 - `FlyControls`
 - `PointerLockControls`
@@ -245,7 +262,7 @@ Other camera controls include:
 For rendering many similar objects:
 
 ```jsx
-import { Instance, Instances } from '@react-three/drei'
+import { Instance, Instances } from '@react-three/drei';
 
 function ManyBoxes() {
   return (
@@ -253,17 +270,17 @@ function ManyBoxes() {
       <boxGeometry />
       <meshStandardMaterial color="red" />
       {Array.from({ length: 100 }, (_, i) => (
-        <Instance 
-          key={i} 
+        <Instance
+          key={i}
           position={[
             Math.random() * 10 - 5,
             Math.random() * 10 - 5,
-            Math.random() * 10 - 5
+            Math.random() * 10 - 5,
           ]}
         />
       ))}
     </Instances>
-  )
+  );
 }
 ```
 
@@ -273,16 +290,19 @@ Optimize geometry and material creation:
 
 ```jsx
 function OptimizedBoxes() {
-  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), [])
-  const material = useMemo(() => new THREE.MeshStandardMaterial({ color: 'hotpink' }), [])
-  
+  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  const material = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: 'hotpink' }),
+    [],
+  );
+
   return (
     <>
       <mesh geometry={geometry} material={material} position={[0, 0, 0]} />
       <mesh geometry={geometry} material={material} position={[2, 0, 0]} />
       <mesh geometry={geometry} material={material} position={[-2, 0, 0]} />
     </>
-  )
+  );
 }
 ```
 
@@ -293,7 +313,11 @@ function OptimizedBoxes() {
 Using the `@react-three/postprocessing` package:
 
 ```jsx
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing'
+import {
+  EffectComposer,
+  Bloom,
+  ChromaticAberration,
+} from '@react-three/postprocessing';
 
 function Scene() {
   return (
@@ -304,7 +328,7 @@ function Scene() {
         <ChromaticAberration offset={[0.005, 0.005]} />
       </EffectComposer>
     </Canvas>
-  )
+  );
 }
 ```
 
@@ -313,43 +337,29 @@ function Scene() {
 You can load 3D models using the `useLoader` hook:
 
 ```jsx
-import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 function Model() {
-  const gltf = useLoader(GLTFLoader, '/path/to/model.gltf')
-  
-  return <primitive object={gltf.scene} position={[0, 0, 0]} scale={[1, 1, 1]} />
+  const gltf = useLoader(GLTFLoader, '/path/to/model.gltf');
+
+  return (
+    <primitive object={gltf.scene} position={[0, 0, 0]} scale={[1, 1, 1]} />
+  );
 }
 ```
 
 Or with the simplified `useGLTF` hook from drei:
 
 ```jsx
-import { useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei';
 
 function Model() {
-  const { scene } = useGLTF('/path/to/model.gltf')
-  
-  return <primitive object={scene} />
+  const { scene } = useGLTF('/path/to/model.gltf');
+
+  return <primitive object={scene} />;
 }
 ```
-
-## Interactive Examples
-
-Below are some interactive examples that demonstrate React Three Fiber in action. Feel free to interact with them!
-
-### Basic Shapes Example
-
-This example shows two simple 3D shapes that rotate continuously. Click on a shape to increase its size.
-
-<ThreeScene />
-
-### Interactive Model with Controls
-
-This interactive torus allows you to adjust its rotation speed using the slider:
-
-<InteractiveModel />
 
 ## Conclusion
 

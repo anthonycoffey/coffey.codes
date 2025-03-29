@@ -5,6 +5,7 @@ import { highlight } from 'sugar-high';
 import React from 'react';
 import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
+import ThreeScene, {InteractiveModel } from './ThreeScene';
 
 function Table({ data }) {
   const headers = data.headers.map((header, index) => (
@@ -117,6 +118,8 @@ const components = {
   code: Code,
   Table,
   Counter,
+  ThreeScene,
+  InteractiveModel,
 };
 
 export function CustomMDX(props) {

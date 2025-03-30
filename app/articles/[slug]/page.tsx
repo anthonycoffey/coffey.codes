@@ -99,53 +99,60 @@ export default async function Blog({ params }) {
       <div className="flex flex-col ml-2">
         <div className="flex items-center space-x-4 mt-4">
           <Image
-        width={330}
-        height={330}
-        src="/headshot.jpg"
-        alt="Anthony Coffey"
-        className="w-10 h-10 rounded-full"
+            width={330}
+            height={330}
+            src="/headshot.jpg"
+            alt="Anthony Coffey"
+            className="w-10 h-10 rounded-full"
           />
           <div>
-        <span className="text-lg block" itemProp="author" itemScope itemType="https://schema.org/Person">
-          <span itemProp="name">Anthony Coffey</span>
-        </span>
-        <time
-          className="text-sm text-gray-500"
-          dateTime={post.metadata.publishedAt}
-          itemProp="datePublished"
-        >
-          Published on {formatDate(post.metadata.publishedAt)}
-        </time>
+            <span
+              className="text-lg block"
+              itemProp="author"
+              itemScope
+              itemType="https://schema.org/Person"
+            >
+              <span itemProp="name">Anthony Coffey</span>
+            </span>
+            <time
+              className="text-sm text-gray-500"
+              dateTime={post.metadata.publishedAt}
+              itemProp="datePublished"
+            >
+              Published on {formatDate(post.metadata.publishedAt)}
+            </time>
           </div>
         </div>
 
         {post.metadata.category && (
           <div className="mt-2">
-        <span className="font-semibold">Category: </span>
-        <Link
-          href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
-          className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full"
-          itemProp="articleSection"
-        >
-          {post.metadata.category}
-        </Link>
+            <span className="font-semibold">Category: </span>
+            <Link
+              href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
+              className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full"
+              itemProp="articleSection"
+            >
+              {post.metadata.category}
+            </Link>
           </div>
         )}
 
         {post.metadata.tags && post.metadata.tags.length > 0 && (
           <div className="mt-2">
-        <span className="font-semibold">Tags: </span>
-        <div className="flex flex-wrap gap-2 mt-1" itemProp="keywords">
-          {post.metadata.tags.map((tag) => (
-            <Link
-          key={tag}
-          href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-          className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded"
-            >
-          {tag}
-            </Link>
-          ))}
-        </div>
+            <div className="flex flex-wrap gap-2 mt-1">
+              <span className="font-semibold">Tags: </span>
+              <div itemProp="keywords">
+                {post.metadata.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                    className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>

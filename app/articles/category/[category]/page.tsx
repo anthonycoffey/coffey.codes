@@ -1,5 +1,5 @@
 import {
-  getBlogPostsByCategory,
+  getPaginatedBlogPostsByCategory,
   getAllCategories,
   getAllTags,
   capitalizeWords,
@@ -52,7 +52,11 @@ export default function CategoryPage({ params, searchParams }) {
 
   const popularTags = getAllTags().slice(0, 24);
 
-  const posts = getBlogPostsByCategory(decodedCategory, page, itemsPerPage);
+  const posts = getPaginatedBlogPostsByCategory(
+    decodedCategory,
+    page,
+    itemsPerPage,
+  );
 
   const { totalPages } = posts.pagination;
 
@@ -108,8 +112,8 @@ export default function CategoryPage({ params, searchParams }) {
                     </Link>
                     <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                       {
-                        getBlogPostsByCategory(otherCategory, 1, 100).posts
-                          .length
+                        getPaginatedBlogPostsByCategory(otherCategory, 1, 100)
+                          .posts.length
                       }
                     </span>
                   </div>

@@ -1,9 +1,9 @@
 import {
-  getBlogPostsByTag,
+  getPaginatedBlogPostsByTag,
   getAllTags,
   getAllCategories,
   capitalizeWords,
-  getBlogPosts,
+  getPaginatedBlogPosts,
 } from '@/app/articles/utils';
 import { BlogPosts } from '@/components/posts';
 import Pagination from '@/components/Pagination';
@@ -41,7 +41,7 @@ export default function TagPage({ params, searchParams }) {
   const itemsPerPage = 5;
   const tag = params.tag;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
-  const posts = getBlogPostsByTag(decodedTag, page, itemsPerPage);
+  const posts = getPaginatedBlogPostsByTag(decodedTag, page, itemsPerPage);
 
   // Get pagination data
   const { totalPages } = posts.pagination;
@@ -111,7 +111,7 @@ export default function TagPage({ params, searchParams }) {
 
                   <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                     {
-                      getBlogPosts(1, 100).posts.filter(
+                      getPaginatedBlogPosts(1, 100).posts.filter(
                         (post) =>
                           post.metadata.category &&
                           post.metadata.category.toLowerCase() ===

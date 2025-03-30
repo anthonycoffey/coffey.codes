@@ -1,5 +1,5 @@
 import { baseUrl } from '@/app/sitemap';
-import { getRSSBlogPosts } from '@/app/articles/utils';
+import { getAllBlogPosts } from '@/app/articles/utils';
 
 function escapeXml(unsafe: string): string {
   return unsafe.replace(/[<>&'"]/g, function (c) {
@@ -21,7 +21,7 @@ function escapeXml(unsafe: string): string {
 }
 
 export async function GET() {
-  const articles = getRSSBlogPosts();
+  const articles = getAllBlogPosts();
 
   const itemsXml = articles
     .sort((a, b) => {

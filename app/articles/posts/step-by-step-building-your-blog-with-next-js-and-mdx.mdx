@@ -19,7 +19,7 @@ My blog is built on a straightforward yet powerful architecture:
 
 The content flow looks like this:
 
-1. MDX files are stored in the `/app/articles/posts` directory
+1. MDX files are stored in the /app/articles/posts directory
 2. When a user visits a post URL, the blog fetches the corresponding MDX file
 3. The content is processed through the MDX parser
 4. The resulting HTML (with React components) is rendered on the page
@@ -80,37 +80,6 @@ export const components = {
   // Add more component overrides as needed
 };
 ```
-
-## Troubleshooting React Version Conflict Errors
-
-If you've implemented MDX in a Next.js project, you might have encountered this frustrating error:
-
-```
-Error: A React Element from an older version of React was rendered. This is not supported. It can happen if:
-- Multiple copies of the "react" package is used.
-- A library pre-bundled an old copy of "react" or "react/jsx-runtime".
-- A compiler tries to "inline" JSX instead of using the runtime.
-```
-
-This error typically occurs when working with next-mdx-remote in a Next.js App Router project. The root cause is that next-mdx-remote might be bundling its own version of React, which conflicts with the version used by Next.js.
-
-## The Solution: Transpile Packages
-
-The simplest solution to this problem is to tell Next.js to transpile the next-mdx-remote package. This ensures that the React version used by next-mdx-remote is compatible with your project's React version.
-
-Add this to your next.config.js:
-
-```js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ['next-mdx-remote'], // Add this line
-  // other config options...
-};
-
-module.exports = nextConfig;
-```
-
-This configuration tells Next.js to process the next-mdx-remote package through its own transpilation pipeline, ensuring that it uses the same React version as the rest of your application.
 
 ## Adding OpenGraph and SEO Integration
 
@@ -191,7 +160,7 @@ export async function GET(request) {
 
 ## Taxonomy and Search
 
-To make content discoverable, I implemented a taxonomy system with categories and tags, along with a search function:
+I implemented a search feature powered by a taxonomy system, defined in the article header using frontmatter.
 
 ```tsx
 // Storing post metadata in frontmatter
@@ -208,21 +177,21 @@ The search functionality works by indexing all posts and making them searchable 
 
 ```tsx
 // app/api/search/route.ts
-import { getBlogPosts } from 'app/articles/utils';
+import { getAllBlogPosts } from 'app/articles/utils';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
 
-  if (!query || query.length < 2) {
+  if (!query) {
     return new Response(JSON.stringify({ posts: [] }), {
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  const allPosts = getBlogPosts(1, 100).posts;
+  const posts = getAllBlogPosts();
 
-  const results = allPosts.filter((post) => {
+  const results = posts.filter((post) => {
     const titleMatch = post.metadata.title
       .toLowerCase()
       .includes(query.toLowerCase());
@@ -245,12 +214,44 @@ export async function GET(request) {
 }
 ```
 
+
+## Troubleshooting React Version Conflict Errors
+
+If you've implemented MDX in a Next.js project, you might have encountered this frustrating error:
+
+```
+Error: A React Element from an older version of React was rendered. This is not supported. It can happen if:
+- Multiple copies of the "react" package is used.
+- A library pre-bundled an old copy of "react" or "react/jsx-runtime".
+- A compiler tries to "inline" JSX instead of using the runtime.
+```
+
+This error typically occurs when working with next-mdx-remote in a Next.js App Router project. The root cause is that next-mdx-remote might be bundling its own version of React, which conflicts with the version used by Next.js.
+
+## The Solution: Transpile Packages
+
+The simplest solution that I found for this problem is to instruct Next.js to transpile the next-mdx-remote package. This ensures that the React version used by next-mdx-remote is compatible with your project's React version.
+
+Just add this to your next.config.js:
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ['next-mdx-remote'], // Add this line
+  // other config options...
+};
+
+module.exports = nextConfig;
+```
+
+This configuration tells Next.js to process the next-mdx-remote package through its own transpilation pipeline, ensuring that it uses the same React version as the rest of your application.
+
 ## Conclusion
 
-Building a blog with Next.js and MDX provides a powerful and flexible platform for publishing content. While you might encounter some integration challenges like React version conflicts, the solutions are straightforward once you understand the problem.
-
-By using the `transpilePackages` option in Next.js config or switching to client components, you can easily overcome these challenges and focus on creating great content for your readers.
+Building a blog with Next.js and MDX provides a powerful and flexible platform for publishing content.
 
 Remember that MDX is not just about rendering Markdown — it's about extending your content with the full power of React components, enabling interactive and dynamic blog posts that stand out from traditional static content.
+
+For example, take a look at the embedded components featured in my <a href="/articles/building-interactive-3d-experiences-with-react-three-fiber">React Fiber</a> article
 
 If you have any questions about implementing MDX in your Next.js project or resolving React version conflicts, feel free to reach out!

@@ -1,5 +1,9 @@
 import { BlogPosts } from '@/components/posts';
-import { getBlogPosts, getAllTags, getAllCategories } from '@/app/articles/utils';
+import {
+  getPaginatedBlogPosts,
+  getAllTags,
+  getAllCategories,
+} from '@/app/articles/utils';
 import Pagination from '@/components/Pagination';
 import {
   DocumentTextIcon,
@@ -20,7 +24,7 @@ export default async function ArticlesPage({ searchParams }) {
   const params = await searchParams;
   const page = params.page ? Number(params.page) : 1;
   const itemsPerPage = 5;
-  const allBlogs = getBlogPosts(page, itemsPerPage);
+  const allBlogs = getPaginatedBlogPosts(page, itemsPerPage);
 
   const popularTags = getAllTags().slice(0, 24);
   const allCategories = getAllCategories();
@@ -71,7 +75,7 @@ export default async function ArticlesPage({ searchParams }) {
                   </Link>
                   <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                     {
-                      getBlogPosts(1, 100).posts.filter(
+                      getPaginatedBlogPosts(1, 100).posts.filter(
                         (post) =>
                           post.metadata.category &&
                           post.metadata.category.toLowerCase() ===

@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation';
 import { CustomMDX } from '@/components/mdx';
-import { getRSSBlogPosts } from '@/app/articles/utils';
+import { getAllBlogPosts } from '@/app/articles/utils';
 import { baseUrl } from '@/app/sitemap';
 import GoBack from '@/components/GoBack';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 export async function generateStaticParams() {
-  const posts = getRSSBlogPosts();
+  const posts = getAllBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = getRSSBlogPosts().find((post) => post.slug === slug);
+  const post = getAllBlogPosts().find((post) => post.slug === slug);
   if (!post) {
     return;
   }
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
 export default async function Blog({ params }) {
   const { slug } = await params;
 
-  const post = getRSSBlogPosts().find((post) => post.slug === slug);
+  const post = getAllBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     notFound();

@@ -33,11 +33,9 @@ function parseFrontmatter(fileContent: string) {
 
     if (x === 'tags') {
       metadata.tags = value.split(',').map((tag) => tag.trim());
-    }
-    else if (x === 'category') {
+    } else if (x === 'category') {
       metadata.category = value;
-    }
-    else if (
+    } else if (
       x === 'title' ||
       x === 'publishedAt' ||
       x === 'summary' ||
@@ -63,9 +61,7 @@ function readMDXFile(filePath) {
   return parseFrontmatter(rawContent);
 }
 
-function getRSSMDXData(
-  dir: string,
-) {
+function getRSSMDXData(dir: string) {
   return getMDXFiles(dir).map((file) => {
     const { metadata, content } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
@@ -115,11 +111,14 @@ function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
   };
 }
 
-export function getRSSBlogPosts() {
+export function getAllBlogPosts() {
   return getRSSMDXData(path.join(process.cwd(), 'app', 'articles', 'posts'));
 }
 
-export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {
+export function getPaginatedBlogPosts(
+  page: number = 1,
+  itemsPerPage: number = 10,
+) {
   return getMDXData(
     path.join(process.cwd(), 'app', 'articles', 'posts'),
     page,
@@ -127,7 +126,7 @@ export function getBlogPosts(page: number = 1, itemsPerPage: number = 10) {
   );
 }
 
-export function getBlogPostsByTag(
+export function getPaginatedBlogPostsByTag(
   tag: string,
   page: number = 1,
   itemsPerPage: number = 10,
@@ -181,7 +180,7 @@ export function getBlogPostsByTag(
   };
 }
 
-export function getBlogPostsByCategory(
+export function getPaginatedBlogPostsByCategory(
   category: string,
   page: number = 1,
   itemsPerPage: number = 10,

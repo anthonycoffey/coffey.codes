@@ -9,7 +9,7 @@ export default function CounterComponent() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gradient-to-b from-blue-500 to-purple-500 p-8 my-4">
+    <div className="flex items-center justify-center bg-gradient-to-b from-blue-500 to-purple-500 p-8 my-4 rounded-lg">
       <div className="bg-white rounded-lg p-8 shadow-lg">
         <span className="font-bold mb-4 block text-center text-black">
           Counter Example

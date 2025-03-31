@@ -35,21 +35,31 @@ React Three Fiber (R3F) is a React renderer for Three.js that allows you to crea
 4. **Hooks**: Use React hooks for animations, interactions, and state management
 5. **Ecosystem**: Access to a growing collection of tools and extensions like drei
 
-## Interactive Examples
+## Example Scene
 
-Below are some interactive examples that demonstrate React Three Fiber in action.
+Inspired by Pink Floyd's "Wish You Were Here", I "vibe coded" a simple Fishbowl scene for this article. No imported models! The entire scene was generated with code using React Fiber components and methods.
 
-### Basic Shapes Example
+<small className="text-right">
+  View Source on{' '}
+  <a href="https://codesandbox.io/p/sandbox/fishbowl-fwdztp">CodeSandbox</a>
+</small>
+
+<FishbowlScene />
+
+<div className="flex justify-center text-center">
+  <em>
+    > How I wish, how I wish you were here, <br />
+    > We're just two lost souls swimming in a fishbowl, year after year. <br />
+    > Runnin' over the same old ground, what have we found? <br />> The same old
+    fears, wish you were here …
+  </em>
+</div>
+
+### Interactive Scene Example
 
 This example shows two simple 3D shapes that rotate continuously. Click on a shape to increase its size, or click and drag to control the camera.
 
 <ThreeScene />
-
-### Interactive Model with Controls
-
-This interactive torus allows you to adjust its rotation speed using the slider:
-
-<InteractiveModel />
 
 ### Core Concepts
 

@@ -153,7 +153,8 @@ export default function Footer() {
               height={82}
               src="/logo-horizontal.svg"
               alt="logo"
-              className="h-20"
+              className="h-20 w-auto"
+              priority
             />
           </Link>
         </div>

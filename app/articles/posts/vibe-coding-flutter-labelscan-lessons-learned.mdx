@@ -42,7 +42,7 @@ The Flutter app didn't do the heavy lifting of OCR itself. It needed to send the
 
 While Flutter handled the user-facing experience, the intelligence resided in the backend. A Python Flask server acted as the intermediary:
 
-1.  The Flutter app sent the captured image data (from the `camera` or `image_picker`) to a specific API endpoint (e.g., `/api/extract_data`).
+1.  The Flutter app sent the captured image data (from the `camera` or `image_picker`) to a specific API endpoint (e.g., `/api/extract-data`).
 2.  The Flask backend received this image.
 3.  The backend then invoked Google Cloud Vision and potentially the Gemini API (as mentioned in the README) to perform Optical Character Recognition (OCR) on the image, specifically looking for price-like patterns.
 4.  Once the price was (hopefully) extracted, the backend sent it back to the Flutter app in a JSON response.
@@ -69,3 +69,23 @@ Building LabelScan was a practical dive into the world of Flutter, driven by cur
 The "vibe coding" approach, while perhaps unconventional, proved to be an effective way to learn Flutter hands-on. The framework's excellent developer experience, rich widget library, and strong community support made tackling an unfamiliar ecosystem achievable and even enjoyable. I faced many challenges, but overall the journey was positive, resulting in a useful tool and valuable insights into Flutter's capabilities.
 
 If you're curious to see the code behind LabelScan, you can check out the repository on GitHub: [https://github.com/anthonycoffey/flutter-labelscan](https://github.com/anthonycoffey/flutter-labelscan)
+
+```mermaid
+graph TD
+    subgraph Flutter Client
+        UI["Screens (Auth, Home, Camera)"] -- User Interaction --> SM(State Management - setState);
+        UI -- Triggers --> Cam[Camera/Image Picker];
+        SM -- Updates --> UI;
+        Cam -- Image Data --> API_Client[HTTP Client];
+        API_Client -- Request --> BE;
+        Auth[Firebase Auth/Google Sign-In] --> UI;
+        Store[Firebase Firestore/Storage] --> UI;
+    end
+
+    subgraph Flask Backend
+        BE["API Endpoint (/api/extract-data)"] -- Receives Request --> OCR["Image Processing/OCR (Cloud Vision & Gemini API)"];
+        OCR -- Extracted Data --> BE;
+    end
+
+    BE -- Response --> API_Client;
+```

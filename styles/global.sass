@@ -217,3 +217,16 @@ pre.multiline code
     
     &:hover
       background: linear-gradient(to bottom, #60a5fa, #3b82f6)
+
+// Mermaid chart styling
+.mermaid-chart-container
+  width: 100% // Ensure it takes available width
+  min-height: 100px // Give it some minimum height
+  display: flex // Use flex to center SVG if needed
+  justify-content: center
+  align-items: center
+  margin: 1rem 0 // Add some vertical spacing
+
+  svg
+    max-width: 100% // Ensure SVG scales down if needed
+    height: auto // Maintain aspect ratio

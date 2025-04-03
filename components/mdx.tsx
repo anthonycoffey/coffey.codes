@@ -7,6 +7,7 @@ import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
 import ThreeScene from './ThreeScene';
 import FishbowlScene from './FishbowlScene';
+import MermaidChart from './MermaidChart'; // Import the new component
 
 function Table({ data }) {
   const headers = data.headers.map((header, index) => (
@@ -52,22 +53,40 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />;
 }
 
-function Code({ children, ...props }) {
-  const isMultiline = children.includes('\n');
-  const codeHTML = highlight(children);
+function Code({ children, className, ...props }) {
+  // Check if the language is mermaid
+  const language = className?.replace(/language-/, '');
+  // console.log('Code component className:', className, 'Detected language:', language); // Removed logging
+
+  if (language === 'mermaid') {
+    // Render Mermaid chart using the client component
+    // Ensure children is passed as a string, trim whitespace
+    const chartDefinition = typeof children === 'string' ? children.trim() : React.Children.toArray(children).join('').trim();
+    // Add a check for empty definition
+    if (!chartDefinition) {
+      console.warn('Empty Mermaid chart definition found.');
+      return null; // Don't render if empty
+    }
+    return <MermaidChart chart={chartDefinition} />;
+  }
+
+  // Existing code block handling
+  const isMultiline = React.Children.toArray(children).join('').includes('\n');
+  const codeString = React.Children.toArray(children).join('');
+  const codeHTML = highlight(codeString);
 
   if (isMultiline) {
     return (
       <span style={{ position: 'relative', display: 'block' }}>
-        <pre className="multiline">
+        <pre className={`multiline ${className || ''}`}>
           <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-          <CopyButton text={children} />
+          <CopyButton text={codeString} />
         </pre>
       </span>
     );
   } else {
     return (
-      <span className="singleline">
+      <span className={`singleline ${className || ''}`}>
         <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
       </span>
     );
@@ -123,7 +142,7 @@ const components = {
   FishbowlScene,
 };
 
-export function CustomMDX(props) {
+export async function CustomMDX(props) { // Make the function async
   return (
     <MDXRemote
       {...props}

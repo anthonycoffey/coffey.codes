@@ -14,7 +14,7 @@ This wasn't some meticulously planned project; I just wanted to see if I could "
 
 Along the way, I picked up quite a bit about Flutter development. This article shares that journey, focusing on the practical side of building LabelScan and the key Flutter lessons learned while working with AI.
 
-> While the backend OCR microservice was something I had previously built and manually repurposed for this project, the Flutter app was coded entirely with AI.
+> The backend OCR microservice was something I had previously built and manually repurposed for this project, but the Flutter app was coded entirely with AI.
 
 ## Why LabelScan? Why Flutter?
 
@@ -117,7 +117,9 @@ This client-server split kept the Flutter app light, focusing on UI and interact
 
 #### System Architecture Diagram
 
-The following diagram illustrates the architecture of the LabelScan app, highlighting the interaction between the Flutter client and the Flask backend:
+The following diagram illustrates the architecture of the LabelScan app, highlighting the interaction between the Flutter client and the Flask backend.
+
+> This diagram was generated using Mermaid syntax, and is also AI-generated.
 
 ```mermaid
 ---
@@ -147,9 +149,9 @@ graph TD
 
 Jumping into Flutter with AI as my co-pilot was definitely an adventure. This "vibe coding" approach, building LabelScan entirely through prompts with Cline and Gemini 2.5 Pro, taught me a few things:
 
-- **First-Try Features & The Image Hurdle:** Impressively, almost every feature I asked for worked correctly on the AI's first try. The _only_ real technical snag was handling the image upload to the backend. Getting the image data formatted right, setting the correct HTTP request headers (MIME types!), and managing the async flow needed more specific instructions. But once I clearly described the problem, the AI tools quickly fixed it. Besides that one hiccup, the whole build felt super efficient.
+- **Handling MIME Types:** Impressively, almost every feature I asked for worked correctly on the AI's first try. The _only_ real technical snag was handling the image upload to the backend. Handling the HTTP request, and managing a seamless integration with the backend required more specific instructions. But once I clearly described the problem, the AI tools quickly fixed it. Besides that one hiccup, the whole build felt super efficient.
 
-- **Developer Experience:** What really stood out was not just how "native" the final app felt (props to Flutter itself), but how well the AI navigated the Flutter ecosystem. It picked suitable packages (`camera`, `image_picker`, `http`, `flutter_riverpod`, Firebase SDKs), structured the code sensibly, and built features from high-level descriptions. The developer experience, boosted by AI, was fantastic. Flutter's logs were still super helpful and easy to read, especially for nailing down that image handling issue for the AI.
+- **Developer Experience:** What really stood out was not just how "native" the final app felt (props to Flutter itself), but how well Gemini 2.5 Pro navigated the Flutter ecosystem. It picked suitable packages (`camera`, `image_picker`, `http`, `flutter_riverpod`, Firebase SDKs), structured the code sensibly, and built features from high-level descriptions. The developer experience, boosted by AI, was fantastic. Flutter's logs were still super helpful and easy to read, especially for nailing down that image handling issue for the AI.
 
 - **Pro Tip:** A simple but vital lesson, especially when moving fast: Double-check that the app running in your simulator or on your device _is_ the current build from your latest `flutter run` command! More than once, I wasted time debugging an issue that wasn't in my latest code but was lingering from an old session. Killing the old process and restarting often fixed these phantom bugs. Hot reload worked great most of the time, though.
 
@@ -157,8 +159,10 @@ Jumping into Flutter with AI as my co-pilot was definitely an adventure. This "v
 
 ## Conclusion
 
-Building LabelScan was a hands-on dive into Flutter, powered entirely by AI collaboration. Driven by curiosity and wanting to solve a simple, everyday problem, the whole Flutter app was built using prompts via the Cline VS Code Extension and Gemini 2.5 Pro. From hooking up the camera and managing state with Riverpod to talking to the existing Python backend, the project showed the potential of AI-driven development for mobile apps.
+Building LabelScan was a hands-on dive into Flutter, powered entirely by AI collaboration. I started with a simple idea and ended up with a functional app that solves a real problem. The process was a mix of learning, experimenting, and relying on AI to fill in the gaps. It was a great way to explore Flutter's capabilities while also testing the limits of AI-assisted development.
 
-This "vibe coding" approach (end-to-end AI-assisted development) turned out to be surprisingly effective. The AI handled the Flutter framework well, using its widget library and community packages to build a working app with little friction. The main hurdle – image handling – was solved quickly with specific feedback, showing how collaboration with AI works. Overall, it was a positive experience, resulting in a useful tool and showcasing what modern AI coding assistants like Cline can do on a full project.
+This "vibe coding" approach (end-to-end AI-assisted development) turned out to be surprisingly effective. The AI handled the Flutter framework well, using its widget library and community packages to build a working app with little friction. The main hurdle – image handling – was solved quickly with specific feedback, showing how collaboration with AI works.
+
+Overall, it was a positive experience, resulting in a useful tool and showcasing what modern AI coding assistants like Cline can do on a full project.
 
 If you're curious to see the code behind LabelScan, you can check out the repository on GitHub: [https://github.com/anthonycoffey/flutter-labelscan](https://github.com/anthonycoffey/flutter-labelscan)

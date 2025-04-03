@@ -1,0 +1,164 @@
+---
+title: Vibe Coding My Way Through Flutter: Building an App exclusively using AI Prompts
+publishedAt: 2025-04-03
+summary: A practical journey building Label Scan, a Flutter app using AI for real-time price scanning, and the key lessons learned about Flutter development along the way.
+category: Mobile Development
+tags: Flutter, Dart, Mobile Development, AI, OCR, Case Study, Learning, Riverpod, Flask
+---
+
+## Introduction
+
+Ever find yourself at the grocery store checkout, bracing for the final total? Keeping track of spending _while_ you shop can be a pain. That's the problem I aimed to solve with LabelScan, a mobile app designed to scan price tags and keep a running total of your cart's cost in real-time.
+
+This wasn't some meticulously planned project; I just wanted to see if I could "vibe code" an entire app in a language I didn't know. If you haven't heard the term, "vibe coding" is basically using AI tools – like Cline powered by Google's Gemini 2.5 Pro model – to build applications, often from the ground up.
+
+Along the way, I picked up quite a bit about Flutter development. This article shares that journey, focusing on the practical side of building LabelScan and the key Flutter lessons learned while working with AI.
+
+> While the backend OCR microservice was something I had previously built and manually repurposed for this project, the Flutter app was coded entirely with AI.
+
+## Why LabelScan? Why Flutter?
+
+The core idea was simple: avoid checkout shock. Tapping numbers into a calculator felt clunky, and existing budget apps didn't quite nail the real-time, in-store scanning thing I had in mind. I needed something fast, visual, and built for mobile.
+
+So, why Flutter? Honestly, it was mostly an experiment driven by wanting to work with AI. I'd never touched Flutter or Dart before and was curious if I could "vibe code" my way through building a functional app in an unfamiliar ecosystem using AI prompts. Could Cline and Gemini 2.5 Pro actually build a complete Flutter app from scratch, feature by feature, just based on my descriptions? It felt like a good test of both the AI's chops and this emerging way of developing.
+
+## Getting Started with Flutter: The Basics
+
+Before diving into the app specifics, let's quickly cover some Flutter basics for anyone new to the framework. Getting your environment set up is job one.
+
+**1. Setting Up Your Environment:**
+
+- **Install the Flutter SDK:** Head over to the official Flutter site ([flutter.dev](https://flutter.dev/)) and grab the SDK for your OS (Windows, macOS, Linux). Follow their installation guide – it involves unzipping the SDK and adding its `bin` folder to your system's PATH so you can run `flutter` commands from anywhere in your terminal.
+- **Install Platform Dependencies:** Depending on whether you want to build for Android, iOS, or both, you'll need specific tools:
+  - **Android:** Install Android Studio. Even if you prefer another editor like VS Code, Android Studio installs the necessary Android SDK, build tools, and platform tools. Make sure to also set up an Android emulator or connect a physical device.
+  - **iOS (macOS only):** Install Xcode from the Mac App Store. This includes the iOS SDK, simulator, and command-line tools needed for iOS development.
+- **Run flutter doctor:** This command is your best friend. Open your terminal and run:
+  ```bash
+  flutter doctor
+  ```
+  It checks your setup and tells you if anything's missing or needs configuring. Follow its advice until the relevant checks pass.
+- **Editor Setup:** Install the Flutter and Dart plugins/extensions for your favorite code editor (VS Code, Android Studio, etc.). They give you syntax highlighting, code completion, debugging tools, and other goodies.
+
+**2. Building and Running Your App:**
+
+Once your environment is good to go, creating and running a Flutter app is pretty simple:
+
+- **Create a New Project:**
+  ```bash
+  flutter create my_awesome_app
+  ```
+- **Navigate into Project:**
+  ```bash
+  cd my_awesome_app
+  ```
+- **Run the App:** Make sure a simulator/emulator is running or a physical device is connected. Then, run:
+  ```bash
+  flutter run
+  ```
+  This builds the app and installs it on your target. Flutter's famous "Hot Reload" usually kicks in, letting you see code changes almost instantly without a full restart.
+
+**3. Managing Packages:**
+
+Flutter uses Dart's package manager, `pub`. Adding third-party libraries (like the `camera` or `http` packages we'll talk about) is easy:
+
+- **Add a Package:**
+  This command automatically adds the dependency to your `pubspec.yaml` file and downloads the package.
+  ```bash
+  flutter pub add package_name
+  # Example: flutter pub add http
+  ```
+- **Get Packages:** Run this command to download/update dependencies.
+  ```bash
+  flutter pub get
+  ```
+
+**4. Running Dart Scripts:**
+
+Sometimes you might have utility scripts within your project written in Dart. You can execute these using:
+
+- **Run a Script:**
+  ```bash
+  dart run path/to/your_script.dart
+  ```
+
+With those basics down, you've got the foundation to start building and playing around with Flutter.
+
+## Building the Frontend: Key Flutter Aspects
+
+Flutter's big promise is beautiful, natively compiled apps for mobile, web, and desktop from one codebase. For LabelScan, the focus was purely mobile. Here's how some key frontend parts came together:
+
+### UI & State Management
+
+Flutter's declarative UI approach, built around widgets, is key. The main screens needed to show the camera feed, a list of scanned items with prices, and the running subtotal, tax, and final cost. At first, I used Flutter's built-in `setState` for managing the app's state (the item list, totals, etc.). But as things got more complex, `setState` started feeling a bit messy for sharing state across different widgets.
+
+This led me to refactor and bring in `Riverpod`, a popular state management library in the Flutter world. Riverpod offered a cleaner, more scalable way to handle state and dependencies, which was a big learning moment.
+
+### Camera Integration
+
+The core feature! The app needed camera access to snap pictures of price labels. I started with the `camera` package, which gives you detailed control over the device camera. Getting the preview working and handling permissions was fairly smooth, thanks to the package docs.
+
+Later, as I got comfy and started adding more stuff ("feature creep" in the best sense!), I also pulled in the `image_picker` package. This let users upload profile pics or even pick photos from their gallery to scan for prices, adding flexibility beyond just the live camera.
+
+### Networking
+
+The Flutter app didn't do the heavy OCR lifting itself. It needed to send the captured image to the Python/Flask backend and get the extracted price back. For this, I used Flutter's standard `http` package. Since I was hitting a Flask microservice I'd repurposed, the networking was pretty direct. Sending the image data and parsing the JSON price response worked fine with `http` – no need for fancier libraries like `dio` here.
+
+## Connecting to the Brains: Backend & AI Interaction
+
+While Flutter handled the user experience, the "brains" were in the backend. A Python Flask server acted as the middleman:
+
+1.  The Flutter app sent the captured image data (from the `camera` or `image_picker`) to a REST API endpoint.
+2.  The Flask backend received this image.
+3.  The backend then called Google Cloud Vision to perform Optical Character Recognition (OCR) on the image, extract price data, and infer a product description using the Gemini API.
+4.  Once the price was (hopefully) found, the backend sent it back to the Flutter app in a JSON response.
+5.  The Flutter app got the response, parsed the price using `http`, and updated the UI via Riverpod to add the item and recalculate totals.
+
+This client-server split kept the Flutter app light, focusing on UI and interaction, while the heavy OCR lifting happened server-side.
+
+#### System Architecture Diagram
+
+The following diagram illustrates the architecture of the LabelScan app, highlighting the interaction between the Flutter client and the Flask backend:
+
+```mermaid
+---
+config:
+  theme: neutral
+---
+graph TD
+    subgraph Flutter Client
+        UI["Screens (Auth, Home, Camera)"] -- User Interaction --> SM(State Management - setState);
+        UI -- Triggers --> Cam[Camera/Image Picker];
+        SM -- Updates --> UI;
+        Cam -- Image Data --> API_Client[HTTP Client];
+        API_Client -- Request --> BE;
+        Auth[Firebase Auth/Google Sign-In] --> UI;
+        Store[Firebase Firestore/Storage] --> UI;
+    end
+
+    subgraph Flask Backend
+        BE["REST API Endpoint (/api/extract-data)"] -- Receives Request --> OCR["Image Processing/OCR (Cloud Vision & Gemini API)"];
+        OCR -- Extracted Data --> BE;
+    end
+
+    BE -- Response --> API_Client;
+```
+
+## Lessons from "Vibe Coding"
+
+Jumping into Flutter with AI as my co-pilot was definitely an adventure. This "vibe coding" approach, building LabelScan entirely through prompts with Cline and Gemini 2.5 Pro, taught me a few things:
+
+- **First-Try Features & The Image Hurdle:** Impressively, almost every feature I asked for worked correctly on the AI's first try. The _only_ real technical snag was handling the image upload to the backend. Getting the image data formatted right, setting the correct HTTP request headers (MIME types!), and managing the async flow needed more specific instructions. But once I clearly described the problem, the AI tools quickly fixed it. Besides that one hiccup, the whole build felt super efficient.
+
+- **Developer Experience:** What really stood out was not just how "native" the final app felt (props to Flutter itself), but how well the AI navigated the Flutter ecosystem. It picked suitable packages (`camera`, `image_picker`, `http`, `flutter_riverpod`, Firebase SDKs), structured the code sensibly, and built features from high-level descriptions. The developer experience, boosted by AI, was fantastic. While Flutter's hot reload is awesome, the speed of AI generating whole features often skipped the need for tiny tweaks. Flutter's clear logs were still super helpful, especially for nailing down that image handling issue for the AI.
+
+- **Pro Tip:** A simple but vital lesson, especially when moving fast: Double-check that the app running in your simulator or on your device _is_ the current build from your latest `flutter run` command! More than once, I wasted time debugging an issue that wasn't in my latest code but was lingering from an old session. Killing the old process and restarting often fixed these phantom bugs. Hot reload worked great most of the time, though.
+
+- **Flutter's Suitability:** Based on this project, Flutter feels like a great fit for quickly building apps needing native features like camera access and networking. Its cross-platform nature is a massive bonus. While I can imagine potential performance snags in super complex apps (like any framework), the development speed and the quality of the final product were impressive. For cross-platform work, especially for apps like LabelScan, I'd definitely recommend giving Flutter a look.
+
+## Conclusion
+
+Building LabelScan was a hands-on dive into Flutter, powered entirely by AI collaboration. Driven by curiosity and wanting to solve a simple, everyday problem, the whole Flutter app was built using prompts via the Cline VS Code Extension and Gemini 2.5 Pro. From hooking up the camera and managing state with Riverpod to talking to the existing Python backend, the project showed the potential of AI-driven development for mobile apps.
+
+This "vibe coding" approach (end-to-end AI-assisted development) turned out to be surprisingly effective. The AI handled the Flutter framework well, using its widget library and community packages to build a working app with little friction. The main hurdle – image handling – was solved quickly with specific feedback, showing how collaboration with AI works. Overall, it was a positive experience, resulting in a useful tool and showcasing what modern AI coding assistants like Cline can do on a full project.
+
+If you're curious to see the code behind LabelScan, you can check out the repository on GitHub: [https://github.com/anthonycoffey/flutter-labelscan](https://github.com/anthonycoffey/flutter-labelscan)

@@ -48,7 +48,7 @@ While Flutter handled the user-facing experience, the intelligence resided in th
 
 1.  The Flutter app sent the captured image data (from the `camera` or `image_picker`) to a REST API endpoint.
 2.  The Flask backend received this image.
-3.  The backend then invoked Google Cloud Vision and potentially the Gemini API (as mentioned in the README) to perform Optical Character Recognition (OCR) on the image, specifically looking for price-like patterns.
+3.  The backend then invoked Google Cloud Vision to perform Optical Character Recognition (OCR) on the image and extract price data and infer a product description from the Cloud Vision response using Gemini API.
 4.  Once the price was (hopefully) extracted, the backend sent it back to the Flutter app in a JSON response.
 5.  The Flutter app received the response, parsed the price using the `http` package, and updated the UI using Riverpod state management to add the item and recalculate the totals.
 

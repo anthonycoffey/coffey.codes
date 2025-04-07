@@ -18,7 +18,7 @@ The project utilizes the **Next.js App Router** architecture. This means:
 - **Language: TypeScript:** Provides static typing for improved code quality, maintainability, and developer experience.
 - **Styling: Tailwind CSS:** Utility-first CSS framework for rapid UI development and consistent styling. Complemented by SASS (`styles/global.sass`) for global styles.
 - **Content: MDX:** Allows writing JSX within Markdown files (`app/articles/posts/`), enabling rich content experiences for blog posts, processed by `next-mdx-remote`.
-- **Package Manager: Yarn:** Explicitly defined in `package.json`.
+- **Package Manager: Bun:** Indicated by `bun.lockb` and confirmed in `techContext.md`.
 
 ## Design Patterns
 

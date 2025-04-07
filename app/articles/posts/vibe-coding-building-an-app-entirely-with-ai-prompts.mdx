@@ -10,7 +10,7 @@ tags: Flutter, Dart, Mobile Development, AI, OCR, Case Study, Learning, Riverpod
 
 Ever get checkout shock at the grocery store? LabelScan is a mobile app designed to solve that by letting you scan price tags and keep a running total in real-time. But building it was also an experiment: could I "vibe code" an entire app in a language and framework I'd never used before (Flutter/Dart)?
 
-"Vibe coding," in this context, means using AI tools – specifically Cline powered by Google's Gemini 2.5 Pro model – to build applications exclusively through descriptive prompts. The goal wasn't just the app itself, but to test if AI could handle the entire Flutter development process, from UI layout to native features, based solely on my instructions.
+"Vibe coding," in this context, means using AI tools – specifically Cline powered by Google's Gemini 2.5 Pro model – to build applications exclusively through descriptive prompts. It's a step towards **agentic coding**, where the AI takes a more proactive role, not just generating code snippets but potentially planning and executing larger development tasks based on high-level goals. The goal wasn't just the app itself, but to test if AI could handle the entire Flutter development process, from UI layout to native features, based solely on my instructions.
 
 This article chronicles that journey, focusing on how LabelScan was built feature-by-feature using AI prompts and the lessons learned about Flutter and AI-assisted development along the way.
 
@@ -73,6 +73,8 @@ Building LabelScan entirely through AI prompts was surprisingly efficient and in
 - **Pro Tip (The Hard Restart):** A simple but vital lesson when moving fast: sometimes, hot reload isn't enough. If you encounter baffling bugs, ensure the app running is truly the latest build. Killing the old process (`flutter clean` followed by `flutter run`) often resolved "phantom" issues lingering from previous sessions.
 
 - **Flutter's Suitability:** This AI-driven project reinforced Flutter's strengths. Its declarative UI based on widget composition felt intuitive, and the Dart syntax was straightforward to grasp, even via AI generation. For building an app like LabelScan quickly, especially one needing native features like camera access and simple networking, the development process felt notably smoother and perhaps easier than tackling the same scope with React Native. The resulting app felt native and performed well.
+
+- **Extending AI Capabilities with MCP:** While Cline/Gemini handled the core Flutter development well, it's worth noting how such AI tools can be extended. Through protocols like the Model Context Protocol (MCP), AI assistants can connect to specialized **MCP servers**. These servers act like plugins, providing the AI with new tools and access to specific data or APIs (e.g., interacting with a company's internal build system, accessing real-time financial data, or controlling smart home devices). This allows the AI's capabilities to grow beyond its base training, enabling it to tackle more complex and specialized development tasks.
 
 ## Conclusion: AI as a Co-Developer
 

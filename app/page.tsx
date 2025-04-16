@@ -221,49 +221,52 @@ export default function Page() {
               Combining deep technical knowledge with a focus on tangible business outcomes.
             </p>
 
-            <div className="bg-blue-50 p-6 rounded-lg mb-12 max-w-4xl mx-auto">
-              <h3 className="text-xl font-bold mb-6 text-gray-900 text-center">
-                Partnering for Success: My Commitment
+            <div className="bg-blue-50 rounded-xl mb-12 max-w-3xl mx-auto py-8 px-6 shadow-sm">
+              <h3 className="text-2xl font-bold mb-8 text-gray-900 text-center">
+              What To Expect
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Reliable Delivery:** Clear planning & execution for project certainty.
-                  </span>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+              {[
+                {
+                title: "Reliable Delivery",
+                desc: "Clear planning & execution for project certainty.",
+                },
+                {
+                title: "Fractional CTO Access",
+                desc: "Direct, senior-level strategic guidance.",
+                },
+                {
+                title: "Sustainable Scalability",
+                desc: "Solutions architected for long-term growth.",
+                },
+                {
+                title: "Practical Innovation",
+                desc: "Bridging cutting-edge tech (like AI) with real results.",
+                },
+                {
+                title: "Production-Ready Focus",
+                desc: "Delivering robust, deployable software.",
+                },
+                {
+                title: "Frequent Communication",
+                desc: "Keeping you informed every step of the way.",
+                },
+              ].map((item) => (
+                <li key={item.title} className="flex items-start gap-3">
+                <CheckCircleIcon className="h-6 w-6 text-blue-600 mt-1 flex-shrink-0" />
+                <div>
+                  <span className="block font-semibold text-gray-900">{item.title}</span>
+                  <span className="block text-gray-700 text-sm">{item.desc}</span>
                 </div>
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Fractional CTO Access:** Direct, senior-level strategic guidance.
-                  </span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Sustainable Scalability:** Solutions architected for long-term growth.
-                  </span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Practical Innovation:** Bridging cutting-edge tech (like AI) with real results.
-                  </span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Production-Ready Focus:** Delivering robust, deployable software.
-                  </span>
-                </div>
-                <div className="flex items-start">
-                  <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
-                  <span className="text-gray-800">
-                    **Transparent Communication:** Keeping you informed every step of the way.
-                  </span>
-                </div>
-              </div>
+                </li>
+              ))}
+              </ul>
             </div>
+
+
+
+
+
 
             <LogoGrid logos={[...frontend, ...backend]} />
           </div>

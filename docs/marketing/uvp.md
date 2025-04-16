@@ -1,34 +1,40 @@
 # Unique Value Proposition (UVP)
 
-This document defines the core value proposition for Anthony Coffey's freelance software engineering services, derived from the framework outlined in the `marketing-advertising-strategy.md`.
+This document defines the core value propositions for Anthony Coffey's freelance software engineering services, tailored to specific Ideal Client Profiles (ICPs) identified in the `marketing-advertising-strategy.md`.
 
-## UVP Statement Framework
+## Core Differentiating Concepts
 
-"For **[Target Client]**, who need **[Client Need]**, **Anthony Coffey** offers **[Primary Offering]** that delivers **[Key Benefit]**. With **12 years of proven engineering experience** and a **pragmatic approach to cutting-edge technology**, your projects are built on a solid foundation to deliver **real-world results**. This focus on deep expertise combined with practical application provides a distinct advantage."
+These UVPs leverage core concepts derived from 12 years of experience:
 
-## Key Differentiating Elements
+*   **Reliable Delivery:** Focus on dependable execution and project certainty.
+*   **Fractional CTO:** Providing senior-level strategic guidance and direct access.
+*   **Sustainable Scalability:** Architecting solutions for long-term growth and maintainability.
+*   **Practical Innovation:** Bridging cutting-edge tech (especially AI) with real-world results.
+*   **Production-Ready Specialization:** Delivering robust, deployable solutions (particularly in AI).
+*   **Integrated Web/Marketing Tech:** Combining development with essential analytics/tracking setup.
 
-*   **12 Years of Proven Experience:** Signals reliability, deep technical knowledge, and a history of successful project delivery. Mitigates risks associated with less experienced developers or agencies.
-*   **Full-Stack Expertise:** Versatility across modern web and mobile technologies (JavaScript, TypeScript, Python, PHP, Node.js, React, React Native).
-*   **Pragmatic AI Integration:** Focuses on practical, implementable AI solutions (LLM integration, automation, custom models) grounded in robust software engineering principles, cutting through hype and delivering tangible business value.
-*   **Austin-Based Credibility:** Offers local presence and accessibility for Texas-based clients while serving a global clientele remotely.
-*   **Business Value Focus:** Emphasizes delivering measurable results (efficiency, scalability, innovation, ROI) rather than just technical features.
-
-## Tailored UVP Examples
+## Tailored UVP Statements by ICP
 
 ### For ICP 1: Established SME needing Web/Mobile Expertise
 
-"For **established SMEs (20-200 employees)** needing **reliable, scalable custom web or mobile applications**, **Anthony Coffey** offers **expert full-stack development** that delivers **robust, maintainable solutions built right the first time**. Benefit from **direct access to senior expertise and 12 years of proven reliability** using **modern technology stacks (Node, Python, React)**, ensuring your critical applications **drive business growth and operational efficiency** without the overhead or uncertainty often found elsewhere."
+"For **established SMEs** needing **custom web/mobile applications they can rely on to scale**, **Anthony Coffey** provides **direct, senior-level partnership (like Your Fractional CTO)** focused on **Reliable Delivery**. Benefit from 12 years of experience architecting **sustainable, scalable solutions** that drive **long-term business growth and efficiency**, avoiding the risks of junior teams or agency bloat."
 
 ### For ICP 2: Forward-Thinking Business Exploring Practical AI
 
-"For **forward-thinking businesses (50-500 employees)** needing to **effectively integrate AI without the hype**, **Anthony Coffey** offers **strategic AI consulting and custom solution development** that delivers **practical, value-driven AI implementations**. Leverage **12 years of solid software engineering experience** applied to a **pragmatic approach to AI (LLM integration, automation)**, ensuring your AI initiatives are **built on a robust foundation and deliver tangible business results**, moving beyond pure theory to successful execution."
+"For **forward-thinking businesses** ready to move **beyond AI hype to real results**, **Anthony Coffey** is your **Practical Innovation Partner**. Get **production-ready AI solutions** built on **sustainable, scalable architectures**, guided by 12 years of engineering discipline. Benefit from **Fractional CTO-level strategic insight** ensuring your AI initiatives are robust, integrated, and deliver **tangible business value.**"
+
+### For ICP 3: SMB needing Integrated Web Presence & Marketing Tech Support
+
+"For **Small to Medium Businesses** needing a **professional web presence integrated with essential marketing tools**, **Anthony Coffey** offers **expert web development combined with marketing tech setup and support**. Whether **building/maintaining WordPress or a modern JavaScript site**, benefit from **12 years of experience** delivering **high-quality websites configured with core analytics and tracking (Google Analytics, Tag Manager)**, backed by **dependable partnership and trustworthy technical guidance.**"
+
+### For ICP 4: Strategic Partner seeking Specialized Expertise (Architecture, DevOps, AI)
+
+"For **Startups, Agencies, or Tech Teams** seeking **senior-level expertise to elevate their projects**, **Anthony Coffey** acts as **Your Fractional CTO or Specialist Lead**. Leverage **12 years of deep experience** in **software architecture, DevOps, or practical AI integration** to ensure initiatives are **scalable, reliable, and cutting-edge**. Partner with a **proven expert** to **augment capabilities** and deliver **superior technical outcomes.**"
 
 ## Integration
 
-This UVP should be consistently reflected across:
-*   Website Homepage (`coffey.codes`)
-*   Dedicated Service Pages (Web/Mobile, AI Consulting)
+These tailored UVPs should be consistently reflected across:
+*   Website Homepage (`coffey.codes`) and relevant Service Pages
 *   LinkedIn Profile
-*   Advertising Copy (LinkedIn, Reddit)
+*   Advertising Copy (LinkedIn, Reddit, etc.)
 *   Sales Proposals and Communications

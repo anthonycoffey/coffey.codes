@@ -27,23 +27,41 @@ Austin's tech hub status provides a rich local target market, encompassing start
 
 ## III. Ideal Client Profiles (ICPs)
 
-Defining specific ideal client profiles is essential for focusing marketing efforts and tailoring messaging effectively. Based on the service offerings, two primary ICPs emerge:
+Defining specific ideal client profiles is essential for focusing marketing efforts and tailoring messaging effectively. Based on the service offerings and target markets, four primary ICPs emerge:
 
-### A. ICP 1: Established SME requiring Web/Mobile Expertise
+### A. ICP 1: Established SME needing Web/Mobile Expertise
 
 - **Industry**: Technology (SaaS), Professional Services, E-commerce, established Non-profits.
-- **Company Size**: 20-200 employees. Large enough to need custom solutions but potentially lacking extensive in-house development teams or needing specialized skills for specific projects.   
+- **Company Size**: 20-200 employees. Large enough to need custom solutions but potentially lacking extensive in-house development teams or needing specialized skills for specific projects.
 - **Decision-Maker**: CTO, VP of Engineering, Head of Product, CEO/Founder (in smaller SMEs).
 - **Pain Points**: Outdated legacy systems needing modernization, requirement for complex web/mobile applications beyond internal capacity, need for reliable long-term development partner, frustration with previous unreliable freelancers/agencies, need to integrate various systems via APIs.
 - **Goals**: Improve operational efficiency, enhance user experience, scale digital platforms, launch new digital products/features, ensure application security and reliability.
 
 ### B. ICP 2: Forward-Thinking Business Exploring Practical AI Implementation
 
-- **Industry**: Technology, Finance, Healthcare, Logistics, Marketing Tech, any data-rich industry seeking efficiency or new capabilities.   
-- **Company Size**: 50-500 employees. Possess sufficient data and operational complexity to benefit from AI, potentially have innovation budgets.   
+- **Industry**: Technology, Finance, Healthcare, Logistics, Marketing Tech, any data-rich industry seeking efficiency or new capabilities.
+- **Company Size**: 50-500 employees. Possess sufficient data and operational complexity to benefit from AI, potentially have innovation budgets.
 - **Decision-Maker**: CTO, CIO, Head of Innovation, Director of Data Science, Business Unit Leaders seeking competitive advantages.
-- **Pain Points**: Uncertainty about how AI can benefit their business, lack of internal AI expertise, difficulty integrating AI into existing workflows, past failed AI initiatives due to poor implementation, need to automate processes or extract insights from data.   
-- **Goals**: Improve efficiency through automation, gain competitive insights from data, enhance customer service (e.g., chatbots), develop innovative AI-powered features, validate AI use cases before large investment.   
+- **Pain Points**: Uncertainty about how AI can benefit their business, lack of internal AI expertise, difficulty integrating AI into existing workflows, past failed AI initiatives due to poor implementation, need to automate processes or extract insights from data.
+- **Goals**: Improve efficiency through automation, gain competitive insights from data, enhance customer service (e.g., chatbots), develop innovative AI-powered features, validate AI use cases before large investment.
+
+### C. ICP 3: SMB needing Integrated Web Presence & Marketing Tech Support
+
+- **Industry**: Various Small to Medium Businesses (SMBs).
+- **Company Size**: Typically 1-50 employees. Often owner-operated or small teams.
+- **Decision-Maker**: Owner, Founder, General Manager, Marketing Manager, Office Manager.
+- **Pain Points**: Outdated/ineffective website, poor mobile experience, difficulty managing content, lack of visibility into website performance or marketing ROI, need for reliable website maintenance/updates, struggling to connect website to marketing tools (analytics, tags, ads), desire for custom features (often WordPress or standard JS frameworks).
+- **Goals**: Establish or improve online visibility, credibility, and lead generation/sales; understand website traffic and user behavior; streamline basic online operations; provide a good user experience; have a reliable web partner for both development and essential marketing tech setup/support.
+- **Common Tech Needs**: WordPress development/customization/maintenance, standard JavaScript site development, Google Analytics setup/config, Google Tag Manager implementation, basic Google Ads tracking setup, website hosting/management advice.
+
+### D. ICP 4: Strategic Partner seeking Specialized Expertise (Architecture, DevOps, AI)
+
+- **Partner Type**: Tech Startups, Digital Agencies, SMBs with internal tech teams.
+- **Company Size**: Varies widely (Startups: 5-50, Agencies: 10-100, SMBs: 50+).
+- **Decision-Maker**: CTO, VP of Engineering, Head of Product, Agency Owner, Lead Developer.
+- **Pain Points**: Lacking senior architectural oversight for complex projects, needing DevOps expertise to improve deployment/infrastructure, wanting to explore/integrate AI but lacking internal skills, needing temporary senior expertise to augment their team for specific initiatives.
+- **Goals**: Ensure technical projects are well-architected and scalable, improve development velocity and reliability (DevOps), successfully integrate AI features, leverage senior expertise without a full-time hire, deliver higher quality solutions to *their* end clients (for agencies).
+- **Common Needs**: Software architecture design/review, CI/CD pipeline setup/optimization, cloud infrastructure management (AWS/GCP), AI integration strategy/implementation, senior-level code contribution/review.
 
 Understanding these distinct profiles allows for targeted messaging and channel selection, ensuring marketing resources are directed towards prospects most likely to convert.
 

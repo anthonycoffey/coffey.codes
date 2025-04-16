@@ -23,6 +23,7 @@ The project is substantially built out and actively maintained. Core sections (B
 - **Components:** A library of reusable components exists in `components/`.
 - **SEO Basics:** `robots.ts`, `sitemap.ts`, `og/route.tsx` suggest basic SEO considerations.
 - **3D Elements:** Integration with React Three Fiber (`components/ThreeScene.tsx`, `components/FishbowlScene.tsx`).
+- **Analytics/Tracking:** Google Tag Manager (GTM ID: GTM-KJC6Q389) installed via `next/script` in `app/layout.tsx`.
 - **Deployment:** Automated deployment via Vercel from `master` branch.
 
 ## What's Left to Build

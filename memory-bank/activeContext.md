@@ -4,11 +4,12 @@
 
 ## Current Focus
 
-The primary focus is **updating the Memory Bank** to ensure it accurately reflects the current project state and aligns with the `.clinerules` guidelines. This involves reviewing all core Memory Bank files and making necessary corrections or additions.
+The immediate task was to install Google Tag Manager (GTM). With that complete, the focus shifts back to the previously defined next steps.
 
 ## Recent Changes
 
 *(Summarize the most recent significant updates or commits.)*
+- **April 16, 2025:** Installed Google Tag Manager (GTM ID: GTM-KJC6Q389) into `app/layout.tsx` using `next/script`.
 - **April 7, 2025:** Initiated Memory Bank update process.
     - Read all core Memory Bank files (`projectbrief.md`, `productContext.md`, `systemPatterns.md`, `techContext.md`, `activeContext.md`, `progress.md`).
     - Corrected package manager reference from Yarn to Bun in `systemPatterns.md`.

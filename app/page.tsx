@@ -33,12 +33,10 @@ export default function Page() {
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
           <div>
             <h1 className="leading-tight text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-              Software Solutions That Drive Business Growth
+              Your Fractional CTO: Reliable, Scalable Software Solutions
             </h1>
             <p className="text-lg text-gray-800 mb-6">
-              With 12+ years of experience, I deliver secure, high-performance
-              applications that solve complex business challenges and drive
-              measurable results.
+              Leverage 12+ years of senior-level expertise for dependable, production-ready applications designed for sustainable growth and practical innovation. Get direct partnership, not layers of management.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
@@ -75,7 +73,7 @@ export default function Page() {
                   Anthony Coffey
                 </p>
                 <p className="text-gray-700 text-sm m-0 font-semibold">
-                  Solutions Architect & Full Stack SWE
+                  Senior Solutions Architect & AI Specialist
                 </p>
                 <p className="text-gray-700 text-xs m-0 text-right">
                   Austin, Texas
@@ -97,7 +95,7 @@ export default function Page() {
           {/* Section Header */}
           <div className="bg-blue-600 text-white p-6 text-center">
             <h2 className="text-2xl md:text-3xl font-bold">
-              Have Questions? Reach Out!
+              How I Help You Succeed
             </h2>
           </div>
 
@@ -112,8 +110,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Transform sluggish systems into lightning-fast solutions that
-                scale with your business growth.
+                Optimize application speed and efficiency, ensuring your systems perform reliably under load and scale smoothly.
               </p>
             </div>
 
@@ -126,8 +123,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Protect your business with enterprise-grade security practices
-                and compliance-ready architecture.
+                Implement robust security measures and best practices to safeguard your data and infrastructure. Reliable delivery includes secure delivery.
               </p>
             </div>
 
@@ -140,8 +136,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Custom web, mobile, and desktop applications built with modern
-                technology stacks.
+                Develop custom, production-ready web and mobile applications tailored to your specific business needs, built for the long term.
               </p>
             </div>
 
@@ -154,8 +149,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Scalable, maintainable, and cost-effective infrastructure
-                design.
+                Design resilient, cost-effective cloud architectures that support sustainable scalability and maintainability.
               </p>
             </div>
 
@@ -168,8 +162,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Intelligent solutions leveraging cutting-edge AI and machine
-                learning technologies.
+                Move beyond AI hype with practical, production-ready AI/ML solutions integrated seamlessly to deliver tangible business value.
               </p>
             </div>
 
@@ -182,7 +175,7 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 mb-3">
-                Streamlined development workflows and deployment pipelines.
+                Implement efficient CI/CD pipelines and automation to ensure reliable, repeatable deployments and faster time-to-market.
               </p>
             </div>
 
@@ -222,51 +215,51 @@ export default function Page() {
           {/* Technology Stack */}
           <div className="mb-20">
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-gray-900">
-              Full-Stack & Cloud Native Expertise
+              Expertise Driving Reliable & Innovative Solutions
             </h2>
             <p className="text-center text-gray-800 mb-10">
-              Leveraging modern technologies to build powerful solutions
+              Combining deep technical knowledge with a focus on tangible business outcomes.
             </p>
 
             <div className="bg-blue-50 p-6 rounded-lg mb-12 max-w-4xl mx-auto">
               <h3 className="text-xl font-bold mb-6 text-gray-900 text-center">
-                Dependable Solutions That You Can Count On!
+                Partnering for Success: My Commitment
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Thorough requirements gathering and planning
+                    **Reliable Delivery:** Clear planning & execution for project certainty.
                   </span>
                 </div>
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Agile development with regular updates
+                    **Fractional CTO Access:** Direct, senior-level strategic guidance.
                   </span>
                 </div>
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Rigorous testing and quality assurance
+                    **Sustainable Scalability:** Solutions architected for long-term growth.
                   </span>
                 </div>
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Clear, transparent communication
+                    **Practical Innovation:** Bridging cutting-edge tech (like AI) with real results.
                   </span>
                 </div>
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Comprehensive documentation
+                    **Production-Ready Focus:** Delivering robust, deployable software.
                   </span>
                 </div>
                 <div className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-1" />
                   <span className="text-gray-800">
-                    Ongoing support and maintenance options
+                    **Transparent Communication:** Keeping you informed every step of the way.
                   </span>
                 </div>
               </div>

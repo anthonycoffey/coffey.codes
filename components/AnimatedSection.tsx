@@ -21,7 +21,7 @@ const AnimatedSection = ({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-24`}>{children}</div>
+      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-22`}>{children}</div>
     </motion.div>
   );
 };

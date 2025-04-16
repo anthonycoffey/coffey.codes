@@ -3,7 +3,7 @@ import { ArrowLongLeftIcon } from '@heroicons/react/20/solid';
 
 export default function GoBack() {
   return (
-    <div className="border-t mt-8 pt-6">
+    <div className="border-t mt-8 pt-6 border-gray-300">
       <a
         className="flex items-center align-items cursor-pointer my-4 mb-4 md:-ml-4 hover:underline"
         onClick={() => {

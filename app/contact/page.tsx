@@ -17,7 +17,7 @@ export default async function ContactPage() {
   return (
     <section className="contact-page">
       <div className="page-content">
-        <div className="border-b pb-4 mb-4 max-w-6xl mx-auto">
+        <div className="border-b border-gray-300 pb-4 mb-4 max-w-6xl mx-auto">
           <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
             <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Contact Me

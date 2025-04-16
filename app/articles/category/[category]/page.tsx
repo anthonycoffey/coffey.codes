@@ -66,7 +66,7 @@ export default function CategoryPage({ params, searchParams }) {
 
   return (
     <div className="article-page max-w-6xl mx-auto">
-      <div className="border-b pb-4 mb-6">
+      <div className="border-b border-gray-300 pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center">
           <FolderIcon className="w-6 h-6 inline mr-2 text-blue-500" />
           Articles in category &quot;{decodedCategory}&quot;

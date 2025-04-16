@@ -12,7 +12,7 @@ export default function Breadcrumbs({ title }: BreadcrumbsProps) {
   const isArticlePage = pathname.startsWith('/articles/');
 
   return (
-    <nav className="flex items-center text-sm my-4 border-b pb-6 mb-6">
+    <nav className="flex items-center text-sm my-4 border-b pb-6 mb-6 border-gray-300">
       <Link href="/" className="flex items-center hover:underline">
         <HomeIcon className="h-4 w-4 mr-1" />
         <span>Home</span>

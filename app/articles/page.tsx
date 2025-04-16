@@ -30,8 +30,8 @@ export default async function ArticlesPage({ searchParams }) {
   const allCategories = getAllCategories();
 
   return (
-    <div className="article-page max-w-6xl mx-auto">
-      <div className="border-b pb-4 mb-6">
+    <div className="article-page mx-auto">
+      <div className="border-b border-gray-300 pb-4 mb-6">
         <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
           <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
           Articles

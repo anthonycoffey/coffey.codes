@@ -229,27 +229,27 @@ export default function Page() {
               {[
                 {
                 title: "Reliable Delivery",
-                desc: "Clear planning & execution for project certainty.",
+                desc: "Clear planning & execution for project certainty",
                 },
                 {
                 title: "Fractional CTO Access",
-                desc: "Direct, senior-level strategic guidance.",
+                desc: "Direct, senior-level strategic guidance",
                 },
                 {
                 title: "Sustainable Scalability",
-                desc: "Solutions architected for long-term growth.",
+                desc: "Solutions architected for long-term growth",
                 },
                 {
                 title: "Practical Innovation",
-                desc: "Bridging cutting-edge tech (like AI) with real results.",
+                desc: "Bridging cutting-edge tech (like AI) with real results",
                 },
                 {
                 title: "Production-Ready Focus",
-                desc: "Delivering robust, deployable software.",
+                desc: "Delivering robust, deployable software",
                 },
                 {
                 title: "Frequent Communication",
-                desc: "Keeping you informed every step of the way.",
+                desc: "Keeping you informed every step of the way",
                 },
               ].map((item) => (
                 <li key={item.title} className="flex items-start gap-3">

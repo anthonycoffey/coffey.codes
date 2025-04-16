@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
@@ -7,7 +7,8 @@ import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
 import ThreeScene from './ThreeScene';
 import FishbowlScene from './FishbowlScene';
-import MermaidChart from './MermaidChart'; // Import the new component
+import MermaidChart from './MermaidChart';
+import { Callout } from './Callout'; // Import the Callout component
 
 function Table({ data }) {
   const headers = data.headers.map((header, index) => (
@@ -140,6 +141,7 @@ const components = {
   Counter,
   ThreeScene,
   FishbowlScene,
+  Callout, // Add Callout to the components object
 };
 
 export async function CustomMDX(props) { // Make the function async

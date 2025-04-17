@@ -62,6 +62,13 @@ export default function ContactForm() {
 
       if (response.ok) {
         setMessageSent(true);
+        // Push event to dataLayer for GTM
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'form_submit',
+          // Optionally include form data if needed, but be mindful of PII
+          formName: 'contact', // Added formName for potential differentiation later
+        });
       }
     } catch (error) {
       console.log(error);

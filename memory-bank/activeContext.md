@@ -4,11 +4,28 @@
 
 ## Current Focus
 
-The recent task of creating the "Slow Android Emulator" article and the supporting `Callout` component is complete. The focus now returns to the previously defined next steps, primarily implementing the contact form backend.
+The implementation of class-based dark mode using `next-themes` is complete, resolving issues with color schemes on the newly created landing pages. Focus now returns to the previously defined next steps, primarily implementing the contact form backend.
 
 ## Recent Changes
 
 *(Summarize the most recent significant updates or commits.)*
+- **April 17, 2025 (Later):**
+    - Implemented class-based dark mode using `next-themes` to fix color scheme issues:
+        - Installed `next-themes` package.
+        - Updated `tailwind.config.js` to `darkMode: 'class'`.
+        - Created `components/ThemeProvider.tsx`.
+        - Wrapped `app/layout.tsx` with `ThemeProvider`.
+        - Corrected import path in `ThemeProvider.tsx`.
+        - Restored `dark:` variants in `app/lp/sme-web-mobile/page.tsx` and fixed ESLint issue.
+- **April 17, 2025 (Earlier):**
+    - Created four new landing pages in `app/lp/` directory, targeting specific ICPs:
+        - `app/lp/sme-web-mobile/page.tsx` (Established SMEs - Web/Mobile)
+        - `app/lp/practical-ai/page.tsx` (Forward-Thinking Businesses - AI)
+        - `app/lp/smb-web-marketing/page.tsx` (SMBs - Web/Marketing Tech)
+        - `app/lp/strategic-partners/page.tsx` (Strategic Partners - Specialized Expertise)
+    - Each page includes the relevant UVP, `ContactForm` component, and a call-to-action for scheduling a strategy call.
+    - Referenced `docs/marketing/uvp.md` to extract ICPs and tailor content.
+    - Fixed minor ESLint issues in the new files.
 - **April 16, 2025 (Later):**
     - Created new article: `app/articles/posts/slow-android-emulator-flutter-dev.mdx`.
     - Created new component: `components/Callout.tsx` with different types and icons.
@@ -45,5 +62,6 @@ The recent task of creating the "Slow Android Emulator" article and the supporti
 ## Learnings & Insights
 
 *(Capture any new learnings, discoveries, or insights gained during the recent work.)*
+- **Marketing-Driven Development:** Successfully utilized marketing documentation (`docs/marketing/uvp.md`) to directly inform the creation of targeted landing pages, demonstrating the link between strategy and implementation.
 - **Synchronization:** The Memory Bank update process highlighted the importance of keeping documentation synchronized with the actual codebase (e.g., correcting the package manager reference). Regular updates are crucial for accuracy.
 - **Clarity:** Explicitly defining next steps and decisions in `activeContext.md` helps maintain focus and track progress effectively.

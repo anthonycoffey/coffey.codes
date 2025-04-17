@@ -9,7 +9,8 @@ _(List the primary languages, frameworks, libraries, and platforms used.)_
 - **Framework:** Next.js (canary)
 - **Language:** TypeScript
 - **UI Library:** React
-- **Styling:** Tailwind CSS, SASS (`styles/global.sass`)
+- **Styling:** Tailwind CSS (`darkMode: 'class'`), SASS (`styles/global.sass`)
+- **Theming:** next-themes
 - **3D Graphics:** Three.js, @react-three/fiber, @react-three/drei
 - **Animation:** motion
 - **MDX:** next-mdx-remote, sugar-high

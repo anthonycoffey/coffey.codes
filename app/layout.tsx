@@ -1,54 +1,21 @@
+'use client'; // Required for usePathname hook
+
 import '/styles/global.sass';
-import type { Metadata } from 'next';
+import { usePathname } from 'next/navigation';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import Script from 'next/script'; // Import next/script
+// Note: Script component might need careful handling in Client Components if issues arise.
+// import Script from 'next/script';
 import { Navbar } from '../components/nav';
+import { LandingPageHeader } from '../components/LandingPageHeader';
 import GoogleAnalyticsClient from '../components/GoogleAnalyticsClient';
 import Footer from '../components/footer';
-import { baseUrl } from './sitemap';
 import ConsentManager from '../components/ConsentManager';
+import { ThemeProvider } from '../components/ThemeProvider';
 
-export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
-  title: {
-    default:
-      'Anthony Coffey, SWE, DevOps | Full Stack Engineer based in Austin, Texas',
-    template: '%s - Anthony Coffey, SWE, DevOps | Full Stack Engineer',
-  },
-  description: 'Welcome to my portfolio blog site!',
-  openGraph: {
-    title:
-      'Anthony Coffey, SWE, DevOps | Full Stack Engineer based in Austin, Texas',
-    description:
-      'Portfolio blog site for Anthony Coffey, Austin Texas based software engineer.',
-    url: baseUrl,
-    siteName: 'Anthony Coffey | Full Stack Engineer based in Austin, Texas',
-    locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Anthony Coffey | Full Stack Engineer based in Austin, Texas',
-      },
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-};
-
-export const viewport = 'width=device-width, initial-scale=1';
+// Metadata and viewport exports are removed as they are not allowed in Client Components ('use client').
+// These should be defined in specific page.tsx files or potentially in a separate
+// Server Component layout file that wraps this Client Component if global metadata is required.
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');
 
@@ -57,27 +24,35 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className={cx('', GeistSans.variable, GeistMono.variable)}>
-      <body className="antialiased">
-        {/* Consent Manager must come before GTM/Analytics */}
-        <ConsentManager />
-        {/* Google Analytics Client uses @next/third-parties to load GTM */}
-        <GoogleAnalyticsClient />
-        {/*<video*/}
-        {/*  autoPlay*/}
-        {/*  loop*/}
-        {/*  muted*/}
-        {/*  playsInline*/}
-        {/*  className="fixed top-0 left-0 w-full h-full object-cover -z-10"*/}
-        {/*>*/}
-        {/*  <source src="/deskloop.mp4" type="video/mp4" />*/}
-        {/*  Your browser does not support the video tag.*/}
-        {/*</video>*/}
+  const pathname = usePathname();
+  // Check if the current path starts with /lp/ or is exactly /lp
+  const isLandingPage = pathname === '/lp' || pathname?.startsWith('/lp/');
 
-        <Navbar />
-        {children}
-        <Footer />
+  return (
+    <html lang="en" className={cx('', GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
+      {/* Apply base light/dark mode styles */}
+      <body className="bg-white dark:bg-neutral-950 text-black dark:text-white antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* Consent Manager should load early */}
+          <ConsentManager />
+          {/* Google Analytics */}
+          <GoogleAnalyticsClient />
+
+          {/* Conditionally render the correct header */}
+          {isLandingPage ? <LandingPageHeader /> : <Navbar />}
+
+          {/* Render the page content */}
+          <main>{children}</main>
+
+          {/* Conditionally render the footer (only on non-landing pages) */}
+          {!isLandingPage && <Footer />}
+
+        </ThemeProvider>
       </body>
     </html>
   );

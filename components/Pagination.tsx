@@ -83,14 +83,14 @@ export default function Pagination({
           {hasPrevPage ? (
             <button
               onClick={handlePrevPage}
-              className="block cursor-pointer px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
+              className="block cursor-pointer px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-400 dark:hover:bg-neutral-700 dark:hover:text-white"
               aria-label="Previous page"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="w-5 h-5" />
             </button>
           ) : (
-            <span className="block px-3 py-2 ml-0 leading-tight text-gray-300 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed">
+            <span className="block px-3 py-2 ml-0 leading-tight text-gray-300 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-600">
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="w-5 h-5" />
             </span>
@@ -101,7 +101,7 @@ export default function Pagination({
         {pageNumbers.map((page, index) => (
           <li key={`page-${page}-${index}`}>
             {page === '...' ? (
-              <span className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300">
+              <span className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-400">
                 ...
               </span>
             ) : (
@@ -109,8 +109,8 @@ export default function Pagination({
                 onClick={() => handlePageChange(Number(page))}
                 className={`cursor-pointer px-3 py-2 leading-tight border ${
                   currentPage === page
-                    ? 'text-blue-600 border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700'
-                    : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700'
+                    ? 'text-blue-600 border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white' // Active page dark styles
+                    : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-400 dark:hover:bg-neutral-700 dark:hover:text-white' // Inactive page dark styles
                 }`}
               >
                 {page}
@@ -124,14 +124,14 @@ export default function Pagination({
           {hasNextPage ? (
             <button
               onClick={handleNextPage}
-              className="block cursor-pointer px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
+              className="block cursor-pointer px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-400 dark:hover:bg-neutral-700 dark:hover:text-white"
               aria-label="Next page"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="w-5 h-5" />
             </button>
           ) : (
-            <span className="block px-3 py-2 leading-tight text-gray-300 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed">
+            <span className="block px-3 py-2 leading-tight text-gray-300 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-600">
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="w-5 h-5" />
             </span>

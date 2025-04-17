@@ -72,7 +72,13 @@ export default async function ContactPage() {
             Prefer to send a message? Fill out the form below to contact me
             directly. I typically respond to all inquiries within 24 hours.
           </p>
-          <ContactForm />
+          {/* Add wrapper to center and constrain width, plus add title */}
+          <div className="w-full max-w-lg mx-auto">
+            <h3 className="text-xl font-semibold text-center text-neutral-800 dark:text-neutral-200 mb-4">
+              Get in Touch
+            </h3>
+            <ContactForm />
+          </div>
         </div>
 
         {/* Calendar Section - First */}

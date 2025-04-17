@@ -19,6 +19,11 @@ The project is substantially built out and actively maintained. Core sections (B
     - Custom MDX components (`components/mdx.tsx`) including `Callout` (`components/Callout.tsx`).
 - **Portfolio/Case Studies:** Sections exist (`app/portfolio/`, `app/case-studies/`). Content structure seems present (e.g., `public/portfolio/`, `public/case-studies/`).
 - **Contact:** Contact page (`app/contact/page.tsx`) and form component (`components/ContactForm.tsx`) exist. (Backend handling is TBD - see "What's Left").
+- **Landing Pages (ICP-Specific):** Created four landing pages under `app/lp/` targeting specific ICPs identified in `docs/marketing/uvp.md`, each including tailored UVP, contact form, and scheduling CTA.
+    - `app/lp/sme-web-mobile/page.tsx`
+    - `app/lp/practical-ai/page.tsx`
+    - `app/lp/smb-web-marketing/page.tsx`
+    - `app/lp/strategic-partners/page.tsx`
 - **Styling:** Tailwind CSS and SASS (`styles/global.sass`) are set up.
 - **Package Manager:** Bun is used (`bun.lockb`).
 - **Components:** A library of reusable components exists in `components/` (e.g., `Callout`, `SearchBox`, `Posts`).

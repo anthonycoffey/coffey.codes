@@ -95,7 +95,7 @@ export default function SearchBox({
 
   return (
     <div className="relative" ref={searchRef}>
-      <div className="relative flex" >
+      <div className="relative flex">
         <input
           ref={inputRef}
           type="text"
@@ -122,12 +122,13 @@ export default function SearchBox({
               }
             }
           }}
-          className="w-full px-3 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-600 dark:focus:border-transparent"
           onFocus={() => {
             if (results.length > 0) setShowResults(true);
           }}
         />
-        <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" />
+        {/* Icon color needs to adapt */}
+        <MagnifyingGlassIcon className="h-5 w-5 text-gray-400 dark:text-gray-500 absolute left-3 top-2.5" />
         {query && !hideDropdown && (
           <button
             onClick={() => {
@@ -138,7 +139,8 @@ export default function SearchBox({
             }}
             className="absolute right-3 top-2.5"
           >
-            <XMarkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+            {/* Icon color needs to adapt */}
+            <XMarkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300" />
           </button>
         )}
 
@@ -150,7 +152,7 @@ export default function SearchBox({
                 window.location.pathname + `?q=${encodeURIComponent(query)}`;
               window.history.pushState({ path: newUrl }, '', newUrl);
             }}
-            className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center"
+            className="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-600 dark:focus:ring-offset-neutral-900"
           >
             <MagnifyingGlassIcon className="h-5 w-5 mr-1" />
             Search
@@ -159,14 +161,17 @@ export default function SearchBox({
       </div>
 
       {!hideDropdown && showResults && query.length >= 2 && !isLoading && (
-        <div className="w-full mt-1 bg-white">
+        // Apply dark mode background to the container for summary/no results
+        <div className="w-full mt-1 bg-white dark:bg-neutral-800">
           {results.length === 0 ? (
-            <p className="text-sm text-gray-500 text-center">
-              No articles found for &quot;{query}&quot;
+            // Style "No articles found" text
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center p-3">
+              No articles found for "{query}"
             </p>
           ) : (
-            <div className="flex justify-between items-center border-t border-gray-100 mt-2 pt-2">
-              <p className="text-xs text-gray-500">
+            // Style the summary row (result count + view all button)
+            <div className="flex justify-between items-center border-t border-gray-100 dark:border-neutral-700 mt-2 pt-2 px-3 pb-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {results.length > 3
                   ? `Showing 3 of ${results.length} results`
                   : `${results.length} results found`}
@@ -175,7 +180,7 @@ export default function SearchBox({
                 onClick={() =>
                   router.push(`/articles/search?q=${encodeURIComponent(query)}`)
                 }
-                className="text-xs text-blue-600 hover:text-blue-800 flex items-center"
+                className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
               >
                 View all results <ArrowRightIcon className="h-3 w-3 ml-1" />
               </button>
@@ -185,26 +190,32 @@ export default function SearchBox({
       )}
 
       {!hideDropdown && showResults && results.length > 0 && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-80 overflow-y-auto">
+        // Style the dropdown container
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-80 overflow-y-auto dark:bg-neutral-800 dark:border-neutral-700">
           {results.map((post) => (
             <Link
               key={post.slug}
               href={`/articles/${post.slug}`}
-              className="block p-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+              // Style individual result links
+              className="block p-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 dark:hover:bg-neutral-700 dark:border-neutral-700"
               onClick={() => {
                 setShowResults(false);
                 setQuery('');
               }}
             >
-              <h3 className="text-sm font-medium text-gray-900 truncate">
+              {/* Style result title */}
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">
                 {post.title}
               </h3>
-              <p className="ml-1 text-xs text-gray-500 mt-1">
+              {/* Style result date */}
+              <p className="ml-1 text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {formatDate(post.publishedAt)}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              {/* Style result category container */}
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {post.category && (
-                  <span className="mr-1 bg-blue-100 text-blue-800 text-xs px-1.5 py-0.5 rounded-full">
+                  // Style category chip
+                  <span className="mr-1 bg-blue-100 text-blue-800 text-xs px-1.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-200">
                     {post.category}
                   </span>
                 )}

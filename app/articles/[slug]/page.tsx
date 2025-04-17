@@ -93,7 +93,8 @@ export default async function Blog({ params }) {
         }}
       />
       <Breadcrumbs title={post.metadata.title} />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      {/* Style title */}
+      <h1 className="title font-semibold text-2xl tracking-tighter dark:text-white">
         {post.metadata.title}
       </h1>
       <div className="flex flex-col ml-2">
@@ -112,10 +113,12 @@ export default async function Blog({ params }) {
               itemScope
               itemType="https://schema.org/Person"
             >
-              <span itemProp="name">Anthony Coffey</span>
+              {/* Style author name */}
+              <span itemProp="name" className="dark:text-gray-300">Anthony Coffey</span>
             </span>
+            {/* Style date */}
             <time
-              className="text-sm text-gray-500"
+              className="text-sm text-gray-500 dark:text-gray-400"
               dateTime={post.metadata.publishedAt}
               itemProp="datePublished"
             >
@@ -126,10 +129,12 @@ export default async function Blog({ params }) {
 
         {post.metadata.category && (
           <div className="mt-2">
-            <span className="font-semibold">Category: </span>
+            {/* Style label */}
+            <span className="font-semibold dark:text-gray-300">Category: </span>
+            {/* Style category chip */}
             <Link
               href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
-              className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full"
+              className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-sm font-medium px-2.5 py-0.5 rounded-full"
               itemProp="articleSection"
             >
               {post.metadata.category}
@@ -140,13 +145,15 @@ export default async function Blog({ params }) {
         {post.metadata.tags && post.metadata.tags.length > 0 && (
           <div className="mt-2">
             <div className="flex flex-wrap gap-2 mt-1">
-              <span className="font-semibold">Tags: </span>
+              {/* Style label */}
+              <span className="font-semibold dark:text-gray-300">Tags: </span>
               <div itemProp="keywords">
                 {post.metadata.tags.map((tag) => (
+                  // Style tag chip
                   <Link
                     key={tag}
                     href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                    className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
+                    className="bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
                   >
                     {tag}
                   </Link>
@@ -156,7 +163,8 @@ export default async function Blog({ params }) {
           </div>
         )}
       </div>
-      <article className="mx-auto prose prose-lg xl:prose-xl">
+      {/* Add dark:prose-invert for MDX content */}
+      <article className="mx-auto prose prose-lg xl:prose-xl dark:prose-invert">
         <CustomMDX source={post.content} />
       </article>
       <GoBack />

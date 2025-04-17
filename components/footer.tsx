@@ -67,10 +67,12 @@ export default function Footer() {
     },
   ];
 
+  const pathName = usePathname();
+
   return (
     <footer className="bg-gray-900 text-white">
       {/* CTA Section - Hidden on portfolio page */}
-      {usePathname() !== '/portfolio' && (
+      {pathName !== '/portfolio' && !pathName.includes('lp') && (
         <div className="bg-blue-600 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">

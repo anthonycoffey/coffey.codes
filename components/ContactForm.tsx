@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { ChatBubbleOvalLeftIcon } from '@heroicons/react/24/solid';
+import { ChatBubbleOvalLeftIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
 
 type FormData = {
   name: string;
@@ -45,7 +45,7 @@ export default function ContactForm() {
     event.preventDefault();
     try {
       const response = await fetch(
-        '/functions/sendContactFormEmail',
+        '/functions/sendContactFormEmail', // Preserved Cloud Function endpoint
         {
           method: 'POST',
           headers: {
@@ -62,16 +62,19 @@ export default function ContactForm() {
 
       if (response.ok) {
         setMessageSent(true);
-        // Push event to dataLayer for GTM
+        // Push event to dataLayer for GTM - Preserved
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: 'form_submit',
-          // Optionally include form data if needed, but be mindful of PII
-          formName: 'contact', // Added formName for potential differentiation later
+          formName: 'contact',
         });
+      } else {
+         // Handle non-ok responses (e.g., 4xx, 5xx)
+         const errorData = await response.json().catch(() => ({})); // Try to parse error, default to empty object
+         setError(errorData.message || `An error occurred: ${response.statusText} (${response.status})`);
       }
     } catch (error) {
-      console.log(error);
+      console.error('Contact form submission error:', error); // Log the actual error
       setError(
         'An error occurred while sending your message, please try again.',
       );
@@ -80,37 +83,42 @@ export default function ContactForm() {
     }
   };
 
+  // Base input classes for light/dark mode - Adjusted for cleaner look
+  const inputClasses = "mt-1 block w-full rounded-md border border-neutral-300 dark:border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500";
+  const labelClasses = "block text-sm font-medium text-neutral-700 dark:text-neutral-300";
+
   return (
     <>
       {!messageSent ? (
-        <form onSubmit={handleFormSubmit}>
-          <div className="grid md:grid-cols-2 text-left">
-            <div className="pr-2">
-              <label className="text-sm block font-bold mb-2" htmlFor="name">
+        <form onSubmit={handleFormSubmit} className="space-y-4">
+          {/* Title removed, should be provided by parent */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className={labelClasses}>
                 Name <span className="text-red-500">*</span>
               </label>
               <input
-                className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
-                id="name"
-                name="name"
                 type="text"
-                placeholder="Your name"
+                name="name"
+                id="name"
+                className={inputClasses}
+                placeholder="Your Name"
                 value={formData.name}
                 onChange={handleInputChange}
                 required={true}
                 autoComplete="name"
               />
             </div>
-            <div className="mb-2">
-              <label className="text-sm block font-bold mb-2" htmlFor="email">
+            <div>
+              <label htmlFor="email" className={labelClasses}>
                 Email <span className="text-red-500">*</span>
               </label>
               <input
-                className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
-                id="email"
-                name="email"
                 type="email"
-                placeholder="Your email address"
+                name="email"
+                id="email"
+                className={inputClasses}
+                placeholder="your.email@example.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 required={true}
@@ -119,15 +127,16 @@ export default function ContactForm() {
             </div>
           </div>
 
-          <div className="mb-2 text-left">
-            <label className="text-sm block font-bold mb-2" htmlFor="message">
+          <div>
+            <label htmlFor="message" className={labelClasses}>
               Message <span className="text-red-500">*</span>
             </label>
             <textarea
-              className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black"
               id="message"
               name="message"
-              placeholder="Your message"
+              rows={4}
+              className={inputClasses}
+              placeholder="How can I help you?"
               value={formData.message}
               onChange={handleTextAreaChange}
               required={true}
@@ -135,40 +144,52 @@ export default function ContactForm() {
             ></textarea>
           </div>
 
-          <div className="mb-4">
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={consentChecked}
-                onChange={handleConsentChange}
-                required
-              />
-              <span className="ml-2 pl-2">
-                I consent to the collection of my data and to being contacted
-                via email.
-              </span>
-            </label>
+          <div className="flex items-start">
+             <div className="flex items-center h-5">
+                <input
+                    id="consent"
+                    name="consent"
+                    type="checkbox"
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-neutral-300 dark:border-neutral-600 rounded bg-neutral-100 dark:bg-neutral-700 dark:focus:ring-offset-neutral-800"
+                    checked={consentChecked}
+                    onChange={handleConsentChange}
+                    required
+                />
+             </div>
+             <div className="ml-3 text-sm">
+                <label htmlFor="consent" className="font-medium text-neutral-700 dark:text-neutral-300">
+                    I consent <span className="text-red-500">*</span>
+                </label>
+                <p className="text-neutral-500 dark:text-neutral-400 text-xs">
+                    to the collection of my data and to being contacted via email regarding this inquiry.
+                </p>
+             </div>
           </div>
 
           {error && (
             <div
-              className="w-full flex bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+              className="flex items-center p-3 rounded-md bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800/50"
               role="alert"
             >
-              <span>{error}</span>
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500 dark:text-red-400 mr-2 flex-shrink-0" aria-hidden="true" />
+              <span className="text-sm text-red-700 dark:text-red-300">{error}</span>
             </div>
           )}
 
-          <div className="flex items-center justify-center">
-            {loading ? (
-              <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center pt-2">
+            <button
+              type="submit"
+              disabled={loading || !consentChecked}
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed dark:focus:ring-offset-neutral-900"
+              aria-label="Send Message"
+            >
+              {loading ? (
                 <svg
-                  className="animate-spin h-5 w-5 text-blue-500"
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  aria-label="Loading"
+                  aria-hidden="true"
                 >
                   <circle
                     className="opacity-25"
@@ -181,31 +202,28 @@ export default function ContactForm() {
                   <path
                     className="opacity-75"
                     fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8H4z"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-              </div>
-            ) : (
-              <button
-                className="cursor-pointer bg-blue-600 text-white font-bold py-4 px-6 rounded focus:outline-none focus:shadow-outline disabled:bg-gray-600 flex justify-center items-center disabled:opacity-75 disabled:cursor-not-allowed"
-                type="submit"
-                aria-label="Send Message"
-              >
+              ) : (
                 <ChatBubbleOvalLeftIcon
-                  className="mr-4 h-6 w-6"
+                  className="-ml-1 mr-2 h-5 w-5"
                   aria-hidden="true"
                 />
-                Send Message
-              </button>
-            )}
+              )}
+              {loading ? 'Sending...' : 'Send Message'}
+            </button>
           </div>
         </form>
       ) : (
         <div
-          className="w-full flex bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+          className="flex items-center p-4 rounded-md bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800/50"
           role="alert"
         >
-          <span>Your message has been successfully delivered!</span>
+          <CheckCircleIcon className="h-6 w-6 text-green-500 dark:text-green-400 mr-3 flex-shrink-0" aria-hidden="true" />
+          <span className="text-base font-medium text-green-800 dark:text-green-200">
+            Your message has been sent successfully!
+          </span>
         </div>
       )}
     </>

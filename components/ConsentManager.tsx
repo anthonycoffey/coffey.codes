@@ -54,9 +54,8 @@ const ConsentManager = () => {
 
   const handleAcceptConsent = () => {
     try {
-      // Update consent state
-      window.dataLayer?.push({
-        consent: 'update',
+      // Update consent state using gtag
+      gtag('consent', 'update', {
         ad_storage: 'granted',
         ad_personalization: 'granted',
         ad_user_data: 'granted',
@@ -75,9 +74,8 @@ const ConsentManager = () => {
 
   const handleRejectConsent = () => {
     try {
-      // Update consent state
-      window.dataLayer?.push({
-        consent: 'update',
+      // Update consent state using gtag
+      gtag('consent', 'update', {
         ad_storage: 'denied',
         ad_personalization: 'denied',
         ad_user_data: 'denied',

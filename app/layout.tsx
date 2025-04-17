@@ -59,22 +59,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cx('', GeistSans.variable, GeistMono.variable)}>
-      {/* Google Tag Manager Script */}
-      <Script id="google-tag-manager" strategy="afterInteractive">
-        {`
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-KJC6Q389');
-        `}
-      </Script>
-      {/* End Google Tag Manager Script */}
       <body className="antialiased">
-        {/* Google Tag Manager (noscript) */}
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KJC6Q389"
-        height="0" width="0" style={{display:'none',visibility:'hidden'}}></iframe></noscript>
-        {/* End Google Tag Manager (noscript) */}
+        {/* Consent Manager must come before GTM/Analytics */}
+        <ConsentManager />
+        {/* Google Analytics Client uses @next/third-parties to load GTM */}
+        <GoogleAnalyticsClient />
         {/*<video*/}
         {/*  autoPlay*/}
         {/*  loop*/}
@@ -86,11 +75,9 @@ export default function RootLayout({
         {/*  Your browser does not support the video tag.*/}
         {/*</video>*/}
 
-        <GoogleAnalyticsClient />
         <Navbar />
         {children}
         <Footer />
-        <ConsentManager />
       </body>
     </html>
   );

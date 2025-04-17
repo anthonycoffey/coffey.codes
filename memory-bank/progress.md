@@ -16,15 +16,17 @@ The project is substantially built out and actively maintained. Core sections (B
     - Category and Tag pages (`app/articles/category/[category]/page.tsx`, `app/articles/tag/[tag]/page.tsx`).
     - Article Search API (`app/api/search/route.ts`) and UI (`components/SearchBox.tsx`, `app/articles/search/page.tsx`).
     - RSS Feed (`app/rss/route.ts`).
+    - Custom MDX components (`components/mdx.tsx`) including `Callout` (`components/Callout.tsx`).
 - **Portfolio/Case Studies:** Sections exist (`app/portfolio/`, `app/case-studies/`). Content structure seems present (e.g., `public/portfolio/`, `public/case-studies/`).
 - **Contact:** Contact page (`app/contact/page.tsx`) and form component (`components/ContactForm.tsx`) exist. (Backend handling is TBD - see "What's Left").
 - **Styling:** Tailwind CSS and SASS (`styles/global.sass`) are set up.
 - **Package Manager:** Bun is used (`bun.lockb`).
-- **Components:** A library of reusable components exists in `components/`.
+- **Components:** A library of reusable components exists in `components/` (e.g., `Callout`, `SearchBox`, `Posts`).
 - **SEO Basics:** `robots.ts`, `sitemap.ts`, `og/route.tsx` suggest basic SEO considerations.
 - **3D Elements:** Integration with React Three Fiber (`components/ThreeScene.tsx`, `components/FishbowlScene.tsx`).
 - **Analytics/Tracking:** Google Tag Manager (GTM ID: GTM-KJC6Q389) installed via `next/script` in `app/layout.tsx`.
 - **Deployment:** Automated deployment via Vercel from `master` branch.
+- **Content:** New articles are being added (e.g., `app/articles/posts/slow-android-emulator-flutter-dev.mdx`).
 
 ## What's Left to Build
 

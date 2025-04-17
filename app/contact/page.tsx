@@ -17,58 +17,62 @@ export default async function ContactPage() {
   return (
     <section className="contact-page">
       <div className="page-content">
-        <div className="border-b border-gray-300 pb-4 mb-4 max-w-6xl mx-auto">
-          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+        {/* Style header border, title, paragraph */}
+        <div className="border-b border-gray-300 dark:border-neutral-700 pb-4 mb-4 max-w-6xl mx-auto">
+          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center dark:text-white">
             <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Contact Me
           </h1>
-          <p className="text-gray-600">
-            Have a project in mind or need technical expertise? Let&apos;s chat!
+          <p className="text-gray-600 dark:text-gray-400">
+            Have a project in mind or need technical expertise? Let's chat!
           </p>
         </div>
 
-        {/* Additional Contact Info */}
-        <div className="bg-gray-50 rounded-lg p-6 mb-8">
+        {/* Style Contact Info section */}
+        <div className="bg-gray-50 dark:bg-neutral-900 rounded-lg p-6 mb-8">
           <div className="text-center mb-6">
-            <h2 className="text-xl font-semibold">Contact Information</h2>
-            <p className="text-gray-600">
+            <h2 className="text-xl font-semibold dark:text-white">Contact Information</h2>
+            <p className="text-gray-600 dark:text-gray-400">
               Interested in connecting? Feel free to reach out!
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
+            {/* Style Phone section */}
             <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
                 <PhoneIcon className="h-5 w-5 text-blue-600" />
               </div>
-              <h3 className="font-medium mb-1">Phone</h3>
-              <p className="text-gray-600">(737) 932-4565</p>
+              <h3 className="font-medium mb-1 dark:text-white">Phone</h3>
+              <p className="text-gray-600 dark:text-gray-400">(737) 932-4565</p>
             </div>
 
+            {/* Style Email section */}
             <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
                 <EnvelopeIcon className="h-5 w-5 text-blue-600" />
               </div>
-              <h3 className="font-medium mb-1">Email</h3>
-              <p className="text-gray-600">anthony@coffey.codes</p>
+              <h3 className="font-medium mb-1 dark:text-white">Email</h3>
+              <p className="text-gray-600 dark:text-gray-400">anthony@coffey.codes</p>
             </div>
 
+            {/* Style Location section */}
             <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
+              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
                 <MapPinIcon className="h-5 w-5 text-blue-600" />
               </div>
-              <h3 className="font-medium mb-1">Location</h3>
-              <p className="text-gray-600">Austin, Texas</p>
+              <h3 className="font-medium mb-1 dark:text-white">Location</h3>
+              <p className="text-gray-600 dark:text-gray-400">Austin, Texas</p>
             </div>
           </div>
         </div>
 
-        {/* Contact Form Section - Second */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+        {/* Style Contact Form section container, heading, paragraph */}
+        <div className="bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-800 p-6 md:p-8 mb-8">
           <div className="flex items-center mb-4">
             <EnvelopeIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
-            <h2 className="text-xl font-semibold">Send a Message</h2>
+            <h2 className="text-xl font-semibold dark:text-white">Send a Message</h2>
           </div>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             Prefer to send a message? Fill out the form below to contact me
             directly. I typically respond to all inquiries within 24 hours.
           </p>
@@ -81,15 +85,15 @@ export default async function ContactPage() {
           </div>
         </div>
 
-        {/* Calendar Section - First */}
-        <div className="bg-blue-50 border border-blue-100 rounded-lg shadow-sm p-6 md:p-8 mb-8">
+        {/* Style Calendar Section container, heading, paragraph */}
+        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-100 dark:border-blue-900 rounded-lg shadow-sm p-6 md:p-8 mb-8">
           <div className="flex items-center mb-4">
-            <CalendarDaysIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
-            <h2 className="text-xl font-semibold text-blue-800">
+            <CalendarDaysIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0" />
+            <h2 className="text-xl font-semibold text-blue-800 dark:text-blue-200">
               Schedule a Free Consultation
             </h2>
           </div>
-          <p className="text-blue-700 mb-6">
+          <p className="text-blue-700 dark:text-blue-300 mb-6">
             The fastest way to discuss your project is to book a free 30-minute
             consultation. We can discuss your needs and determine if my
             expertise is the right fit for your goals.

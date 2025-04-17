@@ -9,6 +9,7 @@ import ThreeScene from './ThreeScene';
 import FishbowlScene from './FishbowlScene';
 import MermaidChart from './MermaidChart';
 import { Callout } from './Callout'; // Import the Callout component
+import Link from 'next/link';
 
 function Table({ data }) {
   const headers = data.headers.map((header, index) => (

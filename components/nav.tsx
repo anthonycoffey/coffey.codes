@@ -95,7 +95,7 @@ export function Navbar() {
               height={82}
               src="/logo-horizontal.svg"
               alt="logo"
-              className="h-16 w-auto bg-black/80 rounded-md"
+              className="h-16 w-auto light:bg-black/80 light:rounded-md"
               priority
             />
           </Link>

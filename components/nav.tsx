@@ -11,8 +11,8 @@ import {
   XMarkIcon,
   BriefcaseIcon,
 } from '@heroicons/react/20/solid';
-
 import Image from 'next/image';
+// Removed ThemeSwitcher import
 
 const navItems = {
   '/': {
@@ -84,7 +84,8 @@ export function Navbar() {
   };
 
   return (
-    <aside className="bg-gray-900 text-white tracking-tight w-full">
+    // Apply theme-aware background and text colors
+    <aside className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white tracking-tight w-full">
       <div className="px-4 py-2">
         {/* Logo and mobile menu button */}
         <div className="flex items-center justify-between md:justify-center">
@@ -99,24 +100,28 @@ export function Navbar() {
             />
           </Link>
 
-          {/* Mobile menu button - only visible on mobile */}
-          <button
-            className="md:hidden p-2 text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
-            ) : (
-              <Bars3Icon className="h-6 w-6" />
-            )}
-          </button>
+          {/* Container for mobile menu button */}
+          <div className="flex items-center md:hidden">
+            {/* Removed ThemeSwitcher */}
+            <button
+              className="p-2 ml-2 text-white" // Added margin
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <XMarkIcon className="h-6 w-6" />
+              ) : (
+                <Bars3Icon className="h-6 w-6" />
+              )}
+            </button>
+          </div> {/* <-- Added missing closing div tag here */}
         </div>
 
         {/* Desktop Navigation - Always visible on desktop, hidden on mobile */}
         <div className="hidden md:block py-4">
-          <nav className="flex justify-center items-center">
+          <nav className="flex justify-center items-center relative"> {/* Added relative positioning */}
             <div className="flex flex-row space-x-6">{renderNavItems()}</div>
+            {/* Removed ThemeSwitcher container */}
           </nav>
         </div>
 

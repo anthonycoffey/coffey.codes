@@ -4,20 +4,19 @@
 
 ## Current Focus
 
-The implementation of class-based dark mode using `next-themes` is complete, resolving issues with color schemes on the newly created landing pages. Focus now returns to the previously defined next steps, primarily implementing the contact form backend.
+Troubleshooting the theme switcher revealed persistent issues with dynamically updating styles via the button. The decision has been made to remove the manual theme switcher component and rely solely on the user's system preference for light/dark mode, which was already functioning correctly via `next-themes` and `enableSystem`. Focus now returns to the previously defined next steps, primarily implementing the contact form backend.
 
 ## Recent Changes
 
 *(Summarize the most recent significant updates or commits.)*
-- **April 17, 2025 (Later):**
-    - Implemented class-based dark mode using `next-themes` to fix color scheme issues:
-        - Installed `next-themes` package.
-        - Updated `tailwind.config.js` to `darkMode: 'class'`.
-        - Created `components/ThemeProvider.tsx`.
-        - Wrapped `app/layout.tsx` with `ThemeProvider`.
-        - Corrected import path in `ThemeProvider.tsx`.
-        - Restored `dark:` variants in `app/lp/sme-web-mobile/page.tsx` and fixed ESLint issue.
-- **April 17, 2025 (Earlier):**
+- **April 17, 2025 (Later - Theme Switcher Removal):**
+    - Removed the manual `ThemeSwitcher` component (`components/ThemeSwitcher.tsx`) due to persistent issues with dynamic style updates when using the button.
+    - Removed `ThemeSwitcher` usage from `components/nav.tsx`.
+    - The site now relies solely on the user's system preference for light/dark mode, managed by `next-themes` with the `enableSystem` prop in `app/layout.tsx`.
+    - Reverted `app/layout.tsx` theme class placement back to the `<body>` tag.
+    - Reverted `styles/global.sass` to use `@use "tailwindcss";`.
+    - Corrected `postcss.config.js` to use `@tailwindcss/postcss`.
+- **April 17, 2025 (Earlier - Landing Pages):**
     - Created four new landing pages in `app/lp/` directory, targeting specific ICPs:
         - `app/lp/sme-web-mobile/page.tsx` (Established SMEs - Web/Mobile)
         - `app/lp/practical-ai/page.tsx` (Forward-Thinking Businesses - AI)

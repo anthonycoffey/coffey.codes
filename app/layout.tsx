@@ -29,14 +29,16 @@ export default function RootLayout({
   const isLandingPage = pathname === '/lp' || pathname?.startsWith('/lp/');
 
   return (
-    <html lang="en" className={cx('', GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
-      {/* Apply base light/dark mode styles */}
-      <body className="bg-white dark:bg-neutral-950 text-black dark:text-white antialiased">
+    // Re-add suppressHydrationWarning
+    // Let next-themes manage the class on <html>, apply base styles to <body>
+    <html lang="en" className={cx(GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
+      {/* Apply base light/dark mode styles to body */}
+      <body className="antialiased bg-white dark:bg-neutral-950 text-black dark:text-white"> {/* Apply base styles here */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+          enableSystem // Re-add enableSystem as per user requirement
+          storageKey="theme" // Add explicit storage key
         >
           {/* Consent Manager should load early */}
           <ConsentManager />

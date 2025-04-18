@@ -16,6 +16,7 @@ import {
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+// Removed ThemeSwitcher import
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -69,6 +70,7 @@ export default function Footer() {
 
   const pathName = usePathname();
 
+  
   return (
     <footer className="bg-gray-900 text-white">
       {/* CTA Section - Hidden on portfolio page */}
@@ -172,6 +174,7 @@ export default function Footer() {
             View Code on GitHub
             <CodeBracketIcon className="h-4 w-4 ml-1" />
           </Link>
+          {/* Removed ThemeSwitcher */}
         </div>
       </div>
     </footer>

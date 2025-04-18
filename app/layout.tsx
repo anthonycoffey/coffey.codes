@@ -33,7 +33,7 @@ export default function RootLayout({
     // Let next-themes manage the class on <html>, apply base styles to <body>
     <html lang="en" className={cx(GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
       {/* Apply base light/dark mode styles to body */}
-      <body className="antialiased bg-white dark:bg-neutral-950 text-black dark:text-white"> {/* Apply base styles here */}
+      <body className="antialiased bg-white dark:bg-neutral-900 text-black dark:text-white"> {/* Apply base styles here */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

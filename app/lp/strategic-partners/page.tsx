@@ -30,7 +30,7 @@ export default function StrategicPartnersLandingPage() {
             <li>Hands-on expertise in DevOps practices and CI/CD pipelines.</li>
             <li>Practical AI integration to enhance your products/services.</li>
             <li>Scalable and reliable system design.</li>
-            <li>Augment your team's capabilities for critical projects.</li>
+            <li>Augment your team&apos;s capabilities for critical projects.</li>
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor

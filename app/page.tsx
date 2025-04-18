@@ -292,7 +292,7 @@ export default function Page() {
           <div className="max-w-lg mx-auto">
             {/* Style heading */}
             <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center text-gray-900 dark:text-white">
-              Don't Just Take My Word For It!
+              Don&apos;t Just Take My Word For It!
             </h2>
             <Testimonials />
           </div>

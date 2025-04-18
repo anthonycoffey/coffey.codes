@@ -46,7 +46,7 @@ export default function SmeWebMobileLandingPage() {
 
       {/* Placeholder section for scheduling call - could link to Calendly or similar */}
       <section id="schedule-call" className="text-center py-12 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg">
-        <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">Let's Strategize Your Next Application</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">Let&apos;s Strategize Your Next Application</h2>
         <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto">
           Book a complimentary 30-minute strategy call to discuss your specific needs and how we can build a reliable, scalable solution together.
         </p>

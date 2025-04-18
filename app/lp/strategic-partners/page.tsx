@@ -1,6 +1,8 @@
 import React from 'react';
 import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
+import Image from 'next/image';
+import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
   title: 'Senior-Level Expertise for Strategic Partners | Coffey Codes',
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function StrategicPartnersLandingPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
           Elevate Your Projects with Specialized Senior Expertise
@@ -17,6 +19,29 @@ export default function StrategicPartnersLandingPage() {
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
           For Startups, Agencies, or Tech Teams seeking senior-level expertise to elevate their projects, Anthony Coffey acts as your Fractional CTO or Specialist Lead. Augment your capabilities and deliver superior technical outcomes.
         </p>
+                <div className="flex justify-center mb-24 mt-10">
+                  <div className="relative w-64 h-64 md:w-72 md:h-72">
+                    <Image
+                      width={330}
+                      height={330}
+                      src="/headshot.jpg"
+                      alt="Anthony Coffey"
+                      className="w-full h-full object-cover rounded-lg shadow-md"
+                    />
+                    <div className="absolute -bottom-12 -right-6 bg-white dark:bg-neutral-800 p-3 rounded-lg shadow-md border border-gray-200 dark:border-neutral-700">
+                      <p className="font-bold text-blue-600 dark:text-blue-400 text-base m-0 text-right">
+                        Anthony Coffey
+                      </p>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm m-0 font-semibold">
+                        Senior Solutions Architect & AI Specialist
+                      </p>
+                      <p className="text-gray-700 dark:text-gray-300 text-xs m-0 text-right">
+                        Austin, Texas
+                      </p>
+                      <SocialIcons />
+                    </div>
+                  </div>
+                </div>
       </section>
 
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
@@ -30,7 +55,7 @@ export default function StrategicPartnersLandingPage() {
             <li>Hands-on expertise in DevOps practices and CI/CD pipelines.</li>
             <li>Practical AI integration to enhance your products/services.</li>
             <li>Scalable and reliable system design.</li>
-            <li>Augment your team&apos;s capabilities for critical projects.</li>
+            <li>Augment your team&apos;s capabilities for critical projects.</li> {/* Lint fix */}
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor
@@ -39,9 +64,13 @@ export default function StrategicPartnersLandingPage() {
             Schedule Your Free Partnership Call
           </a>
         </div>
-        <div className="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-semibold mb-6 text-center text-zinc-800 dark:text-zinc-100">Discuss a Strategic Partnership</h3>
-          <ContactForm />
+        {/* Right column now includes headshot ABOVE the contact form */}
+        <div className="flex flex-col items-center gap-10"> {/* Use flex-col to stack items */}
+          {/* Original Contact Form Box */}
+          <div className="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-lg shadow-lg w-full"> {/* Ensure form takes full width */}
+            <h3 className="text-2xl font-semibold mb-6 text-center text-zinc-800 dark:text-zinc-100">Discuss a Strategic Partnership</h3>
+            <ContactForm />
+          </div>
         </div>
       </section>
 

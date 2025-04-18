@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import {
   OrbitControls,
@@ -30,7 +30,7 @@ const Fish: React.FC<FishProps> = ({
   const initialPosition = useRef<[number, number, number]>(position);
 
   // Animation loop for fish movement
-  useFrame((state) => {
+  useFrame((_state) => {
     if (!fishRef.current) return;
 
     time.current += speed;

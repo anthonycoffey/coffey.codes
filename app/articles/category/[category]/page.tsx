@@ -70,7 +70,7 @@ export default function CategoryPage({ params, searchParams }) {
       <div className="border-b border-gray-300 dark:border-neutral-700 pb-4 mb-6">
         <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center dark:text-white">
           <FolderIcon className="w-6 h-6 inline mr-2 text-blue-500" />
-          Articles in category "{decodedCategory}"
+          Articles in category &quot;{decodedCategory}&quot;
         </h1>
         <div className="mb-4">
           <Link href="/articles" className="text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300">

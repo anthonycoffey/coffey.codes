@@ -166,7 +166,7 @@ export default function SearchBox({
           {results.length === 0 ? (
             // Style "No articles found" text
             <p className="text-sm text-gray-500 dark:text-gray-400 text-center p-3">
-              No articles found for "{query}"
+              No articles found for &quot;{query}&quot;
             </p>
           ) : (
             // Style the summary row (result count + view all button)

@@ -104,7 +104,7 @@ export default function SmbWebMarketingLandingPage() {
           business objectives.
         </p>
         <a
-          href="YOUR_SCHEDULING_LINK_HERE" // Replace with actual scheduling link
+          href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-xl transition duration-300"

@@ -134,7 +134,6 @@ const PortfolioSection: React.FC = () => {
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  // const [showAllProjects, setShowAllProjects] = useState(false);
 
   const openProject = (project: Project) => {
     setSelectedProject(project);
@@ -145,27 +144,24 @@ const PortfolioSection: React.FC = () => {
     setSelectedProject(null);
   };
 
-  // const displayedProjects = showAllProjects
-  //   ? portfolioProjects
-  //   : portfolioProjects.filter((project) => project.featured);
   const displayedProjects = portfolioProjects;
 
   return (
     <section>
       <div className="page-content">
-        <div className="border-b border-gray-300 pb-6 mb-8 max-w-6xl mx-auto">
-          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
+        <div className="border-b border-gray-300 dark:border-neutral-700 pb-6 mb-8 max-w-6xl mx-auto">
+          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center dark:text-white">
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Portfolio
           </h1>
-          <p className="text-gray-600">Check out some of my recent work!</p>
+          <p className="text-gray-600 dark:text-gray-400">Check out some of my recent work!</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-6xl mx-auto">
           {displayedProjects.map((project) => (
             <div
               key={project.id}
-              className="border border-gray-200 bg-gray-50 rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg cursor-pointer"
+              className="border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:border-neutral-700 dark:hover:bg-neutral-800 cursor-pointer"
               onClick={() => openProject(project)}
             >
               <div className="h-64 overflow-hidden">
@@ -178,21 +174,21 @@ const PortfolioSection: React.FC = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{project.description}</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full"
+                      className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex justify-between items-center text-sm text-gray-500">
+                <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center">
                     <UserIcon className="h-4 w-4 mr-1" />
                     {project.client}
@@ -207,25 +203,13 @@ const PortfolioSection: React.FC = () => {
           ))}
         </div>
 
-        {/* View More/Less Button */}
-        {/* {!showAllProjects && (
-          <div className="text-center mb-12">
-            <button
-              onClick={() => setShowAllProjects(!showAllProjects)}
-              className="px-6 py-3 border border-blue-600 text-base rounded-md text-blue-600 bg-transparent font-medium flex items-center mx-auto justify-center hover:bg-blue-50 transition-colors"
-            >
-              {showAllProjects ? 'Show Featured Projects' : 'View All Projects'}
-            </button>
-          </div>
-        )} */}
-
         {selectedProject && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-sm transition-all duration-300"
             onClick={closeProject}
           >
             <div
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700 custom-scrollbar"
+              className="bg-white dark:bg-neutral-900 rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-neutral-700 custom-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
@@ -311,7 +295,7 @@ const PortfolioSection: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="space-y-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                  <div className="space-y-6 bg-gray-50 dark:bg-neutral-800 p-6 rounded-xl">
                     <div>
                       <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
                         <svg
@@ -380,7 +364,7 @@ const PortfolioSection: React.FC = () => {
                         {selectedProject.results.map((result, index) => (
                           <li
                             key={index}
-                            className="flex items-start bg-white dark:bg-gray-700 p-3 rounded-lg shadow-sm"
+                            className="flex items-start bg-white dark:bg-neutral-700 p-3 rounded-lg shadow-sm"
                           >
                             <CheckCircleIcon className="h-5 w-5 text-green-500 dark:text-green-400 mr-3 flex-shrink-0 mt-0.5" />
                             <span className="text-gray-700 dark:text-gray-300">
@@ -394,7 +378,7 @@ const PortfolioSection: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-6">
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                  <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-md">
                     <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -420,7 +404,7 @@ const PortfolioSection: React.FC = () => {
                             href={selectedProject.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 dark:text-blue-400 text-base rounded-lg font-medium no-underline flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors shadow-sm"
+                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 dark:text-blue-400 dark:border-blue-600 text-base rounded-lg font-medium no-underline flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors shadow-sm"
                           >
                             <ArrowTopRightOnSquareIcon className="mr-2 h-5 w-5" />
                             View Live Project
@@ -429,7 +413,7 @@ const PortfolioSection: React.FC = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div className="bg-gray-50 dark:bg-neutral-700 p-4 rounded-lg">
                           <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Client:
                           </p>
@@ -438,7 +422,7 @@ const PortfolioSection: React.FC = () => {
                           </p>
                         </div>
 
-                        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                        <div className="bg-gray-50 dark:bg-neutral-700 p-4 rounded-lg">
                           <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
                             Year:
                           </p>
@@ -505,7 +489,7 @@ const PortfolioSection: React.FC = () => {
           </div>
         )}
 
-        <div className="bg-blue-600 p-8 rounded-lg text-white">
+        <div className="bg-blue-600 p-8 rounded-lg text-white mt-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
             Ready to Build Your Next Great Project?
           </h2>

@@ -24,7 +24,7 @@ const backend: string[] = [
   'google-cloud.svg',
   'aws-amplify.svg',
   'aws.svg',
-  'heroku.svg',
+  'heroku.png',
 ];
 
 export { frontend, backend };

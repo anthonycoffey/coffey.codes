@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function generateMetadata() {
   return {
-    title: 'All Article Tags | Senior Solutions Architect & AI Specialist | Anthony Coffey',
-    description: 'Explore articles by tag on specific technologies and concepts like React, Next.js, AWS, AI, Git, and more from Anthony Coffey.',
+    title: 'All Article Tags | Anthony Coffey - Solutions Architect, AI/ML',
+    description: 'Explore articles by tag on specific technologies and concepts like React, Next.js, AWS, AI/ML, Git, and more from Anthony Coffey.',
   };
 }
 

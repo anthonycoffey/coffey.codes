@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function generateMetadata() {
   return {
-    title: 'All Article Categories | Senior Solutions Architect & AI Specialist | Anthony Coffey',
-    description: 'Browse articles by category on topics like software engineering, AI, cloud computing, and web development from Anthony Coffey.',
+    title: 'All Article Categories | Anthony Coffey - Solutions Architect, AI/ML',
+    description: 'Browse articles by category on topics like software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.',
   };
 }
 

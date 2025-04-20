@@ -5,9 +5,9 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Integrated Web Presence & Marketing Tech for SMBs | Senior Solutions Architect & AI Specialist | Anthony Coffey',
+  title: 'Integrated Web Presence & Marketing Tech for SMBs | Anthony Coffey - Solutions Architect, AI/ML',
   description:
-    'Expert web development (WordPress, JavaScript) combined with essential marketing tech setup (Analytics, GTM) for SMBs.',
+    'Expert web development (WordPress, JavaScript) combined with essential marketing tech setup (Analytics, GTM) for SMBs by Anthony Coffey, Solutions Architect & AI/ML Specialist.',
 };
 
 export default function SmbWebMarketingLandingPage() {

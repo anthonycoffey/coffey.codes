@@ -15,9 +15,9 @@ import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
 
 export const metadata = {
-  title: 'Software Development Articles & Insights | Senior Solutions Architect & AI Specialist | Anthony Coffey',
+  title: 'Software Development Articles & Insights | Anthony Coffey - Solutions Architect, AI/ML',
   description:
-    'Explore articles by Anthony Coffey on software engineering, AI integration, cloud architecture, web development best practices, and project management strategies.',
+    'Explore articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, on software engineering, AI/ML integration, cloud architecture, web development best practices, and project management strategies.',
 };
 
 export default async function ArticlesPage({ searchParams }) {

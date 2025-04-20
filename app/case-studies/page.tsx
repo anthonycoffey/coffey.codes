@@ -6,9 +6,9 @@ import {
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Case Studies | Senior Solutions Architect & AI Specialist | Anthony Coffey',
+  title: 'Case Studies | Anthony Coffey - Solutions Architect, AI/ML',
   description:
-    'Explore detailed software development case studies by Anthony Coffey, showcasing problem-solving approaches and results in areas like geospatial tech, optimization, and more.',
+    'Explore detailed software development case studies by Anthony Coffey, Solutions Architect & AI/ML Specialist, showcasing problem-solving approaches and results in areas like geospatial tech, optimization, and more.',
 };
 
 const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {

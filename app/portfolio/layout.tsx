@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Senior Solutions Architect & AI Specialist | Anthony Coffey',
-  description: 'Explore a selection of software development projects by Anthony Coffey, showcasing expertise in web applications, AI integration, and more.',
+  title: 'Portfolio | Anthony Coffey - Solutions Architect, AI/ML',
+  description: 'Explore a selection of software development projects by Anthony Coffey, Solutions Architect & AI/ML Specialist, showcasing expertise in web applications, AI/ML integration, and more.',
 };
 
 export default function PortfolioLayout({ // Renamed function for clarity

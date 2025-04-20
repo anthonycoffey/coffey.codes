@@ -30,8 +30,8 @@ export async function generateMetadata({ params }) {
     image,
   } = post.metadata;
 
-  // Append professional title and site owner name to the title for the <title> tag and social cards
-  const title = `${postTitle} | Senior Solutions Architect & AI Specialist | Anthony Coffey`;
+  // Use simpler title format for articles to prioritize article title and avoid truncation
+  const title = `${postTitle} | Anthony Coffey`;
 
   // Use the original postTitle for generating the OG image if no specific image is provided
   const ogImage = image

@@ -8,9 +8,9 @@ import {
 import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 
 export const metadata = {
-  title: 'Contact | Senior Solutions Architect & AI Specialist | Anthony Coffey',
+  title: 'Contact | Anthony Coffey - Solutions Architect, AI/ML',
   description:
-    'Get in touch with Anthony Coffey, Senior Solutions Architect & AI Specialist, for software development, AI integration, or consulting services. Send a message or schedule a free consultation.',
+    'Get in touch with Anthony Coffey, Solutions Architect & AI/ML Specialist, for software development, AI/ML integration, or consulting services. Send a message or schedule a free consultation.',
 };
 
 export default async function ContactPage() {

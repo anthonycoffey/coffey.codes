@@ -5,8 +5,8 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Senior-Level Expertise for Strategic Partners | Senior Solutions Architect & AI Specialist | Anthony Coffey',
-  description: 'Augment your team with specialized expertise in software architecture, DevOps, and practical AI integration. Fractional CTO & Specialist Lead services.',
+  title: 'Senior-Level Expertise for Strategic Partners | Anthony Coffey - Solutions Architect, AI/ML',
+  description: 'Augment your team with specialized expertise from Anthony Coffey, Solutions Architect & AI/ML Specialist, in software architecture, DevOps, and practical AI/ML integration. Fractional CTO & Specialist Lead services.',
 };
 
 export default function StrategicPartnersLandingPage() {

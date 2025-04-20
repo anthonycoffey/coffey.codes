@@ -35,8 +35,8 @@ export function generateMetadata({ params }) {
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
 
   return {
-    title: `Articles in Category: ${decodedCategory} | Senior Solutions Architect & AI Specialist | Anthony Coffey`,
-    description: `Explore software development articles by Anthony Coffey categorized under "${decodedCategory}". Find insights on relevant topics.`,
+    title: `Articles in Category: ${decodedCategory} | Anthony Coffey - Solutions Architect, AI/ML`,
+    description: `Explore software development articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, categorized under "${decodedCategory}". Find insights on relevant topics.`,
   };
 }
 

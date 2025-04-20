@@ -21,7 +21,9 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
           <Icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         </div>
         <div className="flex-1">
-          <h2 className="font-medium text-lg text-gray-900 dark:text-white mb-2">{title}</h2>
+          <h2 className="font-medium text-lg text-gray-900 dark:text-white mb-2">
+            {title}
+          </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">{description}</p>
 
           {tags && (
@@ -38,7 +40,9 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
           )}
 
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-500 dark:text-gray-400">PDF Case Study</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              PDF Case Study
+            </span>
             <Link
               href={pdfPath}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors"
@@ -82,7 +86,9 @@ export default async function CaseStudiesPage() {
             Case Studies
           </h1>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
-          Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology.</p>
+            Explore detailed case studies that showcase my expertise and
+            approach to solving real-world problems with technology.
+          </p>
         </div>
 
         <div className="space-y-6">
@@ -103,8 +109,8 @@ export default async function CaseStudiesPage() {
             Need a custom solution?
           </h2>
           <p className="text-blue-800 dark:text-blue-300 mb-4">
-            I specialize in solving problems with tech. Let&apos;s discuss
-            how my expertise can help your business.
+            I specialize in solving problems with tech. Let&apos;s discuss how
+            my expertise can help your business.
           </p>
           <Link
             href="/contact"

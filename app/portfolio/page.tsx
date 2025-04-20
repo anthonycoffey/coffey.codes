@@ -154,7 +154,9 @@ const PortfolioSection: React.FC = () => {
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-blue-600" />
             Portfolio
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">Check out some of my recent work!</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            Check out some of my recent work!
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-6xl mx-auto">
@@ -177,7 +179,9 @@ const PortfolioSection: React.FC = () => {
                 <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{project.description}</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  {project.description}
+                </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag, index) => (
                     <span

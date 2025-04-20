@@ -24,18 +24,19 @@ export async function generateMetadata({ params }) {
   }
 
   const {
-    title: originalTitle, // Rename original title
+    title: postTitle, // Use a clearer name for the title from frontmatter
     publishedAt: publishedTime,
     summary: description,
     image,
   } = post.metadata;
 
-  // Append site owner name to the title
-  const title = `${originalTitle} | Anthony Coffey`;
+  // Append site owner name to the title for the <title> tag and social cards
+  const title = `${postTitle} | Anthony Coffey`;
 
+  // Use the original postTitle for generating the OG image if no specific image is provided
   const ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(originalTitle)}`; // Use original title for OG image generation if needed
+    : `${baseUrl}/og?title=${encodeURIComponent(postTitle)}`;
 
   return {
     title, // Use the modified title

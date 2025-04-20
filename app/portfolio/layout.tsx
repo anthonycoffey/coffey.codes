@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Anthony Coffey',
+  title: 'Portfolio | Senior Solutions Architect & AI Specialist | Anthony Coffey',
   description: 'Explore a selection of software development projects by Anthony Coffey, showcasing expertise in web applications, AI integration, and more.',
 };
 

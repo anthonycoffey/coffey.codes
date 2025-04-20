@@ -5,7 +5,7 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Senior-Level Expertise for Strategic Partners | Anthony Coffey',
+  title: 'Senior-Level Expertise for Strategic Partners | Senior Solutions Architect & AI Specialist | Anthony Coffey',
   description: 'Augment your team with specialized expertise in software architecture, DevOps, and practical AI integration. Fractional CTO & Specialist Lead services.',
 };
 

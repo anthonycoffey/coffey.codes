@@ -6,7 +6,7 @@ import {
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Case Studies | Anthony Coffey',
+  title: 'Case Studies | Senior Solutions Architect & AI Specialist | Anthony Coffey',
   description:
     'Explore detailed software development case studies by Anthony Coffey, showcasing problem-solving approaches and results in areas like geospatial tech, optimization, and more.',
 };

@@ -18,9 +18,9 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Fractional CTO & Senior Software Engineer | Reliable, Scalable Solutions | Anthony Coffey',
+  title: 'Reliable, Scalable Software Solutions | Senior Solutions Architect & AI Specialist | Anthony Coffey',
   description:
-    'Partner with Anthony Coffey, a Fractional CTO & AI Specialist, for reliable, production-ready software. Leverage 12+ years of senior expertise for scalable web/mobile apps and practical AI integration.',
+    'Partner with Anthony Coffey, a Senior Solutions Architect & AI Specialist, for reliable, production-ready software. Leverage 12+ years of expertise for scalable web/mobile apps and practical AI integration.',
 };
 
 export default function Page() {

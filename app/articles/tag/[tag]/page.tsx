@@ -31,7 +31,7 @@ export function generateMetadata({ params }) {
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
 
   return {
-    title: `Articles Tagged: ${decodedTag} | Anthony Coffey`,
+    title: `Articles Tagged: ${decodedTag} | Senior Solutions Architect & AI Specialist | Anthony Coffey`,
     description: `Find software development articles by Anthony Coffey tagged with "${decodedTag}". Explore specific technologies and concepts.`,
   };
 }

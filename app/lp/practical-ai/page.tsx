@@ -5,7 +5,7 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Practical AI Solutions for Business Growth | Anthony Coffey',
+  title: 'Practical AI Solutions for Business Growth | Senior Solutions Architect & AI Specialist | Anthony Coffey',
   description:
     'Move beyond AI hype. Get production-ready, scalable AI solutions integrated with your business for tangible results.',
 };

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  transpilePackages: ['next-mdx-remote'], // Added here
+  transpilePackages: ['next-mdx-remote'],
   async redirects() {
     return [
       {
@@ -12,7 +12,8 @@ const nextConfig = {
       },
       {
         source: '/articles/gradient-background-for-post-thumbnails',
-        destination: '/articles/using-css-gradients-for-dynamic-post-thumbnails',
+        destination:
+          '/articles/using-css-gradients-for-dynamic-post-thumbnails',
         permanent: true,
       },
       {
@@ -47,7 +48,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/articles/mitigating-risk-reducing-delays-in-ai-software-development-projects',
+        source:
+          '/articles/mitigating-risk-reducing-delays-in-ai-software-development-projects',
         destination: '/articles',
         permanent: true,
       },
@@ -60,11 +62,12 @@ const nextConfig = {
     return [
       {
         source: '/functions/:path*',
-        destination: 'https://us-central1-coffeywebdev-d0487.cloudfunctions.net/:path*',
+        destination:
+          'https://us-central1-coffeywebdev-d0487.cloudfunctions.net/:path*',
         basePath: false,
       },
     ];
-  }
+  },
 };
 
 module.exports = nextConfig;

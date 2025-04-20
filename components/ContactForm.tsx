@@ -1,6 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { ChatBubbleOvalLeftIcon, CheckCircleIcon, ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import {
+  ChatBubbleOvalLeftIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+} from '@heroicons/react/24/solid';
 
 type FormData = {
   name: string;
@@ -44,37 +48,34 @@ export default function ContactForm() {
     setError(null);
     event.preventDefault();
     try {
-      const response = await fetch(
-        '/functions/sendContactFormEmail', // Preserved Cloud Function endpoint
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-            consent: consentChecked,
-          }),
+      const response = await fetch('/functions/sendContactFormEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          consent: consentChecked,
+        }),
+      });
 
       if (response.ok) {
         setMessageSent(true);
-        // Push event to dataLayer for GTM - Preserved
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: 'form_submit',
           formName: 'contact',
         });
       } else {
-         // Handle non-ok responses (e.g., 4xx, 5xx)
-         const errorData = await response.json().catch(() => ({})); // Try to parse error, default to empty object
-         setError(errorData.message || `An error occurred: ${response.statusText} (${response.status})`);
+        const errorData = await response.json().catch(() => ({}));
+        setError(
+          errorData.message ||
+            `An error occurred: ${response.statusText} (${response.status})`,
+        );
       }
     } catch (error) {
-      console.error('Contact form submission error:', error); // Log the actual error
       setError(
         'An error occurred while sending your message, please try again.',
       );
@@ -83,15 +84,15 @@ export default function ContactForm() {
     }
   };
 
-  // Base input classes for light/dark mode - Adjusted for cleaner look
-  const inputClasses = "mt-1 block w-full rounded-md border border-neutral-300 dark:border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500";
-  const labelClasses = "block text-sm font-medium text-neutral-700 dark:text-neutral-300";
+  const inputClasses =
+    'mt-1 block w-full rounded-md border border-neutral-300 dark:border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500';
+  const labelClasses =
+    'block text-sm font-medium text-neutral-700 dark:text-neutral-300';
 
   return (
     <>
       {!messageSent ? (
         <form onSubmit={handleFormSubmit} className="space-y-4">
-          {/* Title removed, should be provided by parent */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="name" className={labelClasses}>
@@ -145,25 +146,29 @@ export default function ContactForm() {
           </div>
 
           <div className="flex items-start">
-             <div className="flex items-center h-5">
-                <input
-                    id="consent"
-                    name="consent"
-                    type="checkbox"
-                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-neutral-300 dark:border-neutral-600 rounded bg-neutral-100 dark:bg-neutral-700 dark:focus:ring-offset-neutral-800"
-                    checked={consentChecked}
-                    onChange={handleConsentChange}
-                    required
-                />
-             </div>
-             <div className="ml-3 text-sm">
-                <label htmlFor="consent" className="font-medium text-neutral-700 dark:text-neutral-300">
-                    I consent <span className="text-red-500">*</span>
-                </label>
-                <p className="text-neutral-500 dark:text-neutral-400 text-xs">
-                    to the collection of my data and to being contacted via email regarding this inquiry.
-                </p>
-             </div>
+            <div className="flex items-center h-5">
+              <input
+                id="consent"
+                name="consent"
+                type="checkbox"
+                className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-neutral-300 dark:border-neutral-600 rounded bg-neutral-100 dark:bg-neutral-700 dark:focus:ring-offset-neutral-800"
+                checked={consentChecked}
+                onChange={handleConsentChange}
+                required
+              />
+            </div>
+            <div className="ml-3 text-sm">
+              <label
+                htmlFor="consent"
+                className="font-medium text-neutral-700 dark:text-neutral-300"
+              >
+                I consent <span className="text-red-500">*</span>
+              </label>
+              <p className="text-neutral-500 dark:text-neutral-400 text-xs">
+                to the collection of my data and to being contacted via email
+                regarding this inquiry.
+              </p>
+            </div>
           </div>
 
           {error && (
@@ -171,8 +176,13 @@ export default function ContactForm() {
               className="flex items-center p-3 rounded-md bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800/50"
               role="alert"
             >
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500 dark:text-red-400 mr-2 flex-shrink-0" aria-hidden="true" />
-              <span className="text-sm text-red-700 dark:text-red-300">{error}</span>
+              <ExclamationCircleIcon
+                className="h-5 w-5 text-red-500 dark:text-red-400 mr-2 flex-shrink-0"
+                aria-hidden="true"
+              />
+              <span className="text-sm text-red-700 dark:text-red-300">
+                {error}
+              </span>
             </div>
           )}
 
@@ -220,7 +230,10 @@ export default function ContactForm() {
           className="flex items-center p-4 rounded-md bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800/50"
           role="alert"
         >
-          <CheckCircleIcon className="h-6 w-6 text-green-500 dark:text-green-400 mr-3 flex-shrink-0" aria-hidden="true" />
+          <CheckCircleIcon
+            className="h-6 w-6 text-green-500 dark:text-green-400 mr-3 flex-shrink-0"
+            aria-hidden="true"
+          />
           <span className="text-base font-medium text-green-800 dark:text-green-200">
             Your message has been sent successfully!
           </span>

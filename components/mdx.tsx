@@ -1,4 +1,3 @@
-// import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
@@ -8,7 +7,7 @@ import CopyButton from './CopyButton';
 import ThreeScene from './ThreeScene';
 import FishbowlScene from './FishbowlScene';
 import MermaidChart from './MermaidChart';
-import { Callout } from './Callout'; // Import the Callout component
+import { Callout } from './Callout';
 import Link from 'next/link';
 
 function Table({ data }) {
@@ -56,23 +55,20 @@ function RoundedImage(props) {
 }
 
 function Code({ children, className, ...props }) {
-  // Check if the language is mermaid
   const language = className?.replace(/language-/, '');
-  // console.log('Code component className:', className, 'Detected language:', language); // Removed logging
 
   if (language === 'mermaid') {
-    // Render Mermaid chart using the client component
-    // Ensure children is passed as a string, trim whitespace
-    const chartDefinition = typeof children === 'string' ? children.trim() : React.Children.toArray(children).join('').trim();
-    // Add a check for empty definition
+    const chartDefinition =
+      typeof children === 'string'
+        ? children.trim()
+        : React.Children.toArray(children).join('').trim();
     if (!chartDefinition) {
       console.warn('Empty Mermaid chart definition found.');
-      return null; // Don't render if empty
+      return null;
     }
     return <MermaidChart chart={chartDefinition} />;
   }
 
-  // Existing code block handling
   const isMultiline = React.Children.toArray(children).join('').includes('\n');
   const codeString = React.Children.toArray(children).join('');
   const codeHTML = highlight(codeString);
@@ -99,11 +95,11 @@ function slugify(str) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w-]+/g, '') // Remove all non-word characters except for -
-    .replace(/-+/g, '-'); // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/&/g, '-and-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/-+/g, '-');
 }
 
 function createHeading(level) {
@@ -142,10 +138,10 @@ const components = {
   Counter,
   ThreeScene,
   FishbowlScene,
-  Callout, // Add Callout to the components object
+  Callout,
 };
 
-export async function CustomMDX(props) { // Make the function async
+export async function CustomMDX(props) {
   return (
     <MDXRemote
       {...props}

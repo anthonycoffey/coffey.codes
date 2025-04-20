@@ -29,12 +29,6 @@ const config = [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
-      // 'no-console': ['warn', { allow: ['warn', 'error'] }],
-      // 'react/no-unescaped-entities': 'off', 
-      // 'no-useless-escape': 'warn',  
-      // '@next/next/no-img-element': 'warn', 
-      // '@next/next/no-html-link-for-pages': 'warn', 
-      // 'no-constant-binary-expression': 'warn',  
     },
     settings: {
       react: {

@@ -5,7 +5,8 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Custom Web & Mobile Apps for Established SMEs | Anthony Coffey - Solutions Architect, AI/ML',
+  title:
+    'Custom Web & Mobile Apps for Established SMEs | Anthony Coffey - Solutions Architect, AI/ML',
   description:
     'Reliable, scalable web and mobile applications built with senior-level expertise by Anthony Coffey, Solutions Architect & AI/ML Specialist, for established SMEs seeking long-term growth.',
 };

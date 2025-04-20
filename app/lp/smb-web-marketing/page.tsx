@@ -5,7 +5,8 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Integrated Web Presence & Marketing Tech for SMBs | Anthony Coffey - Solutions Architect, AI/ML',
+  title:
+    'Integrated Web Presence & Marketing Tech for SMBs | Anthony Coffey - Solutions Architect, AI/ML',
   description:
     'Expert web development (WordPress, JavaScript) combined with essential marketing tech setup (Analytics, GTM) for SMBs by Anthony Coffey, Solutions Architect & AI/ML Specialist.',
 };
@@ -15,13 +16,14 @@ export default function SmbWebMarketingLandingPage() {
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
-          Your Professional Web Presence, Integrated & Supported
+          Stop Worrying About Your Website. Start Growing Your Business.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          For Small to Medium Businesses requiring a professional web presence
-          integrated with essential marketing tools, Anthony Coffey offers
-          expert web development combined with comprehensive marketing tech
-          setup and support.
+          Is your website just an online brochure, or is it actively helping you
+          grow? For SMBs needing more than just a pretty design, Anthony Coffey
+          delivers professional websites integrated with essential marketing
+          tools (like Google Analytics & Tag Manager) – all backed by reliable,
+          expert support.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -51,22 +53,34 @@ export default function SmbWebMarketingLandingPage() {
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
           <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
-            Web Development Meets Marketing Tech
+            Beyond the Build: Websites That Drive Results
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Whether building or maintaining WordPress or modern JavaScript
-            sites, benefit from 12 years of proven experience delivering
-            high-quality websites configured with core analytics and tracking
-            (Google Analytics, Tag Manager). Receive dependable partnership and
-            trustworthy technical guidance.
+            You need a website that looks great *and* performs. With 12 years of
+            experience in both WordPress and modern JavaScript development, I
+            build high-quality sites designed for your specific needs.
+            Crucially, I ensure they're properly configured with essential tools
+            like Google Analytics and Tag Manager, so you can actually track
+            your marketing efforts and understand what's working. Get a
+            dependable partner, not just a developer.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>Expertise in both WordPress and modern JS frameworks.</li>
-            <li>Seamless integration with Google Analytics & Tag Manager.</li>
-            <li>High-quality, professional website design and development.</li>
-            <li>Reliable support and technical guidance.</li>
             <li>
-              Focus on building a web presence that supports your marketing
+              Flexible Development: Expertise in WordPress & modern JS to fit
+              your needs.
+            </li>
+            <li>
+              Track Your Success: Seamless Google Analytics & Tag Manager setup.
+            </li>
+            <li>
+              Professional & Polished: High-quality design that builds trust.
+            </li>
+            <li>
+              Reliable Partnership: Dependable support and clear technical
+              advice.
+            </li>
+            <li>
+              Marketing-Ready: A web presence built to achieve your business
               goals.
             </li>
           </ul>

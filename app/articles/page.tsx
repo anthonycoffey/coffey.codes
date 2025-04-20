@@ -15,7 +15,8 @@ import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
 
 export const metadata = {
-  title: 'Software Development Articles & Insights | Anthony Coffey - Solutions Architect, AI/ML',
+  title:
+    'Software Development Articles & Insights | Anthony Coffey - Solutions Architect, AI/ML',
   description:
     'Explore articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, on software engineering, AI/ML integration, cloud architecture, web development best practices, and project management strategies.',
 };
@@ -44,11 +45,7 @@ export default async function ArticlesPage({ searchParams }) {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-2/3">
-          <BlogPosts allBlogs={allBlogs} />
-        </div>
-
+      <div className="flex flex-col md:flex-row-reverse gap-8">
         <aside className="md:w-1/3 space-y-6">
           {/* Add dark mode bg, border, text to Search section */}
           <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
@@ -128,6 +125,10 @@ export default async function ArticlesPage({ searchParams }) {
             </div>
           </div>
         </aside>
+
+        <div className="md:w-2/3">
+          <BlogPosts allBlogs={allBlogs} />
+        </div>
       </div>
 
       <div className="w-full mt-8 flex justify-center">

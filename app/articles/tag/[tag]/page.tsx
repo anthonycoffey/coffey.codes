@@ -67,20 +67,17 @@ export default function TagPage({ params, searchParams }) {
           Articles tagged with &quot;{decodedTag}&quot;
         </h1>
         <div className="mb-4">
-          <Link href="/articles" className="text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300">
+          <Link
+            href="/articles"
+            className="text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+          >
             ← Back to all articles
           </Link>
         </div>
       </div>
 
       {/* Main content with sidebar layout */}
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Main content area */}
-        <div className="md:w-2/3">
-          <BlogPosts allBlogs={posts} />
-        </div>
-
-        {/* Sidebar */}
+      <div className="flex flex-col md:flex-row-reverse gap-8">
         <aside className="md:w-1/3 space-y-6">
           {/* Style Search section */}
           <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
@@ -163,6 +160,11 @@ export default function TagPage({ params, searchParams }) {
             </div>
           )}
         </aside>
+
+        {/* Main content area */}
+        <div className="md:w-2/3">
+          <BlogPosts allBlogs={posts} />
+        </div>
       </div>
 
       {/* Centered Pagination */}

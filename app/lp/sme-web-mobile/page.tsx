@@ -19,7 +19,11 @@ export default function SmeWebMobileLandingPage() {
           Stop Fighting Unreliable Tech. Get Custom Apps That Fuel Growth.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          Tired of tech projects that derail or agencies that disappear? Established SMEs need reliable, scalable web and mobile applications built for the long haul. Anthony Coffey offers a direct, senior-level partnership – think of it as your Fractional CTO – focused squarely on delivering robust solutions you can depend on.
+          Tired of tech projects that derail or agencies that disappear?
+          Established SMEs need reliable, scalable web and mobile applications
+          built for the long haul. Anthony Coffey offers a direct, senior-level
+          partnership – think of it as your Fractional CTO – focused squarely on
+          delivering robust solutions you can depend on.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -52,14 +56,32 @@ export default function SmeWebMobileLandingPage() {
             Experience That Translates to Reliable Results
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Benefit from 12+ years architecting sustainable, scalable solutions specifically designed for long-term business growth. Avoid the costly mistakes and delays common with junior teams or impersonal agencies. Get solutions built correctly from the start, saving you time and resources down the road.
+            Benefit from 12+ years architecting sustainable, scalable solutions
+            specifically designed for long-term business growth. Avoid the
+            costly mistakes and delays common with junior teams or impersonal
+            agencies. Get solutions built correctly from the start, saving you
+            time and resources down the road.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>On-Time, On-Budget Delivery: Reliable execution you can count on.</li>
-            <li>Built to Scale: Solutions architected for future growth and easy maintenance.</li>
-            <li>Your Fractional CTO: Direct access to senior-level strategic guidance.</li>
-            <li>Business-Focused: Tangible outcomes prioritized over technical jargon.</li>
-            <li>Avoid Costly Rework: Get it right the first time with expert architecture.</li>
+            <li>
+              On-Time, On-Budget Delivery: Reliable execution you can count on.
+            </li>
+            <li>
+              Built to Scale: Solutions architected for future growth and easy
+              maintenance.
+            </li>
+            <li>
+              Your Fractional CTO: Direct access to senior-level strategic
+              guidance.
+            </li>
+            <li>
+              Business-Focused: Tangible outcomes prioritized over technical
+              jargon.
+            </li>
+            <li>
+              Avoid Costly Rework: Get it right the first time with expert
+              architecture.
+            </li>
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor

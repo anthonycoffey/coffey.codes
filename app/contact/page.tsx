@@ -8,9 +8,9 @@ import {
 import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 
 export const metadata = {
-  title: 'Contact | Get in Touch',
+  title: 'Contact Anthony Coffey | Software Development & Consulting',
   description:
-    "Need assistance with a project or have a question? Reach out and let's discuss how I can help you achieve your goals.",
+    'Get in touch with Anthony Coffey for software development, AI integration, or consulting services. Send a message or schedule a free consultation.',
 };
 
 export default async function ContactPage() {

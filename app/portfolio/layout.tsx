@@ -1,4 +1,11 @@
-export default function CaseStudiesLayout({
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Portfolio | Anthony Coffey',
+  description: 'Explore a selection of software development projects by Anthony Coffey, showcasing expertise in web applications, AI integration, and more.',
+};
+
+export default function PortfolioLayout({ // Renamed function for clarity
   children,
 }: {
   children: React.ReactNode;

@@ -18,9 +18,9 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Anthony Coffey - Full Stack Software Engineer | Austin, Texas',
+  title: 'Fractional CTO & Senior Software Engineer | Reliable, Scalable Solutions | Anthony Coffey',
   description:
-    'Expert software development and consulting services - building scalable, secure, and high-performance applications for businesses of all sizes.',
+    'Partner with Anthony Coffey, a Fractional CTO & AI Specialist, for reliable, production-ready software. Leverage 12+ years of senior expertise for scalable web/mobile apps and practical AI integration.',
 };
 
 export default function Page() {

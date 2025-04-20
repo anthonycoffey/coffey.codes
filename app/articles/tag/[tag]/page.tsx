@@ -31,8 +31,8 @@ export function generateMetadata({ params }) {
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
 
   return {
-    title: `Articles tagged with "${decodedTag}" | Anthony Coffey`,
-    description: `Browse all articles tagged with "${decodedTag}"`,
+    title: `Articles Tagged: ${decodedTag} | Anthony Coffey`,
+    description: `Find software development articles by Anthony Coffey tagged with "${decodedTag}". Explore specific technologies and concepts.`,
   };
 }
 

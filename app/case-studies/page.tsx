@@ -6,9 +6,9 @@ import {
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Case Studies | Professional Portfolio',
+  title: 'Case Studies | Anthony Coffey',
   description:
-    'Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology.',
+    'Explore detailed software development case studies by Anthony Coffey, showcasing problem-solving approaches and results in areas like geospatial tech, optimization, and more.',
 };
 
 const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {

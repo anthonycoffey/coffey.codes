@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function generateMetadata() {
   return {
-    title: 'All Tags | Anthony Coffey',
-    description: 'Browse all available tags for articles',
+    title: 'All Article Tags | Anthony Coffey',
+    description: 'Explore articles by tag on specific technologies and concepts like React, Next.js, AWS, AI, Git, and more from Anthony Coffey.',
   };
 }
 

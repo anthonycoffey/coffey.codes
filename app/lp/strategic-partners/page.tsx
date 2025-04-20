@@ -1,11 +1,11 @@
-import React from 'react';
+ import React from 'react';
 import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Senior-Level Expertise for Strategic Partners | Coffey Codes',
+  title: 'Senior-Level Expertise for Strategic Partners | Anthony Coffey',
   description: 'Augment your team with specialized expertise in software architecture, DevOps, and practical AI integration. Fractional CTO & Specialist Lead services.',
 };
 

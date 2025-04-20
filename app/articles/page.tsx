@@ -15,9 +15,9 @@ import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
 
 export const metadata = {
-  title: 'Articles',
+  title: 'Software Development Articles & Insights | Anthony Coffey',
   description:
-    'Unpacking the strategies, challenges, and breakthroughs in software development, project management, and cloud technology.',
+    'Explore articles by Anthony Coffey on software engineering, AI integration, cloud architecture, web development best practices, and project management strategies.',
 };
 
 export default async function ArticlesPage({ searchParams }) {

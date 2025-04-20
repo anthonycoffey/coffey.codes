@@ -5,7 +5,7 @@ import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
 
 export const metadata: Metadata = {
-  title: 'Integrated Web Presence & Marketing Tech for SMBs | Coffey Codes',
+  title: 'Integrated Web Presence & Marketing Tech for SMBs | Anthony Coffey',
   description:
     'Expert web development (WordPress, JavaScript) combined with essential marketing tech setup (Analytics, GTM) for SMBs.',
 };

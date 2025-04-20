@@ -24,20 +24,24 @@ export async function generateMetadata({ params }) {
   }
 
   const {
-    title,
+    title: originalTitle, // Rename original title
     publishedAt: publishedTime,
     summary: description,
     image,
   } = post.metadata;
+
+  // Append site owner name to the title
+  const title = `${originalTitle} | Anthony Coffey`;
+
   const ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
+    : `${baseUrl}/og?title=${encodeURIComponent(originalTitle)}`; // Use original title for OG image generation if needed
 
   return {
-    title,
+    title, // Use the modified title
     description,
     openGraph: {
-      title,
+      title, // Use the modified title
       description,
       type: 'article',
       publishedTime,

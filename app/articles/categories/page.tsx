@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function generateMetadata() {
   return {
-    title: 'All Categories | Anthony Coffey',
-    description: 'Browse all available categories for articles',
+    title: 'All Article Categories | Anthony Coffey',
+    description: 'Browse articles by category on topics like software engineering, AI, cloud computing, and web development from Anthony Coffey.',
   };
 }
 

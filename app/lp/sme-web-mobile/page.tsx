@@ -16,12 +16,10 @@ export default function SmeWebMobileLandingPage() {
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
-          Build Custom Web & Mobile Apps That Scale With Your Business
+          Stop Fighting Unreliable Tech. Get Custom Apps That Fuel Growth.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          For established SMEs seeking custom web and mobile applications they
-          can trust to scale, Anthony Coffey provides a direct, senior-level
-          partnership (your Fractional CTO) emphasizing Reliable Delivery.
+          Tired of tech projects that derail or agencies that disappear? Established SMEs need reliable, scalable web and mobile applications built for the long haul. Anthony Coffey offers a direct, senior-level partnership – think of it as your Fractional CTO – focused squarely on delivering robust solutions you can depend on.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -51,21 +49,17 @@ export default function SmeWebMobileLandingPage() {
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
           <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
-            Leverage 12 Years of Experience
+            Experience That Translates to Reliable Results
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Benefit from over a decade of experience architecting sustainable,
-            scalable solutions designed for long-term business growth and
-            efficiency. Avoid the common pitfalls associated with junior teams
-            or impersonal agency models.
+            Benefit from 12+ years architecting sustainable, scalable solutions specifically designed for long-term business growth. Avoid the costly mistakes and delays common with junior teams or impersonal agencies. Get solutions built correctly from the start, saving you time and resources down the road.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>Reliable project delivery, on time and on budget.</li>
-            <li>
-              Solutions architected for future growth and maintainability.
-            </li>
-            <li>Direct access to senior-level strategic guidance.</li>
-            <li>Focus on tangible business outcomes, not just code.</li>
+            <li>On-Time, On-Budget Delivery: Reliable execution you can count on.</li>
+            <li>Built to Scale: Solutions architected for future growth and easy maintenance.</li>
+            <li>Your Fractional CTO: Direct access to senior-level strategic guidance.</li>
+            <li>Business-Focused: Tangible outcomes prioritized over technical jargon.</li>
+            <li>Avoid Costly Rework: Get it right the first time with expert architecture.</li>
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor
@@ -74,11 +68,8 @@ export default function SmeWebMobileLandingPage() {
             Schedule Your Free Strategy Call
           </a>
         </div>
-        {/* Right column now includes headshot ABOVE the contact form */}
         <div className="flex flex-col items-center gap-10">
-          {/* Original Contact Form Box */}
           <div className="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-lg shadow-lg w-full">
-            {/* Ensure form takes full width */}
             <h3 className="text-2xl font-semibold mb-6 text-center text-zinc-800 dark:text-zinc-100">
               Ready to Discuss Your Project?
             </h3>
@@ -87,7 +78,6 @@ export default function SmeWebMobileLandingPage() {
         </div>
       </section>
 
-      {/* Placeholder section for scheduling call - could link to Calendly or similar */}
       <section
         id="schedule-call"
         className="text-center py-12 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg"

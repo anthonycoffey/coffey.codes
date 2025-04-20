@@ -18,7 +18,7 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Reliable, Scalable Software Solutions | Anthony Coffey - Solutions Architect, AI/ML',
+  title: 'Anthony Coffey | Solutions Architect & AI/ML Specialist',
   description:
     'Partner with Anthony Coffey, Solutions Architect & AI/ML Specialist, for reliable, production-ready software. Leverage 12+ years of expertise for scalable web/mobile apps and practical AI/ML integration.',
 };

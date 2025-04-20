@@ -16,13 +16,10 @@ export default function PracticalAiLandingPage() {
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
-          Implement Practical AI That Delivers Real Business Value
+          Cut Through the AI Hype. Get AI Solutions That Actually Work.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          For forward-thinking businesses ready to move beyond AI hype to
-          tangible results, Anthony Coffey serves as your Practical Innovation
-          Partner. Get production-ready AI solutions built on sustainable,
-          scalable architectures.
+          Ready to leverage AI but tired of the buzzwords? For businesses seeking tangible results, not just experiments, Anthony Coffey is your Practical Innovation Partner. Get production-ready AI solutions, built on robust, scalable foundations, and integrated seamlessly into your operations.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -52,20 +49,17 @@ export default function PracticalAiLandingPage() {
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
           <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
-            From Hype to Production-Ready AI
+            Engineering Discipline Meets AI Innovation
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Leverage 12 years of disciplined engineering experience to ensure
-            your AI initiatives are robust, integrated, and deliver measurable
-            business value. Benefit from Fractional CTO-level strategic insights
-            throughout the process.
+            Successful AI isn't just about algorithms; it's about solid engineering. Leverage 12+ years of disciplined software development experience to ensure your AI initiatives are not just innovative, but also robust, well-integrated, and focused on measurable business value. Get the strategic oversight of a Fractional CTO combined with hands-on implementation expertise.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>Focus on practical, achievable AI implementations.</li>
-            <li>Solutions designed for scalability and long-term use.</li>
-            <li>Integration with existing systems and workflows.</li>
-            <li>Clear communication and strategic guidance.</li>
-            <li>Emphasis on tangible ROI and business outcomes.</li>
+            <li>Practical & Achievable: AI solutions focused on real-world application.</li>
+            <li>Scalable & Sustainable: Built for long-term performance and growth.</li>
+            <li>Seamless Integration: Connect AI with your existing systems smoothly.</li>
+            <li>Clear Strategy & Guidance: Understand the 'what, why, and how'.</li>
+            <li>Measurable ROI: Focus on AI that delivers tangible business results.</li>
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor

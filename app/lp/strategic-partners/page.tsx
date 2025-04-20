@@ -16,13 +16,10 @@ export default function StrategicPartnersLandingPage() {
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
-          Elevate Your Projects with Specialized Senior Expertise
+          Need Senior Expertise? Augment Your Team with a Strategic Tech Partner.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          For Startups, Agencies, or Tech Teams seeking senior-level expertise
-          to elevate their projects, Anthony Coffey acts as your Fractional CTO
-          or Specialist Lead. Augment your capabilities and deliver superior
-          technical outcomes.
+          Facing complex technical hurdles or need strategic leadership for a critical project? Anthony Coffey partners with startups, agencies, and tech teams as a Fractional CTO or Specialist Lead. Augment your existing team with deep expertise in architecture, DevOps, and AI to confidently tackle ambitious goals and deliver superior results.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -52,23 +49,17 @@ export default function StrategicPartnersLandingPage() {
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
           <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
-            Fractional CTO & Specialist Lead
+            Your On-Demand Technical Leadership
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Leverage 12 years of deep expertise in software architecture,
-            DevOps, and practical AI integration to ensure your initiatives are
-            scalable, reliable, and cutting-edge. Partner with a proven expert
-            to overcome technical challenges and achieve ambitious goals.
+            Gain immediate access to 12+ years of specialized experience in software architecture, DevOps, and practical AI integration. Whether you need high-level strategic guidance or hands-on leadership for complex implementations, partner with a proven expert to navigate technical challenges, ensure best practices, and drive your most important projects forward.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>Strategic guidance on architecture and technology choices.</li>
-            <li>Hands-on expertise in DevOps practices and CI/CD pipelines.</li>
-            <li>Practical AI integration to enhance your products/services.</li>
-            <li>Scalable and reliable system design.</li>
-            <li>
-              Augment your team&apos;s capabilities for critical projects.
-            </li>{' '}
-            {/* Lint fix */}
+            <li>Expert Architecture & Tech Strategy: Make confident technology decisions.</li>
+            <li>DevOps & CI/CD Mastery: Streamline development and deployment.</li>
+            <li>Practical AI Implementation: Integrate AI to enhance your offerings.</li>
+            <li>Scalable & Reliable Systems: Build robust solutions for the long term.</li>
+            <li>Seamless Team Augmentation: Add senior expertise exactly when needed.</li>
           </ul>
           <a
             href="#schedule-call" // Placeholder link/anchor

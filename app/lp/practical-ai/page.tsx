@@ -52,13 +52,13 @@ export default function PracticalAiLandingPage() {
             Engineering Discipline Meets AI Innovation
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Successful AI isn't just about algorithms; it's about solid engineering. Leverage 12+ years of disciplined software development experience to ensure your AI initiatives are not just innovative, but also robust, well-integrated, and focused on measurable business value. Get the strategic oversight of a Fractional CTO combined with hands-on implementation expertise.
+            Successful AI isn&apos;t just about algorithms; it&apos;s about solid engineering. Leverage 12+ years of disciplined software development experience to ensure your AI initiatives are not just innovative, but also robust, well-integrated, and focused on measurable business value. Get the strategic oversight of a Fractional CTO combined with hands-on implementation expertise.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
             <li>Practical & Achievable: AI solutions focused on real-world application.</li>
             <li>Scalable & Sustainable: Built for long-term performance and growth.</li>
             <li>Seamless Integration: Connect AI with your existing systems smoothly.</li>
-            <li>Clear Strategy & Guidance: Understand the 'what, why, and how'.</li>
+            <li>Clear Strategy & Guidance: Understand the &apos;what, why, and how&apos;.</li>
             <li>Measurable ROI: Focus on AI that delivers tangible business results.</li>
           </ul>
           <a

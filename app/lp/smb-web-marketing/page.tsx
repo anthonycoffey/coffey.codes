@@ -59,9 +59,9 @@ export default function SmbWebMarketingLandingPage() {
             You need a website that looks great *and* performs. With 12 years of
             experience in both WordPress and modern JavaScript development, I
             build high-quality sites designed for your specific needs.
-            Crucially, I ensure they're properly configured with essential tools
+            Crucially, I ensure they&apos;re properly configured with essential tools
             like Google Analytics and Tag Manager, so you can actually track
-            your marketing efforts and understand what's working. Get a
+            your marketing efforts and understand what&apos;s working. Get a
             dependable partner, not just a developer.
           </p>
           <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">

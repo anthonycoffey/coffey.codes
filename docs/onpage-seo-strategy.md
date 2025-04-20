@@ -30,18 +30,12 @@ This document outlines the strategy used for implementing on-page SEO metadata (
 - They aim to summarize the page's core content and value proposition concisely.
 - Keywords relevant to the page content (including "Solutions Architect", "AI/ML Specialist" where appropriate) are included naturally.
 
-### 3. Description Strategy
-
-- Descriptions are tailored to each specific page or page type.
-- They aim to summarize the page's core content and value proposition concisely.
-- Keywords relevant to the page content are included naturally where appropriate.
-
 ### 4. Implementation by Page Type
 
 - **Static Pages (e.g., Home, Contact, Case Studies Index):**
     - Files: `app/page.tsx`, `app/contact/page.tsx`, `app/case-studies/page.tsx`
-    - Method: Export a static `metadata` object with predefined `title` (using standard format) and `description`.
-    - Example Title (Home): `Reliable, Scalable Software Solutions | Anthony Coffey - Solutions Architect, AI/ML`
+    - Method: Export a static `metadata` object with predefined `title` (using standard format, except for Home) and `description`.
+    - Example Title (Home): `Anthony Coffey | Solutions Architect & AI/ML Specialist` (Note: Homepage uses Name | Title format as per specific request)
     - Example Description (Home): `Partner with Anthony Coffey, Solutions Architect & AI/ML Specialist, for reliable, production-ready software. Leverage 12+ years of expertise for scalable web/mobile apps and practical AI/ML integration.`
 
 - **Section Layouts (Handling Client Component Pages like Portfolio):**

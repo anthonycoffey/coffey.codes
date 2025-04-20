@@ -77,7 +77,7 @@ export default function TagPage({ params, searchParams }) {
       </div>
 
       {/* Main content with sidebar layout */}
-      <div className="flex flex-col md:flex-row-reverse gap-8">
+      <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/3 space-y-6">
           {/* Style Search section */}
           <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">

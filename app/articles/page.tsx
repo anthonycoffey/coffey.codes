@@ -16,7 +16,7 @@ import SearchBox from '@/components/SearchBox';
 
 export const metadata = {
   title:
-    'Software Development Articles & Insights | Anthony Coffey - Solutions Architect, AI/ML',
+    'Articles | Anthony Coffey - Solutions Architect, AI/ML',
   description:
     'Explore articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, on software engineering, AI/ML integration, cloud architecture, web development best practices, and project management strategies.',
 };

@@ -3,6 +3,13 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import {
+  CodeBracketSquareIcon,
+  ChartPieIcon,
+  SparklesIcon,
+  UserGroupIcon,
+  RocketLaunchIcon,
+} from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
   title:
@@ -64,26 +71,44 @@ export default function SmbWebMarketingLandingPage() {
             your marketing efforts and understand what&apos;s working. Get a
             dependable partner, not just a developer.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>
-              Flexible Development: Expertise in WordPress & modern JS to fit
-              your needs.
-            </li>
-            <li>
-              Track Your Success: Seamless Google Analytics & Tag Manager setup.
-            </li>
-            <li>
-              Professional & Polished: High-quality design that builds trust.
-            </li>
-            <li>
-              Reliable Partnership: Dependable support and clear technical
-              advice.
-            </li>
-            <li>
-              Marketing-Ready: A web presence built to achieve your business
-              goals.
-            </li>
-          </ul>
+          {/* Enhanced Benefits List with Icons */}
+          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+            <div className="flex items-start">
+              <CodeBracketSquareIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Flexible Development:</span>{' '}
+                Expertise in WordPress & modern JS to fit your needs.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ChartPieIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Track Your Success:</span>{' '}
+                Seamless Google Analytics & Tag Manager setup.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <SparklesIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Professional & Polished:</span>{' '}
+                High-quality design that builds trust.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <UserGroupIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Reliable Partnership:</span>{' '}
+                Dependable support and clear technical advice.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <RocketLaunchIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Marketing-Ready:</span> A web
+                presence built to achieve your business goals.
+              </span>
+            </div>
+          </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"

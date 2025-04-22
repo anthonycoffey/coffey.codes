@@ -3,6 +3,13 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import {
+  LightBulbIcon,
+  ArrowsPointingOutIcon,
+  PuzzlePieceIcon,
+  MapIcon,
+  ChartBarIcon,
+} from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
   title:
@@ -19,7 +26,11 @@ export default function PracticalAiLandingPage() {
           Cut Through the AI Hype. Get AI Solutions That Actually Work.
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
-          Ready to leverage AI but tired of the buzzwords? For businesses seeking tangible results, not just experiments, Anthony Coffey is your Practical Innovation Partner. Get production-ready AI solutions, built on robust, scalable foundations, and integrated seamlessly into your operations.
+          Ready to leverage AI but tired of the buzzwords? For businesses
+          seeking tangible results, not just experiments, Anthony Coffey is your
+          Practical Innovation Partner. Get production-ready AI solutions, built
+          on robust, scalable foundations, and integrated seamlessly into your
+          operations.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -52,15 +63,51 @@ export default function PracticalAiLandingPage() {
             Engineering Discipline Meets AI Innovation
           </h2>
           <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
-            Successful AI isn&apos;t just about algorithms; it&apos;s about solid engineering. Leverage 12+ years of disciplined software development experience to ensure your AI initiatives are not just innovative, but also robust, well-integrated, and focused on measurable business value. Get the strategic oversight of a Fractional CTO combined with hands-on implementation expertise.
+            Successful AI isn&apos;t just about algorithms; it&apos;s about
+            solid engineering. Leverage 12+ years of disciplined software
+            development experience to ensure your AI initiatives are not just
+            innovative, but also robust, well-integrated, and focused on
+            measurable business value. Get the strategic oversight of a
+            Fractional CTO combined with hands-on implementation expertise.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>Practical & Achievable: AI solutions focused on real-world application.</li>
-            <li>Scalable & Sustainable: Built for long-term performance and growth.</li>
-            <li>Seamless Integration: Connect AI with your existing systems smoothly.</li>
-            <li>Clear Strategy & Guidance: Understand the &apos;what, why, and how&apos;.</li>
-            <li>Measurable ROI: Focus on AI that delivers tangible business results.</li>
-          </ul>
+          {/* Enhanced Benefits List with Icons */}
+          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+            <div className="flex items-start">
+              <LightBulbIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Practical & Achievable:</span> AI
+                solutions focused on real-world application.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ArrowsPointingOutIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Scalable & Sustainable:</span>{' '}
+                Built for long-term performance and growth.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <PuzzlePieceIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Seamless Integration:</span>{' '}
+                Connect AI with your existing systems smoothly.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Clear Strategy & Guidance:</span>{' '}
+                Understand the 'what, why, and how'.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Measurable ROI:</span> Focus on AI
+                that delivers tangible business results.
+              </span>
+            </div>
+          </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"

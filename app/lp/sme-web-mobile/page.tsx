@@ -3,6 +3,13 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import {
+  ClockIcon,
+  ArrowsPointingOutIcon,
+  UserGroupIcon,
+  ChartBarIcon,
+  ShieldCheckIcon,
+} from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
   title:
@@ -62,27 +69,46 @@ export default function SmeWebMobileLandingPage() {
             agencies. Get solutions built correctly from the start, saving you
             time and resources down the road.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>
-              On-Time, On-Budget Delivery: Reliable execution you can count on.
-            </li>
-            <li>
-              Built to Scale: Solutions architected for future growth and easy
-              maintenance.
-            </li>
-            <li>
-              Your Fractional CTO: Direct access to senior-level strategic
-              guidance.
-            </li>
-            <li>
-              Business-Focused: Tangible outcomes prioritized over technical
-              jargon.
-            </li>
-            <li>
-              Avoid Costly Rework: Get it right the first time with expert
-              architecture.
-            </li>
-          </ul>
+          {/* Enhanced Benefits List with Icons */}
+          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+            <div className="flex items-start">
+              <ClockIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">
+                  On-Time, On-Budget Delivery:
+                </span>{' '}
+                Reliable execution you can count on.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ArrowsPointingOutIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Built to Scale:</span> Solutions
+                architected for future growth and easy maintenance.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <UserGroupIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Your Fractional CTO:</span>{' '}
+                Direct access to senior-level strategic guidance.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Business-Focused:</span>{' '}
+                Tangible outcomes prioritized over technical jargon.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ShieldCheckIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">Avoid Costly Rework:</span> Get
+                it right the first time with expert architecture.
+              </span>
+            </div>
+          </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"

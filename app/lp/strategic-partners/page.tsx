@@ -3,6 +3,13 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import {
+  BuildingLibraryIcon,
+  ServerStackIcon,
+  CpuChipIcon,
+  ScaleIcon,
+  UserPlusIcon,
+} from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
   title:
@@ -64,27 +71,52 @@ export default function StrategicPartnersLandingPage() {
             technical challenges, ensure best practices, and drive your most
             important projects forward.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-            <li>
-              Expert Architecture & Tech Strategy: Make confident technology
-              decisions.
-            </li>
-            <li>
-              DevOps & CI/CD Mastery: Streamline development and deployment.
-            </li>
-            <li>
-              Practical AI Implementation: Integrate AI to enhance your
-              offerings.
-            </li>
-            <li>
-              Scalable & Reliable Systems: Build robust solutions for the long
-              term.
-            </li>
-            <li>
-              Seamless Team Augmentation: Add senior expertise exactly when
-              needed.
-            </li>
-          </ul>
+          {/* Enhanced Benefits List with Icons */}
+          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+            <div className="flex items-start">
+              <BuildingLibraryIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">
+                  Expert Architecture & Tech Strategy:
+                </span>{' '}
+                Make confident technology decisions.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ServerStackIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">DevOps & CI/CD Mastery:</span>{' '}
+                Streamline development and deployment.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <CpuChipIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">
+                  Practical AI Implementation:
+                </span>{' '}
+                Integrate AI to enhance your offerings.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <ScaleIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">
+                  Scalable & Reliable Systems:
+                </span>{' '}
+                Build robust solutions for the long term.
+              </span>
+            </div>
+            <div className="flex items-start">
+              <UserPlusIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <span>
+                <span className="font-semibold">
+                  Seamless Team Augmentation:
+                </span>{' '}
+                Add senior expertise exactly when needed.
+              </span>
+            </div>
+          </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"

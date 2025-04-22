@@ -97,7 +97,7 @@ export default function PracticalAiLandingPage() {
               <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
               <span>
                 <span className="font-semibold">Clear Strategy & Guidance:</span>{' '}
-                Understand the 'what, why, and how'.
+                Understand the WHAT, WHY and HOW.
               </span>
             </div>
             <div className="flex items-start">

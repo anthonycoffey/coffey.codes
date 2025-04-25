@@ -83,6 +83,10 @@ Notice the `apt-get install` command. This is optional and should only be used t
 
 #### Gunicorn Command Issues
 
+<Callout type="warning">
+If you are having issues after deploying, check your Flask application's entry point to ensure Gunicorn can locate and run it properly.
+</Callout>
+
 One common issue is getting the Gunicorn command to correctly call the Flask application. The CMD in the Dockerfile is defined as:
 
 ```Dockerfile
@@ -103,9 +107,10 @@ If your factory function is named differently, adjust accordingly:
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "myapp:create_app()"]
 ```
 
-If you are having issues after deploying, check your Flask application's entry point to ensure Gunicorn can locate and run it properly.
 
+<Callout type="tip">
 Use `gcloud functions logs read` to view logs for debugging, or navigate to the Cloud Run service in the Google Cloud Console to view the logs for your service.
+</Callout>
 
 ### Conclusion
 

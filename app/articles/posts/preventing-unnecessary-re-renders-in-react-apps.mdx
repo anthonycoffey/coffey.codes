@@ -35,7 +35,9 @@ A component re-renders when:
 - Its parent component re-renders
 - Its context value changes
 
+<Callout type="warning">
 Not all re-renders are problematic, but unnecessary ones can impact performance, especially in complex applications.
+</Callout>
 
 ## Common Causes of Unnecessary Re-Renders
 
@@ -262,7 +264,9 @@ function UserComponent({ userId }) {
 
 ### 3. Don't Over-Optimize Prematurely
 
+<Callout type="warning">
 I touched on this briefly above, but don't memoize everything without measuring!
+</Callout>
 
 ```jsx
 // Probably unnecessary for simple components

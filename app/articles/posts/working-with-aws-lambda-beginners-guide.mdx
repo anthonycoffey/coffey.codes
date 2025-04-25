@@ -42,7 +42,9 @@ Before diving into Lambda, it's important to understand some key limitations:
 
 ### Step 1: Setting Up
 
+<Callout type="info">
 Before you start, make sure you have an AWS account and the AWS CLI (Command Line Interface) installed and configured on your machine with appropriate permissions.
+</Callout>
 
 ### Step 2: Creating a Lambda Function
 
@@ -104,7 +106,9 @@ If your Lambda function needs to access resources in a VPC (like RDS databases, 
 2. Select the VPC, subnets, and security groups
 3. Ensure your Lambda execution role has the necessary permissions (`AWSLambdaVPCAccessExecutionRole`)
 
+<Callout type="warning">
 Note that connecting Lambda to a VPC may increase cold start times.
+</Callout>
 
 ### Step 6: Deploying and Testing
 

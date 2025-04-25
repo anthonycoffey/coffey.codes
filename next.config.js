@@ -59,6 +59,12 @@ const nextConfig = {
         destination: '/articles/preventing-unnecessary-re-renders-in-react-apps',
         permanent: true,
       },
+      {
+        source:
+          '/articles/using-css-gradients-for-dynamic-post-thumbnails',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

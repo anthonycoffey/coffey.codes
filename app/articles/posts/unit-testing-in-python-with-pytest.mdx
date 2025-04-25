@@ -18,7 +18,9 @@ Before you start writing tests, you need to install pytest. You can do this usin
 pip install pytest
 ```
 
+<Callout type="info">
 Once installed, you’re ready to write and execute tests.
+</Callout>
 
 ### Writing Tests with Pytest
 
@@ -35,7 +37,9 @@ Save this function in a file named `test_math.py` and run the test using the fol
 pytest test_math.py
 ```
 
+<Callout type="info">
 Pytest will automatically discover and execute all test functions in the file, providing detailed feedback on test results.
+</Callout>
 
 ## Test Discovery
 
@@ -45,7 +49,9 @@ Pytest automatically discovers tests based on the following rules:
 - Test files should be named `test_*.py` or end with `_test.py`.
 - Test classes should start with `Test` but should not have an `__init__` method.
 
+<Callout type="tip">
 Following these conventions ensures that pytest can efficiently locate and run your tests.
+</Callout>
 
 ## Using Fixtures for Setup and Teardown
 
@@ -63,7 +69,9 @@ def test_sample_data(sample_data):
     assert sample_data["age"] == 30
 ```
 
+<Callout type="tip">
 Fixtures can be used to set up database connections, create test data, or prepare mock environments before running tests.
+</Callout>
 
 ## Parameterized Testing
 
@@ -81,7 +89,9 @@ def test_addition(a, b, result):
     assert a + b == result
 ```
 
+<Callout type="info">
 This test runs multiple assertions with different input values, improving efficiency.
+</Callout>
 
 ## Mocking with Pytest
 
@@ -98,7 +108,9 @@ def test_mocked_data():
     assert mock_function() == "Mocked Data"
 ```
 
+<Callout type="tip">
 Mocking allows you to isolate specific parts of your code and simulate different scenarios.
+</Callout>
 
 ## Naming Conventions for Tests
 

@@ -53,6 +53,12 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      {
+        source:
+          '/articles/avoiding-unnecessary-re-renders-in-react-apps',
+        destination: '/articles/preventing-unnecessary-re-renders-in-react-apps',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

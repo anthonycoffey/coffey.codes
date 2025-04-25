@@ -1,5 +1,5 @@
 ---
-title: Avoiding Unnecessary Re-Renders in React Applications
+title: Preventing Unnecessary Re-Renders in React Applications
 publishedAt: 2025-03-27
 summary: 'Learn essential strategies to optimize your React applications by preventing unnecessary re-renders. This guide covers techniques to keep your components efficient and your app responsive.'
 tags: React, Performance Optimization, React 18, React 19, Frontend Development
@@ -43,41 +43,36 @@ Several patterns commonly lead to unnecessary re-renders:
 
 1. **Creating Functions in Render**: Defining functions inside component bodies creates new function references on every render.
 
-```jsx
-// Problematic: New function reference on every render
-function UserProfile({ user }) {
-  const handleClick = () => {
-    console.log(user.id);
-  };
-  
-  return <Button onClick={handleClick}>View Profile</Button>;
-}
-```
+  ```jsx
+  // Problematic: New function reference on every render
+  function UserProfile({ user }) {
+    const handleClick = () => {
+      console.log(user.id);
+    };
+    
+    return <Button onClick={handleClick}>View Profile</Button>;
+  }
+  ```
 
-It's worth mentioning that declaring functions in the component body is generally fine for most use cases, especially when:
-- The function is simple and doesn't render frequently
-- The function doesn't create complex objects or calculations on every render
-- The function isn't passed as a prop to child components that might re-render unnecessarily
+  It's worth mentioning that declaring functions in the component body is generally fine for most use cases, especially when:
+  - The component is simple and doesn't render frequently
+  - The function doesn't create complex objects or calculations on every render
+  - The function isn't passed as a prop to child components that might re-render unnecessarily
 
-When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
- 
-However, in React v19, the React team has implemented an "automatic memoization" feature which intelligently handles function references and derived values behind the scenes, making this less of a concern.
-
-
-```jsx
+  When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
 
 2. **Creating Objects/Arrays in Render**: Similar to functions, inline objects and arrays create new references each render.
 
-```jsx
-// Problematic: New object reference on every render
-function ProductCard({ product }) {
-  return (
-    <Card style={{ padding: 16, margin: 8 }}>
-      <CardContent>{product.name}</CardContent>
-    </Card>
-  );
-}
-```
+  ```jsx
+  // Problematic: New object reference on every render
+  function ProductCard({ product }) {
+    return (
+      <Card style={{ padding: 16, margin: 8 }}>
+        <CardContent>{product.name}</CardContent>
+      </Card>
+    );
+  }
+  ```
 
 3. **Passing Down Everything**: Passing unnecessary props to child components triggers re-renders when those values change.
 
@@ -103,7 +98,7 @@ const ProductCard = React.memo(function ProductCard({ product }) {
 
 ### 2. Memoize Expensive Calculations with useMemo
 
-Use `useMemo` to cache calculations between renders:
+Use `useMemo` to cache calculations between renders, but avoid using it indiscriminately. Instead of applying `useMemo` everywhere, the best practice is to first write clear code, then profile to identify specific performance bottlenecks, and finally, strategically apply `useMemo` only where it offers a measurable improvement. This will also make your code more concise and easier to read, which is always a good thing.
 
 ```jsx
 function ProductList({ products, category }) {
@@ -267,7 +262,7 @@ function UserComponent({ userId }) {
 
 ### 3. Don't Over-Optimize Prematurely
 
-Don't memoize everything without measuring:
+I touched on this briefly above, but don't memoize everything without measuring!
 
 ```jsx
 // Probably unnecessary for simple components

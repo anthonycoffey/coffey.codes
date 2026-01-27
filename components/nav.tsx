@@ -12,7 +12,6 @@ import {
   BriefcaseIcon,
 } from '@heroicons/react/20/solid';
 import Image from 'next/image';
-// Removed ThemeSwitcher import
 
 const navItems = {
   '/': {
@@ -99,7 +98,6 @@ export function Navbar() {
               priority
             />
           </Link>
-
           {/* Container for mobile menu button */}
           <div className="flex items-center md:hidden">
             {/* Removed ThemeSwitcher */}
@@ -114,12 +112,15 @@ export function Navbar() {
                 <Bars3Icon className="h-6 w-6" />
               )}
             </button>
-          </div> {/* <-- Added missing closing div tag here */}
+          </div>{' '}
+          {/* <-- Added missing closing div tag here */}
         </div>
 
         {/* Desktop Navigation - Always visible on desktop, hidden on mobile */}
         <div className="hidden md:block py-4">
-          <nav className="flex justify-center items-center relative"> {/* Added relative positioning */}
+          <nav className="flex justify-center items-center relative">
+            {' '}
+            {/* Added relative positioning */}
             <div className="flex flex-row space-x-6">{renderNavItems()}</div>
             {/* Removed ThemeSwitcher container */}
           </nav>

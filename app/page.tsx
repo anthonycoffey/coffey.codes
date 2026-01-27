@@ -18,9 +18,9 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Anthony Coffey | Technical Overflow Partner & Solutions Architect',
+  title: 'Anthony Coffey | Senior Solutions Architect & Engineering Leader',
   description:
-    'Partner with Anthony Coffey, your Technical Overflow Partner, for reliable, production-ready software. Leverage 12+ years of expertise to scale your team, lead initiatives, and ship scalable web/mobile apps.',
+    'Scale your engineering capacity with Anthony Coffey. 12+ years of expertise in reliable, production-ready software, leadership, and AI/ML integration.',
 };
 
 export default function Page() {
@@ -35,10 +35,10 @@ export default function Page() {
           <div>
             {/* Style heading and paragraph */}
             <h1 className="leading-tight text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Your Technical Overflow Partner: Plug-and-Play Leadership & Scale
+              Scale Your Engineering Capacity with Confidence
             </h1>
             <p className="text-lg text-gray-800 dark:text-gray-300 mb-6">
-              Leverage 12+ years of senior expertise to scale your engineering efforts, lead critical initiatives, and ship production-ready software. A seamless extension of your team to bridge the gap between strategy and execution.
+              Leverage 12+ years of senior expertise to lead critical initiatives, unblock delivery, and ship production-ready software. Reliable execution that scales with your team.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
@@ -248,8 +248,8 @@ export default function Page() {
                 desc: "Clear planning & execution for project certainty",
                 },
                 {
-                title: "Seamless Integration",
-                desc: "Plug-and-play senior capability that fits right into your workflow",
+                title: "Scalable Leadership",
+                desc: "Senior engineering capacity to lead initiatives and mentor teams",
                 },
                 {
                 title: "Sustainable Scalability",

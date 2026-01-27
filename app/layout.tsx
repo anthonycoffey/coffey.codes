@@ -1,6 +1,6 @@
 'use client'; // Required for usePathname hook
 
-import '/styles/global.sass';
+import '../styles/global.sass';
 import { usePathname } from 'next/navigation';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';

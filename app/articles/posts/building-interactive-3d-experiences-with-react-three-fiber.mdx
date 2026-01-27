@@ -37,12 +37,17 @@ React Three Fiber (R3F) is a React renderer for Three.js that allows you to crea
 
 Inspired by Pink Floyd's "Wish You Were Here", I "vibe coded" a simple Fishbowl scene for this article. No imported models, the entire scene was generated with code using React Fiber.
 
+I've also included a basic interactive scene. Use the tabs below to switch between the Fishbowl and the Interactive Shapes example. In the interactive example, you can click on a shape to increase its size.
+
 <small className="text-right">
   View Source on{' '}
   <a href="https://codesandbox.io/p/sandbox/fishbowl-fwdztp">CodeSandbox</a>
 </small>
 
-<FishbowlScene />
+<SceneExplorer sceneNames={['Fishbowl', 'Interactive Shapes']}>
+  <FishbowlScene />
+  <ThreeScene />
+</SceneExplorer>
 
 <div className="flex justify-center text-center">
   <em>
@@ -53,11 +58,6 @@ Inspired by Pink Floyd's "Wish You Were Here", I "vibe coded" a simple Fishbowl 
   </em>
 </div>
 
-### Interactive Scene Example
-
-This example shows two simple 3D shapes that rotate continuously. Click on a shape to increase its size, or click and drag to control the camera.
-
-<ThreeScene />
 
 ### Core Concepts
 

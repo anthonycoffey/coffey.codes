@@ -6,6 +6,7 @@ import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
 import ThreeScene from './ThreeScene';
 import FishbowlScene from './FishbowlScene';
+import SceneExplorer from './SceneExplorer';
 import MermaidChart from './MermaidChart';
 import { Callout } from './Callout';
 import Link from 'next/link';
@@ -138,6 +139,7 @@ const components = {
   Counter,
   ThreeScene,
   FishbowlScene,
+  SceneExplorer,
   Callout,
 };
 

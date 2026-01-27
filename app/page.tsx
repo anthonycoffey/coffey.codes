@@ -18,9 +18,9 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Anthony Coffey | Solutions Architect & AI/ML Specialist',
+  title: 'Anthony Coffey | Technical Overflow Partner & Solutions Architect',
   description:
-    'Partner with Anthony Coffey, Solutions Architect & AI/ML Specialist, for reliable, production-ready software. Leverage 12+ years of expertise for scalable web/mobile apps and practical AI/ML integration.',
+    'Partner with Anthony Coffey, your Technical Overflow Partner, for reliable, production-ready software. Leverage 12+ years of expertise to scale your team, lead initiatives, and ship scalable web/mobile apps.',
 };
 
 export default function Page() {
@@ -35,10 +35,10 @@ export default function Page() {
           <div>
             {/* Style heading and paragraph */}
             <h1 className="leading-tight text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Your Fractional CTO: Reliable, Scalable Software Solutions
+              Your Technical Overflow Partner: Plug-and-Play Leadership & Scale
             </h1>
             <p className="text-lg text-gray-800 dark:text-gray-300 mb-6">
-              Leverage 12+ years of senior-level expertise for dependable, production-ready applications designed for sustainable growth and practical innovation. Get direct partnership, not layers of management.
+              Leverage 12+ years of senior expertise to scale your engineering efforts, lead critical initiatives, and ship production-ready software. A seamless extension of your team to bridge the gap between strategy and execution.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
@@ -248,8 +248,8 @@ export default function Page() {
                 desc: "Clear planning & execution for project certainty",
                 },
                 {
-                title: "Fractional CTO Access",
-                desc: "Direct, senior-level strategic guidance",
+                title: "Seamless Integration",
+                desc: "Plug-and-play senior capability that fits right into your workflow",
                 },
                 {
                 title: "Sustainable Scalability",

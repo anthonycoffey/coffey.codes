@@ -5,7 +5,7 @@ This document outlines the core value propositions for Anthony Coffey's freelanc
 ## Core Concepts: The Pillars of Dependable Transformation
 
 *   **Project Certainty (Formerly Reliable Delivery):** Delivering peace of mind through dependable execution and predictable outcomes. Launch with confidence.
-*   **Strategic Partnership (Formerly Fractional CTO):** Providing senior-level strategic guidance and direct, personalized access – your trusted technical partner.
+*   **Technical Overflow Partner (Formerly Strategic Partnership/Fractional CTO):** providing plug-and-play senior capacity to lead teams, unblock delivery, and scale engineering efforts – a seamless extension of your team.
 *   **Built for Future Growth (Formerly Sustainable Scalability):** Architecting solutions designed for long-term success, ensuring technology won't hold you back.
 *   **Practical AI Advantage (Formerly Practical Innovation):** Bridging cutting-edge AI with tangible, real-world results that give your business a competitive edge.
 *   **Production-Ready Expertise (Formerly Production-Ready Specialization):** Delivering robust, deployable solutions, especially in AI, built with discipline.
@@ -28,10 +28,10 @@ This document outlines the core value propositions for Anthony Coffey's freelanc
 "For **Small to Medium Businesses** needing a **professional web presence that actively works to attract and convert customers**, **Anthony Coffey** provides **Integrated Tech for Results**. Benefit from **expert web development** (WordPress or modern JavaScript) combined with **essential marketing tech setup**, ensuring your website is a **dependable engine for business growth**, supported by **trustworthy technical guidance**."
 *(Focus: Measurable results, ease, dependability)*
 
-### ICP 4: Strategic Partners Needing Proven Expertise
+### ICP 4: Teams Needing a "Plug & Play" Overflow Partner
 
-"For **Startups, Agencies, or Tech Teams** needing **proven, senior-level expertise to confidently deliver ambitious projects**, **Anthony Coffey** acts as your **Specialist Lead or Strategic Partner**. Leverage **12 years of deep expertise** in **architecture, DevOps, and practical AI** for **dependable execution** on complex initiatives, ensuring you **achieve superior technical outcomes** and **augment your capabilities**."
-*(Focus: Confidence, capability, dependable execution)*
+"For **Startups, Agencies, or Tech Teams** needing to **scale capacity or lead critical initiatives without the ramp-up**, **Anthony Coffey** acts as your **Technical Overflow Partner**. Leverage **12+ years of deep expertise** as a **plug-and-play senior member** who can seamlessly integrate, lead, and execute on **complex architecture, DevOps, and AI challenges**, ensuring you **ship faster** and **augment your team's leadership capabilities**."
+*(Focus: Seamless integration, scaling capacity, leadership)*
 
 ## Integration
 

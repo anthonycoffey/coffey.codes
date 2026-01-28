@@ -1,21 +1,15 @@
-'use client'; // Required for usePathname hook
+'use client';
 
 import '../styles/global.sass';
 import { usePathname } from 'next/navigation';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-// Note: Script component might need careful handling in Client Components if issues arise.
-// import Script from 'next/script';
 import { Navbar } from '../components/nav';
 import { LandingPageHeader } from '../components/LandingPageHeader';
 import GoogleAnalyticsClient from '../components/GoogleAnalyticsClient';
 import Footer from '../components/footer';
 import ConsentManager from '../components/ConsentManager';
 import { ThemeProvider } from '../components/ThemeProvider';
-
-// Metadata and viewport exports are removed as they are not allowed in Client Components ('use client').
-// These should be defined in specific page.tsx files or potentially in a separate
-// Server Component layout file that wraps this Client Component if global metadata is required.
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');
 

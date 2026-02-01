@@ -4,11 +4,18 @@
 
 ## Current Focus
 
-Troubleshooting the theme switcher revealed persistent issues with dynamically updating styles via the button. The decision has been made to remove the manual theme switcher component and rely solely on the user's system preference for light/dark mode, which was already functioning correctly via `next-themes` and `enableSystem`. Focus now returns to the previously defined next steps, primarily implementing the contact form backend.
+Completed troubleshooting and fixing broken taxonomy routes after Next.js 16 upgrade. The async params/searchParams breaking change has been resolved, and a comprehensive educational article has been published documenting the problem and solution. Focus now returns to the previously defined next steps, primarily implementing the contact form backend.
 
 ## Recent Changes
 
 *(Summarize the most recent significant updates or commits.)*
+- **February 1, 2026 (Next.js 16 Async Params Fix):**
+    - Fixed broken taxonomy routes (categories and tags) after Next.js 16 upgrade.
+    - Updated `app/articles/category/[category]/page.tsx` to await `params` and `searchParams`.
+    - Updated `app/articles/tag/[tag]/page.tsx` to await `params` and `searchParams`.
+    - Made `generateMetadata` and page component functions async to support Next.js 15+ breaking change.
+    - Created comprehensive educational article: `app/articles/posts/fixing-broken-routes-after-nextjs-16-upgrade.mdx`.
+    - Article explains the problem, why the change was made, step-by-step solution, and broader implications.
 - **April 17, 2025 (Later - Theme Switcher Removal):**
     - Removed the manual `ThemeSwitcher` component (`components/ThemeSwitcher.tsx`) due to persistent issues with dynamic style updates when using the button.
     - Removed `ThemeSwitcher` usage from `components/nav.tsx`.
@@ -61,6 +68,7 @@ Troubleshooting the theme switcher revealed persistent issues with dynamically u
 ## Learnings & Insights
 
 *(Capture any new learnings, discoveries, or insights gained during the recent work.)*
+- **Next.js Breaking Changes (Feb 2026):** The async params/searchParams breaking change in Next.js 15+ initially appears as added complexity but represents a fundamental shift toward streaming and partial prerendering. Understanding the "why" behind breaking changes helps transform frustration into learning opportunities. Turning real debugging experiences into educational content adds value for the community.
 - **Marketing-Driven Development:** Successfully utilized marketing documentation (`docs/marketing/uvp.md`) to directly inform the creation of targeted landing pages, demonstrating the link between strategy and implementation.
 - **Synchronization:** The Memory Bank update process highlighted the importance of keeping documentation synchronized with the actual codebase (e.g., correcting the package manager reference). Regular updates are crucial for accuracy.
 - **Clarity:** Explicitly defining next steps and decisions in `activeContext.md` helps maintain focus and track progress effectively.

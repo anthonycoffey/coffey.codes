@@ -1,0 +1,264 @@
+---
+title: 'Fixing Broken Dynamic Routes After Upgrading to Next.js 16'
+publishedAt: '2026-02-01'
+summary: 'Learn how to fix the common async params breaking change in Next.js 15+ that breaks dynamic routes, and understand why this change makes your apps more resilient.'
+tags: Next.js, React, TypeScript, Async, Server Components, Debugging
+category: Web Development
+---
+
+If you recently upgraded to Next.js 15 or 16 and suddenly your dynamic routes started throwing cryptic errors about params and searchParams being Promises, you're not alone. This breaking change caught many developers off guard, but understanding it reveals something profound about how Next.js is evolving to build more resilient applications.
+
+## The Problem: Routes That Worked Yesterday Don't Work Today
+
+After upgrading my MDX-powered blog to Next.js 16, I encountered this frustrating error:
+
+```
+Error: Route "/articles/category/[category]" used `params.category`. 
+`params` is a Promise and must be unwrapped with `await` or `React.use()` 
+before accessing its properties.
+```
+
+The same error appeared for `searchParams`:
+
+```
+Error: Route "/articles/tag/[tag]" used `searchParams.page`. 
+`searchParams` is a Promise and must be unwrapped with `await` or `React.use()` 
+before accessing its properties.
+```
+
+My taxonomy pages—categories and tags that had been working perfectly—were completely broken. The build succeeded, but at runtime, the pages failed to render.
+
+## Understanding the Breaking Change
+
+Prior to Next.js 15, both `params` and `searchParams` were synchronously available objects. You could access them directly:
+
+```tsx
+// This worked in Next.js 14
+export function generateMetadata({ params }) {
+  const category = params.category; // Direct access
+  return {
+    title: `Category: ${category}`,
+  };
+}
+
+export default function Page({ params, searchParams }) {
+  const page = searchParams?.page ? Number(searchParams.page) : 1;
+  const category = params.category;
+  // ... rest of component
+}
+```
+
+Starting with Next.js 15, these are now **Promises that must be awaited**:
+
+```tsx
+// Required in Next.js 15+
+export async function generateMetadata({ params }) {
+  const { category } = await params; // Must await!
+  return {
+    title: `Category: ${category}`,
+  };
+}
+
+export default async function Page({ params, searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const { category } = await params;
+  // ... rest of component
+}
+```
+
+## Why This Change Actually Makes Sense
+
+At first, this feels like unnecessary complexity. Why make simple property access async? But there's a compelling reason: **partial prerendering and streaming**.
+
+Next.js is moving toward a model where different parts of your page can be rendered and streamed at different times. By making `params` and `searchParams` async, Next.js gains the flexibility to:
+
+1. **Stream HTML as data becomes available** - Your page structure can start rendering before all params are resolved
+2. **Enable partial prerendering** - Static parts render immediately while dynamic parts wait for data
+3. **Improve error boundaries** - Async operations have clearer error handling patterns
+4. **Support edge runtime optimizations** - Async primitives work better in distributed edge environments
+
+This aligns with React's broader shift toward async components and Suspense boundaries, making your application more resilient to slow networks and external dependencies.
+
+## The Solution: A Step-by-Step Fix
+
+Let's fix a real-world example—a category page for a blog's taxonomy system.
+
+### Before: Synchronous Access (Next.js 14)
+
+```tsx
+// app/articles/category/[category]/page.tsx (Next.js 14)
+
+export function generateMetadata({ params }) {
+  const category = params.category;
+  const decodedCategory = decodeURIComponent(category);
+  
+  return {
+    title: `Articles in Category: ${decodedCategory}`,
+    description: `Explore articles categorized under "${decodedCategory}".`,
+  };
+}
+
+export default function CategoryPage({ params, searchParams }) {
+  const page = searchParams?.page ? Number(searchParams.page) : 1;
+  const itemsPerPage = 5;
+  const category = params.category;
+  const decodedCategory = decodeURIComponent(category);
+  
+  const posts = getPaginatedBlogPostsByCategory(
+    decodedCategory,
+    page,
+    itemsPerPage
+  );
+  
+  return (
+    <div>
+      <h1>Articles in "{decodedCategory}"</h1>
+      <BlogPosts posts={posts.posts} />
+      <Pagination totalPages={posts.pagination.totalPages} initialPage={page} />
+    </div>
+  );
+}
+```
+
+### After: Async/Await Pattern (Next.js 15+)
+
+```tsx
+// app/articles/category/[category]/page.tsx (Next.js 15+)
+
+export async function generateMetadata({ params }) {
+  const { category } = await params; // Await and destructure
+  const decodedCategory = decodeURIComponent(category);
+  
+  return {
+    title: `Articles in Category: ${decodedCategory}`,
+    description: `Explore articles categorized under "${decodedCategory}".`,
+  };
+}
+
+export default async function CategoryPage({ params, searchParams }) {
+  const resolvedSearchParams = await searchParams; // Await first
+  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const itemsPerPage = 5;
+  const { category } = await params; // Await and destructure
+  const decodedCategory = decodeURIComponent(category);
+  
+  const posts = getPaginatedBlogPostsByCategory(
+    decodedCategory,
+    page,
+    itemsPerPage
+  );
+  
+  return (
+    <div>
+      <h1>Articles in "{decodedCategory}"</h1>
+      <BlogPosts posts={posts.posts} />
+      <Pagination totalPages={posts.pagination.totalPages} initialPage={page} />
+    </div>
+  );
+}
+```
+
+### Key Changes Made
+
+1. **Added `async` keyword** to both `generateMetadata` and the page component function
+2. **Awaited `params`** before accessing properties: `const { category } = await params`
+3. **Awaited `searchParams`** before accessing properties: `const resolvedSearchParams = await searchParams`
+4. **Used destructuring** for cleaner code: `const { category } = await params`
+
+## Testing Your Fixes
+
+After making these changes, verify everything works:
+
+```bash
+# Build to catch any compilation errors
+npm run build
+
+# Start dev server to test runtime behavior
+npm run dev
+```
+
+Visit your dynamic routes to confirm:
+- Category pages: `/articles/category/web-development`
+- Tag pages: `/articles/tag/nextjs`
+- Paginated routes: `/articles/category/web-development?page=2`
+
+Check the terminal for any lingering errors about params or searchParams.
+
+## Common Patterns Across Your Codebase
+
+This breaking change affects any page component using dynamic routes. Here are common patterns to search for and update:
+
+### Pattern 1: Direct param access
+```tsx
+// ❌ Old way
+const id = params.id;
+
+// ✅ New way
+const { id } = await params;
+```
+
+### Pattern 2: Optional chaining with searchParams
+```tsx
+// ❌ Old way
+const query = searchParams?.q || '';
+
+// ✅ New way
+const resolvedSearchParams = await searchParams;
+const query = resolvedSearchParams?.q || '';
+```
+
+### Pattern 3: Multiple params
+```tsx
+// ❌ Old way
+const { slug, id } = params;
+
+// ✅ New way
+const { slug, id } = await params;
+```
+
+## A Note on Static Generation
+
+You might notice your routes change from SSG (`●`) to Dynamic (`ƒ`) in the build output after making components async. This is expected behavior—Next.js treats async page components as potentially dynamic since they might fetch data.
+
+If you want to maintain static generation with `generateStaticParams`, ensure your component doesn't perform any dynamic data fetching beyond what's needed for static param resolution:
+
+```tsx
+export async function generateStaticParams() {
+  const categories = getAllCategories();
+  
+  return categories.map((category) => ({
+    category: category.toLowerCase().trim(),
+  }));
+}
+```
+
+The routes will work correctly whether they're static or dynamic, but understanding this distinction helps with performance optimization.
+
+## The Bigger Picture: Embracing Async Primitives
+
+This breaking change is part of a broader evolution in React and Next.js toward async-first patterns:
+
+- **React Server Components** are inherently async
+- **Suspense boundaries** coordinate async data loading
+- **Streaming SSR** delivers content progressively
+- **Partial prerendering** mixes static and dynamic content
+
+By making `params` and `searchParams` async, Next.js aligns these routing primitives with the framework's modern rendering capabilities. The initial friction of updating your code pays dividends in flexibility and performance.
+
+## Resources for Further Learning
+
+- [Next.js 15 Release Notes](https://nextjs.org/blog/next-15) - Official changelog explaining async params
+- [Next.js Docs: Dynamic Routes](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes) - Updated documentation
+- [Next.js Migration Guide](https://nextjs.org/docs/app/building-your-application/upgrading) - Step-by-step upgrade instructions
+- [React Server Components](https://react.dev/reference/rsc/server-components) - Understanding the async foundation
+
+## Conclusion
+
+Breaking changes are never fun, but this particular change in Next.js 15+ represents a meaningful evolution toward more resilient, performant web applications. By making `params` and `searchParams` async Promises, Next.js unlocks powerful rendering optimizations while aligning with React's async-first future.
+
+The fix is straightforward: add `async` to your functions and `await` your params. Your taxonomy pages, dynamic routes, and search functionality will work smoothly again—and you'll be better positioned to leverage Next.js's advanced rendering features.
+
+If you're building an MDX-powered blog or any site with dynamic routing, take this opportunity to audit all your dynamic route handlers. A few minutes of updating `params` access patterns now will save you debugging headaches later.
+
+Have you encountered other surprising breaking changes in Next.js 15 or 16? I'd love to hear about your experience and how you solved them!

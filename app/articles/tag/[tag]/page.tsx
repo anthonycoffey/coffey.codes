@@ -26,8 +26,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
-  const tag = params.tag;
+export async function generateMetadata({ params }) {
+  const { tag } = await params;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
 
   return {
@@ -36,10 +36,11 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function TagPage({ params, searchParams }) {
-  const page = searchParams?.page ? Number(searchParams.page) : 1;
+export default async function TagPage({ params, searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
   const itemsPerPage = 5;
-  const tag = params.tag;
+  const { tag } = await params;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
   const posts = getPaginatedBlogPostsByTag(decodedTag, page, itemsPerPage);
 

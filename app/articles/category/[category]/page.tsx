@@ -30,8 +30,8 @@ export async function generateStaticParams() {
   return params;
 }
 
-export function generateMetadata({ params }) {
-  const category = params.category;
+export async function generateMetadata({ params }) {
+  const { category } = await params;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
 
   return {
@@ -40,10 +40,11 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function CategoryPage({ params, searchParams }) {
-  const page = searchParams?.page ? Number(searchParams.page) : 1;
+export default async function CategoryPage({ params, searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
   const itemsPerPage = 5;
-  const category = params.category;
+  const { category } = await params;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
 
   const otherCategories = getAllCategories().filter(

@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 
 interface SceneExplorerProps {
-  sceneNames: string[];
+  sceneNames?: string[];
   children: React.ReactNode;
 }
 
 const SceneExplorer: React.FC<SceneExplorerProps> = ({
-  sceneNames,
+  sceneNames = [],
   children,
 }) => {
   const [activeTab, setActiveTab] = useState(0);

@@ -35,7 +35,7 @@ _(Provide instructions or links to documentation on how to set up the local deve
 
 _(Document any limitations or constraints affecting development.)_
 
-- None specified.
+- **Node.js Version:** Requires Node.js >= 22.0.0 due to `camera-controls` dependency (via `@react-three/drei`).
 
 ## Key Dependencies
 

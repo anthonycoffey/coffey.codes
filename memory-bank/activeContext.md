@@ -9,6 +9,10 @@ Completed troubleshooting and fixing broken taxonomy routes after Next.js 16 upg
 ## Recent Changes
 
 *(Summarize the most recent significant updates or commits.)*
+- **February 17, 2026 (Node Version Update):**
+    - Updated `package.json` to specify `"engines": { "node": ">=22.0.0" }`.
+    - Created `.nvmrc` with version `22`.
+    - This resolves a Vercel build warning/error caused by `camera-controls` (a dependency of `@react-three/drei`) requiring Node.js 22+.
 - **February 1, 2026 (Next.js 16 Async Params Fix):**
     - Fixed broken taxonomy routes (categories and tags) after Next.js 16 upgrade.
     - Updated `app/articles/category/[category]/page.tsx` to await `params` and `searchParams`.

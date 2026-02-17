@@ -78,10 +78,10 @@ export default function Footer() {
         <div className="bg-blue-600 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
-              Ready to Transform Your Business?
+              Ready to Build Your Next Project?
             </h2>
             <p className="text-center text-xl mb-10 text-blue-100">
-              Let&apos;s discuss how tech can solve your problems and drive growth
+              Let's discuss how I can help you ship reliable, high-quality software
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link

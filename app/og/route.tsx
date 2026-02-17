@@ -4,7 +4,7 @@ export function GET(request: Request) {
   const url = new URL(request.url);
   const title =
     url.searchParams.get('title') ||
-    'Anthony Coffey | Solutions Architect & Software Engineer - Austin, Texas';
+    'Anthony Coffey | Full Stack Software Engineer - Austin, Texas';
 
   return new ImageResponse(
     (

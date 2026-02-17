@@ -18,9 +18,9 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Anthony Coffey | Senior Solutions Architect & Engineering Leader',
+  title: 'Anthony Coffey | Full Stack Software Engineer',
   description:
-    'Scale your engineering capacity with Anthony Coffey. 12+ years of expertise in reliable, production-ready software, leadership, and AI/ML integration.',
+    'Build reliable, scalable software with Anthony Coffey. 12+ years of full stack engineering expertise in React, Node.js, and cloud architecture.',
 };
 
 export default function Page() {
@@ -35,10 +35,10 @@ export default function Page() {
           <div>
             {/* Style heading and paragraph */}
             <h1 className="leading-tight text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Scale Your Engineering Capacity with Confidence
+              Building Reliable, Scalable Software for Web & Mobile
             </h1>
             <p className="text-lg text-gray-800 dark:text-gray-300 mb-6">
-              Leverage 12+ years of senior expertise to lead critical initiatives, unblock delivery, and ship production-ready software. Reliable execution that scales with your team.
+              Full Stack Engineer with 12+ years of experience shipping production-ready applications. Specializing in React, Node.js, and Cloud Architecture.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
@@ -77,7 +77,7 @@ export default function Page() {
                   Anthony Coffey
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 text-sm m-0 font-semibold">
-                  Senior Solutions Architect & AI Specialist
+                  Full Stack Software Engineer
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 text-xs m-0 text-right">
                   Austin, Texas
@@ -101,7 +101,7 @@ export default function Page() {
           {/* Section Header */}
           <div className="bg-blue-600 text-white p-6 text-center">
             <h2 className="text-2xl md:text-3xl font-bold">
-              How I Help You Succeed
+              Technical Expertise
             </h2>
           </div>
 
@@ -113,11 +113,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <BoltIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Performance Optimization
+                  Performance & Optimization
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Optimize application speed and efficiency, ensuring your systems perform reliably under load and scale smoothly.
+                Optimize application speed and efficiency through code-level improvements, database tuning, and efficient resource management.
               </p>
             </div>
 
@@ -127,11 +127,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <ShieldCheckIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Security Hardening
+                  Secure App Development
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Implement robust security measures and best practices to safeguard your data and infrastructure. Reliable delivery includes secure delivery.
+                Implement robust security measures (OWASP Top 10, XSS/CSRF protection) to safeguard your applications and user data.
               </p>
             </div>
 
@@ -141,11 +141,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <CodeBracketIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  Application Development
+                  Full Stack Development
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Develop custom, production-ready web and mobile applications tailored to your specific business needs, built for the long term.
+                Build custom, production-ready web and mobile applications using React, React Native, Next.js, and Node.js.
               </p>
             </div>
 
@@ -155,11 +155,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <ServerIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  System Architecture
+                  Cloud Architecture
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Design resilient, cost-effective cloud architectures that support sustainable scalability and maintainability.
+                Design and implement resilient, cost-effective cloud solutions on AWS and Google Cloud (GCP) that support sustainable growth.
               </p>
             </div>
 
@@ -169,11 +169,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <AdjustmentsHorizontalIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  AI/ML Integration
+                  AI-Powered Solutions
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Move beyond AI hype with practical, production-ready AI/ML solutions integrated seamlessly to deliver tangible business value.
+                Integrate practical AI/ML capabilities (Gemini, Cloud Vision) into applications to solve complex problems and enhance user experience.
               </p>
             </div>
 
@@ -183,11 +183,11 @@ export default function Page() {
               <div className="flex items-center mb-3">
                 <CommandLineIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-2" />
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                  DevOps
+                  DevOps & Infrastructure
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Implement efficient CI/CD pipelines and automation to ensure reliable, repeatable deployments and faster time-to-market.
+                Implement efficient CI/CD pipelines, containerization (Docker/Kubernetes), and infrastructure as code (Terraform) for reliable deployments.
               </p>
             </div>
 
@@ -195,7 +195,7 @@ export default function Page() {
             {/* Style CTA container, text, secondary button */}
             <div className="col-span-1 md:col-span-2 lg:col-span-3 bg-gray-50 dark:bg-neutral-700 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-gray-800 dark:text-gray-200 font-medium">
-                Ready to transform your business?
+                Ready to start your project?
               </p>
               <div className="flex gap-3">
                 <a
@@ -230,42 +230,42 @@ export default function Page() {
           <div className="mb-20">
             {/* Style heading and paragraph */}
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-gray-900 dark:text-white">
-              Expertise Driving Reliable & Innovative Solutions
+              Engineering Approach & Technologies
             </h2>
             <p className="text-center text-gray-800 dark:text-gray-300 mb-10">
-              Combining deep technical knowledge with a focus on tangible business outcomes.
+              Delivering high-quality software through rigorous engineering practices and modern technologies.
             </p>
 
             {/* Style "What To Expect" box */}
             <div className="bg-blue-50 dark:bg-blue-950/50 rounded-xl mb-12 max-w-3xl mx-auto py-8 px-6 shadow-sm border border-blue-100 dark:border-blue-900/50">
               <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-blue-100 text-center">
-              What To Expect
+              Engineering Principles
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
               {[
                 {
-                title: "Reliable Delivery",
-                desc: "Clear planning & execution for project certainty",
+                title: "Clean Code",
+                desc: "Writing maintainable, self-documenting code that is easy to extend.",
                 },
                 {
-                title: "Scalable Leadership",
-                desc: "Senior engineering capacity to lead initiatives and mentor teams",
+                title: "High Test Coverage",
+                desc: "Ensuring reliability with comprehensive unit and integration tests.",
                 },
                 {
-                title: "Sustainable Scalability",
-                desc: "Solutions architected for long-term growth",
+                title: "Modern Tech Stack",
+                desc: "Leveraging the latest tools like React, Next.js, and TypeScript.",
                 },
                 {
-                title: "Practical Innovation",
-                desc: "Bridging cutting-edge tech (like AI) with real results",
+                title: "Practical AI Integration",
+                desc: "Implementing AI/ML solutions that solve real-world problems.",
                 },
                 {
                 title: "Production-Ready Focus",
-                desc: "Delivering robust, deployable software",
+                desc: "Delivering robust, secure, and deployable software.",
                 },
                 {
-                title: "Frequent Communication",
-                desc: "Keeping you informed every step of the way",
+                title: "Clear Communication",
+                desc: "Transparent updates and collaboration throughout the development process.",
                 },
               ].map((item) => (
                 <li key={item.title} className="flex items-start gap-3">

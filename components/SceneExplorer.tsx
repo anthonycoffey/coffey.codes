@@ -3,20 +3,18 @@
 import React, { useState } from 'react';
 
 interface SceneExplorerProps {
-  sceneNames?: string[];
   children: React.ReactNode;
 }
 
-const SceneExplorer: React.FC<SceneExplorerProps> = ({
-  sceneNames = [],
-  children,
-}) => {
+const SceneExplorer: React.FC<SceneExplorerProps> = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const sceneNames = ['Fishbowl', 'Interactive Shapes'];
   const scenes = React.Children.toArray(children);
 
-  // If we have names but not enough scenes, or vice versa, handle gracefully
+  // Safely handle cases where we have fewer scenes than names
   const validScenes = scenes.slice(0, sceneNames.length);
 
+  // If no scenes are provided, return null
   if (validScenes.length === 0) {
     return null;
   }
@@ -44,15 +42,17 @@ const SceneExplorer: React.FC<SceneExplorerProps> = ({
           </button>
         ))}
       </div>
-      
+
       <div className="p-1 sm:p-4 bg-white dark:bg-gray-950 min-h-[300px] flex items-center justify-center">
         {validScenes.map((scene, index) => (
-          <div 
-            key={index} 
-            className={`w-full transition-opacity duration-300 ${activeTab === index ? 'block opacity-100' : 'hidden opacity-0'}`}
+          <div
+            key={index}
+            className={`w-full transition-opacity duration-300 ${
+              activeTab === index ? 'block opacity-100' : 'hidden opacity-0'
+            }`}
           >
-             {/* Only render the active scene to save WebGL resources */}
-             {activeTab === index ? scene : null}
+            {/* Only render the active scene to save WebGL resources */}
+            {activeTab === index ? scene : null}
           </div>
         ))}
       </div>

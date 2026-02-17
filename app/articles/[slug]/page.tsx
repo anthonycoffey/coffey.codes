@@ -107,7 +107,7 @@ export default async function Blog({ params }) {
           <Image
             width={330}
             height={330}
-            src="/headshot.jpg"
+            src="/headshot.png"
             alt="Anthony Coffey"
             className="w-10 h-10 rounded-full"
           />
@@ -119,7 +119,9 @@ export default async function Blog({ params }) {
               itemType="https://schema.org/Person"
             >
               {/* Style author name */}
-              <span itemProp="name" className="dark:text-gray-300">Anthony Coffey</span>
+              <span itemProp="name" className="dark:text-gray-300">
+                Anthony Coffey
+              </span>
             </span>
             {/* Style date */}
             <time

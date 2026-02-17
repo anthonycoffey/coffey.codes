@@ -38,7 +38,7 @@ export default function StrategicPartnersLandingPage() {
             <Image
               width={330}
               height={330}
-              src="/headshot.jpg"
+              src="/headshot.png"
               alt="Anthony Coffey"
               className="w-full h-full object-cover rounded-lg shadow-md"
             />

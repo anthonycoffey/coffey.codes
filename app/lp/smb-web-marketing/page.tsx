@@ -37,7 +37,7 @@ export default function SmbWebMarketingLandingPage() {
             <Image
               width={330}
               height={330}
-              src="/headshot.jpg"
+              src="/headshot.png"
               alt="Anthony Coffey"
               className="w-full h-full object-cover rounded-lg shadow-md"
             />
@@ -66,10 +66,10 @@ export default function SmbWebMarketingLandingPage() {
             You need a website that looks great *and* performs. With 12 years of
             experience in both WordPress and modern JavaScript development, I
             build high-quality sites designed for your specific needs.
-            Crucially, I ensure they&apos;re properly configured with essential tools
-            like Google Analytics and Tag Manager, so you can actually track
-            your marketing efforts and understand what&apos;s working. Get a
-            dependable partner, not just a developer.
+            Crucially, I ensure they&apos;re properly configured with essential
+            tools like Google Analytics and Tag Manager, so you can actually
+            track your marketing efforts and understand what&apos;s working. Get
+            a dependable partner, not just a developer.
           </p>
           {/* Enhanced Benefits List with Icons */}
           <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">

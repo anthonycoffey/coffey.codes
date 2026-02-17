@@ -38,7 +38,9 @@ export default function Page() {
               Building Reliable, Scalable Software for Web & Mobile
             </h1>
             <p className="text-lg text-gray-800 dark:text-gray-300 mb-6">
-              Full Stack Engineer with 12+ years of experience shipping production-ready applications. Specializing in React, Node.js, and Cloud Architecture.
+              Full Stack Engineer with 12+ years of experience shipping
+              production-ready applications. Specializing in React, Node.js, and
+              Cloud Architecture.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <a
@@ -67,7 +69,7 @@ export default function Page() {
               <Image
                 width={330}
                 height={330}
-                src="/headshot.jpg"
+                src="/headshot.png"
                 alt="Anthony Coffey"
                 className="w-full h-full object-cover rounded-lg shadow-md "
               />
@@ -117,7 +119,9 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Optimize application speed and efficiency through code-level improvements, database tuning, and efficient resource management.
+                Optimize application speed and efficiency through code-level
+                improvements, database tuning, and efficient resource
+                management.
               </p>
             </div>
 
@@ -131,7 +135,8 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Implement robust security measures (OWASP Top 10, XSS/CSRF protection) to safeguard your applications and user data.
+                Implement robust security measures (OWASP Top 10, XSS/CSRF
+                protection) to safeguard your applications and user data.
               </p>
             </div>
 
@@ -145,7 +150,8 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Build custom, production-ready web and mobile applications using React, React Native, Next.js, and Node.js.
+                Build custom, production-ready web and mobile applications using
+                React, React Native, Next.js, and Node.js.
               </p>
             </div>
 
@@ -159,7 +165,8 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Design and implement resilient, cost-effective cloud solutions on AWS and Google Cloud (GCP) that support sustainable growth.
+                Design and implement resilient, cost-effective cloud solutions
+                on AWS and Google Cloud (GCP) that support sustainable growth.
               </p>
             </div>
 
@@ -173,7 +180,9 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Integrate practical AI/ML capabilities (Gemini, Cloud Vision) into applications to solve complex problems and enhance user experience.
+                Integrate practical AI/ML capabilities (Gemini, Cloud Vision)
+                into applications to solve complex problems and enhance user
+                experience.
               </p>
             </div>
 
@@ -187,7 +196,9 @@ export default function Page() {
                 </h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-3">
-                Implement efficient CI/CD pipelines, containerization (Docker/Kubernetes), and infrastructure as code (Terraform) for reliable deployments.
+                Implement efficient CI/CD pipelines, containerization
+                (Docker/Kubernetes), and infrastructure as code (Terraform) for
+                reliable deployments.
               </p>
             </div>
 
@@ -233,57 +244,57 @@ export default function Page() {
               Engineering Approach & Technologies
             </h2>
             <p className="text-center text-gray-800 dark:text-gray-300 mb-10">
-              Delivering high-quality software through rigorous engineering practices and modern technologies.
+              Delivering high-quality software through rigorous engineering
+              practices and modern technologies.
             </p>
 
             {/* Style "What To Expect" box */}
             <div className="bg-blue-50 dark:bg-blue-950/50 rounded-xl mb-12 max-w-3xl mx-auto py-8 px-6 shadow-sm border border-blue-100 dark:border-blue-900/50">
               <h3 className="text-2xl font-bold mb-8 text-gray-900 dark:text-blue-100 text-center">
-              Engineering Principles
+                Engineering Principles
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-              {[
-                {
-                title: "Clean Code",
-                desc: "Writing maintainable, self-documenting code that is easy to extend.",
-                },
-                {
-                title: "High Test Coverage",
-                desc: "Ensuring reliability with comprehensive unit and integration tests.",
-                },
-                {
-                title: "Modern Tech Stack",
-                desc: "Leveraging the latest tools like React, Next.js, and TypeScript.",
-                },
-                {
-                title: "Practical AI Integration",
-                desc: "Implementing AI/ML solutions that solve real-world problems.",
-                },
-                {
-                title: "Production-Ready Focus",
-                desc: "Delivering robust, secure, and deployable software.",
-                },
-                {
-                title: "Clear Communication",
-                desc: "Transparent updates and collaboration throughout the development process.",
-                },
-              ].map((item) => (
-                <li key={item.title} className="flex items-start gap-3">
-                <CheckCircleIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1 flex-shrink-0" />
-                <div>
-                  {/* Style list item text */}
-                  <span className="block font-semibold text-gray-900 dark:text-gray-100">{item.title}</span>
-                  <span className="block text-gray-700 dark:text-gray-300 text-sm">{item.desc}</span>
-                </div>
-                </li>
-              ))}
+                {[
+                  {
+                    title: 'Clean Code',
+                    desc: 'Writing maintainable, self-documenting code that is easy to extend.',
+                  },
+                  {
+                    title: 'High Test Coverage',
+                    desc: 'Ensuring reliability with comprehensive unit and integration tests.',
+                  },
+                  {
+                    title: 'Modern Tech Stack',
+                    desc: 'Leveraging the latest tools like React, Next.js, and TypeScript.',
+                  },
+                  {
+                    title: 'Practical AI Integration',
+                    desc: 'Implementing AI/ML solutions that solve real-world problems.',
+                  },
+                  {
+                    title: 'Production-Ready Focus',
+                    desc: 'Delivering robust, secure, and deployable software.',
+                  },
+                  {
+                    title: 'Clear Communication',
+                    desc: 'Transparent updates and collaboration throughout the development process.',
+                  },
+                ].map((item) => (
+                  <li key={item.title} className="flex items-start gap-3">
+                    <CheckCircleIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mt-1 flex-shrink-0" />
+                    <div>
+                      {/* Style list item text */}
+                      <span className="block font-semibold text-gray-900 dark:text-gray-100">
+                        {item.title}
+                      </span>
+                      <span className="block text-gray-700 dark:text-gray-300 text-sm">
+                        {item.desc}
+                      </span>
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
-
-
-
-
-
 
             <LogoGrid logos={[...frontend, ...backend]} />
           </div>

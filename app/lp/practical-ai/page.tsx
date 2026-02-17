@@ -37,7 +37,7 @@ export default function PracticalAiLandingPage() {
             <Image
               width={330}
               height={330}
-              src="/headshot.jpg"
+              src="/headshot.png"
               alt="Anthony Coffey"
               className="w-full h-full object-cover rounded-lg shadow-md"
             />
@@ -75,8 +75,8 @@ export default function PracticalAiLandingPage() {
             <div className="flex items-start">
               <LightBulbIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
               <span>
-                <span className="font-semibold">Practical & Achievable:</span> AI
-                solutions focused on real-world application.
+                <span className="font-semibold">Practical & Achievable:</span>{' '}
+                AI solutions focused on real-world application.
               </span>
             </div>
             <div className="flex items-start">
@@ -96,15 +96,17 @@ export default function PracticalAiLandingPage() {
             <div className="flex items-start">
               <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
               <span>
-                <span className="font-semibold">Clear Strategy & Guidance:</span>{' '}
+                <span className="font-semibold">
+                  Clear Strategy & Guidance:
+                </span>{' '}
                 Understand the WHAT, WHY and HOW.
               </span>
             </div>
             <div className="flex items-start">
               <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
               <span>
-                <span className="font-semibold">Measurable ROI:</span> Focus on AI
-                that delivers tangible business results.
+                <span className="font-semibold">Measurable ROI:</span> Focus on
+                AI that delivers tangible business results.
               </span>
             </div>
           </div>

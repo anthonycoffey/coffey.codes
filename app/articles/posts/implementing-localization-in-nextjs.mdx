@@ -1,0 +1,280 @@
+---
+title: 'Implementing Localization in a Next.js App'
+publishedAt: '2026-02-26'
+summary: 'A guide on how to implement localization in a Next.js app to support multiple languages using i18next and react-i18next.'
+tags: Next.js, i18next, Localization, React, TypeScript
+category: Web Development
+---
+
+So, I just wrapped up implementing localization for a production app to support **English**, **Spanish**, and **Portuguese**, and let me tell you—it was a journey! 😅 But honestly, seeing your app speak multiple languages is pretty satisfying.
+
+I learned a ton during the process, so I figured I'd write it down to help you (and future me) out. Here's how we set up a robust internationalization (i18n) system using **i18next** and **react-i18next**.
+
+<Callout type="info">
+  Localization (l10n) is about adapting your product for a specific locale. Internationalization (i18n) is designing your product so it *can* be adapted. You need both! 🌍
+</Callout>
+
+## The Tech Stack 🛠️
+
+We went with a battle-tested stack for this:
+
+- **i18next**: The core framework. It's been around forever and just works.
+- **react-i18next**: The React bindings (because hooks are life).
+- **i18next-browser-languagedetector**: Automatically detects the user's language preference from their browser or `localStorage`.
+
+### Supported Languages
+- **English (en)** - Default/Fallback
+- **Spanish (es)**
+- **Portuguese (pt)**
+
+## Configuration ⚙️
+
+The heart of our i18n setup lives in `src/i18n/index.ts`. This file initializes `i18next`, loads our translation resources, and configures detection.
+
+Here's what the configuration looks like:
+
+```typescript
+// src/i18n/index.ts
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+import en from './locales/en.json';
+import es from './locales/es.json';
+import pt from './locales/pt.json';
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+      pt: { translation: pt },
+    },
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false, // React already safe from XSS
+    },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
+  });
+
+export default i18n;
+```
+
+<Callout type="tip">
+  Notice the detection order? We check `localStorage` first. This means if a user manually selects a language, we remember it! 🧠 If not, we fall back to their browser settings.
+</Callout>
+
+Our translation strings are stored in simple JSON files:
+```
+src/i18n/locales/
+├── en.json
+├── es.json
+└── pt.json
+```
+
+## Usage in Components 🧩
+
+Using the translations is super straightforward thanks to the `useTranslation` hook.
+
+```tsx
+import { useTranslation } from 'react-i18next';
+
+function WelcomeHeader() {
+  const { t } = useTranslation();
+
+  return (
+    <header className="p-4 bg-primary text-white">
+      <h1>{t('welcomeMessage')}</h1>
+      <p>{t('subtitle')}</p>
+    </header>
+  );
+}
+```
+
+<Callout type="warning">
+  Make sure your keys match exactly what's in your JSON files! Typos will just return the key string itself, which looks kinda unprofessional. 😅
+</Callout>
+
+## The Language Switcher 🔀
+
+We built a custom `LanguageSwitcher` component to let users swap languages easily. It features a dropdown menu, persists the selection, and even has some nice animations! ✨
+
+Here is the full component code:
+
+```tsx
+import { useState, useRef, useEffect, type JSX } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Check, ChevronDown } from 'lucide-react';
+
+const LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'es', label: 'ES' },
+  { code: 'pt', label: 'PT' },
+] as const;
+
+export function LanguageSwitcher(): JSX.Element {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        event.target instanceof Node &&
+        !menuRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
+
+  const currentLanguage = LANGUAGES.find((l) => l.code === i18n.language) || LANGUAGES[0];
+
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium text-foreground hover:bg-accent focus:outline-none"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        <span>{currentLanguage.label}</span>
+        <ChevronDown
+          className={`h-4 w-4 transition-transform duration-200 ${
+            isOpen ? 'rotate-180' : ''
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 z-50 mt-2 w-32 overflow-hidden rounded-md border border-border bg-popover shadow-md animate-in fade-in-0 zoom-in-95">
+          <div className="p-1">
+            {LANGUAGES.map(({ code, label }) => {
+              const isSelected = i18n.language === code;
+              return (
+                <button
+                  key={code}
+                  onClick={() => {
+                    i18n.changeLanguage(code);
+                    setIsOpen(false);
+                  }}
+                  className={`flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-sm text-left outline-none transition-colors hover:bg-accent hover:text-accent-foreground ${
+                    isSelected ? 'bg-accent text-accent-foreground' : ''
+                  }`}
+                  role="option"
+                  aria-selected={isSelected}
+                >
+                  <span>{label}</span>
+                  {isSelected && <Check className="h-4 w-4" />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## API Integration & Headers 🌐
+
+It's not just the UI that needs to be localized—the backend needs to know what language the user prefers too!
+
+We handled this with a simple Axios interceptor that attaches the `Accept-Language` header to every outgoing request.
+
+```typescript
+// In src/services/api.ts
+silmarilApi.interceptors.request.use((config) => {
+  // Pass the current language to the backend
+  config.headers['Accept-Language'] = i18n.language;
+  return config;
+});
+```
+
+Now our API responses (like validation errors or dynamic data) can respect the user's choice automatically. 😎
+
+## Validation Messages (Zod) ✅
+
+Speaking of validation, we're using **Zod** for our schemas. To localize error messages, we created a utility function `syncZodLocale`.
+
+It maps the current i18next language to Zod's built-in locales (`z.locales.en`, `z.locales.es`, etc.). We trigger this synchronization whenever the app loads or the language changes. No more "Required" messages popping up for Spanish users!
+
+## Testing 🧪
+
+Testing localized components can be tricky because `localStorage` persists between tests, which can lead to flaky results.
+
+To solve this, we use a helper function `createTestI18n` that creates an *isolated* instance of i18next for each test.
+
+```typescript
+// src/test/i18nTestHelper.ts
+export const createTestI18n = (language = 'en') => {
+  const i18n = i18next.createInstance();
+  i18n.init({
+    lng: language,
+    fallbackLng: 'en',
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+      // ...
+    },
+  });
+  return i18n;
+};
+```
+
+**Usage in Tests:**
+
+```tsx
+import { render } from '@testing-library/react';
+import { I18nextProvider } from 'react-i18next';
+import { createTestI18n } from '../../../test/i18nTestHelper';
+
+test('renders in Spanish', () => {
+  const i18n = createTestI18n('es'); // Start test in Spanish
+  render(
+    <I18nextProvider i18n={i18n}>
+      <LanguageSwitcher />
+    </I18nextProvider>
+  );
+  // Assert Spanish content...
+});
+```
+
+## Backend Bonus: FastAPI & Babel 🐍
+
+Wait, there's more! For the backend, we used the `fastapi-babel` package, and honestly, it's pretty slick.
+
+In the frontend, we're used to using dot-notation keys like `t('home.welcomeMessage')`. But in the backend, we used **natural language keys**.
+
+Instead of `home.welcomeMessage`, the key *is* the English string:
+
+```python
+_("Welcome to the API")
+```
+
+This makes the backend code so much more readable! You don't have to jump to a translation file to know what a message says—it's right there in the code. 🤯
+
+<Callout type="info">
+  This approach (gettext style) is super popular in Python/Django worlds. It keeps the codebase searchable and clean. The translation files map "Welcome to the API" -> "Bienvenido a la API".
+</Callout>
+
+## Conclusion
+
+Implementing localization might seem daunting at first, but with the right tools, it becomes a breeze. 🌬️ The combination of `i18next` for the frontend and `fastapi-babel` for the backend gave us a seamless, end-to-end multi-language experience.
+
+Now go out there and make your apps global! 🌎
+
+Happy coding! 🚀

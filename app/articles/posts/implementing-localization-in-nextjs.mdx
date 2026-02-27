@@ -6,12 +6,14 @@ tags: Next.js, i18next, Localization, React, TypeScript
 category: Web Development
 ---
 
-So, I just wrapped up implementing localization for a production app to support **English**, **Spanish**, and **Portuguese**, and let me tell you—it was a journey! 😅 But honestly, seeing your app speak multiple languages is pretty satisfying.
+I just finished implementing localization for a production Next.js app to support **English**, **Spanish**, and **Portuguese** and here's what I learned along the way.
 
-I learned a ton during the process, so I figured I'd write it down to help you (and future me) out. Here's how we set up a robust internationalization (i18n) system using **i18next** and **react-i18next**.
+In this article you will learn how I set up a robust internationalization (i18n) system using **i18next** and **react-i18next**.
 
 <Callout type="info">
-  Localization (l10n) is about adapting your product for a specific locale. Internationalization (i18n) is designing your product so it *can* be adapted. You need both! 🌍
+  Localization (l10n) is about adapting your product for a specific locale.
+  Internationalization (i18n) is designing your product so it *can* be adapted.
+  You need both! 🌍
 </Callout>
 
 ## The Tech Stack 🛠️
@@ -23,6 +25,7 @@ We went with a battle-tested stack for this:
 - **i18next-browser-languagedetector**: Automatically detects the user's language preference from their browser or `localStorage`.
 
 ### Supported Languages
+
 - **English (en)** - Default/Fallback
 - **Spanish (es)**
 - **Portuguese (pt)**
@@ -66,10 +69,13 @@ export default i18n;
 ```
 
 <Callout type="tip">
-  Notice the detection order? We check `localStorage` first. This means if a user manually selects a language, we remember it! 🧠 If not, we fall back to their browser settings.
+  Notice the detection order? We check `localStorage` first. This means if a
+  user manually selects a language, we remember it! 🧠 If not, we fall back to
+  their browser settings.
 </Callout>
 
 Our translation strings are stored in simple JSON files:
+
 ```
 src/i18n/locales/
 ├── en.json
@@ -97,7 +103,8 @@ function WelcomeHeader() {
 ```
 
 <Callout type="warning">
-  Make sure your keys match exactly what's in your JSON files! Typos will just return the key string itself, which looks kinda unprofessional. 😅
+  Make sure your keys match exactly what's in your JSON files! Typos will just
+  return the key string itself, which looks kinda unprofessional. 😅
 </Callout>
 
 ## The Language Switcher 🔀
@@ -139,7 +146,8 @@ export function LanguageSwitcher(): JSX.Element {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
-  const currentLanguage = LANGUAGES.find((l) => l.code === i18n.language) || LANGUAGES[0];
+  const currentLanguage =
+    LANGUAGES.find((l) => l.code === i18n.language) || LANGUAGES[0];
 
   return (
     <div className="relative" ref={menuRef}>
@@ -197,7 +205,7 @@ We handled this with a simple Axios interceptor that attaches the `Accept-Langua
 
 ```typescript
 // In src/services/api.ts
-silmarilApi.interceptors.request.use((config) => {
+api.interceptors.request.use((config) => {
   // Pass the current language to the backend
   config.headers['Accept-Language'] = i18n.language;
   return config;
@@ -210,13 +218,13 @@ Now our API responses (like validation errors or dynamic data) can respect the u
 
 Speaking of validation, we're using **Zod** for our schemas. To localize error messages, we created a utility function `syncZodLocale`.
 
-It maps the current i18next language to Zod's built-in locales (`z.locales.en`, `z.locales.es`, etc.). We trigger this synchronization whenever the app loads or the language changes. No more "Required" messages popping up for Spanish users!
+It maps the current i18next language to Zod's built-in locales (`z.locales.en`, `z.locales.es`, etc.). We trigger this synchronization whenever the app loads or the language changes. No more English messages coming from the backend for Spanish users!
 
 ## Testing 🧪
 
 Testing localized components can be tricky because `localStorage` persists between tests, which can lead to flaky results.
 
-To solve this, we use a helper function `createTestI18n` that creates an *isolated* instance of i18next for each test.
+To solve this, we use a helper function `createTestI18n` that creates an _isolated_ instance of i18next for each test.
 
 ```typescript
 // src/test/i18nTestHelper.ts
@@ -247,7 +255,7 @@ test('renders in Spanish', () => {
   render(
     <I18nextProvider i18n={i18n}>
       <LanguageSwitcher />
-    </I18nextProvider>
+    </I18nextProvider>,
   );
   // Assert Spanish content...
 });
@@ -259,7 +267,7 @@ Wait, there's more! For the backend, we used the `fastapi-babel` package, and ho
 
 In the frontend, we're used to using dot-notation keys like `t('home.welcomeMessage')`. But in the backend, we used **natural language keys**.
 
-Instead of `home.welcomeMessage`, the key *is* the English string:
+Instead of `home.welcomeMessage`, the key _is_ the English string:
 
 ```python
 _("Welcome to the API")

@@ -141,8 +141,8 @@ See `CLAUDE.md` at the project root for the full code style guide (TypeScript co
 
 | Tool | Command | Purpose |
 |------|---------|---------|
-| Dev server | `bun dev` | Local development on port 3000 |
-| Build | `bun build` | Production build |
-| Lint | `bun lint` | ESLint check |
-| Lint fix | `bun lint:fix` | ESLint auto-fix |
+| Dev server | `npm dev` | Local development on port 3000 |
+| Build | `npm build` | Production build |
+| Lint | `npm lint` | ESLint check |
+| Lint fix | `npm lint:fix` | ESLint auto-fix |
 | Deploy | Push to `master` | Auto-deploy via Vercel |

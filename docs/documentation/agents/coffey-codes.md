@@ -32,7 +32,7 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 | Animation | motion |
 | Icons | @heroicons/react |
 | Hosting | Vercel (auto-deploys from `master`) |
-| Package Manager | Bun |
+| Package Manager | npm |
 
 ## Key Dependencies
 
@@ -114,15 +114,15 @@ No environment variables are required for local development.
 ### Run locally
 
 ```bash
-bun install
-bun dev        # http://localhost:3000
+npm install
+npm dev        # http://localhost:3000
 ```
 
 ### Build for production
 
 ```bash
-bun build
-bun start
+npm build
+npm start
 ```
 
 ## Known Gotchas

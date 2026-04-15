@@ -4,7 +4,7 @@
 
 ## Current Status
 
-The project is substantially built out and actively maintained. Core sections (Blog, Portfolio, Contact) and key features (MDX rendering, Search, Categories/Tags, RSS, OG Images) are implemented using Next.js App Router and Bun. The primary focus shifts between content creation and feature refinement/addition. Deployment to Vercel is automated from the `master` branch.
+The project is substantially built out and actively maintained. Core sections (Blog, Portfolio, Contact) and key features (MDX rendering, Search, Categories/Tags, RSS, OG Images) are implemented using Next.js App Router and npm. The primary focus shifts between content creation and feature refinement/addition. Deployment to Vercel is automated from the `master` branch.
 
 ## What Works
 
@@ -25,7 +25,7 @@ The project is substantially built out and actively maintained. Core sections (B
     - `app/lp/smb-web-marketing/page.tsx`
     - `app/lp/strategic-partners/page.tsx`
 - **Styling:** Tailwind CSS and SASS (`styles/global.sass`) are set up.
-- **Package Manager:** Bun is used (`bun.lockb`).
+- **Package Manager:** npm is used
 - **Components:** A library of reusable components exists in `components/` (e.g., `Callout`, `SearchBox`, `Posts`).
 - **SEO Basics:** `robots.ts`, `sitemap.ts`, `og/route.tsx` suggest basic SEO considerations.
 - **3D Elements:** Integration with React Three Fiber (`components/ThreeScene.tsx`, `components/FishbowlScene.tsx`).
@@ -54,4 +54,4 @@ The project is substantially built out and actively maintained. Core sections (B
 - *(Initial):* Project likely started or migrated to Next.js App Router.
 - *(Initial):* Chose MDX for blog content flexibility.
 - *(Initial):* Adopted Tailwind CSS for styling.
-- *(Date TBD):* Switched package manager to Bun.
+- *(Date TBD):* Switched package manager to npm.

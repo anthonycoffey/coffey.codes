@@ -9,7 +9,17 @@
       "Bash(cp docs/marketing/email-marketing.md docs/documentation/guides/marketing/email-marketing.md)",
       "Bash(cp docs/marketing/lead-capture.md docs/documentation/guides/marketing/lead-capture.md)",
       "Bash(rm docs/marketing-advertising-strategy.md docs/onpage-seo-strategy.md)",
-      "Bash(rm -rf docs/marketing)"
+      "Bash(rm -rf docs/marketing)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create --title 'feat: full visual redesign with CSS-var theme system [SPEC-001]' --body ':*)",
+      "Bash(ls D:\\\\repos\\\\coffey.codes\\\\components\\\\[Ff]ooter*)",
+      "Bash(dir D:\\\\repos\\\\coffey.codes\\\\components\\\\*ooter*)",
+      "Bash(git mv:*)",
+      "Bash(git commit -m 'fix: rename footer.tsx to Footer.tsx for case-sensitive Linux builds [SPEC-001]:*)"
     ]
   }
 }

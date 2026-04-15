@@ -60,7 +60,7 @@ coffey.codes/
 | 3D | @react-three/fiber + drei | Homepage scenes |
 | Animation | motion | UI animations |
 | Icons | @heroicons/react | |
-| Package Manager | Bun | `bun.lockb` |
+| Package Manager | npm | `package.json` |
 | Hosting | Vercel | Auto-deploy from `master` |
 | Analytics | Google Tag Manager | GTM-KJC6Q389 |
 
@@ -78,8 +78,8 @@ Utility-first CSS for rapid development. Complemented by SASS for global styles.
 ### MDX for Blog Content
 Allows JSX components within markdown, enabling rich interactive blog posts. Processed by `next-mdx-remote`.
 
-### Bun as Package Manager
-Faster than npm/yarn. Lock file is `bun.lockb`.
+### npm as Package Manager
+npm is preferred for stability/practicality. Lock file is `package.json`.
 
 ### System-Preference Theming Only
 Manual theme toggle was removed (April 2025) due to persistent issues with dynamic style updates. The site now relies solely on `next-themes` with `enableSystem`.
@@ -129,12 +129,12 @@ Custom components available in blog posts are registered in `components/mdx.tsx`
 ## Build & Deployment
 
 ```bash
-bun install         # Install dependencies (requires Node >= 22)
-bun dev             # Dev server at http://localhost:3000
-bun build           # Production build
-bun start           # Run production build locally
-bun lint            # ESLint
-bun lint:fix        # ESLint auto-fix
+npm install         # Install dependencies (requires Node >= 22)
+npm dev             # Dev server at http://localhost:3000
+npm build           # Production build
+npm start           # Run production build locally
+npm lint            # ESLint
+npm lint:fix        # ESLint auto-fix
 ```
 
 **Deployment:** Push to `master` → Vercel auto-deploys.

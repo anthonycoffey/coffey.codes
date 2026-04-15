@@ -68,7 +68,7 @@ const Testimonials = () => {
   }, [currentIndex, isAutoPlaying, isHovering, next]);
 
   const slideVariants = {
-    enter: (direction) => ({
+    enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
       opacity: 0,
       scale: 0.9,
@@ -79,16 +79,16 @@ const Testimonials = () => {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: [0.4, 0, 0.2, 1] as any,
+        ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
       },
     },
-    exit: (direction) => ({
+    exit: (direction: number) => ({
       x: direction < 0 ? 300 : -300,
       opacity: 0,
       scale: 0.9,
       transition: {
         duration: 0.5,
-        ease: [0.4, 0, 1, 1] as any,
+        ease: [0.4, 0, 1, 1] as [number, number, number, number],
       },
     }),
   };
@@ -114,72 +114,52 @@ const Testimonials = () => {
 
   return (
     <section
-      className="bg-gradient-to-b from-gray-900 to-gray-800 pt-4 rounded-xl -mx-0 md:-mx-20 border border-blue-600/50 shadow-lg relative overflow-hidden"
+      data-theme="dark"
+      className="bg-surface border border-border pt-4 rounded-xl shadow-retro relative overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/20 to-transparent"></div>
-
       <div className="relative py-12 px-4 md:px-8 lg:px-12">
         {/* Controls */}
         <div className="absolute z-10 top-1/2 left-0 right-0 flex justify-between px-2 md:px-4">
           <button
-            onClick={() => {
-              paginate(-1);
-              setIsAutoPlaying(false);
-            }}
-            className="p-2 md:p-3 rounded-full bg-gray-800/80 hover:bg-gray-700 transition-all duration-300 border border-gray-700 transform hover:scale-105"
+            onClick={() => { paginate(-1); setIsAutoPlaying(false); }}
+            className="p-2 md:p-3 rounded-full bg-surface-hover hover:bg-bg-alt transition-all duration-300 border border-border transform hover:scale-105"
             aria-label="Previous testimonial"
           >
-            <ChevronLeftIcon className="h-5 w-5 md:h-6 md:w-6 text-blue-400" />
+            <ChevronLeftIcon className="h-5 w-5 md:h-6 md:w-6 text-link" />
           </button>
-
           <button
-            onClick={() => {
-              paginate(1);
-              setIsAutoPlaying(false);
-            }}
-            className="p-2 md:p-3 rounded-full bg-gray-800/80 hover:bg-gray-700 transition-all duration-300 border border-gray-700 transform hover:scale-105"
+            onClick={() => { paginate(1); setIsAutoPlaying(false); }}
+            className="p-2 md:p-3 rounded-full bg-surface-hover hover:bg-bg-alt transition-all duration-300 border border-border transform hover:scale-105"
             aria-label="Next testimonial"
           >
-            <ChevronRightIcon className="h-5 w-5 md:h-6 md:w-6 text-blue-400" />
+            <ChevronRightIcon className="h-5 w-5 md:h-6 md:w-6 text-link" />
           </button>
         </div>
 
-        {/* Play/Pause button */}
+        {/* Play/Pause */}
         <button
           onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-          className="absolute z-10 top-4 right-4 p-2 rounded-full bg-gray-800/80 hover:bg-gray-700 transition-all duration-300 border border-gray-700"
+          className="absolute z-10 top-4 right-4 p-2 rounded-full bg-surface-hover hover:bg-bg-alt transition-all duration-300 border border-border"
           aria-label={isAutoPlaying ? 'Pause slideshow' : 'Play slideshow'}
         >
           {isAutoPlaying ? (
-            <PauseIcon className="h-4 w-4 text-blue-400" />
+            <PauseIcon className="h-4 w-4 text-link" />
           ) : (
-            <PlayIcon className="h-4 w-4 text-blue-400" />
+            <PlayIcon className="h-4 w-4 text-link" />
           )}
         </button>
 
         {/* Decorative quote mark */}
         <div className="absolute top-6 left-6 opacity-20">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="48"
-            height="48"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-blue-300"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent2">
             <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
             <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
           </svg>
         </div>
 
-        {/* Testimonials */}
+        {/* Testimonial slide */}
         <div className="min-h-[300px] sm:min-h-[250px] flex items-center justify-center">
           <AnimatePresence custom={direction} initial={false} mode="wait">
             <motion.div
@@ -191,10 +171,10 @@ const Testimonials = () => {
               exit="exit"
               className="w-full"
             >
-              <figure className="max-w-3xl mx-auto bg-gray-800/40 p-6 rounded-lg border-b border-blue-800/30">
+              <figure className="max-w-3xl mx-auto bg-bg-alt p-6 rounded-lg border border-border">
                 <blockquote>
-                  <p className="text-lg md:text-xl italic font-light text-white text-center leading-relaxed">
-                  &quot;{testimonials[currentIndex].text}&quot;
+                  <p className="text-lg md:text-xl italic font-light text-c-text text-center leading-relaxed">
+                    &quot;{testimonials[currentIndex].text}&quot;
                   </p>
                 </blockquote>
                 <figcaption className="flex flex-col items-center justify-center mt-6 space-y-2">
@@ -203,34 +183,21 @@ const Testimonials = () => {
                       <StarIcon key={i} className="h-5 w-5 text-yellow-400" />
                     ))}
                   </div>
-
                   <div className="mt-4">
-                    <div className="font-medium text-white text-lg">
+                    <div className="font-fraunces font-medium text-c-heading text-lg">
                       {testimonials[currentIndex].author}
                     </div>
                   </div>
-
                   {testimonials[currentIndex].link && (
-                    <div className="text-sm font-light text-gray-400 mt-2">
+                    <div className="text-sm font-light text-c-muted mt-2">
                       <a
                         href={`https://${testimonials[currentIndex].link}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-blue-400 transition-colors flex items-center"
+                        className="hover:text-link transition-colors flex items-center"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 mr-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                         {testimonials[currentIndex].link}
                       </a>
@@ -249,9 +216,7 @@ const Testimonials = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? 'bg-blue-500 scale-125'
-                  : 'bg-gray-500 hover:bg-gray-400'
+                index === currentIndex ? 'bg-accent1 scale-125' : 'bg-border hover:bg-c-muted'
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />

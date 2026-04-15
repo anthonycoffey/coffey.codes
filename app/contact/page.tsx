@@ -1,4 +1,6 @@
 import ContactForm from '../../components/ContactForm';
+import RetroWindow from '../../components/ui/RetroWindow';
+import Button from '../../components/ui/Button';
 import {
   CalendarDaysIcon,
   EnvelopeIcon,
@@ -15,100 +17,82 @@ export const metadata = {
 
 export default async function ContactPage() {
   return (
-    <section className="contact-page">
-      <div className="page-content">
-        {/* Style header border, title, paragraph */}
-        <div className="border-b border-gray-300 dark:border-neutral-700 pb-4 mb-4 max-w-6xl mx-auto">
-          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center dark:text-white">
-            <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+    <section className="bg-bg min-h-screen">
+      <div className="max-w-5xl mx-auto px-4 py-12">
+        <div className="border-b border-border pb-4 mb-10">
+          <h1 className="font-fraunces font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+            <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Contact Me
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-c-muted">
             Have a project in mind or need technical expertise? Let&apos;s chat!
           </p>
         </div>
 
-        {/* Style Contact Info section */}
-        <div className="bg-gray-50 dark:bg-neutral-900 rounded-lg p-6 mb-8">
-          <div className="text-center mb-6">
-            <h2 className="text-xl font-semibold dark:text-white">Contact Information</h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Interested in connecting? Feel free to reach out!
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Style Phone section */}
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <PhoneIcon className="h-5 w-5 text-blue-600" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Left column: info boxes */}
+          <div className="flex flex-col gap-4">
+            <RetroWindow title="phone.txt">
+              <div className="p-5 flex items-center gap-4">
+                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
+                  <PhoneIcon className="h-5 w-5 text-accent1-dark" />
+                </div>
+                <div>
+                  <p className="font-semibold text-c-heading text-sm">Phone</p>
+                  <p className="text-c-text">(737) 932-4565</p>
+                </div>
               </div>
-              <h3 className="font-medium mb-1 dark:text-white">Phone</h3>
-              <p className="text-gray-600 dark:text-gray-400">(737) 932-4565</p>
-            </div>
+            </RetroWindow>
 
-            {/* Style Email section */}
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <EnvelopeIcon className="h-5 w-5 text-blue-600" />
+            <RetroWindow title="email.txt">
+              <div className="p-5 flex items-center gap-4">
+                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
+                  <EnvelopeIcon className="h-5 w-5 text-accent1-dark" />
+                </div>
+                <div>
+                  <p className="font-semibold text-c-heading text-sm">Email</p>
+                  <p className="text-c-text">anthony@coffey.codes</p>
+                </div>
               </div>
-              <h3 className="font-medium mb-1 dark:text-white">Email</h3>
-              <p className="text-gray-600 dark:text-gray-400">anthony@coffey.codes</p>
-            </div>
+            </RetroWindow>
 
-            {/* Style Location section */}
-            <div className="text-center p-4">
-              <div className="mx-auto p-3 bg-white dark:bg-neutral-800 rounded-full w-12 h-12 flex items-center justify-center mb-3 shadow-sm">
-                <MapPinIcon className="h-5 w-5 text-blue-600" />
+            <RetroWindow title="location.txt">
+              <div className="p-5 flex items-center gap-4">
+                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
+                  <MapPinIcon className="h-5 w-5 text-accent1-dark" />
+                </div>
+                <div>
+                  <p className="font-semibold text-c-heading text-sm">Location</p>
+                  <p className="text-c-text">Austin, Texas</p>
+                </div>
               </div>
-              <h3 className="font-medium mb-1 dark:text-white">Location</h3>
-              <p className="text-gray-600 dark:text-gray-400">Austin, Texas</p>
+            </RetroWindow>
+
+            <RetroWindow title="calendar.txt">
+              <div className="p-5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
+                    <CalendarDaysIcon className="h-5 w-5 text-accent1-dark" />
+                  </div>
+                  <p className="font-semibold text-c-heading text-sm">Schedule a Free Consultation</p>
+                </div>
+                <p className="text-c-muted text-sm mb-4 leading-relaxed">
+                  The fastest way to discuss your project is to book a free 30-minute consultation. We can discuss your needs and determine if my expertise is the right fit.
+                </p>
+                <Button as="a" href="https://calendly.com/antcoffpersonal/meet" variant="primary" size="sm" target="_blank" rel="noopener noreferrer">
+                  <CalendarDaysIcon className="h-4 w-4" />
+                  Book Your Free Session
+                </Button>
+              </div>
+            </RetroWindow>
+          </div>
+
+          {/* Right column: contact form */}
+          <RetroWindow title="send-message.txt">
+            <div className="p-6">
+              <ContactForm />
             </div>
-          </div>
-        </div>
-
-        {/* Style Contact Form section container, heading, paragraph */}
-        <div className="bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-800 p-6 md:p-8 mb-8">
-          <div className="flex items-center mb-4">
-            <EnvelopeIcon className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" />
-            <h2 className="text-xl font-semibold dark:text-white">Send a Message</h2>
-          </div>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Prefer to send a message? Fill out the form below to contact me
-            directly. I typically respond to all inquiries within 24 hours.
-          </p>
-          {/* Add wrapper to center and constrain width, plus add title */}
-          <div className="w-full max-w-lg mx-auto">
-            <h3 className="text-xl font-semibold text-center text-neutral-800 dark:text-neutral-200 mb-4">
-              Get in Touch
-            </h3>
-            <ContactForm />
-          </div>
-        </div>
-
-        {/* Style Calendar Section container, heading, paragraph */}
-        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-100 dark:border-blue-900 rounded-lg shadow-sm p-6 md:p-8 mb-8">
-          <div className="flex items-center mb-4">
-            <CalendarDaysIcon className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0" />
-            <h2 className="text-xl font-semibold text-blue-800 dark:text-blue-200">
-              Schedule a Free Consultation
-            </h2>
-          </div>
-          <p className="text-blue-700 dark:text-blue-300 mb-6">
-            The fastest way to discuss your project is to book a free 30-minute
-            consultation. We can discuss your needs and determine if my
-            expertise is the right fit for your goals.
-          </p>
-          <div className="flex justify-center">
-            <a
-              href="https://calendly.com/antcoffpersonal/meet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition-colors"
-            >
-              <CalendarDaysIcon className="h-5 w-5 mr-2" />
-              Book Your Free Session
-            </a>
-          </div>
+          </RetroWindow>
         </div>
       </div>
     </section>

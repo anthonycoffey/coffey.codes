@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
@@ -9,7 +9,10 @@ import {
   UserIcon,
   ClockIcon,
   CodeBracketSquareIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid';
+import RetroWindow from '../../components/ui/RetroWindow';
+import Button from '../../components/ui/Button';
 
 import Image from 'next/image';
 
@@ -144,29 +147,40 @@ const PortfolioSection: React.FC = () => {
     setSelectedProject(null);
   };
 
+  // Scroll lock when modal open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [selectedProject]);
+
+  const tiltAngles = [-1.5, 1, -2, 0.5];
   const displayedProjects = portfolioProjects;
 
   return (
-    <section>
-      <div className="page-content">
-        <div className="border-b border-gray-300 dark:border-neutral-700 pb-6 mb-8 max-w-6xl mx-auto">
-          <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center dark:text-white">
-            <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+    <section className="bg-bg min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="border-b border-border pb-6 mb-10">
+          <h1 className="font-fraunces font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+            <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Portfolio
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Check out some of my recent work!
-          </p>
+          <p className="text-c-muted">Check out some of my recent work!</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-6xl mx-auto">
-          {displayedProjects.map((project) => (
+        {/* Polaroid grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+          {displayedProjects.map((project, i) => (
             <div
               key={project.id}
-              className="border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg dark:hover:border-neutral-700 dark:hover:bg-neutral-800 cursor-pointer"
+              className="polaroid-card vhs-card cursor-pointer"
+              style={{ '--card-tilt': `${tiltAngles[i % tiltAngles.length]}deg` } as React.CSSProperties}
               onClick={() => openProject(project)}
             >
-              <div className="h-64 overflow-hidden">
+              <div className="h-56 overflow-hidden">
                 <Image
                   width={1200}
                   height={1200}
@@ -175,205 +189,96 @@ const PortfolioSection: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full"
-                    >
+              <div className="pt-3 px-1">
+                <h3 className="font-fraunces text-lg font-bold text-c-heading mb-1">{project.title}</h3>
+                <p className="text-c-muted text-sm mb-3">{project.description}</p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {project.tags.map((tag, idx) => (
+                    <span key={idx} className="bg-accent2 text-c-heading text-xs font-semibold px-2 py-0.5 rounded-full">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                  <span className="flex items-center">
-                    <UserIcon className="h-4 w-4 mr-1" />
-                    {project.client}
-                  </span>
-                  <span className="flex items-center">
-                    <ClockIcon className="h-4 w-4 mr-1" />
-                    {project.year}
-                  </span>
+                <div className="flex justify-between text-xs text-c-muted">
+                  <span className="flex items-center gap-1"><UserIcon className="h-3 w-3" />{project.client}</span>
+                  <span className="flex items-center gap-1"><ClockIcon className="h-3 w-3" />{project.year}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
+        {/* Modal */}
         {selectedProject && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-sm transition-all duration-300"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-sm"
             onClick={closeProject}
           >
             <div
-              className="bg-white dark:bg-neutral-900 rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-neutral-700 custom-scrollbar"
+              className="bg-surface rounded-xl shadow-2xl overflow-hidden max-w-6xl w-full max-h-[90vh] overflow-y-auto border border-border custom-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center p-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-                <h3 className="text-2xl font-bold tracking-tight">
-                  {selectedProject.title}
-                </h3>
+              {/* Modal header */}
+              <div className="flex justify-between items-center p-4 bg-accent2 border-b-2 border-border">
+                <h3 className="font-fraunces text-xl font-bold text-c-heading">{selectedProject.title}</h3>
                 <button
                   onClick={closeProject}
-                  className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  className="p-1.5 rounded-full hover:bg-surface-hover transition-colors text-c-muted"
                   aria-label="Close modal"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-white"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <XMarkIcon className="h-5 w-5" />
                 </button>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 p-6">
+                {/* Left: image + details */}
                 <div className="lg:col-span-3 space-y-6">
-                  <div className="overflow-hidden rounded-lg shadow-lg">
+                  <RetroWindow title={selectedProject.title}>
                     <Image
                       width={1200}
                       height={1200}
-                      src={
-                        activeImageIndex === 0
-                          ? selectedProject.mainImage
-                          : selectedProject.gallery[activeImageIndex - 1]
-                      }
+                      src={activeImageIndex === 0 ? selectedProject.mainImage : selectedProject.gallery[activeImageIndex - 1]}
                       alt={selectedProject.title}
                       className="w-full h-auto object-fit"
                     />
-                  </div>
+                  </RetroWindow>
 
                   {selectedProject.gallery.length > 0 && (
                     <div className="grid grid-cols-4 gap-3">
                       <div
-                        className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
-                          activeImageIndex === 0
-                            ? 'ring-2 ring-blue-600 scale-[1.02]'
-                            : 'opacity-80 hover:opacity-100'
-                        }`}
+                        className={`cursor-pointer rounded overflow-hidden transition-all duration-200 ${activeImageIndex === 0 ? 'ring-2 ring-accent1-dark scale-[1.02]' : 'opacity-70 hover:opacity-100'}`}
                         onClick={() => setActiveImageIndex(0)}
                       >
-                        <Image
-                          width={1200}
-                          height={1200}
-                          src={selectedProject.mainImage}
-                          alt="Main"
-                          className="w-full h-20 object-cover"
-                        />
+                        <Image width={300} height={300} src={selectedProject.mainImage} alt="Main" className="w-full h-16 object-cover" />
                       </div>
-
                       {selectedProject.gallery.map((image, index) => (
                         <div
                           key={index}
-                          className={`cursor-pointer rounded-lg overflow-hidden shadow transition-all duration-200 ${
-                            activeImageIndex === index + 1
-                              ? 'ring-2 ring-blue-600 scale-[1.02]'
-                              : 'opacity-80 hover:opacity-100'
-                          }`}
+                          className={`cursor-pointer rounded overflow-hidden transition-all duration-200 ${activeImageIndex === index + 1 ? 'ring-2 ring-accent1-dark scale-[1.02]' : 'opacity-70 hover:opacity-100'}`}
                           onClick={() => setActiveImageIndex(index + 1)}
                         >
-                          <Image
-                            width={1200}
-                            height={1200}
-                            src={image}
-                            alt={`Detail ${index + 1}`}
-                            className="w-full h-20 object-cover"
-                          />
+                          <Image width={300} height={300} src={image} alt={`Detail ${index + 1}`} className="w-full h-16 object-cover" />
                         </div>
                       ))}
                     </div>
                   )}
 
-                  <div className="space-y-6 bg-gray-50 dark:bg-neutral-800 p-6 rounded-xl">
+                  <div className="space-y-5 bg-bg-alt p-6 rounded-xl border border-border">
                     <div>
-                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                          />
-                        </svg>
-                        Challenge
-                      </h4>
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {selectedProject.challenge}
-                      </p>
+                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Challenge</h4>
+                      <p className="text-c-text leading-relaxed text-sm">{selectedProject.challenge}</p>
                     </div>
-
                     <div>
-                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13 10V3L4 14h7v7l9-11h-7z"
-                          />
-                        </svg>
-                        Solution
-                      </h4>
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                        {selectedProject.solution}
-                      </p>
+                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Solution</h4>
+                      <p className="text-c-text leading-relaxed text-sm">{selectedProject.solution}</p>
                     </div>
-
                     <div>
-                      <h4 className="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        Results
-                      </h4>
-                      <ul className="space-y-3">
+                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Results</h4>
+                      <ul className="space-y-2">
                         {selectedProject.results.map((result, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start bg-white dark:bg-neutral-700 p-3 rounded-lg shadow-sm"
-                          >
-                            <CheckCircleIcon className="h-5 w-5 text-green-500 dark:text-green-400 mr-3 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-700 dark:text-gray-300">
-                              {result}
-                            </span>
+                          <li key={index} className="flex items-start bg-surface p-3 rounded-lg border border-border">
+                            <CheckCircleIcon className="h-4 w-4 text-accent1-dark mr-2 flex-shrink-0 mt-0.5" />
+                            <span className="text-c-text text-sm">{result}</span>
                           </li>
                         ))}
                       </ul>
@@ -381,73 +286,33 @@ const PortfolioSection: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Right: sidebar */}
                 <div className="lg:col-span-2 space-y-6">
-                  <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-md">
-                    <h4 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-2 text-blue-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      Project Details
-                    </h4>
-
-                    <div className="space-y-5">
-                      <div>
-                        {selectedProject.link && (
-                          <a
-                            href={selectedProject.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full px-6 py-3 border border-blue-500 text-blue-700 dark:text-blue-400 dark:border-blue-600 text-base rounded-lg font-medium no-underline flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors shadow-sm"
-                          >
-                            <ArrowTopRightOnSquareIcon className="mr-2 h-5 w-5" />
-                            View Live Project
-                          </a>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 dark:bg-neutral-700 p-4 rounded-lg">
-                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Client:
-                          </p>
-                          <p className="text-gray-600 dark:text-gray-400 font-semibold">
-                            {selectedProject.client}
-                          </p>
+                  <div className="bg-surface border border-border p-5 rounded-xl">
+                    <h4 className="font-fraunces text-base font-bold text-c-heading mb-4">Project Details</h4>
+                    <div className="space-y-4">
+                      {selectedProject.link && (
+                        <Button as="a" href={selectedProject.link} variant="secondary" size="sm" target="_blank" rel="noopener noreferrer" className="w-full justify-center">
+                          <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+                          View Live Project
+                        </Button>
+                      )}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-bg-alt p-3 rounded-lg border border-border">
+                          <p className="text-c-muted text-xs mb-1">Client</p>
+                          <p className="text-c-text text-sm font-semibold">{selectedProject.client}</p>
                         </div>
-
-                        <div className="bg-gray-50 dark:bg-neutral-700 p-4 rounded-lg">
-                          <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Year:
-                          </p>
-                          <p className="text-gray-600 dark:text-gray-400 font-semibold">
-                            {selectedProject.year}
-                          </p>
+                        <div className="bg-bg-alt p-3 rounded-lg border border-border">
+                          <p className="text-c-muted text-xs mb-1">Year</p>
+                          <p className="text-c-text text-sm font-semibold">{selectedProject.year}</p>
                         </div>
                       </div>
-
                       <div>
-                        <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Technologies:
-                        </p>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="text-c-muted text-xs mb-2">Technologies</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {selectedProject.tags.map((tag, index) => (
-                            <span
-                              key={index}
-                              className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center shadow-sm"
-                            >
-                              <TagIcon className="h-3 w-3 mr-1" />
-                              {tag}
+                            <span key={index} className="bg-accent2 text-c-heading text-xs font-semibold px-2 py-1 rounded flex items-center gap-1">
+                              <TagIcon className="h-3 w-3" />{tag}
                             </span>
                           ))}
                         </div>
@@ -455,36 +320,20 @@ const PortfolioSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-xl shadow-lg text-white relative overflow-hidden">
-                    <div className="absolute inset-0 bg-blue-600 opacity-10 mix-blend-multiply"></div>
-                    <div className="relative z-10">
-                      <h4 className="text-xl font-bold mb-4 tracking-tight">
-                        Interested in a similar solution?
-                      </h4>
-                      <p className="mb-6 text-gray-200 leading-relaxed">
-                        Let&apos;s discuss how I can help you achieve similar
-                        results for your business.
-                      </p>
-
-                      <div className="space-y-3">
-                        <a
-                          href="/contact"
-                          className="w-full px-6 py-3 border border-transparent text-base rounded-lg text-white bg-blue-600 font-medium no-underline flex items-center justify-center hover:bg-blue-700 transition-colors shadow-md"
-                        >
-                          <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
-                          Discuss Your Project
-                        </a>
-
-                        <a
-                          target="_blank"
-                          href="https://calendly.com/antcoffpersonal/meet"
-                          rel="noopener noreferrer"
-                          className="w-full px-6 py-3 border border-gray-300 text-base rounded-lg text-white bg-transparent font-medium no-underline flex items-center justify-center hover:bg-white/10 transition-colors shadow-md"
-                        >
-                          <CalendarDaysIcon className="mr-2 h-5 w-5" />
-                          Schedule Consultation
-                        </a>
-                      </div>
+                  <div className="bg-bg-alt border border-border p-5 rounded-xl">
+                    <h4 className="font-fraunces text-base font-bold text-c-heading mb-3">Interested in a similar solution?</h4>
+                    <p className="text-c-muted text-sm mb-5 leading-relaxed">
+                      Let&apos;s discuss how I can help you achieve similar results for your business.
+                    </p>
+                    <div className="space-y-3">
+                      <Button as="a" href="/contact" variant="primary" size="sm" className="w-full justify-center">
+                        <ChatBubbleOvalLeftIcon className="h-4 w-4" />
+                        Discuss Your Project
+                      </Button>
+                      <Button as="a" href="https://calendly.com/antcoffpersonal/meet" variant="secondary" size="sm" target="_blank" rel="noopener noreferrer" className="w-full justify-center">
+                        <CalendarDaysIcon className="h-4 w-4" />
+                        Schedule Consultation
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -493,30 +342,21 @@ const PortfolioSection: React.FC = () => {
           </div>
         )}
 
-        <div className="bg-blue-600 p-8 rounded-lg text-white mt-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
+        {/* Bottom CTA */}
+        <div className="bg-accent2 border-2 border-border p-8 rounded-2xl text-center mt-4">
+          <h2 className="font-fraunces text-2xl md:text-3xl font-bold mb-3 text-c-heading">
             Ready to Build Your Next Great Project?
           </h2>
-          <p className="text-center text-xl mb-8">
-            Let&apos;s create a custom solution that achieves your business
-            goals
-          </p>
+          <p className="text-c-text mb-8">Let&apos;s create a custom solution that achieves your business goals</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="/contact"
-              className="px-6 py-3 border border-transparent text-base rounded-md text-blue-600 bg-white font-medium no-underline flex items-center justify-center hover:bg-gray-100 transition-colors"
-            >
-              <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
+            <Button as="a" href="/contact" variant="primary">
+              <ChatBubbleOvalLeftIcon className="h-5 w-5" />
               Start Your Project
-            </a>
-            <a
-              target="_blank"
-              href="https://calendly.com/antcoffpersonal/meet"
-              className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
-            >
-              <CalendarDaysIcon className="mr-2 h-5 w-5" />
+            </Button>
+            <Button as="a" href="https://calendly.com/antcoffpersonal/meet" variant="secondary" target="_blank" rel="noopener noreferrer">
+              <CalendarDaysIcon className="h-5 w-5" />
               Book Free Consultation
-            </a>
+            </Button>
           </div>
         </div>
       </div>

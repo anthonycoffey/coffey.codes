@@ -25,9 +25,8 @@ export default function ContactForm() {
   const [apiError, setApiError] = useState<string | null>(null); // Renamed to avoid conflict with Formik errors
 
   const inputClasses =
-    'mt-1 block w-full rounded-md border border-neutral-300 dark:border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500';
-  const labelClasses =
-    'block text-sm font-medium text-neutral-700 dark:text-neutral-300';
+    'mt-1 block w-full rounded-md border border-border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent1-dark focus:ring-offset-2 bg-surface text-c-text placeholder-c-muted';
+  const labelClasses = 'block text-sm font-medium text-c-text';
   const errorClasses = 'text-red-500 text-xs mt-1';
 
   return (
@@ -150,7 +149,7 @@ export default function ContactForm() {
                     id="consent"
                     name="consent"
                     type="checkbox"
-                    className={`focus:ring-blue-500 h-4 w-4 text-blue-600 border-neutral-300 dark:border-neutral-600 rounded bg-neutral-100 dark:bg-neutral-700 dark:focus:ring-offset-neutral-800 ${
+                    className={`focus:ring-accent1-dark h-4 w-4 accent-accent1-dark border-border rounded bg-surface ${
                       errors.consent && touched.consent ? 'border-red-500' : ''
                     }`}
                   />
@@ -158,11 +157,11 @@ export default function ContactForm() {
                 <div className="ml-3 text-sm">
                   <label
                     htmlFor="consent"
-                    className="font-medium text-neutral-700 dark:text-neutral-300"
+                    className="font-medium text-c-text"
                   >
                     Consent to Contact <span className="text-red-500">*</span>
                   </label>
-                  <p className="text-neutral-500 dark:text-neutral-400 text-xs">
+                  <p className="text-c-muted text-xs">
                     I understand my information will be used to respond to this
                     inquiry via email.
                   </p>
@@ -176,14 +175,14 @@ export default function ContactForm() {
 
               {apiError && (
                 <div
-                  className="flex items-center p-3 rounded-md bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800/50"
+                  className="flex items-center p-3 rounded-md bg-surface border border-border"
                   role="alert"
                 >
                   <ExclamationCircleIcon
-                    className="h-5 w-5 text-red-500 dark:text-red-400 mr-2 flex-shrink-0"
+                    className="h-5 w-5 text-red-500 mr-2 flex-shrink-0"
                     aria-hidden="true"
                   />
-                  <span className="text-sm text-red-700 dark:text-red-300">
+                  <span className="text-sm text-red-500">
                     {apiError}
                   </span>
                 </div>
@@ -192,8 +191,8 @@ export default function ContactForm() {
               <div className="flex items-center justify-center pt-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting} // Disable only while submitting
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed dark:focus:ring-offset-neutral-900"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full text-base font-semibold bg-accent1-dark text-surface hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent1-dark disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
                   aria-label="Send Message"
                 >
                   {isSubmitting ? (
@@ -232,14 +231,14 @@ export default function ContactForm() {
         </Formik>
       ) : (
         <div
-          className="flex items-center p-4 rounded-md bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800/50"
+          className="flex items-center p-4 rounded-md bg-surface border border-border"
           role="alert"
         >
           <CheckCircleIcon
-            className="h-6 w-6 text-green-500 dark:text-green-400 mr-3 flex-shrink-0"
+            className="h-6 w-6 text-accent1-dark mr-3 flex-shrink-0"
             aria-hidden="true"
           />
-          <span className="text-base font-medium text-green-800 dark:text-green-200">
+          <span className="text-base font-medium text-c-heading">
             Your message has been sent successfully!
           </span>
         </div>

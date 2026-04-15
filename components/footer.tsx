@@ -1,5 +1,8 @@
 'use client';
+
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import {
   HomeIcon,
   DocumentTextIcon,
@@ -9,14 +12,19 @@ import {
   CodeBracketIcon,
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
-  ArrowDownTrayIcon,
   BriefcaseIcon,
   ClipboardDocumentCheckIcon,
 } from '@heroicons/react/20/solid';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-// Removed ThemeSwitcher import
+import SocialIcons from './SocialIcons';
+
+const navLinks = [
+  { href: '/', text: 'Home', icon: <HomeIcon className="h-4 w-4" /> },
+  { href: '/portfolio', text: 'Portfolio', icon: <BriefcaseIcon className="h-4 w-4" /> },
+  { href: '/articles', text: 'Articles', icon: <DocumentTextIcon className="h-4 w-4" /> },
+  { href: '/contact', text: 'Contact', icon: <EnvelopeIcon className="h-4 w-4" /> },
+  { href: '/case-studies', text: 'Case Studies', icon: <ClipboardDocumentCheckIcon className="h-4 w-4" /> },
+  { href: '/rss', text: 'RSS', icon: <RssIcon className="h-4 w-4" />, external: true },
+];
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -25,156 +33,104 @@ export default function Footer() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
       const nearBottom = document.documentElement.scrollHeight - 100;
-      const hasScrollbar =
-        document.documentElement.scrollHeight > window.innerHeight;
+      const hasScrollbar = document.documentElement.scrollHeight > window.innerHeight;
       setShowScrollToTop(hasScrollbar && scrollPosition >= nearBottom);
     };
-
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const links = [
-    {
-      href: '/',
-      text: 'home',
-      icon: <HomeIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/portfolio',
-      text: 'portfolio',
-      icon: <BriefcaseIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/articles',
-      text: 'articles',
-      icon: <DocumentTextIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/contact',
-      text: 'contact',
-      icon: <EnvelopeIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/case-studies',
-      text: 'case studies',
-      icon: <ClipboardDocumentCheckIcon className="h-4 w-4 ml-1" />,
-    },
-    {
-      href: '/rss',
-      text: 'rss',
-      icon: <RssIcon className="h-4 w-4 ml-1" />,
-    },
-  ];
-
-  const pathName = usePathname();
-
-  
   return (
-    <footer className="bg-gray-900 text-white">
-      {/* CTA Section - Hidden on portfolio page */}
-      {pathName !== '/portfolio' && !pathName.includes('lp') && (
-        <div className="bg-blue-600 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center text-white">
-              Ready to Build Your Next Project?
-            </h2>
-            <p className="text-center text-xl mb-10 text-blue-100">
-              Let's discuss how I can help you ship reliable, high-quality software
+    <footer className="bg-bg-alt border-t-2 border-border text-c-text">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+          {/* Col 1: Logo + tagline + social */}
+          <div className="flex flex-col gap-4">
+            <Link href="/">
+              <Image
+                width={300}
+                height={82}
+                src="/logo-horizontal.svg"
+                alt="Anthony Coffey logo"
+                className="h-14 w-auto"
+                priority
+              />
+            </Link>
+            <p className="text-c-muted text-sm leading-relaxed">
+              Full-stack engineer &amp; Fractional CTO based in Austin, TX.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <SocialIcons />
+          </div>
+
+          {/* Col 2: Nav links */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-4">Navigation</p>
+            <ul className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    target={link.external ? '_blank' : undefined}
+                    className="flex items-center gap-2 text-sm text-c-text hover:text-link transition-colors"
+                  >
+                    {link.icon}
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: CTA */}
+          <div className="flex flex-col gap-4">
+            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-0">Get in touch</p>
+            <p className="font-fraunces text-xl text-c-heading leading-snug">
+              Ready to build something?
+            </p>
+            <div className="flex flex-col gap-2">
               <Link
                 href="/contact"
-                className="px-6 py-3 text-base rounded-md text-blue-600 bg-white font-medium no-underline flex items-center justify-center hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent1-dark text-surface text-sm font-semibold hover:opacity-90 transition-opacity no-underline"
               >
-                <ChatBubbleOvalLeftIcon className="mr-2 h-5 w-5" />
+                <ChatBubbleOvalLeftIcon className="h-4 w-4" />
                 Start a Conversation
               </Link>
               <Link
-                target="_blank"
                 href="https://calendly.com/antcoffpersonal/meet"
-                className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
-              >
-                <CalendarDaysIcon className="mr-2 h-5 w-5" />
-                Schedule 30-Min Consultation
-              </Link>
-              <Link
                 target="_blank"
-                href="/Anthony%20Coffey%20-%20Resume.pdf"
-                className="px-6 py-3 border border-white text-base rounded-md text-white bg-transparent no-underline flex items-center justify-center hover:bg-blue-700 transition-colors"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-border text-c-text text-sm font-semibold hover:bg-surface-hover transition-colors no-underline"
               >
-                <ArrowDownTrayIcon className="mr-2 h-5 w-5" />
-                Download Resume
+                <CalendarDaysIcon className="h-4 w-4" />
+                Schedule a Call
               </Link>
             </div>
           </div>
         </div>
-      )}
 
-      {/* Original Footer Content */}
-      <div className="py-12">
-        <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-4 md:space-y-0 md:justify-center">
-          {links.map((link, index) => (
-            <li key={index}>
-              <Link
-                className="flex items-center transition-all  hover:underline"
-                rel={link.href.endsWith('rss') ? 'noopener noreferrer' : ''}
-                target={link.href.endsWith('rss') ? '_blank' : '_self'}
-                href={link.href}
-              >
-                <p className="ml-2 h-7">
-                  <span className="flex items-center space-x-1">
-                    {link.icon}
-                    <span>{link.text}</span>
-                  </span>
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="relative right-8 bottom-8">
-          <a
-            className={`scroll-to-top ${
-              showScrollToTop ? 'visible' : 'invisible'
-            }`}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <p className="ml-2 h-7">
-              <span className="flex items-center">
-                Scroll to Top
-                <ArrowUpCircleIcon className="h-4 w-4 ml-1" />
-              </span>
-            </p>
-          </a>
-        </div>
-
-        <div className="flex justify-center mt-8">
-          <Link href="/">
-            <Image
-              width={300}
-              height={82}
-              src="/logo-horizontal.svg"
-              alt="logo"
-              className="h-20 w-auto"
-              priority
-            />
-          </Link>
-        </div>
-        <div className="justify-center mt-8 flex items-center space-x-2">
-          <span>© {new Date().getFullYear()} </span>
-          <span> &#183; </span>
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-c-muted">
+          <span>&copy; {new Date().getFullYear()} Anthony Coffey</span>
           <Link
             href="https://github.com/anthonycoffey/coffey.codes"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center hover:underline"
+            className="flex items-center gap-1 hover:text-link transition-colors"
           >
-            View Code on GitHub
-            <CodeBracketIcon className="h-4 w-4 ml-1" />
+            View on GitHub
+            <CodeBracketIcon className="h-4 w-4" />
           </Link>
-          {/* Removed ThemeSwitcher */}
+          <button
+            className={`flex items-center gap-1 hover:text-link transition-all cursor-pointer ${showScrollToTop ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Scroll to top"
+          >
+            Scroll to Top
+            <ArrowUpCircleIcon className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </footer>

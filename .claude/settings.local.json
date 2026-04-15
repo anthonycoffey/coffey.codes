@@ -19,7 +19,8 @@
       "Bash(ls D:\\\\repos\\\\coffey.codes\\\\components\\\\[Ff]ooter*)",
       "Bash(dir D:\\\\repos\\\\coffey.codes\\\\components\\\\*ooter*)",
       "Bash(git mv:*)",
-      "Bash(git commit -m 'fix: rename footer.tsx to Footer.tsx for case-sensitive Linux builds [SPEC-001]:*)"
+      "Bash(git commit -m 'fix: rename footer.tsx to Footer.tsx for case-sensitive Linux builds [SPEC-001]:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

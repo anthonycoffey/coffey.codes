@@ -22,11 +22,11 @@ export default function StrategicPartnersLandingPage() {
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
+        <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Need Senior Expertise? Augment Your Team with a Strategic Tech
           Partner.
         </h1>
-        <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
+        <p className="text-xl text-c-muted max-w-3xl mx-auto">
           Facing complex technical hurdles or need strategic leadership for a
           critical project? Anthony Coffey partners with startups, agencies, and
           tech teams as a Fractional CTO or Specialist Lead. Augment your
@@ -42,14 +42,14 @@ export default function StrategicPartnersLandingPage() {
               alt="Anthony Coffey"
               className="w-full h-full object-cover rounded-lg shadow-md"
             />
-            <div className="absolute -bottom-12 -right-6 bg-white dark:bg-neutral-800 p-3 rounded-lg shadow-md border border-gray-200 dark:border-neutral-700">
-              <p className="font-bold text-blue-600 dark:text-blue-400 text-base m-0 text-right">
+            <div className="absolute -bottom-12 -right-6 bg-surface p-3 rounded-lg shadow-md border border-border">
+              <p className="font-bold text-accent1-dark text-base m-0 text-right">
                 Anthony Coffey
               </p>
-              <p className="text-gray-700 dark:text-gray-300 text-sm m-0 font-semibold">
+              <p className="text-c-text text-sm m-0 font-semibold">
                 Senior Solutions Architect & AI Specialist
               </p>
-              <p className="text-gray-700 dark:text-gray-300 text-xs m-0 text-right">
+              <p className="text-c-text text-xs m-0 text-right">
                 Austin, Texas
               </p>
               <SocialIcons />
@@ -60,10 +60,10 @@ export default function StrategicPartnersLandingPage() {
 
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
-          <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
+          <h2 className="text-3xl font-semibold mb-4 text-c-heading">
             Your On-Demand Technical Leadership
           </h2>
-          <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
+          <p className="text-lg text-c-text mb-4">
             Gain immediate access to 12+ years of specialized experience in
             software architecture, DevOps, and practical AI integration. Whether
             you need high-level strategic guidance or hands-on leadership for
@@ -72,9 +72,9 @@ export default function StrategicPartnersLandingPage() {
             important projects forward.
           </p>
           {/* Enhanced Benefits List with Icons */}
-          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+          <div className="space-y-4 text-lg text-c-text mb-6">
             <div className="flex items-start">
-              <BuildingLibraryIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <BuildingLibraryIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
                   Expert Architecture & Tech Strategy:
@@ -83,14 +83,14 @@ export default function StrategicPartnersLandingPage() {
               </span>
             </div>
             <div className="flex items-start">
-              <ServerStackIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <ServerStackIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">DevOps & CI/CD Mastery:</span>{' '}
                 Streamline development and deployment.
               </span>
             </div>
             <div className="flex items-start">
-              <CpuChipIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <CpuChipIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
                   Practical AI Implementation:
@@ -99,7 +99,7 @@ export default function StrategicPartnersLandingPage() {
               </span>
             </div>
             <div className="flex items-start">
-              <ScaleIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <ScaleIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
                   Scalable & Reliable Systems:
@@ -108,7 +108,7 @@ export default function StrategicPartnersLandingPage() {
               </span>
             </div>
             <div className="flex items-start">
-              <UserPlusIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <UserPlusIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
                   Seamless Team Augmentation:
@@ -119,7 +119,7 @@ export default function StrategicPartnersLandingPage() {
           </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
+            className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
             Schedule Your Free Partnership Call
           </a>
@@ -129,10 +129,10 @@ export default function StrategicPartnersLandingPage() {
           {' '}
           {/* Use flex-col to stack items */}
           {/* Original Contact Form Box */}
-          <div className="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-lg shadow-lg w-full">
+          <div className="bg-surface p-8 rounded-lg shadow-lg w-full">
             {' '}
             {/* Ensure form takes full width */}
-            <h3 className="text-2xl font-semibold mb-6 text-center text-zinc-800 dark:text-zinc-100">
+            <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
               Discuss a Strategic Partnership
             </h3>
             <ContactForm />
@@ -143,12 +143,12 @@ export default function StrategicPartnersLandingPage() {
       {/* Placeholder section for scheduling call */}
       <section
         id="schedule-call"
-        className="text-center py-12 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg"
+        className="text-center py-12 bg-bg-alt rounded-lg"
       >
-        <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
+        <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Explore Collaboration Opportunities
         </h2>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto">
+        <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
           Book a complimentary 30-minute call to discuss how specialized
           expertise can augment your team and accelerate your project success.
         </p>
@@ -156,7 +156,7 @@ export default function StrategicPartnersLandingPage() {
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
+          className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
         >
           Book Partnership Call Now
         </a>

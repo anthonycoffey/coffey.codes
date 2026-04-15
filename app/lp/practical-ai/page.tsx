@@ -22,10 +22,10 @@ export default function PracticalAiLandingPage() {
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
       <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-zinc-800 dark:text-zinc-100">
+        <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Cut Through the AI Hype. Get AI Solutions That Actually Work.
         </h1>
-        <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
+        <p className="text-xl text-c-muted max-w-3xl mx-auto">
           Ready to leverage AI but tired of the buzzwords? For businesses
           seeking tangible results, not just experiments, Anthony Coffey is your
           Practical Innovation Partner. Get production-ready AI solutions, built
@@ -41,14 +41,14 @@ export default function PracticalAiLandingPage() {
               alt="Anthony Coffey"
               className="w-full h-full object-cover rounded-lg shadow-md"
             />
-            <div className="absolute -bottom-12 -right-6 bg-white dark:bg-neutral-800 p-3 rounded-lg shadow-md border border-gray-200 dark:border-neutral-700">
-              <p className="font-bold text-blue-600 dark:text-blue-400 text-base m-0 text-right">
+            <div className="absolute -bottom-12 -right-6 bg-surface p-3 rounded-lg shadow-md border border-border">
+              <p className="font-bold text-accent1-dark text-base m-0 text-right">
                 Anthony Coffey
               </p>
-              <p className="text-gray-700 dark:text-gray-300 text-sm m-0 font-semibold">
+              <p className="text-c-text text-sm m-0 font-semibold">
                 Senior Solutions Architect & AI Specialist
               </p>
-              <p className="text-gray-700 dark:text-gray-300 text-xs m-0 text-right">
+              <p className="text-c-text text-xs m-0 text-right">
                 Austin, Texas
               </p>
               <SocialIcons />
@@ -59,10 +59,10 @@ export default function PracticalAiLandingPage() {
 
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
-          <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
+          <h2 className="text-3xl font-semibold mb-4 text-c-heading">
             Engineering Discipline Meets AI Innovation
           </h2>
-          <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-4">
+          <p className="text-lg text-c-text mb-4">
             Successful AI isn&apos;t just about algorithms; it&apos;s about
             solid engineering. Leverage 12+ years of disciplined software
             development experience to ensure your AI initiatives are not just
@@ -71,30 +71,30 @@ export default function PracticalAiLandingPage() {
             Fractional CTO combined with hands-on implementation expertise.
           </p>
           {/* Enhanced Benefits List with Icons */}
-          <div className="space-y-4 text-lg text-zinc-700 dark:text-zinc-300 mb-6">
+          <div className="space-y-4 text-lg text-c-text mb-6">
             <div className="flex items-start">
-              <LightBulbIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <LightBulbIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">Practical & Achievable:</span>{' '}
                 AI solutions focused on real-world application.
               </span>
             </div>
             <div className="flex items-start">
-              <ArrowsPointingOutIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <ArrowsPointingOutIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">Scalable & Sustainable:</span>{' '}
                 Built for long-term performance and growth.
               </span>
             </div>
             <div className="flex items-start">
-              <PuzzlePieceIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <PuzzlePieceIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">Seamless Integration:</span>{' '}
                 Connect AI with your existing systems smoothly.
               </span>
             </div>
             <div className="flex items-start">
-              <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
                   Clear Strategy & Guidance:
@@ -103,7 +103,7 @@ export default function PracticalAiLandingPage() {
               </span>
             </div>
             <div className="flex items-start">
-              <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-blue-600 dark:text-blue-400" />
+              <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">Measurable ROI:</span> Focus on
                 AI that delivers tangible business results.
@@ -112,7 +112,7 @@ export default function PracticalAiLandingPage() {
           </div>
           <a
             href="#schedule-call" // Placeholder link/anchor
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
+            className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
             Schedule Your Free AI Strategy Call
           </a>
@@ -122,10 +122,10 @@ export default function PracticalAiLandingPage() {
           {' '}
           {/* Use flex-col to stack items */}
           {/* Original Contact Form Box */}
-          <div className="bg-zinc-100 dark:bg-zinc-800 p-8 rounded-lg shadow-lg w-full">
+          <div className="bg-surface p-8 rounded-lg shadow-lg w-full">
             {' '}
             {/* Ensure form takes full width */}
-            <h3 className="text-2xl font-semibold mb-6 text-center text-zinc-800 dark:text-zinc-100">
+            <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
               Discuss Your AI Initiative
             </h3>
             <ContactForm />
@@ -136,12 +136,12 @@ export default function PracticalAiLandingPage() {
       {/* Placeholder section for scheduling call */}
       <section
         id="schedule-call"
-        className="text-center py-12 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg"
+        className="text-center py-12 bg-bg-alt rounded-lg"
       >
-        <h2 className="text-3xl font-semibold mb-4 text-zinc-800 dark:text-zinc-100">
+        <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Explore Your AI Potential
         </h2>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto">
+        <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
           Book a complimentary 30-minute strategy call to discuss how practical
           AI solutions can drive innovation and efficiency in your business.
         </p>
@@ -149,7 +149,7 @@ export default function PracticalAiLandingPage() {
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
+          className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
         >
           Book Free AI Call Now
         </a>

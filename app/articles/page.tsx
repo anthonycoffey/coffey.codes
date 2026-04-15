@@ -32,14 +32,12 @@ export default async function ArticlesPage({ searchParams }) {
 
   return (
     <div className="article-page mx-auto">
-      {/* Add dark mode border and text color */}
-      <div className="border-b border-gray-300 dark:border-neutral-700 pb-4 mb-6">
-        <h1 className="font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center">
-          <DocumentTextIcon className="w-8 h-8 inline mr-3 text-blue-600" />
+      <div className="border-b border-border pb-4 mb-6">
+        <h1 className="font-fraunces font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+          <DocumentTextIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
           Articles
         </h1>
-        {/* Add dark mode text color */}
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
+        <p className="text-c-muted mb-4">
           Unpacking the strategies, challenges, and breakthroughs in software
           development, project management, and cloud technology.
         </p>
@@ -47,79 +45,61 @@ export default async function ArticlesPage({ searchParams }) {
 
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/3 space-y-6">
-          {/* Add dark mode bg, border, text to Search section */}
-          <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-              <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
+          <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+              <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-c-muted" />
               Search
             </h2>
             <SearchBox />
           </div>
 
-          {/* Add dark mode bg, border, text to Categories section */}
-          <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-              <FolderIcon className="w-5 h-5 mr-2 text-blue-500" />
+          <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+              <FolderIcon className="w-5 h-5 mr-2 text-accent1-dark" />
               Categories
             </h2>
             <div className="space-y-2">
               {allCategories.map((category) => (
-                <div
-                  key={category}
-                  className="flex justify-between items-center"
-                >
-                  {/* Style category link */}
+                <div key={category} className="flex justify-between items-center">
                   <Link
                     href={`/articles/category/${encodeURIComponent(category.toLowerCase())}`}
-                    className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+                    className="text-c-text hover:text-link transition-colors"
                   >
                     {category}
                   </Link>
-                  {/* Style category count badge */}
-                  <span className="text-xs text-gray-500 bg-gray-100 dark:bg-neutral-800 dark:text-gray-400 px-2 py-1 rounded-full">
+                  <span className="text-xs text-c-muted bg-bg-alt px-2 py-1 rounded-full">
                     {
                       getPaginatedBlogPosts(1, 100).posts.filter(
                         (post) =>
                           post.metadata.category &&
-                          post.metadata.category.toLowerCase() ===
-                            category.toLowerCase(),
+                          post.metadata.category.toLowerCase() === category.toLowerCase(),
                       ).length
                     }
                   </span>
                 </div>
               ))}
-              {/* Style "View all" link */}
-              <Link
-                href="/articles/categories"
-                className="text-sm text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300 flex items-center mt-2"
-              >
+              <Link href="/articles/categories" className="text-sm text-link hover:underline flex items-center mt-2">
                 View all categories →
               </Link>
             </div>
           </div>
 
-          {/* Add dark mode bg, border, text to Tags section */}
-          <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-              <TagIcon className="w-5 h-5 mr-2 text-blue-500" />
+          <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+              <TagIcon className="w-5 h-5 mr-2 text-accent1-dark" />
               Popular Tags
             </h2>
             <div className="flex flex-wrap gap-2">
               {popularTags.map((tag) => (
-                // Correctly style tag link/chip
                 <Link
                   key={tag}
                   href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-gray-300 text-xs font-medium px-2.5 py-1.5 rounded transition-colors"
+                  className="bg-bg-alt hover:bg-surface-hover text-c-muted text-xs font-medium px-2.5 py-1.5 rounded transition-colors"
                 >
                   {tag}
                 </Link>
               ))}
-              {/* Correctly style "View all" link */}
-              <Link
-                href="/articles/tags"
-                className="text-sm text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300 flex items-center mt-2"
-              >
+              <Link href="/articles/tags" className="text-sm text-link hover:underline flex items-center mt-2">
                 View all tags →
               </Link>
             </div>

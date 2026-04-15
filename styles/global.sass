@@ -3,26 +3,112 @@
 @tailwind utilities
 
 
-::selection
-  background-color: #47a3f3
-  color: #fefefe
-
+// ─── FOUC fallback — matches [data-theme="light"] values ──────────────────────
 :root
-  --sh-class: #4c97f8
-  --sh-identifier: white
-  --sh-keyword: #f47067
-  --sh-string: #0fa295
-  --sh-sign: #8996a3
-  --sh-comment: #a19595
-  --sh-jsxliterals: #6266d1
-  --sh-property: #e25a1c
-  --sh-entity: #e25a1c
+  --color-bg:            #F7F8FA
+  --color-bg-alt:        #EDEEF2
+  --color-surface:       #FFFFFF
+  --color-surface-hover: #E4E6EC
+  --color-border:        #D0D3DC
+  --color-text:          #111827
+  --color-text-muted:    #6B7280
+  --color-heading:       #030712
+  --color-accent-1:      #3B82F6
+  --color-accent-2:      #DBEAFE
+  --color-accent-3:      #F97316
+  --color-accent-1-dark: #1D4ED8
+  --color-link:          #2563EB
+  --color-code-bg:       #EDEEF2
+
+  // Syntax highlighting — light theme
+  --sh-class:       #2563EB
+  --sh-identifier:  #111827
+  --sh-keyword:     #DC2626
+  --sh-string:      #059669
+  --sh-sign:        #6B7280
+  --sh-comment:     #9CA3AF
+  --sh-jsxliterals: #7C3AED
+  --sh-property:    #EA580C
+  --sh-entity:      #EA580C
 
 
+// ─── Light theme ──────────────────────────────────────────────────────────────
+[data-theme="light"]
+  --color-bg:            #F7F8FA
+  --color-bg-alt:        #EDEEF2
+  --color-surface:       #FFFFFF
+  --color-surface-hover: #E4E6EC
+  --color-border:        #D0D3DC
+  --color-text:          #111827
+  --color-text-muted:    #6B7280
+  --color-heading:       #030712
+  --color-accent-1:      #3B82F6
+  --color-accent-2:      #DBEAFE
+  --color-accent-3:      #F97316
+  --color-accent-1-dark: #1D4ED8
+  --color-link:          #2563EB
+  --color-code-bg:       #EDEEF2
+
+  --sh-class:       #2563EB
+  --sh-identifier:  #111827
+  --sh-keyword:     #DC2626
+  --sh-string:      #059669
+  --sh-sign:        #6B7280
+  --sh-comment:     #9CA3AF
+  --sh-jsxliterals: #7C3AED
+  --sh-property:    #EA580C
+  --sh-entity:      #EA580C
+
+
+// ─── Dark theme ───────────────────────────────────────────────────────────────
+[data-theme="dark"]
+  --color-bg:            #0D1117
+  --color-bg-alt:        #161B22
+  --color-surface:       #1C2128
+  --color-surface-hover: #22273A
+  --color-border:        #30363D
+  --color-text:          #E8E8FF
+  --color-text-muted:    #8888AA
+  --color-heading:       #F0F0FF
+  --color-accent-1:      #00E5FF
+  --color-accent-2:      #1A2535
+  --color-accent-3:      #FF6B00
+  --color-accent-1-dark: #00BCD4
+  --color-link:          #00E5FF
+  --color-code-bg:       #161B22
+
+  // Fix retro window bar contrast — accent-2 bg clashes with muted text in dark mode
+  .retro-window .retro-window-bar
+    background: var(--color-bg-alt)
+    border-bottom-color: var(--color-border)
+
+  --sh-class:       #00E5FF
+  --sh-identifier:  #E8EAF0
+  --sh-keyword:     #FF6B00
+  --sh-string:      #00FFB3
+  --sh-sign:        #8892A4
+  --sh-comment:     #4A5568
+  --sh-jsxliterals: #BD93F9
+  --sh-property:    #FFB347
+  --sh-entity:      #FFB347
+
+
+// ─── Base ─────────────────────────────────────────────────────────────────────
 html
   min-width: 360px
   scroll-behavior: smooth
+  background-color: var(--color-bg)
+  color: var(--color-text)
 
+body
+  font-family: var(--font-nunito), sans-serif
+
+::selection
+  background-color: var(--color-accent-3)
+  color: #1a1a1a
+
+
+// ─── Prose ────────────────────────────────────────────────────────────────────
 .prose .anchor
   @apply absolute invisible no-underline
   margin-left: -1em
@@ -36,6 +122,7 @@ html
 
 .prose a
   @apply underline transition-all underline-offset-2 decoration-[0.1em]
+  color: var(--color-link)
   &:hover
     @apply no-underline
 
@@ -46,10 +133,13 @@ html
   @apply visible
 
 .prose pre
-  @apply bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-900 py-2 px-3 text-sm
+  background: var(--color-code-bg)
+  @apply rounded-lg overflow-x-auto border py-2 px-3 text-sm
+  border-color: var(--color-border)
 
 .prose code
-  @apply  bg-neutral-900
+  background: var(--color-code-bg)
+  color: var(--color-text)
   margin: 0 1px
   border-radius: 5px
   padding: 5px 3px
@@ -60,10 +150,10 @@ html
   line-height: 1
 
 .prose code span
-  @apply font-medium 
+  @apply font-medium
 
 .prose code span.singleline
-    white-space: nowrap
+  white-space: nowrap
 
 .prose img
   @apply mx-auto my-0
@@ -73,15 +163,23 @@ html
 
 .prose h1
   @apply text-4xl font-semibold tracking-tight mt-6 mb-2
+  font-family: var(--font-fraunces), serif
+  color: var(--color-heading)
 
 .prose h2
   @apply text-xl font-semibold tracking-tight mt-6 mb-2
+  font-family: var(--font-fraunces), serif
+  color: var(--color-heading)
 
 .prose h3
   @apply text-xl font-semibold tracking-tight mt-6 mb-2
+  font-family: var(--font-fraunces), serif
+  color: var(--color-heading)
 
 .prose h4
   @apply text-lg font-semibold tracking-tight mt-6 mb-2
+  font-family: var(--font-fraunces), serif
+  color: var(--color-heading)
 
 .prose strong
   @apply font-semibold
@@ -118,10 +216,74 @@ table
 .title
   text-wrap: balance
 
-.homepage-avatar
-  @apply rounded-xl w-40 shadow-2xl border-2 border-blue-500
 
+// ─── Components ───────────────────────────────────────────────────────────────
 @layer components
+  // Polaroid card
+  .polaroid-card
+    background: var(--color-surface)
+    border: 1px solid var(--color-border)
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.12)
+    border-radius: 4px
+    padding: 10px 10px 32px
+    transform: rotate(var(--card-tilt, -1deg))
+    transition: transform 0.3s ease, box-shadow 0.3s ease
+    &:hover
+      transform: rotate(0deg) scale(1.02)
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.2)
+
+  // VHS glitch overlay
+  .vhs-card
+    position: relative
+    overflow: hidden
+    &::before, &::after
+      content: ''
+      position: absolute
+      inset: 0
+      pointer-events: none
+      opacity: 0
+      background: inherit
+    &:hover::before
+      opacity: 1
+      animation: glitch 0.4s infinite linear alternate-reverse
+      background: rgba(255,45,120,0.15)
+      mix-blend-mode: color-dodge
+    &:hover::after
+      opacity: 1
+      animation: glitch 0.4s 0.1s infinite linear alternate-reverse
+      background: rgba(0,229,255,0.15)
+      mix-blend-mode: color-dodge
+
+  // 90s OS window frame
+  .retro-window
+    border: 2px solid var(--color-border)
+    border-radius: 8px
+    overflow: hidden
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.12)
+
+    .retro-window-bar
+      display: flex
+      align-items: center
+      gap: 8px
+      padding: 8px 12px
+      background: var(--color-accent-2)
+      border-bottom: 2px solid var(--color-border)
+
+    .retro-dot
+      width: 12px
+      height: 12px
+      border-radius: 50%
+      border: 1.5px solid rgba(0,0,0,0.15)
+      flex-shrink: 0
+
+    .retro-dot-red
+      background: #FF5F57
+    .retro-dot-yellow
+      background: #FFBD2E
+    .retro-dot-green
+      background: #28CA41
+
+  // Logo grid
   .logo-grid
     @apply grid justify-items-center items-center content-center px-2
     img
@@ -129,10 +291,13 @@ table
       @screen md
         min-width: 75px
 
-
+  // Chip
   .Chip
-    @apply relative inline-block select-none whitespace-nowrap rounded-lg bg-blue-600 py-3 px-4 align-baseline font-sans text-sm font-bold uppercase leading-none text-white m-1
+    @apply relative inline-block select-none whitespace-nowrap rounded-lg py-1.5 px-3 align-baseline font-sans text-xs font-bold uppercase leading-none m-1
+    background: var(--color-accent-2)
+    color: var(--color-heading)
 
+  // Social icons
   .social-icons
     @apply items-center justify-end pt-2
     display: flex
@@ -142,23 +307,53 @@ table
       @apply transition-all
       width: 24px
       height: auto
-      fill: #3488f7
+      fill: var(--color-link)
       transition: fill 0.3s, transform 0.3s
 
     .icon:hover
-      fill: #4c97f8
+      fill: var(--color-accent-1-dark)
       transform: translateY(-5px)
       transition: transform 0.3s, fill 0.3s
 
-.scroll-to-top
-  @apply cursor-pointer right-0 bottom-0
-  position: absolute
-  transform: translateY(100%)
-  transition: transform 0.3s ease-in-out
+  // Scroll-to-top button
+  .scroll-to-top
+    @apply cursor-pointer right-0 bottom-0
+    position: absolute
+    transform: translateY(100%)
+    transition: transform 0.3s ease-in-out
 
-  &.visible
-    transform: translateY(0)
+    &.visible
+      transform: translateY(0)
 
+  // Base button
+  .btn
+    @apply mt-2 rounded flex items-center text-sm
+    text-decoration: none!important
+
+
+// ─── Glitch keyframes ─────────────────────────────────────────────────────────
+@keyframes glitch
+  0%
+    clip-path: inset(40% 0 61% 0)
+    transform: translate(-2px, 0)
+  20%
+    clip-path: inset(92% 0 1% 0)
+    transform: translate(2px, 0)
+  40%
+    clip-path: inset(43% 0 1% 0)
+    transform: translate(-2px, 0)
+  60%
+    clip-path: inset(25% 0 58% 0)
+    transform: translate(2px, 0)
+  80%
+    clip-path: inset(54% 0 7% 0)
+    transform: translate(-2px, 0)
+  100%
+    clip-path: inset(58% 0 43% 0)
+    transform: translate(2px, 0)
+
+
+// ─── Article / Contact page layout ────────────────────────────────────────────
 .article-page, .contact-page
   @apply relative pb-4
 
@@ -171,12 +366,7 @@ table
       right: 0
 
 
-
-.btn
-  @apply mt-2 rounded flex items-center text-sm
-  text-decoration: none!important
-
-
+// ─── Multiline code line counter ──────────────────────────────────────────────
 pre.multiline code
   counter-reset: sh-line-number
 
@@ -185,50 +375,40 @@ pre.multiline code
     content: counter(sh-line-number)
     margin-right: 24px
     text-align: right
-    color: #a4a4a4
-    
-// Custom scrollbar styling
+    color: var(--color-text-muted)
+
+
+// ─── Custom scrollbar ─────────────────────────────────────────────────────────
 .custom-scrollbar
-  // Firefox scrollbar styling
   scrollbar-width: thin
-  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(229, 231, 235, 0.1)
-  
-  // Chrome, Edge, and Safari scrollbar styling
+  scrollbar-color: var(--color-accent-1) var(--color-bg-alt)
+
   &::-webkit-scrollbar
     width: 8px
     height: 8px
-    
+
   &::-webkit-scrollbar-track
-    background: rgba(229, 231, 235, 0.1)
+    background: var(--color-bg-alt)
     border-radius: 8px
     margin: 2px
-    
-  &::-webkit-scrollbar-thumb
-    background: linear-gradient(to bottom, #3b82f6, #1d4ed8)
-    border-radius: 8px
-    
-    &:hover
-      background: linear-gradient(to bottom, #2563eb, #1e40af)
-      
-  // Dark mode adjustments
-  .dark &::-webkit-scrollbar-track
-    background: rgba(17, 24, 39, 0.3)
-    
-  .dark &::-webkit-scrollbar-thumb
-    background: linear-gradient(to bottom, #3b82f6, #1d4ed8)
-    
-    &:hover
-      background: linear-gradient(to bottom, #60a5fa, #3b82f6)
 
-// Mermaid chart styling
+  &::-webkit-scrollbar-thumb
+    background: linear-gradient(to bottom, var(--color-accent-1), var(--color-accent-1-dark))
+    border-radius: 8px
+
+    &:hover
+      background: linear-gradient(to bottom, var(--color-accent-1-dark), var(--color-accent-1))
+
+
+// ─── Mermaid chart ────────────────────────────────────────────────────────────
 .mermaid-chart-container
-  width: 100% // Ensure it takes available width
-  min-height: 100px // Give it some minimum height
-  display: flex // Use flex to center SVG if needed
+  width: 100%
+  min-height: 100px
+  display: flex
   justify-content: center
   align-items: center
-  margin: 1rem 0 // Add some vertical spacing
+  margin: 1rem 0
 
   svg
-    max-width: 100% // Ensure SVG scales down if needed
-    height: auto // Maintain aspect ratio
+    max-width: 100%
+    height: auto

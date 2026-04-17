@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Html } from '@react-three/drei'
-import * as THREE from 'three'
-import nowData from '@/data/now.json'
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import * as THREE from 'three';
+import nowData from '@/data/now.json';
 
 function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t
+  return a + (b - a) * t;
 }
 
 function smoothstep(t: number): number {
-  const c = Math.max(0, Math.min(1, t))
-  return c * c * (3 - 2 * c)
+  const c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
 }
 
 interface SatelliteProps {
-  scrollProgress: React.RefObject<number>
+  scrollProgress: React.RefObject<number>;
 }
 
 /**
@@ -31,42 +31,38 @@ interface SatelliteProps {
  * Gentle y-bob only.
  */
 export default function Satellite({ scrollProgress }: SatelliteProps) {
-  const groupRef = useRef<THREE.Group>(null)
+  const groupRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
-    if (!groupRef.current) return
+    if (!groupRef.current) return;
 
-    const progress = scrollProgress.current ?? 0
-    const t = clock.getElapsedTime()
+    const progress = scrollProgress.current ?? 0;
+    const t = clock.getElapsedTime();
 
     // Satellite active 68–82%
-    if (progress < 0.65 || progress > 0.80) {
+    if (progress < 0.65 || progress > 0.8) {
       // Park far offscreen
-      groupRef.current.position.set(30, -1, -54)
-      return
+      groupRef.current.position.set(30, -1, -54);
+      return;
     }
 
     // Fly in from right over 68–76%, park at 76%+
-    const flyT = smoothstep(Math.min(1, (progress - 0.68) / 0.08))
-    const x = lerp(14, 0, flyT)
-    const y = -1 + Math.sin(t * 0.5) * 0.15  // gentle hover
+    const flyT = smoothstep(Math.min(1, (progress - 0.68) / 0.08));
+    const x = lerp(14, 0, flyT);
+    const y = -1 + Math.sin(t * 0.5) * 0.15; // gentle hover
 
-    groupRef.current.position.set(x, y, -54)
+    groupRef.current.position.set(x, y, -54);
 
     // No rotation — always face the same direction (toward camera)
-    groupRef.current.rotation.set(0, 0, 0)
-  })
+    groupRef.current.rotation.set(0, 0, 0);
+  });
 
   return (
     <group ref={groupRef}>
       {/* Satellite body */}
       <mesh>
         <boxGeometry args={[1, 0.5, 0.5]} />
-        <meshStandardMaterial
-          color="#3a3a5a"
-          metalness={0.8}
-          roughness={0.2}
-        />
+        <meshStandardMaterial color="#3a3a5a" metalness={0.8} roughness={0.2} />
       </mesh>
 
       {/* Solar panel — left */}
@@ -102,7 +98,11 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
       </mesh>
       <mesh position={[0, 0.95, 0]}>
         <sphereGeometry args={[0.05, 6, 6]} />
-        <meshStandardMaterial color="#00e5ff" emissive="#00e5ff" emissiveIntensity={1} />
+        <meshStandardMaterial
+          color="#00e5ff"
+          emissive="#00e5ff"
+          emissiveIntensity={1}
+        />
       </mesh>
 
       {/* Screen on hull face — glowing display */}
@@ -118,10 +118,10 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
       </mesh>
 
       {/* Holographic content — real HTML projected forward from screen */}
-      <Html
+      {/*<Html
         transform
         position={[2.5, 0, 0.5]}
-        scale={0.35}
+        scale={1}
         style={{ width: '500px', pointerEvents: 'auto' }}
       >
         <div
@@ -147,7 +147,9 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
           >
             Right now &mdash;
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+          >
             {nowData.items.map((item, i) => (
               <div
                 key={i}
@@ -173,10 +175,15 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
             ))}
           </div>
         </div>
-      </Html>
+      </Html>*/}
 
       {/* Satellite light */}
-      <pointLight position={[0, 0, 1]} color="#00e5ff" intensity={3} distance={10} />
+      <pointLight
+        position={[0, 0, 1]}
+        color="#00e5ff"
+        intensity={3}
+        distance={10}
+      />
     </group>
-  )
+  );
 }

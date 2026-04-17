@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Html } from '@react-three/drei'
-import * as THREE from 'three'
+import { useRef, useMemo } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import * as THREE from 'three';
 
 function smoothstep(t: number): number {
-  const c = Math.max(0, Math.min(1, t))
-  return c * c * (3 - 2 * c)
+  const c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
 }
 
 interface GateProps {
-  scrollProgress: React.RefObject<number>
+  scrollProgress: React.RefObject<number>;
 }
 
 /**
@@ -20,30 +20,32 @@ interface GateProps {
  * Connect content is surface-mounted on its face via drei <Html>.
  */
 export default function Gate({ scrollProgress }: GateProps) {
-  const groupRef = useRef<THREE.Group>(null)
+  const groupRef = useRef<THREE.Group>(null);
 
   // Positioned on camera lookAt line at scroll 85–100%
   // Camera at t=0.82–1.00: pos (0,6-7,-58-65), lookAt (0,2-3,-72-80)
   // Center sits right on that lookAt trajectory
-  const CENTER = useMemo(() => new THREE.Vector3(0, 3, -71), [])
+  const CENTER = useMemo(() => new THREE.Vector3(0, 3, -71), []);
 
   useFrame(() => {
-    if (!groupRef.current) return
+    if (!groupRef.current) return;
 
-    const progress = scrollProgress.current ?? 0
+    const progress = scrollProgress.current ?? 0;
 
     // Gate emerges at scroll 82%, fully visible by 88%
-    const emergeT = smoothstep(Math.max(0, Math.min(1, (progress - 0.82) / 0.06)))
+    const emergeT = smoothstep(
+      Math.max(0, Math.min(1, (progress - 0.82) / 0.06)),
+    );
 
-    groupRef.current.position.set(CENTER.x, CENTER.y, CENTER.z)
-    groupRef.current.scale.setScalar(emergeT)
-  })
+    groupRef.current.position.set(CENTER.x, CENTER.y, CENTER.z);
+    groupRef.current.scale.setScalar(emergeT);
+  });
 
   return (
     <group ref={groupRef}>
       {/* Monolith — tall dark slab */}
-      <mesh>
-        <boxGeometry args={[3, 4.5, 0.2]} />
+      {/*<mesh>
+        <boxGeometry args={[2, 4.5, 0.2]} />
         <meshStandardMaterial
           color="#0a0a1a"
           metalness={0.9}
@@ -51,25 +53,25 @@ export default function Gate({ scrollProgress }: GateProps) {
           emissive="#1a1a3a"
           emissiveIntensity={0.3}
         />
-      </mesh>
+      </mesh>*/}
 
       {/* Edge glow — thin border */}
-      <mesh>
+      {/*<mesh>
         <boxGeometry args={[3.1, 4.6, 0.15]} />
         <meshStandardMaterial
           color="#4400cc"
           emissive="#6633ff"
-          emissiveIntensity={1}
+          emissiveIntensity={40}
           transparent
-          opacity={0.3}
+          opacity={0.6}
         />
-      </mesh>
+      </mesh>*/}
 
       {/* Surface-mounted content on the monolith face */}
       <Html
         transform
-        position={[0, 0, 0.15]}
-        scale={0.5}
+        position={[-8, 0, 0]}
+        scale={1}
         style={{
           width: '400px',
           pointerEvents: 'auto',
@@ -77,7 +79,7 @@ export default function Gate({ scrollProgress }: GateProps) {
       >
         <div
           style={{
-            textAlign: 'center',
+            textAlign: 'right',
             padding: '32px',
             color: '#e8e8ff',
             fontFamily: 'var(--font-outfit), sans-serif',
@@ -92,9 +94,9 @@ export default function Gate({ scrollProgress }: GateProps) {
               letterSpacing: '-0.02em',
             }}
           >
-            I don&apos;t pitch.
+            shine on,
             <br />
-            I talk.
+            you crazy diamond.
           </p>
           <a
             href="/contact"
@@ -108,13 +110,17 @@ export default function Gate({ scrollProgress }: GateProps) {
               letterSpacing: '0.06em',
               transition: 'color 0.25s ease',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#f0f0ff' }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(240, 240, 255, 0.45)' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#f0f0ff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'rgba(240, 240, 255, 0.45)';
+            }}
           >
             &rarr;&nbsp; reach out
           </a>
         </div>
       </Html>
     </group>
-  )
+  );
 }

@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { useRef, useMemo } from 'react';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
-const VORTEX_COUNT = 500
+const VORTEX_COUNT = 2000;
 
 interface WormholeProps {
-  scrollProgress: React.RefObject<number>
+  scrollProgress: React.RefObject<number>;
 }
 
 function smoothstep(t: number): number {
-  const c = Math.max(0, Math.min(1, t))
-  return c * c * (3 - 2 * c)
+  const c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
 }
 
 /**
@@ -21,58 +21,58 @@ function smoothstep(t: number): number {
  * Deep violet → electric blue gradient. Bloom makes it glow.
  */
 export default function Wormhole({ scrollProgress }: WormholeProps) {
-  const pointsRef = useRef<THREE.Points>(null)
-  const positions = useRef(new Float32Array(VORTEX_COUNT * 3))
+  const pointsRef = useRef<THREE.Points>(null);
+  const positions = useRef(new Float32Array(VORTEX_COUNT * 3));
 
   // Pre-compute random phase offsets for organic swirl
   const phases = useMemo(() => {
-    const arr = new Float32Array(VORTEX_COUNT)
+    const arr = new Float32Array(VORTEX_COUNT);
     for (let i = 0; i < VORTEX_COUNT; i++) {
-      arr[i] = Math.random() * Math.PI * 2
+      arr[i] = Math.random() * Math.PI * 100;
     }
-    return arr
-  }, [])
+    return arr;
+  }, []);
 
   const radii = useMemo(() => {
-    const arr = new Float32Array(VORTEX_COUNT)
+    const arr = new Float32Array(VORTEX_COUNT);
     for (let i = 0; i < VORTEX_COUNT; i++) {
-      arr[i] = 0.3 + Math.random() * 3
+      arr[i] = 1.5 + Math.random() * 15 * 2;
     }
-    return arr
-  }, [])
+    return arr;
+  }, []);
 
   // Wormhole center — matches Gate CENTER exactly
-  const CENTER = useMemo(() => new THREE.Vector3(0, 3, -71), [])
+  const CENTER = useMemo(() => new THREE.Vector3(0, 2, -65), []);
 
   useFrame(({ clock }) => {
-    if (!pointsRef.current) return
+    if (!pointsRef.current) return;
 
-    const progress = scrollProgress.current ?? 0
-    const t = clock.getElapsedTime()
+    const progress = scrollProgress.current ?? 0;
+    const t = clock.getElapsedTime();
 
     // Wormhole opens at scroll 78%, stabilizes by 85%
-    const openT = smoothstep(Math.max(0, Math.min(1, (progress - 0.78) / 0.07)))
+    const openT = smoothstep(Math.max(0, Math.min(1, (progress - 0.92) / 0.3)));
 
-    const buf = positions.current
+    const buf = positions.current;
     for (let i = 0; i < VORTEX_COUNT; i++) {
-      const phase = phases[i]
-      const baseRadius = radii[i]
-      const radius = baseRadius * openT
-      const speed = 1.5 - baseRadius * 0.3 // inner particles orbit faster
-      const angle = t * speed + phase
+      const phase = phases[i];
+      const baseRadius = radii[i];
+      const radius = baseRadius * openT;
+      const speed = 1.5 - baseRadius * 0.05; // inner particles orbit faster
+      const angle = t * speed + phase;
 
-      buf[i * 3]     = CENTER.x + Math.cos(angle) * radius
-      buf[i * 3 + 1] = CENTER.y + Math.sin(angle) * radius
-      buf[i * 3 + 2] = CENTER.z + Math.sin(angle * 0.5 + phase) * 0.5 * openT
+      buf[i * 3] = CENTER.x + Math.cos(angle) * radius;
+      buf[i * 3 + 1] = CENTER.y + Math.sin(angle) * radius;
+      buf[i * 3 + 2] = CENTER.z + Math.sin(angle * 0.5 + phase) * 0.5 * openT;
     }
 
-    const geo = pointsRef.current.geometry
-    ;(geo.attributes.position as THREE.BufferAttribute).array = buf
-    geo.attributes.position.needsUpdate = true
+    const geo = pointsRef.current.geometry;
+    (geo.attributes.position as THREE.BufferAttribute).array = buf;
+    geo.attributes.position.needsUpdate = true;
 
     // Fade in opacity with opening
-    ;(pointsRef.current.material as THREE.PointsMaterial).opacity = openT * 0.7
-  })
+    (pointsRef.current.material as THREE.PointsMaterial).opacity = openT * 0.9;
+  });
 
   return (
     <>
@@ -84,33 +84,25 @@ export default function Wormhole({ scrollProgress }: WormholeProps) {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.04}
-          color="#7733ff"
+          size={0.03}
+          color="#D3AF37"
           transparent
-          opacity={0}
           sizeAttenuation
         />
       </points>
-
       {/* Core glow — emissive sphere at center */}
-      <mesh position={CENTER.toArray()}>
-        <sphereGeometry args={[0.3, 16, 16]} />
+      {/*<mesh position={[0, 2.5, -65]}>
+        <sphereGeometry args={[0.2, 16, 16]} />
         <meshStandardMaterial
           color="#4400cc"
           emissive="#6633ff"
-          emissiveIntensity={2}
+          emissiveIntensity={20}
           transparent
-          opacity={0.6}
+          opacity={0.5}
         />
-      </mesh>
-
+      </mesh>*/}
       {/* Wormhole light */}
-      <pointLight
-        position={CENTER.toArray()}
-        color="#7733ff"
-        intensity={5}
-        distance={20}
-      />
+      <pointLight position={CENTER.toArray()} color="#7733ff" intensity={100} />
     </>
-  )
+  );
 }

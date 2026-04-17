@@ -16,7 +16,7 @@ superseded_by: ""
 
 ## Context
 
-The prior homepage was a vertical brochure — services list, logo grid, testimonials, corporate CTA. It was pleasant, forgettable, and indistinguishable from any other contractor site. The business goal is to attract higher-quality work by being *memorable and evidently skilled*, not by pitching. The decision to rebuild the homepage around a scroll-driven cinematic originates in `SPEC-002-homepage-content-rewrite.md` (now `complete`). This ADR records the architectural shape of the implementation as shipped on the `feature/homepage-cinematic-rebuild` branch, which diverges from the original spec in several ways.
+The prior homepage was a vertical brochure — services list, logo grid, testimonials, corporate CTA. It was pleasant, forgettable, and indistinguishable from any other contractor site. The business goal is to attract higher-quality work by being *memorable and evidently skilled*, not by pitching. The decision to rebuild the homepage around a scroll-driven cinematic originates in `SPEC-001-homepage-content-rewrite.md` (now `complete`). This ADR records the architectural shape of the implementation as shipped on the `feature/homepage-cinematic-rebuild` branch, which diverges from the original spec in several ways.
 
 ## Decision
 
@@ -43,7 +43,7 @@ The homepage is a single continuous Three.js scene driven by vertical scroll. A 
 | `Galaxy` | `components/canvas/objects/Galaxy.tsx` | Spiral disc + core + three planets; always rendered, parked at `z=-220` (visible as a distant speck). Rushes to `z=-70` across 0.75–0.95, then closes to `z=-65` by 1.0, filling frame | always rendered; active motion 0.75–1.0 |
 | `EffectComposer` / `Bloom` | `@react-three/postprocessing` | HDR bloom on emissive materials (engines, stars, galactic core) | always |
 
-### Divergences from SPEC-002
+### Divergences from SPEC-001
 
 The spec proposed a horizontal-scroll, five-pinned-panel layout with separate scene React components (`IntroScene`, `AboutScene`, `CraftScene`, `NowScene`, `ConnectScene`) and a particle-field canvas only in the intro. The shipped implementation is one continuous 3D scene with text overlays, not five discrete panels. The following specific changes were made during implementation:
 
@@ -52,7 +52,7 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 - **Satellite retained but simplified.** The original "holograph" projection and its contents were cut (read poorly in testing). The satellite's path was rewritten from a static perch to a continuous orbit around the focal `Planet`, computed from a trigger-locked clock so it always starts at 3 o'clock when scroll first crosses 0.50.
 - **Merkaba is a logo moment, not a morph.** Rather than forming and dissolving mid-scroll, the Merkaba renders as the opening brand symbol. The moment scroll begins, it spins with *exponential* angular velocity over a very short window — the visual reads as "spinning into pieces" — and then explodes outward and fully unmounts itself from the draw list. (Dispersal mechanics are the subject of ADR-002.)
 - **UFO pathing re-authored.** The flyby was tightened to pass very close to the camera on a diagonal that reveals the underside lighting for maximum drama, rather than the wider arc originally planned.
-- **Spaceship flyby added.** Not in SPEC-002. A rebel-fighter-style ship with an `InstancedMesh` thruster particle rig enters before the galaxy. Its trigger is scroll-position gated, but its motion is **time-driven** once triggered — it flies on its own clock regardless of further scroll input, so the sequence reads as a deliberate beat rather than a scrubbable animation.
+- **Spaceship flyby added.** Not in SPEC-001. A rebel-fighter-style ship with an `InstancedMesh` thruster particle rig enters before the galaxy. Its trigger is scroll-position gated, but its motion is **time-driven** once triggered — it flies on its own clock regardless of further scroll input, so the sequence reads as a deliberate beat rather than a scrubbable animation.
 
 ## Consequences
 
@@ -73,13 +73,13 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 ### Neutral
 
 - Mobile falls back to native vertical snap-scroll via CSS media queries in `ScrollContainer`; GSAP is bypassed entirely on narrow viewports.
-- The dark/vibrant palette direction from SPEC-002 (deep inky black base, neon accents) is realized in-scene through emissive materials + bloom rather than through CSS tokens alone.
+- The dark/vibrant palette direction from SPEC-001 (deep inky black base, neon accents) is realized in-scene through emissive materials + bloom rather than through CSS tokens alone.
 
 ## Alternatives Considered
 
 ### Option A: Ship the spec literally — horizontal scroll, five pinned scene panels
 
-- **Description:** Implement the original SPEC-002 layout with five separate React scene components and horizontal translation under GSAP pinning.
+- **Description:** Implement the original SPEC-001 layout with five separate React scene components and horizontal translation under GSAP pinning.
 - **Pros:** Familiar interaction pattern for "immersive portfolio" sites; clear per-scene separation of concerns.
 - **Cons:** The per-scene architecture forces discrete cuts between moments. Our content is better told as a single continuous journey. Horizontal scroll pinning is also the exact GSAP configuration that produced the React-unmount `removeChild` error we later had to engineer around.
 - **Why rejected:** The storytelling goal favored continuity; horizontal pinning did not survive contact with React 19 / Next.js App Router route transitions.
@@ -100,7 +100,7 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 
 ## Notes
 
-- Source spec: `docs/specs/active/SPEC-002-homepage-content-rewrite.md` (status: `complete`)
+- Source spec: `docs/specs/active/SPEC-001-homepage-content-rewrite.md` (status: `complete`)
 - Related ADR: `ADR-002` — the Merkaba particle system's dispersal redesign and its separation from the background star field.
 - Implementation entry points:
   - `app/page.tsx`

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import dynamic from 'next/dynamic'
@@ -14,39 +14,58 @@ const WorldCanvas = dynamic(() => import('@/components/canvas/WorldCanvas'), {
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Scroll track is 6× viewport (1 for the initial hold + 5 of scrub).
+// Matches the previous GSAP `end: +=innerHeight * 5` range.
+const SCROLL_MULTIPLIER = 6
+
 export default function ScrollContainer() {
-  const containerRef   = useRef<HTMLDivElement>(null)
+  const spacerRef      = useRef<HTMLDivElement>(null)
   const scrollProgress = useRef(0)
 
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+  useLayoutEffect(() => {
+    const spacer = spacerRef.current
+    if (!spacer) return
 
     // Mobile: CSS handles vertical snap scroll — skip GSAP
     if (window.innerWidth < 768) return
 
-    const SCROLL_LENGTH = window.innerHeight * 5
-
-    const trigger = ScrollTrigger.create({
-      trigger: container,
-      pin: true,
-      scrub: 1,
-      end: () => `+=${SCROLL_LENGTH}`,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        scrollProgress.current = self.progress
-      },
-    })
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: spacer,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          scrollProgress.current = self.progress
+        },
+      })
+    }, spacerRef)
 
     return () => {
-      trigger.kill()
+      ctx.revert()
     }
   }, [])
 
   return (
-    <div id="scroll-container" ref={containerRef} className={styles.container}>
-      <WorldCanvas scrollProgress={scrollProgress} />
-      <HUDOverlay scrollProgress={scrollProgress} />
+    <div
+      ref={spacerRef}
+      style={{ height: `${SCROLL_MULTIPLIER * 100}vh`, position: 'relative' }}
+    >
+      <div
+        id="scroll-container"
+        className={styles.container}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+        }}
+      >
+        <WorldCanvas scrollProgress={scrollProgress} />
+        <HUDOverlay scrollProgress={scrollProgress} />
+      </div>
     </div>
   )
 }

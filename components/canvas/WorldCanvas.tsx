@@ -55,7 +55,7 @@ const STAR_POSITIONS = (() => {
 const INITIAL_POSITIONS = new Float32Array(MERKABA_POSITIONS);
 
 // ── Colors ─────────────────────────────────────────────────────────────────
-const COLOR_GOLD = new THREE.Color('#f59e0b');
+const COLOR_GREEN = new THREE.Color('#39FF49');
 const COLOR_WHITE = new THREE.Color('#e8e8ff');
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -79,16 +79,12 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    // ── Formation factor — holds until 10%, disperses 10–25% ──
-    // progress < 0.10 → formFactor = 1 (full Merkaba)
-    // progress 0.10–0.25 → formFactor 1→0 (dispersing)
+    // ── Formation factor — disperses immediately from scroll start ──
+    // progress 0 → formFactor = 1 (full Merkaba)
+    // progress 0 → 0.25 → formFactor 1→0 (dispersing)
     // progress > 0.25 → formFactor = 0 (full star field)
     const formFactor =
-      progress < 0.1
-        ? 1
-        : progress < 0.25
-          ? 1 - smoothstep((progress - 0.1) / 0.15)
-          : 0;
+      progress < 0.25 ? 1 - smoothstep(progress / 0.25) : 0;
 
     // ── Lerp positions toward target ──────────────────────────
     const buf = currentPositions.current;
@@ -103,9 +99,9 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     (geo.attributes.position as THREE.BufferAttribute).array = buf;
     geo.attributes.position.needsUpdate = true;
 
-    // ── Color: gold during formation → white as stars ─────────
+    // ── Color: green during formation → white as stars ─────────
     const colorT = smoothstep(1 - formFactor);
-    const blended = COLOR_GOLD.clone().lerp(COLOR_WHITE, colorT);
+    const blended = COLOR_GREEN.clone().lerp(COLOR_WHITE, colorT);
     (pointsRef.current.material as THREE.PointsMaterial).color.copy(blended);
 
     // ── Opacity: crossfades with background star layer ─────────

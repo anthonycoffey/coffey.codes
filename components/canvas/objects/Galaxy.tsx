@@ -15,12 +15,12 @@ function lerp(a: number, b: number, t: number): number {
 
 const GALAXY_COUNT = 3000;
 
-interface WormholeProps {
+interface GalaxyProps {
   scrollProgress: React.RefObject<number>;
 }
 
 /**
- * Galaxy — replaces the old wormhole vortex.
+ * Galaxy — replaces the old Galaxy vortex.
  *
  * A spiral-arm disc galaxy that flies toward the camera during scroll 0.75–1.00.
  * By scroll ~0.95 it fills the viewport (~41° angular half-width > 35° FOV half).
@@ -59,7 +59,7 @@ const GALAXY_POSITIONS = (() => {
   return arr;
 })();
 
-export default function Galaxy({ scrollProgress }: WormholeProps) {
+export default function Galaxy({ scrollProgress }: GalaxyProps) {
   const groupRef = useRef<THREE.Group>(null);
   const pointsRef = useRef<THREE.Points>(null);
 
@@ -84,9 +84,8 @@ export default function Galaxy({ scrollProgress }: WormholeProps) {
     // ── Constant slow Y-axis spin ──────────────────────────────────
     groupRef.current.rotation.y = t * 0.04;
 
-    // ── Particle opacity: fade in as galaxy enters frame ──────────
-    const fadeT = progress < 0.75 ? 0 : smoothstep((progress - 0.75) / 0.08);
-    (pointsRef.current.material as THREE.PointsMaterial).opacity = fadeT * 0.85;
+    // ── Particle opacity: always fully visible ─────────────────────
+    (pointsRef.current.material as THREE.PointsMaterial).opacity = 0.85;
   });
 
   return (
@@ -103,7 +102,7 @@ export default function Galaxy({ scrollProgress }: WormholeProps) {
           size={0.06}
           color="#ffe8aa"
           transparent
-          opacity={0}
+          opacity={0.85}
           sizeAttenuation
         />
       </points>

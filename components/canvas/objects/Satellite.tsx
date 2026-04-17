@@ -9,16 +9,17 @@ interface SatelliteProps {
 }
 
 /**
- * Satellite — continuous time-based orbit around the planet.
+ * Satellite — scroll-locked orbit start, time-driven thereafter.
  *
  * Orbit plane: XY (vertical from camera's perspective).
  * Planet center: (0, -22, -42), orbit radius 26 (just outside planet surface).
- * Starts at 6 o'clock (directly below planet) and orbits counterclockwise:
- *   6 o'clock → 3 o'clock (right) → 12 o'clock (top) → 9 o'clock (left) → back
  *
- * Hidden below the planet until scroll > 0.50, at which point the orbit
- * begins. The camera "discovers" the satellite as it pans down into the
- * planet zone around scroll 0.68–0.82, catching it mid-arc.
+ * Trigger: when scroll first crosses 0.50, the satellite snaps to exactly
+ * 3 o'clock (right side of planet) and begins orbiting counterclockwise.
+ * Elapsed time is measured FROM the trigger moment, not from page load —
+ * so the satellite always starts at the same position relative to scroll.
+ *
+ *   3 o'clock → 12 o'clock (top) → 9 o'clock (left) → ...
  *
  * Full orbit: ~30 seconds at 0.21 rad/s.
  * No rotation — fixed orientation so it's always legible.
@@ -29,7 +30,9 @@ const ORBIT_RADIUS = 26;
 const ORBIT_SPEED = 0.21; // rad/s → full orbit ≈ 30 s
 
 export default function Satellite({ scrollProgress }: SatelliteProps) {
-  const groupRef = useRef<THREE.Group>(null);
+  const groupRef      = useRef<THREE.Group>(null);
+  const activatedRef  = useRef(false);
+  const activateTime  = useRef(0);
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
@@ -37,17 +40,24 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    if (progress < 0.5) {
-      // Parked directly under the planet — out of camera view
+    if (progress < 0.50) {
+      // Hidden below planet — out of camera view, activation reset
+      activatedRef.current = false;
       groupRef.current.position.set(0, -80, -42);
       return;
     }
 
-    // Counterclockwise from 6 o'clock (-π/2):
-    //   angle 0 → right (3 o'clock)
-    //   angle π/2 → top (12 o'clock)
-    //   angle π → left (9 o'clock)
-    const angle = -Math.PI / 2 + t * ORBIT_SPEED;
+    // Lock the start moment the first time scroll crosses 0.50
+    if (!activatedRef.current) {
+      activatedRef.current = true;
+      activateTime.current = t;
+    }
+
+    // Angle 0 = 3 o'clock (right), increases counterclockwise:
+    //   π/2 → 12 o'clock (top)
+    //   π   → 9 o'clock (left)
+    const elapsed = t - activateTime.current;
+    const angle = elapsed * ORBIT_SPEED;
 
     const x = PLANET_CENTER.x + ORBIT_RADIUS * Math.cos(angle);
     const y = PLANET_CENTER.y + ORBIT_RADIUS * Math.sin(angle);

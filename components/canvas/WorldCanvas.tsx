@@ -10,6 +10,7 @@ import UFO from './objects/UFO';
 import Planet from './objects/Planet';
 import Satellite from './objects/Satellite';
 import Wormhole from './objects/Wormhole';
+import Spaceship from './objects/Spaceship';
 
 // ── Constants ──────────────────────────────────────────────────────────────
 const PARTICLE_COUNT = 2000;
@@ -61,10 +62,6 @@ const COLOR_WHITE = new THREE.Color('#e8e8ff');
 function smoothstep(t: number): number {
   const c = Math.max(0, Math.min(1, t));
   return c * c * (3 - 2 * c);
-}
-
-function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t;
 }
 
 // ── Particle system — Merkaba → Stars ─────────────────────────────────────
@@ -144,57 +141,6 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
   );
 }
 
-// ── FlybyOrb — time-based sphere flyby triggered at 75% scroll ────────────
-interface FlybyOrbProps {
-  scrollProgress: React.RefObject<number>;
-}
-
-function FlybyOrb({ scrollProgress }: FlybyOrbProps) {
-  const groupRef = useRef<THREE.Group>(null);
-  const triggered = useRef(false);
-  const triggerTime = useRef(0);
-
-  useFrame(({ clock }) => {
-    if (!groupRef.current) return;
-
-    const progress = scrollProgress.current ?? 0;
-    const t = clock.getElapsedTime();
-
-    if (progress < 0.74) {
-      groupRef.current.position.set(50, 0, -80);
-      triggered.current = false;
-      return;
-    }
-
-    if (!triggered.current) {
-      triggered.current = true;
-      triggerTime.current = t;
-    }
-
-    const elapsed = t - triggerTime.current;
-    const flyT = Math.min(1, elapsed / 10); // 10-second flyby
-
-    const x = lerp(10, -14, flyT);
-    const y = lerp(2, -1, flyT);
-    const z = lerp(-100, -55, flyT);
-    groupRef.current.position.set(x, y, z);
-  });
-
-  return (
-    <group ref={groupRef}>
-      <mesh>
-        <sphereGeometry args={[0.5, 16, 16]} />
-        <meshStandardMaterial
-          color="#ff88cc"
-          emissive="#ff55bb"
-          emissiveIntensity={4}
-        />
-      </mesh>
-      <pointLight color="#ff88cc" intensity={6} distance={12} />
-    </group>
-  );
-}
-
 // ── WorldCanvas — full-viewport canvas, IS the visual experience ──────────
 interface WorldCanvasProps {
   scrollProgress: React.RefObject<number>;
@@ -248,7 +194,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         <Planet scrollProgress={scrollProgress} />
         <Satellite scrollProgress={scrollProgress} />
         <Wormhole scrollProgress={scrollProgress} />
-        <FlybyOrb scrollProgress={scrollProgress} />
+        <Spaceship scrollProgress={scrollProgress} />
 
         <EffectComposer>
           <Bloom

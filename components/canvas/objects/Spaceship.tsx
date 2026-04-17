@@ -39,7 +39,7 @@ interface SpaceshipProps {
 /**
  * Rebel Alliance-style fighter with InstancedMesh thruster fire.
  *
- * Triggers at scroll 0.74 — same path and timing as the old FlybyOrb.
+ * Triggers at scroll 0.62 — same path and timing as the old FlybyOrb.
  * Flies from screen-right (x=10, z=-100) to screen-left (x=-14, z=-55).
  *
  * Ship orientation: nose in -Z local space, rotated to face travel direction
@@ -79,8 +79,8 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
+    // Parked far off-screen right — invisible at any scroll position
     if (progress < 0.62) {
-      // Parked far off-screen right — invisible at any scroll position
       groupRef.current.position.set(200, 0, -80);
       triggered.current = false;
       return;

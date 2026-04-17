@@ -16,7 +16,7 @@ function smoothstep(t: number): number {
 // Mouse parallax is intentionally absent — pure cinematic rail.
 //
 // Planet is at (0, -22, -42), radius 20.
-// Galaxy (Wormhole.tsx) approaches from z=-220, reaching z=-70 at scroll 0.95.
+// Galaxy (Galaxy.tsx) approaches from z=-220, reaching z=-70 at scroll 0.95.
 // Camera at 0.82→1.00 looks level into the approaching galaxy center.
 //
 const KEYFRAMES = [

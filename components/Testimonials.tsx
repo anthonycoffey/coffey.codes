@@ -184,7 +184,7 @@ const Testimonials = () => {
                     ))}
                   </div>
                   <div className="mt-4">
-                    <div className="font-fraunces font-medium text-c-heading text-lg">
+                    <div className="font-outfit font-medium text-c-heading text-lg">
                       {testimonials[currentIndex].author}
                     </div>
                   </div>

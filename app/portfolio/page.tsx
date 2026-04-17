@@ -164,7 +164,7 @@ const PortfolioSection: React.FC = () => {
     <section className="bg-bg min-h-screen">
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="border-b border-border pb-6 mb-10">
-          <h1 className="font-fraunces font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+          <h1 className="font-outfit font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Portfolio
           </h1>
@@ -190,7 +190,7 @@ const PortfolioSection: React.FC = () => {
                 />
               </div>
               <div className="pt-3 px-1">
-                <h3 className="font-fraunces text-lg font-bold text-c-heading mb-1">{project.title}</h3>
+                <h3 className="font-outfit text-lg font-bold text-c-heading mb-1">{project.title}</h3>
                 <p className="text-c-muted text-sm mb-3">{project.description}</p>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {project.tags.map((tag, idx) => (
@@ -220,7 +220,7 @@ const PortfolioSection: React.FC = () => {
             >
               {/* Modal header */}
               <div className="flex justify-between items-center p-4 bg-accent2 border-b-2 border-border">
-                <h3 className="font-fraunces text-xl font-bold text-c-heading">{selectedProject.title}</h3>
+                <h3 className="font-outfit text-xl font-bold text-c-heading">{selectedProject.title}</h3>
                 <button
                   onClick={closeProject}
                   className="p-1.5 rounded-full hover:bg-surface-hover transition-colors text-c-muted"
@@ -265,15 +265,15 @@ const PortfolioSection: React.FC = () => {
 
                   <div className="space-y-5 bg-bg-alt p-6 rounded-xl border border-border">
                     <div>
-                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Challenge</h4>
+                      <h4 className="font-outfit text-base font-bold text-link mb-2">Challenge</h4>
                       <p className="text-c-text leading-relaxed text-sm">{selectedProject.challenge}</p>
                     </div>
                     <div>
-                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Solution</h4>
+                      <h4 className="font-outfit text-base font-bold text-link mb-2">Solution</h4>
                       <p className="text-c-text leading-relaxed text-sm">{selectedProject.solution}</p>
                     </div>
                     <div>
-                      <h4 className="font-fraunces text-base font-bold text-link mb-2">Results</h4>
+                      <h4 className="font-outfit text-base font-bold text-link mb-2">Results</h4>
                       <ul className="space-y-2">
                         {selectedProject.results.map((result, index) => (
                           <li key={index} className="flex items-start bg-surface p-3 rounded-lg border border-border">
@@ -289,7 +289,7 @@ const PortfolioSection: React.FC = () => {
                 {/* Right: sidebar */}
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-surface border border-border p-5 rounded-xl">
-                    <h4 className="font-fraunces text-base font-bold text-c-heading mb-4">Project Details</h4>
+                    <h4 className="font-outfit text-base font-bold text-c-heading mb-4">Project Details</h4>
                     <div className="space-y-4">
                       {selectedProject.link && (
                         <Button as="a" href={selectedProject.link} variant="secondary" size="sm" target="_blank" rel="noopener noreferrer" className="w-full justify-center">
@@ -321,7 +321,7 @@ const PortfolioSection: React.FC = () => {
                   </div>
 
                   <div className="bg-bg-alt border border-border p-5 rounded-xl">
-                    <h4 className="font-fraunces text-base font-bold text-c-heading mb-3">Interested in a similar solution?</h4>
+                    <h4 className="font-outfit text-base font-bold text-c-heading mb-3">Interested in a similar solution?</h4>
                     <p className="text-c-muted text-sm mb-5 leading-relaxed">
                       Let&apos;s discuss how I can help you achieve similar results for your business.
                     </p>
@@ -344,7 +344,7 @@ const PortfolioSection: React.FC = () => {
 
         {/* Bottom CTA */}
         <div className="bg-accent2 border-2 border-border p-8 rounded-2xl text-center mt-4">
-          <h2 className="font-fraunces text-2xl md:text-3xl font-bold mb-3 text-c-heading">
+          <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-3 text-c-heading">
             Ready to Build Your Next Great Project?
           </h2>
           <p className="text-c-text mb-8">Let&apos;s create a custom solution that achieves your business goals</p>

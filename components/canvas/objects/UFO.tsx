@@ -20,8 +20,8 @@ interface UFOProps {
 // Persistent yaw — classic UFO rotation, applied in every phase.
 const IDLE_SPIN = 2;
 // Hover bob — shorter amplitude and quicker cadence than the original idle.
-const HOVER_FREQ = 1.2349;
-const HOVER_AMP = 0.4;
+const HOVER_FREQ = 1.5;
+const HOVER_AMP = 0.3;
 
 /**
  * S-curve UFO flyby — camera NEVER follows it.
@@ -119,10 +119,10 @@ export default function UFO({ scrollProgress }: UFOProps) {
       />
 
       <pointLight
-        position={[0, -0.23, 0]}
+        position={[0, -0.3, 0]}
         color="#8b5cf6"
-        intensity={10}
-        distance={0.7}
+        intensity={20}
+        distance={1}
       />
     </group>
   );

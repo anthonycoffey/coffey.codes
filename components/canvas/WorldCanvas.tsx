@@ -9,7 +9,7 @@ import CameraRig from './CameraRig';
 import UFO from './objects/UFO';
 import Planet from './objects/Planet';
 import Satellite from './objects/Satellite';
-import Wormhole from './objects/Wormhole';
+import Galaxy from './objects/Galaxy';
 import Spaceship from './objects/Spaceship';
 
 // ── Constants ──────────────────────────────────────────────────────────────
@@ -193,7 +193,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         <UFO scrollProgress={scrollProgress} />
         <Planet scrollProgress={scrollProgress} />
         <Satellite scrollProgress={scrollProgress} />
-        <Wormhole scrollProgress={scrollProgress} />
+        <Galaxy scrollProgress={scrollProgress} />
         <Spaceship scrollProgress={scrollProgress} />
 
         <EffectComposer>

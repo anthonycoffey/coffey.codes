@@ -1,0 +1,87 @@
+// ── Overlay wrapper ───────────────────────────────────────────────────────
+.overlay
+  position: absolute
+  inset: 0
+  z-index: 1
+  pointer-events: none
+
+// ── Shared overlay panel ──────────────────────────────────────────────────
+.panel
+  position: absolute
+  display: flex
+  flex-direction: column
+  gap: 1.5rem
+  max-width: 640px
+  padding: 0 2rem
+  transition: opacity 0.5s ease, transform 0.5s ease
+  opacity: 0
+  transform: translateY(16px)
+
+  &.visible
+    opacity: 1
+    transform: translateY(0)
+
+// ── Intro overlay — centered ──────────────────────────────────────────────
+.introPanel
+  composes: panel
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  text-align: center
+  align-items: center
+
+  &.visible
+    transform: translate(-50%, -50%)
+
+// ── HUD-style overlays (About, Craft) ─────────────────────────────────────
+.hudPanel
+  composes: panel
+  top: 50%
+  left: 8vw
+  transform: translateY(-50%) translateX(-20px)
+
+  &.visible
+    transform: translateY(-50%) translateX(0)
+
+// ── Typography ────────────────────────────────────────────────────────────
+.headline
+  font-family: var(--font-outfit), sans-serif
+  font-size: clamp(2.2rem, 5vw, 4.5rem)
+  font-weight: 700
+  line-height: 1.1
+  color: #f0f0ff
+  margin: 0
+  letter-spacing: -0.02em
+
+.byline
+  font-family: var(--font-geist-mono), monospace
+  font-size: 0.75rem
+  letter-spacing: 0.18em
+  text-transform: uppercase
+  color: rgba(240, 240, 255, 0.35)
+  margin: 0
+
+.leadLine
+  font-family: var(--font-outfit), sans-serif
+  font-size: clamp(1.6rem, 3.5vw, 3rem)
+  font-weight: 700
+  line-height: 1.15
+  color: #f0f0ff
+  margin: 0
+  letter-spacing: -0.02em
+
+.bodyLine
+  font-family: var(--font-outfit), sans-serif
+  font-size: clamp(1rem, 2vw, 1.2rem)
+  font-weight: 400
+  line-height: 1.7
+  color: rgba(240, 240, 255, 0.5)
+  margin: 0
+
+.eyebrow
+  font-family: var(--font-geist-mono), monospace
+  font-size: 0.7rem
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  color: rgba(240, 240, 255, 0.3)
+  margin: 0

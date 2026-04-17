@@ -12,51 +12,49 @@ import Satellite from './objects/Satellite';
 import Galaxy from './objects/Galaxy';
 import Spaceship from './objects/Spaceship';
 
-// ── Constants ──────────────────────────────────────────────────────────────
+// ── Constants ────────────────────────────────────────────────────────────────────────────
 const PARTICLE_COUNT = 2000;
 const MERKABA_RADIUS = 1.6;
-const LERP_SPEED = 0.04;
 
-// Star field spread — always ahead of camera (camera max z = -56)
-const STAR_SPREAD_XY = 80;
-const STAR_SPREAD_Z_MIN = -65;
-const STAR_SPREAD_Z_MAX = -180;
+// Dispersal: how far each particle drifts outward before being fully faded.
+// Keep > a few units so the explosion clearly moves off-center, but small
+// enough that nothing survives past the end of the animation window.
+const DISPERSE_DISTANCE = 10;
 
-// Background star field — static, always visible
+// Background star field — static, always visible (the ONLY source of stars).
 const BG_STAR_COUNT = 1500;
+const BG_STAR_Z_MIN = -65;
+const BG_STAR_Z_MAX = -180;
 const BG_STAR_POSITIONS = (() => {
   const arr = new Float32Array(BG_STAR_COUNT * 3);
   for (let i = 0; i < BG_STAR_COUNT; i++) {
     arr[i * 3] = (Math.random() - 0.5) * 160;
     arr[i * 3 + 1] = (Math.random() - 0.5) * 160;
     arr[i * 3 + 2] =
-      STAR_SPREAD_Z_MIN +
-      Math.random() * (STAR_SPREAD_Z_MAX - STAR_SPREAD_Z_MIN);
+      BG_STAR_Z_MIN + Math.random() * (BG_STAR_Z_MAX - BG_STAR_Z_MIN);
   }
   return arr;
 })();
 
-// ── Pre-computed geometry data (computed once at module load) ──────────────
+// ── Pre-computed geometry data (computed once at module load) ──────────
 const MERKABA_POSITIONS = sampleMerkaba(MERKABA_RADIUS, PARTICLE_COUNT);
 
-const STAR_POSITIONS = (() => {
-  const arr = new Float32Array(PARTICLE_COUNT * 3);
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    arr[i * 3] = (Math.random() - 0.5) * STAR_SPREAD_XY;
-    arr[i * 3 + 1] = (Math.random() - 0.5) * STAR_SPREAD_XY;
-    arr[i * 3 + 2] =
-      STAR_SPREAD_Z_MIN +
-      Math.random() * (STAR_SPREAD_Z_MAX - STAR_SPREAD_Z_MIN);
-  }
-  return arr;
-})();
+// Per-particle outward explosion direction (uniform on the unit sphere)
+// and a speed multiplier for natural variation.
+const DISPERSE_DIRECTIONS = new Float32Array(PARTICLE_COUNT * 3);
+const DISPERSE_SPEEDS = new Float32Array(PARTICLE_COUNT);
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.acos(2 * Math.random() - 1);
+  const sinPhi = Math.sin(phi);
+  DISPERSE_DIRECTIONS[i * 3] = sinPhi * Math.cos(theta);
+  DISPERSE_DIRECTIONS[i * 3 + 1] = sinPhi * Math.sin(theta);
+  DISPERSE_DIRECTIONS[i * 3 + 2] = Math.cos(phi);
+  DISPERSE_SPEEDS[i] = 0.6 + Math.random() * 1.2; // 0.6× – 1.8×
+}
 
-// Start in Merkaba formation
-const INITIAL_POSITIONS = new Float32Array(MERKABA_POSITIONS);
-
-// ── Colors ─────────────────────────────────────────────────────────────────
-const COLOR_GREEN = new THREE.Color('#39FF49');
-const COLOR_WHITE = new THREE.Color('#e8e8ff');
+// ── Colors ───────────────────────────────────────────────────────────────────────────────
+const COLOR_GREEN = '#39FF49';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function smoothstep(t: number): number {
@@ -71,7 +69,8 @@ interface ParticleSystemProps {
 
 function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
   const pointsRef = useRef<THREE.Points>(null);
-  const currentPositions = useRef(new Float32Array(INITIAL_POSITIONS));
+  // Working buffer — starts in Merkaba formation. Mutated per frame in place.
+  const currentPositions = useRef(new Float32Array(MERKABA_POSITIONS));
 
   useFrame(({ clock }) => {
     if (!pointsRef.current) return;
@@ -79,41 +78,46 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    // ── Formation factor — disperses immediately from scroll start ──
-    // progress 0 → formFactor = 1 (full Merkaba)
-    // progress 0 → 0.25 → formFactor 1→0 (dispersing)
-    // progress > 0.25 → formFactor = 0 (full star field)
-    const formFactor =
-      progress < 0.25 ? 1 - smoothstep(progress / 0.25) : 0;
+    // Dispersal factor: 0 while formed, 1 once fully exploded.
+    // Driven purely by scroll — no per-frame lerp, so position is a pure
+    // function of scroll progress (reversible, no catch-up lag).
+    const disperse = progress < 0.25 ? smoothstep(progress / 0.25) : 1;
 
-    // ── Lerp positions toward target ──────────────────────────
+    // Fully dispersed → hide the whole <points> object. three.js skips
+    // drawing it entirely, so there is no chance of stray particles
+    // re-appearing as the camera dollies forward later in the scroll.
+    if (disperse >= 1) {
+      pointsRef.current.visible = false;
+      return;
+    }
+    pointsRef.current.visible = true;
+
+    // ── Positions: each particle = merkaba origin + outward drift ───
+    const drift = disperse * DISPERSE_DISTANCE;
     const buf = currentPositions.current;
-    for (let i = 0; i < PARTICLE_COUNT * 3; i++) {
-      const target =
-        MERKABA_POSITIONS[i] * formFactor +
-        STAR_POSITIONS[i] * (1 - formFactor);
-      buf[i] += (target - buf[i]) * LERP_SPEED;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const speed = DISPERSE_SPEEDS[i];
+      const ix = i * 3;
+      const iy = ix + 1;
+      const iz = ix + 2;
+      buf[ix] = MERKABA_POSITIONS[ix] + DISPERSE_DIRECTIONS[ix] * drift * speed;
+      buf[iy] = MERKABA_POSITIONS[iy] + DISPERSE_DIRECTIONS[iy] * drift * speed;
+      buf[iz] = MERKABA_POSITIONS[iz] + DISPERSE_DIRECTIONS[iz] * drift * speed;
     }
 
     const geo = pointsRef.current.geometry;
     (geo.attributes.position as THREE.BufferAttribute).array = buf;
     geo.attributes.position.needsUpdate = true;
 
-    // ── Color: green during formation → white as stars ─────────
-    const colorT = smoothstep(1 - formFactor);
-    const blended = COLOR_GREEN.clone().lerp(COLOR_WHITE, colorT);
-    (pointsRef.current.material as THREE.PointsMaterial).color.copy(blended);
+    // ── Opacity: fade from 0.75 → 0 across the dispersal window ───
+    // Tuning note: if the explosion feels too abrupt, shift the opacity
+    // curve from (1 - disperse) to (1 - disperse)² so it holds brightness
+    // during the initial outward motion and then snaps dark near the end.
+    const mat = pointsRef.current.material as THREE.PointsMaterial;
+    mat.opacity = (1 - disperse) * 0.75;
 
-    // ── Opacity: crossfades with background star layer ─────────
-    // Merkaba layer fades out (0.7→0) while background star layer takes over
-    const opacity = formFactor > 0.01 ? formFactor * 0.7 : 0.6;
-    (pointsRef.current.material as THREE.PointsMaterial).opacity = opacity;
-
-    // ── Rotation — perfectly upright Y-axis spin (like a top) ──
-    // X and Z rotations are always 0 so the Merkaba stays upright.
-    // The cross-section reveals itself naturally as it spins on Y.
-    const rotationSpeed = formFactor > 0.01 ? 0.08 : 0;
-    pointsRef.current.rotation.y = t * rotationSpeed;
+    // ── Rotation: spin while formed; stop once exploded ────────
+    pointsRef.current.rotation.y = t * 0.08 * (1 - disperse);
     pointsRef.current.rotation.x = 0;
     pointsRef.current.rotation.z = 0;
   });
@@ -128,9 +132,9 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
       </bufferGeometry>
       <pointsMaterial
         size={0.013}
-        color="#f59e0b"
+        color={COLOR_GREEN}
         transparent
-        opacity={0.7}
+        opacity={0.75}
         sizeAttenuation
       />
     </points>

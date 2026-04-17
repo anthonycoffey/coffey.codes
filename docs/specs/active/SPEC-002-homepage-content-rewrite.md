@@ -1,7 +1,7 @@
 ---
 id: SPEC-002
 title: "Homepage Rebuild — Immersive Interactive Storytelling Layout"
-status: in-progress
+status: complete
 created: 2026-04-15
 author: Anthony Coffey
 reviewers: []

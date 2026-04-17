@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import {
   HomeIcon,
   DocumentTextIcon,
@@ -41,8 +42,19 @@ const navItems: Record<string, { name: string; icon: React.ReactNode }> = {
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const { theme } = useTheme();
   const isOverlay = pathname === '/';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logoSrc =
+    isOverlay || !mounted || theme === 'dark'
+      ? '/logo-horizontal.svg'
+      : '/logo-horizontal-light.svg';
 
   useEffect(() => {
     if (isMobile) setIsMenuOpen(false);
@@ -93,7 +105,7 @@ export default function Navbar() {
             <Image
               width={300}
               height={82}
-              src="/logo-horizontal.svg"
+              src={logoSrc}
               alt="Anthony Coffey logo"
               className="h-14 w-auto"
               priority

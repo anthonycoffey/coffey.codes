@@ -2,34 +2,32 @@
 
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
 import * as THREE from 'three';
-import nowData from '@/data/now.json';
-
-function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t;
-}
-
-function smoothstep(t: number): number {
-  const c = Math.max(0, Math.min(1, t));
-  return c * c * (3 - 2 * c);
-}
 
 interface SatelliteProps {
   scrollProgress: React.RefObject<number>;
 }
 
 /**
- * Satellite with holographic content panel.
- * Active scroll 0.68–0.82 (camera at planet horizon, looking down-forward).
+ * Satellite — continuous time-based orbit around the planet.
  *
- * Camera at this zone: pos ~(0, 8, -48), lookAt ~(0, -14, -62)
- * View center ~10 units ahead: approx (0, -1, -54)
- * Satellite parks at (0, -1, -54), enters from right (12, -1, -54).
+ * Orbit plane: XY (vertical from camera's perspective).
+ * Planet center: (0, -22, -42), orbit radius 26 (just outside planet surface).
+ * Starts at 6 o'clock (directly below planet) and orbits counterclockwise:
+ *   6 o'clock → 3 o'clock (right) → 12 o'clock (top) → 9 o'clock (left) → back
  *
- * NO rotation — satellite keeps fixed orientation so it's always legible.
- * Gentle y-bob only.
+ * Hidden below the planet until scroll > 0.50, at which point the orbit
+ * begins. The camera "discovers" the satellite as it pans down into the
+ * planet zone around scroll 0.68–0.82, catching it mid-arc.
+ *
+ * Full orbit: ~30 seconds at 0.21 rad/s.
+ * No rotation — fixed orientation so it's always legible.
  */
+
+const PLANET_CENTER = new THREE.Vector3(0, -22, -42);
+const ORBIT_RADIUS = 26;
+const ORBIT_SPEED = 0.21; // rad/s → full orbit ≈ 30 s
+
 export default function Satellite({ scrollProgress }: SatelliteProps) {
   const groupRef = useRef<THREE.Group>(null);
 
@@ -39,22 +37,24 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    // Satellite active 68–82%
-    if (progress < 0.65 || progress > 0.8) {
-      // Park far offscreen
-      groupRef.current.position.set(30, -1, -54);
+    if (progress < 0.5) {
+      // Parked directly under the planet — out of camera view
+      groupRef.current.position.set(0, -80, -42);
       return;
     }
 
-    // Fly in from right over 68–76%, park at 76%+
-    const flyT = smoothstep(Math.min(1, (progress - 0.68) / 0.08));
-    const x = lerp(14, 0, flyT);
-    const y = -1 + Math.sin(t * 0.5) * 0.15; // gentle hover
+    // Counterclockwise from 6 o'clock (-π/2):
+    //   angle 0 → right (3 o'clock)
+    //   angle π/2 → top (12 o'clock)
+    //   angle π → left (9 o'clock)
+    const angle = -Math.PI / 2 + t * ORBIT_SPEED;
 
-    groupRef.current.position.set(x, y, -54);
+    const x = PLANET_CENTER.x + ORBIT_RADIUS * Math.cos(angle);
+    const y = PLANET_CENTER.y + ORBIT_RADIUS * Math.sin(angle);
+    const z = PLANET_CENTER.z;
 
-    // No rotation — always face the same direction (toward camera)
-    groupRef.current.rotation.set(0, 0, 0);
+    groupRef.current.position.set(x, y, z);
+    groupRef.current.rotation.set(0, 0, 0); // fixed orientation always
   });
 
   return (
@@ -105,7 +105,7 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
         />
       </mesh>
 
-      {/* Screen on hull face — glowing display */}
+      {/* Screen on hull face */}
       <mesh position={[0, 0, 0.26]}>
         <planeGeometry args={[0.8, 0.4]} />
         <meshStandardMaterial
@@ -116,66 +116,6 @@ export default function Satellite({ scrollProgress }: SatelliteProps) {
           opacity={0.7}
         />
       </mesh>
-
-      {/* Holographic content — real HTML projected forward from screen */}
-      {/*<Html
-        transform
-        position={[2.5, 0, 0.5]}
-        scale={1}
-        style={{ width: '500px', pointerEvents: 'auto' }}
-      >
-        <div
-          style={{
-            background: 'rgba(10, 10, 30, 0.82)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(0, 229, 255, 0.25)',
-            borderRadius: '12px',
-            padding: '24px',
-            color: '#e8e8ff',
-            fontFamily: 'var(--font-outfit), sans-serif',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: 'var(--font-geist-mono), monospace',
-              fontSize: '0.65rem',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'rgba(240, 240, 255, 0.3)',
-              margin: '0 0 16px 0',
-            }}
-          >
-            Right now &mdash;
-          </p>
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
-          >
-            {nowData.items.map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  gap: '8px',
-                  fontSize: '0.9rem',
-                  color: 'rgba(240, 240, 255, 0.65)',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'var(--font-geist-mono), monospace',
-                    color: 'rgba(0, 229, 255, 0.4)',
-                    flexShrink: 0,
-                  }}
-                >
-                  &rarr;
-                </span>
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </Html>*/}
 
       {/* Satellite light */}
       <pointLight

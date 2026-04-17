@@ -18,17 +18,17 @@ interface UFOProps {
 }
 
 /**
- * Two-phase UFO — camera NEVER follows it.
+ * S-curve UFO flyby — camera NEVER follows it.
  *
- * Phase 1 (0.15–0.38): Enters from right, hovers gently in front of camera.
- *   Camera is at z≈-18, UFO at z=-28 — visible mid-distance.
+ * Phase 1 (0.15–0.38): Enters from far right (+X), settles left of content center (-X).
+ *   Hovers gently with a y-bob and slow idle spin.
  *
- * Phase 2 (0.38–0.52): Flies straight at camera (z: -28 → -2).
- *   Stays near center-screen (x≈0, slight y offset).
- *   Natural perspective makes it grow dramatically.
- *   At z≈-2 it fills the frame and disappears (snaps behind camera).
+ * Phase 2 (0.38–0.52): Diagonal flyby sweep — moves from left (-X) to right (+X)
+ *   while flying toward and PAST the camera (z goes positive = behind camera).
+ *   UFO rises above the camera so the underside is visible from below.
+ *   Y bob fades out smoothly at phase boundary (no jump).
  *
- * No camera tracking. No x/y drift during flyby.
+ * After 0.52: Parked behind+above camera, invisible.
  */
 export default function UFO({ scrollProgress }: UFOProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -40,34 +40,36 @@ export default function UFO({ scrollProgress }: UFOProps) {
     const t = clock.getElapsedTime();
 
     if (progress < 0.15) {
-      // Off-screen, waiting
-      groupRef.current.position.set(20, 1, -28);
+      // Far off-screen right — not yet visible
+      groupRef.current.position.set(80, 0, -22);
       groupRef.current.rotation.set(0, 0, 0);
       return;
     }
 
     if (progress < 0.38) {
-      // ── Phase 1: Enter + hover ──────────────────────────────
-      const enterT = smoothstep(Math.min(1, (progress - 0.15) / 0.1));
-      const x = lerp(10, 0.5, enterT); // enters from right → slightly off-center
-      const y = 2.5 + Math.sin(t * 0.8) * 0.25;
-      groupRef.current.position.set(x, y, -28);
-      groupRef.current.rotation.y = t * 0.06; // very slow idle spin
+      // ── Phase 1: Enter from right → settle left of center ──────────────
+      // Enters at x=14, settles at x=-2 (left of content)
+      const enterT = smoothstep(Math.min(1, (progress - 0.15) / 0.12));
+      const x = lerp(14, -2, enterT);
+      const y = 3.8 + Math.sin(t * 0.8) * 0.25;
+      groupRef.current.position.set(x, y, -22);
+      groupRef.current.rotation.y = t * 0.06;
       groupRef.current.rotation.z = Math.sin(t * 0.6) * 0.03;
     } else if (progress < 0.52) {
-      // ── Phase 2: Fly directly at camera ─────────────────────
-      // z: -28 → -2  (stops just before camera near clip)
-      // x/y: barely drifts — UFO stays center-screen
+      // ── Phase 2: Diagonal flyby — left→right while shooting past camera ─
       const flyT = smoothstep((progress - 0.38) / 0.14);
-      const z = lerp(-28, -2, flyT);
-      const x = lerp(0.5, 0.8, flyT); // tiny drift right — "barely misses"
-      const y = lerp(2.5, 2.5, flyT); // slight upward drift — flies "over"
+
+      // Y continuity: bob preserved at flyT=0, fades out during flyby
+      const yBob = 3.8 + Math.sin(t * 0.8) * 0.25 * (1 - flyT);
+      const x = lerp(-2, 9, flyT); // sweeps right across screen
+      const y = lerp(yBob, 6, flyT); // rises above camera (camera y≈2-3 here)
+      const z = lerp(-22, 12, flyT); // shoots past camera into positive Z
       groupRef.current.position.set(x, y, z);
-      groupRef.current.rotation.y = t * 0.4; // faster spin during zoom
+      groupRef.current.rotation.y = t * 0.5; // faster spin during zoom
       groupRef.current.rotation.z = 0;
     } else {
-      // ── Snap behind camera — invisible ──────────────────────
-      groupRef.current.position.set(1, 2, 15);
+      // ── Parked behind + above camera — invisible ─────────────────────────
+      groupRef.current.position.set(12, 8, 20);
     }
   });
 

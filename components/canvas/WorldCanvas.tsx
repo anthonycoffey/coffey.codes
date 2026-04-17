@@ -10,17 +10,30 @@ import UFO from './objects/UFO';
 import Planet from './objects/Planet';
 import Satellite from './objects/Satellite';
 import Wormhole from './objects/Wormhole';
-import Gate from './objects/Gate';
 
 // ── Constants ──────────────────────────────────────────────────────────────
 const PARTICLE_COUNT = 2000;
 const MERKABA_RADIUS = 1.6;
 const LERP_SPEED = 0.04;
 
-// Star field spread — wide volume along the camera travel path
-const STAR_SPREAD_XY = 50;
-const STAR_SPREAD_Z_MIN = -10;
-const STAR_SPREAD_Z_MAX = -100;
+// Star field spread — always ahead of camera (camera max z = -56)
+const STAR_SPREAD_XY = 80;
+const STAR_SPREAD_Z_MIN = -65;
+const STAR_SPREAD_Z_MAX = -180;
+
+// Background star field — static, always visible
+const BG_STAR_COUNT = 1500;
+const BG_STAR_POSITIONS = (() => {
+  const arr = new Float32Array(BG_STAR_COUNT * 3);
+  for (let i = 0; i < BG_STAR_COUNT; i++) {
+    arr[i * 3] = (Math.random() - 0.5) * 160;
+    arr[i * 3 + 1] = (Math.random() - 0.5) * 160;
+    arr[i * 3 + 2] =
+      STAR_SPREAD_Z_MIN +
+      Math.random() * (STAR_SPREAD_Z_MAX - STAR_SPREAD_Z_MIN);
+  }
+  return arr;
+})();
 
 // ── Pre-computed geometry data (computed once at module load) ──────────────
 const MERKABA_POSITIONS = sampleMerkaba(MERKABA_RADIUS, PARTICLE_COUNT);
@@ -50,6 +63,10 @@ function smoothstep(t: number): number {
   return c * c * (3 - 2 * c);
 }
 
+function lerp(a: number, b: number, t: number): number {
+  return a + (b - a) * t;
+}
+
 // ── Particle system — Merkaba → Stars ─────────────────────────────────────
 interface ParticleSystemProps {
   scrollProgress: React.RefObject<number>;
@@ -65,10 +82,16 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    // ── Formation factor — disperses immediately as user scrolls ──
-    // progress=0 → formFactor=1 (full Merkaba)
-    // progress=0.15 → formFactor=0 (full star field)
-    const formFactor = progress < 0.15 ? 1 - smoothstep(progress / 0.15) : 0;
+    // ── Formation factor — holds until 10%, disperses 10–25% ──
+    // progress < 0.10 → formFactor = 1 (full Merkaba)
+    // progress 0.10–0.25 → formFactor 1→0 (dispersing)
+    // progress > 0.25 → formFactor = 0 (full star field)
+    const formFactor =
+      progress < 0.1
+        ? 1
+        : progress < 0.25
+          ? 1 - smoothstep((progress - 0.1) / 0.15)
+          : 0;
 
     // ── Lerp positions toward target ──────────────────────────
     const buf = currentPositions.current;
@@ -88,13 +111,19 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     const blended = COLOR_GOLD.clone().lerp(COLOR_WHITE, colorT);
     (pointsRef.current.material as THREE.PointsMaterial).color.copy(blended);
 
-    // ── Rotation — constant slow idle while Merkaba, stops once stars ──
+    // ── Opacity: crossfades with background star layer ─────────
+    // Merkaba layer fades out (0.7→0) while background star layer takes over
+    const opacity = formFactor > 0.01 ? formFactor * 0.7 : 0.6;
+    (pointsRef.current.material as THREE.PointsMaterial).opacity = opacity;
+
+    // ── Rotation — perfectly upright Y-axis spin (like a top) ──
+    // X and Z rotations are always 0 so the Merkaba stays upright.
+    // The cross-section reveals itself naturally as it spins on Y.
     const rotationSpeed = formFactor > 0.01 ? 0.08 : 0;
     pointsRef.current.rotation.y = t * rotationSpeed;
-    pointsRef.current.rotation.x = t * rotationSpeed * 0.4;
+    pointsRef.current.rotation.x = 0;
+    pointsRef.current.rotation.z = 0;
   });
-
-  console.log(currentPositions.current);
 
   return (
     <points ref={pointsRef}>
@@ -108,10 +137,61 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
         size={0.013}
         color="#f59e0b"
         transparent
-        opacity={0.6}
+        opacity={0.7}
         sizeAttenuation
       />
     </points>
+  );
+}
+
+// ── FlybyOrb — time-based sphere flyby triggered at 75% scroll ────────────
+interface FlybyOrbProps {
+  scrollProgress: React.RefObject<number>;
+}
+
+function FlybyOrb({ scrollProgress }: FlybyOrbProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const triggered = useRef(false);
+  const triggerTime = useRef(0);
+
+  useFrame(({ clock }) => {
+    if (!groupRef.current) return;
+
+    const progress = scrollProgress.current ?? 0;
+    const t = clock.getElapsedTime();
+
+    if (progress < 0.74) {
+      groupRef.current.position.set(50, 0, -80);
+      triggered.current = false;
+      return;
+    }
+
+    if (!triggered.current) {
+      triggered.current = true;
+      triggerTime.current = t;
+    }
+
+    const elapsed = t - triggerTime.current;
+    const flyT = Math.min(1, elapsed / 10); // 10-second flyby
+
+    const x = lerp(10, -14, flyT);
+    const y = lerp(2, -1, flyT);
+    const z = lerp(-100, -55, flyT);
+    groupRef.current.position.set(x, y, z);
+  });
+
+  return (
+    <group ref={groupRef}>
+      <mesh>
+        <sphereGeometry args={[0.5, 16, 16]} />
+        <meshStandardMaterial
+          color="#ff88cc"
+          emissive="#ff55bb"
+          emissiveIntensity={4}
+        />
+      </mesh>
+      <pointLight color="#ff88cc" intensity={6} distance={12} />
+    </group>
   );
 }
 
@@ -145,12 +225,30 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         />
 
         <CameraRig scrollProgress={scrollProgress} />
+
+        {/* Static background star field — always visible, never animated */}
+        <points>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              args={[BG_STAR_POSITIONS, 3]}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            size={0.007}
+            color="#ddeeff"
+            transparent
+            opacity={0.3}
+            sizeAttenuation
+          />
+        </points>
+
         <ParticleSystem scrollProgress={scrollProgress} />
         <UFO scrollProgress={scrollProgress} />
         <Planet scrollProgress={scrollProgress} />
         <Satellite scrollProgress={scrollProgress} />
         <Wormhole scrollProgress={scrollProgress} />
-        <Gate scrollProgress={scrollProgress} />
+        <FlybyOrb scrollProgress={scrollProgress} />
 
         <EffectComposer>
           <Bloom

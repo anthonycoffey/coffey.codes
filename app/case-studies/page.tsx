@@ -21,7 +21,7 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
           <Icon className="w-6 h-6 text-accent1-dark" />
         </div>
         <div className="flex-1">
-          <h2 className="font-fraunces font-medium text-lg text-c-heading mb-2">{title}</h2>
+          <h2 className="font-outfit font-medium text-lg text-c-heading mb-2">{title}</h2>
           <p className="text-c-text mb-4">{description}</p>
 
           {tags && (
@@ -74,7 +74,7 @@ export default async function CaseStudiesPage() {
     <section>
       <div className="page-content">
         <div className="border-b border-border pb-4 mb-8">
-          <h1 className="font-fraunces font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+          <h1 className="font-outfit font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
             <ClipboardDocumentCheckIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Case Studies
           </h1>
@@ -98,7 +98,7 @@ export default async function CaseStudiesPage() {
         </div>
 
         <div className="mt-12 bg-bg-alt p-6 rounded-xl border border-border">
-          <h2 className="font-fraunces text-xl font-medium text-c-heading mb-2">
+          <h2 className="font-outfit text-xl font-medium text-c-heading mb-2">
             Need a custom solution?
           </h2>
           <p className="text-c-text mb-4">

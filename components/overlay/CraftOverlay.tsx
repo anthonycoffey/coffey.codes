@@ -1,0 +1,20 @@
+'use client'
+
+import styles from './Overlay.module.sass'
+
+interface CraftOverlayProps {
+  visible: boolean
+}
+
+export default function CraftOverlay({ visible }: CraftOverlayProps) {
+  return (
+    <div className={`${styles.hudPanel} ${visible ? styles.visible : ''}`}>
+      <p className={styles.leadLine}>
+        I solve problems.
+      </p>
+      <p className={styles.bodyLine}>
+        The tools and trends change, but what I do remains the same.
+      </p>
+    </div>
+  )
+}

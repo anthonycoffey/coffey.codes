@@ -87,7 +87,7 @@ export default function Footer() {
           {/* Col 3: CTA */}
           <div className="flex flex-col gap-4">
             <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-0">Get in touch</p>
-            <p className="font-fraunces text-xl text-c-heading leading-snug">
+            <p className="font-outfit text-xl text-c-heading leading-snug">
               Ready to build something?
             </p>
             <div className="flex flex-col gap-2">

@@ -2,7 +2,7 @@
 
 import '../styles/global.sass';
 import { usePathname } from 'next/navigation';
-import { fraunces, nunito, GeistMono } from '../lib/fonts';
+import { outfit, GeistMono } from '../lib/fonts';
 import Navbar from '../components/Navbar';
 import { LandingPageHeader } from '../components/LandingPageHeader';
 import GoogleAnalyticsClient from '../components/GoogleAnalyticsClient';
@@ -19,15 +19,16 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
   const isLandingPage = pathname === '/lp' || pathname?.startsWith('/lp/');
+  const isHomePage = pathname === '/';
 
   return (
     <html
       lang="en"
       data-theme="light"
-      className={cx(fraunces.variable, nunito.variable, GeistMono.variable)}
+      className={cx(outfit.variable, GeistMono.variable)}
       suppressHydrationWarning
     >
-      <body className="antialiased bg-bg text-c-text font-nunito">
+      <body className="antialiased bg-bg text-c-text font-outfit">
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="light"
@@ -40,7 +41,7 @@ export default function RootLayout({
 
           <main>{children}</main>
 
-          {!isLandingPage && <Footer />}
+          {!isLandingPage && !isHomePage && <Footer />}
         </ThemeProvider>
       </body>
     </html>

@@ -21,8 +21,7 @@ module.exports = {
         'code-bg':       'var(--color-code-bg)',
       },
       fontFamily: {
-        fraunces: ['var(--font-fraunces)', 'serif'],
-        nunito:   ['var(--font-nunito)', 'sans-serif'],
+        outfit: ['var(--font-outfit)', 'sans-serif'],
       },
       boxShadow: {
         retro:    '4px 4px 0px rgba(0,0,0,0.12)',

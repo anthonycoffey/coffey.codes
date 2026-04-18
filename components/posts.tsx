@@ -9,7 +9,7 @@ export function BlogPosts({ allBlogs }) {
         <div key={post.slug} className="p-6 mb-4 bg-surface rounded-lg border border-border hover:bg-surface-hover transition duration-300">
           <div className="w-full flex flex-col space-y-2">
             <Link href={`/articles/${post.slug}`} className="block">
-              <h4 className="font-fraunces text-lg font-bold text-c-heading hover:text-link">
+              <h4 className="font-outfit text-lg font-bold text-c-heading hover:text-link">
                 {post.metadata.title}
               </h4>
             </Link>

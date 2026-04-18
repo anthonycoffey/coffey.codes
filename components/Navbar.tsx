@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import {
   HomeIcon,
   DocumentTextIcon,
@@ -41,7 +42,19 @@ const navItems: Record<string, { name: string; icon: React.ReactNode }> = {
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const { theme } = useTheme();
+  const isOverlay = pathname === '/';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logoSrc =
+    isOverlay || !mounted || theme === 'dark'
+      ? '/logo-horizontal.svg'
+      : '/logo-horizontal-light.svg';
 
   useEffect(() => {
     if (isMobile) setIsMenuOpen(false);
@@ -62,9 +75,13 @@ export default function Navbar() {
           key={path}
           href={path}
           className={`flex items-center text-sm transition-colors rounded-full px-3 py-1.5 ${
-            isActive
-              ? 'bg-accent2 text-c-heading font-semibold'
-              : 'text-c-text hover:bg-surface-hover'
+            isOverlay
+              ? isActive
+                ? 'bg-white/15 text-white font-semibold'
+                : 'text-white/70 hover:text-white hover:bg-white/10'
+              : isActive
+                ? 'bg-accent2 text-c-heading font-semibold'
+                : 'text-c-text hover:bg-surface-hover'
           }`}
         >
           {icon}
@@ -74,7 +91,13 @@ export default function Navbar() {
     });
 
   return (
-    <aside className="sticky top-0 z-50 bg-bg border-b-2 border-border tracking-tight w-full">
+    <aside
+      className={`z-50 w-full tracking-tight transition-colors ${
+        isOverlay
+          ? 'fixed top-0 bg-transparent border-none'
+          : 'sticky top-0 bg-bg border-b-2 border-border'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 py-2">
         {/* Logo row */}
         <div className="flex items-center justify-between">
@@ -82,7 +105,7 @@ export default function Navbar() {
             <Image
               width={300}
               height={82}
-              src="/logo-horizontal.svg"
+              src={logoSrc}
               alt="Anthony Coffey logo"
               className="h-14 w-auto"
               priority
@@ -92,14 +115,18 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {renderNavItems()}
-            <ThemeToggle className="ml-2" />
+            {!isOverlay && <ThemeToggle className="ml-2" />}
           </nav>
 
           {/* Mobile controls */}
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
+            {!isOverlay && <ThemeToggle />}
             <button
-              className="p-2 text-c-text hover:bg-surface-hover rounded-full transition-colors"
+              className={`p-2 rounded-full transition-colors ${
+                isOverlay
+                  ? 'text-white/70 hover:text-white hover:bg-white/10'
+                  : 'text-c-text hover:bg-surface-hover'
+              }`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -114,7 +141,11 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {isMobile && isMenuOpen && (
-          <nav className="py-3 md:hidden flex flex-col gap-1">
+          <nav
+            className={`py-3 md:hidden flex flex-col gap-1 ${
+              isOverlay ? 'bg-black/60 backdrop-blur-sm rounded-xl px-2 mt-1' : ''
+            }`}
+          >
             {renderNavItems()}
           </nav>
         )}

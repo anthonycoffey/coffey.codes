@@ -12,7 +12,7 @@ export default function CraftScene() {
     >
       <div className={styles.sceneContent}>
         <p data-animate className={styles.leadLine}>
-          The process is supposed to be messy.
+          
           <br />
           The work isn&apos;t.
         </p>

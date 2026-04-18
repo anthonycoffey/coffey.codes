@@ -12,7 +12,7 @@ export default function AboutScene() {
     >
       <div className={styles.sceneContent}>
         <p data-animate className={styles.leadLine}>
-          Musician. Director. Engineer. Actor.
+          Musician. Engineer. Maker. Artist.
           <br />
           Not a list &mdash; a life.
         </p>

@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import styles from './Scene.module.sass'
+import styles from './Scene.module.sass';
 
 export default function IntroScene() {
   return (
@@ -12,14 +12,14 @@ export default function IntroScene() {
     >
       <div className={styles.introContent}>
         <p data-animate className={styles.introHeadline}>
-          Art is the point.
+          Art is life.
           <br />
-          Everything else is the medium.
+          Everything is the medium.
         </p>
         <p data-animate className={styles.introByline}>
           Anthony Coffey &mdash; Austin, TX
         </p>
       </div>
     </section>
-  )
+  );
 }

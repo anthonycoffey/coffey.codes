@@ -9,12 +9,9 @@ interface ShineOverlayProps {
 export default function ShineOverlay({ visible }: ShineOverlayProps) {
   return (
     <div className={`${styles.introPanel} ${visible ? styles.visible : ''}`}>
-      <p className={styles.byline}>Anthony Coffey</p>
-      <p className={styles.headline}>
-        Shine on, you crazy diamond.
-      </p>
+      <p className={styles.headline}>Anthony Coffey</p>
       <p className={styles.bodyLine}>
-        Let&rsquo;s build something worth remembering.
+        <a href="/contact">&rarr;&nbsp;&nbsp;reach out</a>
       </p>
     </div>
   )

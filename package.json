@@ -15,7 +15,7 @@
     "test:e2e": "playwright test"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -23,7 +23,7 @@
     "@react-three/drei": "^10.0.5",
     "@react-three/fiber": "^9.1.0",
     "@react-three/postprocessing": "^3.0.4",
-    "@types/node": "20.11.17",
+    "@types/node": "^24.0.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.2",
     "autoprefixer": "^10.4.21",

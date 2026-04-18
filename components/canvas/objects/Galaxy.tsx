@@ -306,10 +306,10 @@ function RingParticles() {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.01}
+        size={0.1}
         color="#4F6178"
         transparent
-        opacity={0.33}
+        opacity={0.1}
         sizeAttenuation
         depthWrite={false}
       />
@@ -457,11 +457,11 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
 
       {/* Galactic core — glowing sun (lighter tint) */}
       <mesh>
-        <sphereGeometry args={[0.8, 16, 16]} />
+        <sphereGeometry args={[2, 16, 16]} />
         <meshStandardMaterial
           color="#fffde0"
           emissive="#ffe895"
-          emissiveIntensity={1.5}
+          emissiveIntensity={0.9}
           toneMapped={false}
         />
       </mesh>

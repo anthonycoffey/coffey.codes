@@ -47,8 +47,8 @@ const INITIAL_SAT_ANGLE = Math.PI / 4; // 1-2 o'clock, climbing toward 12
 // Satellite attitude wobble: slow Y-axis spin plus X/Z sinusoidal tilts.
 // Gives the satellite a "drifting attitude" feel without full tumbling
 // (silhouette stays roughly legible on most frames).
-const SAT_SPIN_Y = 0.1; // yaw spin rad/s (1 rev / ~63 s)
-const SAT_WOBBLE_X_AMP = 0.14; // pitch wobble amplitude (rad, ~8°)
+const SAT_SPIN_Y = 0.3; // yaw spin rad/s (1 rev / ~63 s)
+const SAT_WOBBLE_X_AMP = 0.4; // pitch wobble amplitude (rad, ~8°)
 const SAT_WOBBLE_Z_AMP = 0.09; // roll wobble amplitude (rad, ~5°)
 const SAT_WOBBLE_X_RATE = 0.4; // pitch wobble oscillation rate
 const SAT_WOBBLE_Z_RATE = 0.3; // roll wobble oscillation rate (slightly
@@ -59,13 +59,15 @@ const SAT_WOBBLE_Z_RATE = 0.3; // roll wobble oscillation rate (slightly
 // (nearly opposite the thing they're both orbiting). Rock speed is
 // independent (faster + reverse direction) so the two bodies drift and pass
 // each other over time, adding motion without locking in rigid symmetry.
-const ROCK_ANGLE_SPEED = -0.5; // rad/s, negative = reverse direction, faster
+const ROCK_ANGLE_SPEED = -0.7; // rad/s, negative = reverse direction, faster
 const ROCK_INITIAL_ANGLE = INITIAL_SAT_ANGLE + Math.PI; // opposite of sat's starting angle
-const ROCK_TUMBLE_X = 0.7; // rad/s
-const ROCK_TUMBLE_Y = 1.3;
+const ROCK_TUMBLE_X = 0.9; // rad/s
+const ROCK_TUMBLE_Y = 1.7;
 const ROCK_TUMBLE_Z = 0.5;
 
-export default function Satellite({ scrollProgress: _scrollProgress }: SatelliteProps) {
+export default function Satellite({
+  scrollProgress: _scrollProgress,
+}: SatelliteProps) {
   const groupRef = useRef<THREE.Group>(null);
   const rockRef = useRef<THREE.Mesh>(null);
 
@@ -91,8 +93,8 @@ export default function Satellite({ scrollProgress: _scrollProgress }: Satellite
     if (rockRef.current) {
       const rockAngle = ROCK_INITIAL_ANGLE + t * ROCK_ANGLE_SPEED;
       rockRef.current.position.set(
-        ORBIT_CENTER.x + ORBIT_RADIUS * Math.cos(rockAngle),
-        ORBIT_CENTER.y + ORBIT_RADIUS * Math.sin(rockAngle),
+        ORBIT_CENTER.x + (ORBIT_RADIUS / 1.5) * Math.cos(rockAngle / 2),
+        ORBIT_CENTER.y + (ORBIT_RADIUS / 1.5) * Math.sin(rockAngle / 2),
         ORBIT_CENTER.z,
       );
       // Multi-axis tumble at independent rates for a chaotic rock feel.
@@ -106,85 +108,89 @@ export default function Satellite({ scrollProgress: _scrollProgress }: Satellite
 
   return (
     <>
-    <group ref={groupRef} scale={4}>
-      {/* Satellite body */}
-      <mesh>
-        <boxGeometry args={[1, 0.5, 0.5]} />
-        <meshStandardMaterial color="#3a3a5a" metalness={0.8} roughness={0.2} />
-      </mesh>
+      <group ref={groupRef} scale={4}>
+        {/* Satellite body */}
+        <mesh>
+          <boxGeometry args={[1, 0.5, 0.5]} />
+          <meshStandardMaterial
+            color="#3a3a5a"
+            metalness={0.8}
+            roughness={0.2}
+          />
+        </mesh>
 
-      {/* Solar panel — left */}
-      <mesh position={[-1.5, 0, 0]}>
-        <planeGeometry args={[2, 0.8]} />
-        <meshStandardMaterial
-          color="#1a1a44"
-          metalness={0.6}
-          roughness={0.3}
-          emissive="#111133"
-          emissiveIntensity={0.3}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+        {/* Solar panel — left */}
+        <mesh position={[-1.5, 0, 0]}>
+          <planeGeometry args={[2, 0.8]} />
+          <meshStandardMaterial
+            color="#1a1a44"
+            metalness={0.6}
+            roughness={0.3}
+            emissive="#111133"
+            emissiveIntensity={0.3}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
 
-      {/* Solar panel — right */}
-      <mesh position={[1.5, 0, 0]}>
-        <planeGeometry args={[2, 0.8]} />
-        <meshStandardMaterial
-          color="#1a1a44"
-          metalness={0.6}
-          roughness={0.3}
-          emissive="#111133"
-          emissiveIntensity={0.3}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+        {/* Solar panel — right */}
+        <mesh position={[1.5, 0, 0]}>
+          <planeGeometry args={[2, 0.8]} />
+          <meshStandardMaterial
+            color="#1a1a44"
+            metalness={0.6}
+            roughness={0.3}
+            emissive="#111133"
+            emissiveIntensity={0.3}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
 
-      {/* Antenna */}
-      <mesh position={[0, 0.5, 0]}>
-        <cylinderGeometry args={[0.02, 0.02, 0.8, 6]} />
-        <meshStandardMaterial color="#888" metalness={0.9} roughness={0.1} />
-      </mesh>
-      <mesh position={[0, 0.95, 0]}>
-        <sphereGeometry args={[0.05, 6, 6]} />
-        <meshStandardMaterial
+        {/* Antenna */}
+        <mesh position={[0, 0.5, 0]}>
+          <cylinderGeometry args={[0.02, 0.02, 0.8, 6]} />
+          <meshStandardMaterial color="#888" metalness={0.9} roughness={0.1} />
+        </mesh>
+        <mesh position={[0, 0.95, 0]}>
+          <sphereGeometry args={[0.05, 6, 6]} />
+          <meshStandardMaterial
+            color="#00e5ff"
+            emissive="#00e5ff"
+            emissiveIntensity={1}
+          />
+        </mesh>
+
+        {/* Screen on hull face */}
+        <mesh position={[0, 0, 0.26]}>
+          <planeGeometry args={[0.8, 0.4]} />
+          <meshStandardMaterial
+            color="#00e5ff"
+            emissive="#00e5ff"
+            emissiveIntensity={0.8}
+            transparent
+            opacity={0.7}
+          />
+        </mesh>
+
+        {/* Satellite light */}
+        <pointLight
+          position={[0, 0, 1]}
           color="#00e5ff"
-          emissive="#00e5ff"
-          emissiveIntensity={1}
+          intensity={3}
+          distance={10}
         />
-      </mesh>
+      </group>
 
-      {/* Screen on hull face */}
-      <mesh position={[0, 0, 0.26]}>
-        <planeGeometry args={[0.8, 0.4]} />
-        <meshStandardMaterial
-          color="#00e5ff"
-          emissive="#00e5ff"
-          emissiveIntensity={0.8}
-          transparent
-          opacity={0.7}
-        />
-      </mesh>
-
-      {/* Satellite light */}
-      <pointLight
-        position={[0, 0, 1]}
-        color="#00e5ff"
-        intensity={3}
-        distance={10}
-      />
-    </group>
-
-    {/* Tumbling rock on perpendicular orbit — roughly opposite the
+      {/* Tumbling rock on perpendicular orbit — roughly opposite the
         satellite at all times. Position and rotation driven from the same
         useFrame loop as the satellite above. */}
-    <mesh ref={rockRef}>
-      <icosahedronGeometry args={[1.5, 0]} />
-      <meshStandardMaterial
-        color="#9C9C9C"
-        roughness={0.95}
-        metalness={0.05}
-      />
-    </mesh>
+      <mesh ref={rockRef}>
+        <icosahedronGeometry args={[2, 0]} />
+        <meshStandardMaterial
+          color="#b3dafd"
+          roughness={0.82}
+          metalness={0.01}
+        />
+      </mesh>
     </>
   );
 }

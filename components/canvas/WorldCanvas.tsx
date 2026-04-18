@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sampleMerkaba } from '@/utils/merkaba';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import CameraRig from './CameraRig';
 import UFO from './objects/UFO';
 import Planet from './objects/Planet';
@@ -158,6 +158,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
     >
       <Canvas
         camera={{ position: [0, 0, 4], fov: 70 }}
+        dpr={[1, 1.5]}
         gl={{ antialias: false, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
         style={{ background: 'transparent' }}
         frameloop="always"
@@ -196,13 +197,16 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         <Galaxy scrollProgress={scrollProgress} />
         <Spaceship scrollProgress={scrollProgress} />
 
-        <EffectComposer>
+        <EffectComposer multisampling={0}>
           <Bloom
-            luminanceThreshold={1.0}
+            luminanceThreshold={0.9}
             luminanceSmoothing={0.3}
             intensity={1.5}
             mipmapBlur
+            radius={0.85}
+            levels={9}
           />
+          <Vignette eskil={false} offset={0.3} darkness={0.7} />
         </EffectComposer>
       </Canvas>
     </div>

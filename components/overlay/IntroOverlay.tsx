@@ -10,7 +10,7 @@ export default function IntroOverlay({ visible }: IntroOverlayProps) {
   return (
     <div className={`${styles.introPanel} ${visible ? styles.visible : ''}`}>
       <p className={styles.headline}>Anthony Coffey</p>
-      <p className={styles.byline}>Austin, TX</p>
+      <p className={styles.byline}>Austin, Texas</p>
     </div>
   )
 }

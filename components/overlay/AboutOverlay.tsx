@@ -15,7 +15,10 @@ export default function AboutOverlay({ visible }: AboutOverlayProps) {
         <br /> Artist. Maker.
       </p>
       <p className={styles.bodyLine}>
-        Creativity is at the core of everything I do.
+        <span className={[styles.rainbow, styles.boldupper].join(' ')}>
+          Creativity
+        </span>{' '}
+        is at the core of everything that I love to do.
       </p>
     </div>
   );

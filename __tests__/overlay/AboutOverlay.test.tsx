@@ -10,7 +10,12 @@ describe('AboutOverlay', () => {
 
   it('renders the body line', () => {
     render(<AboutOverlay visible={true} />)
-    expect(screen.getByText(/Creativity is at the core/)).toBeInTheDocument()
+    // "Creativity" is wrapped in a styled <span>, so the body line text is
+    // split across nodes. Match on the trailing fragment that lives in a
+    // single text node.
+    expect(
+      screen.getByText(/is at the core of everything that I love to do/),
+    ).toBeInTheDocument()
   })
 
   it('applies visible class when visible', () => {

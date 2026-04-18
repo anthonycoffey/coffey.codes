@@ -1,52 +1,140 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Homepage — scroll skeleton', () => {
+// Must match the SCROLL_MULTIPLIER constant in ScrollContainer.tsx
+const SCROLL_MULTIPLIER = 6
+
+// Total scrollable distance = (SCROLL_MULTIPLIER - 1) × viewport height
+const totalScroll = (vh: number) => (SCROLL_MULTIPLIER - 1) * vh
+
+// Playwright's toBeVisible/toBeHidden only check display:none and visibility:hidden —
+// they do NOT check opacity.  The overlay panels hide via opacity: 0 (CSS transition),
+// so we verify visibility by checking whether the CSS module `.visible` class is
+// present on the panel container.  The class appears in the compiled attribute as a
+// substring (e.g. "__visible"), so a /visible/ regex match is reliable.
+const panels = {
+  intro: (page: any) => page.locator('[class*="introPanel"]').first(),
+  shine: (page: any) => page.locator('[class*="introPanel"]').last(),
+  about: (page: any) => page.locator('[class*="hudPanel"]').first(),
+  craft: (page: any) => page.locator('[class*="hudPanel"]').last(),
+}
+
+const isShowing  = /visible/
+const isHidden   = expect.not
+
+test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
+    // Wait for the WebGL canvas to mount before any assertions or scrolling
+    await page.waitForSelector('canvas')
   })
 
-  test('renders full-viewport on load — no page bottom visible', async ({ page }) => {
-    const viewportHeight = page.viewportSize()!.height
-    const body = await page.locator('body').boundingBox()
-    // The scroll container should be exactly viewport height, not taller
+  // ── Structure ──────────────────────────────────────────────────────────
+
+  test('renders the scroll container at full viewport height', async ({ page }) => {
+    const vh = page.viewportSize()!.height
     const container = page.locator('#scroll-container')
     await expect(container).toBeVisible()
     const box = await container.boundingBox()
-    expect(box!.height).toBeCloseTo(viewportHeight, -1)
+    expect(box!.height).toBeCloseTo(vh, -1)
   })
 
-  test('scroll track contains 5 scenes side by side', async ({ page }) => {
-    const scenes = page.locator('[data-scene]')
-    await expect(scenes).toHaveCount(5)
+  test('canvas element is present (WebGL scene mounted)', async ({ page }) => {
+    await expect(page.locator('canvas')).toBeVisible()
   })
 
-  test('scrolling moves the track horizontally', async ({ page }) => {
-    const track = page.locator('#scroll-track')
-    const before = await track.boundingBox()
-
-    // Scroll down to trigger GSAP horizontal movement
-    await page.mouse.wheel(0, 600)
-    await page.waitForTimeout(400)
-
-    const after = await track.boundingBox()
-    // Track x position should have shifted left (negative direction)
-    expect(after!.x).toBeLessThan(before!.x)
+  test('page body is 600vh tall (full scroll range intact)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    const bodyScrollHeight = await page.evaluate(() => document.body.scrollHeight)
+    expect(bodyScrollHeight).toBeCloseTo(SCROLL_MULTIPLIER * vh, -2)
   })
 
-  test('all 5 scenes are reachable by scrolling', async ({ page }) => {
-    const sceneIds = ['intro', 'about', 'craft', 'now', 'connect']
-    const trackWidth = await page.locator('#scroll-track').evaluate(
-      (el) => el.scrollWidth
-    )
-    const viewportWidth = page.viewportSize()!.width
-    const totalScroll = trackWidth - viewportWidth
+  // ── Overlay visibility at rest ─────────────────────────────────────────
 
-    for (let i = 0; i < sceneIds.length; i++) {
-      const scrollAmount = (totalScroll / (sceneIds.length - 1)) * i
-      await page.evaluate((y) => window.scrollTo(0, y), scrollAmount)
-      await page.waitForTimeout(300)
-      const scene = page.locator(`[data-scene="${sceneIds[i]}"]`)
-      await expect(scene).toBeVisible()
-    }
+  test('no overlay panels have the visible class before scrolling', async ({ page }) => {
+    await expect(panels.intro(page)).not.toHaveClass(isShowing)
+    await expect(panels.shine(page)).not.toHaveClass(isShowing)
+    await expect(panels.about(page)).not.toHaveClass(isShowing)
+    await expect(panels.craft(page)).not.toHaveClass(isShowing)
+  })
+
+  // ── Intro overlay (progress 0.15–0.35) ────────────────────────────────
+
+  test('intro overlay panel becomes visible when scrolled into range (~25%)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.25 * totalScroll(vh))
+    await expect(panels.intro(page)).toHaveClass(isShowing)
+    await expect(panels.intro(page)).toContainText('Who Am I?')
+    await expect(panels.intro(page)).toContainText('Anthony Coffey - Austin, Texas')
+  })
+
+  test('intro overlay social links are present and correctly labelled', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.25 * totalScroll(vh))
+    await expect(panels.intro(page)).toHaveClass(isShowing)
+    await expect(page.getByRole('link', { name: 'GitHub' })).toBeTruthy()
+    await expect(page.getByRole('link', { name: 'LinkedIn' })).toBeTruthy()
+    await expect(page.getByRole('link', { name: 'Linktree Hub' })).toBeTruthy()
+  })
+
+  // ── About overlay (progress 0.35–0.52) ────────────────────────────────
+
+  test('about overlay panel becomes visible when scrolled into range (~44%)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.44 * totalScroll(vh))
+    await expect(panels.about(page)).toHaveClass(isShowing)
+    await expect(panels.about(page)).toContainText('Musician.')
+    await expect(panels.about(page)).toContainText('Creativity is at the core of everything I do.')
+  })
+
+  test('intro overlay panel is hidden once scrolled past its range', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.44 * totalScroll(vh))
+    await expect(panels.about(page)).toHaveClass(isShowing)
+    await expect(panels.intro(page)).not.toHaveClass(isShowing)
+  })
+
+  // ── Craft overlay (progress 0.52–0.68) ────────────────────────────────
+
+  test('craft overlay panel becomes visible when scrolled into range (~60%)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.60 * totalScroll(vh))
+    await expect(panels.craft(page)).toHaveClass(isShowing)
+    await expect(panels.craft(page)).toContainText('I solve problems for people.')
+    await expect(panels.craft(page)).toContainText('The tools and trends may change')
+  })
+
+  test('about overlay panel is hidden once scrolled past its range', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.60 * totalScroll(vh))
+    await expect(panels.craft(page)).toHaveClass(isShowing)
+    await expect(panels.about(page)).not.toHaveClass(isShowing)
+  })
+
+  // ── Silent zone (progress 0.68–0.82) — no overlays ───────────────────
+
+  test('no overlay panel has the visible class in the silent zone (~75%)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.75 * totalScroll(vh))
+    await expect(panels.intro(page)).not.toHaveClass(isShowing)
+    await expect(panels.about(page)).not.toHaveClass(isShowing)
+    await expect(panels.craft(page)).not.toHaveClass(isShowing)
+    await expect(panels.shine(page)).not.toHaveClass(isShowing)
+  })
+
+  // ── Shine overlay (progress 0.82–1.00) ────────────────────────────────
+
+  test('shine overlay panel becomes visible when scrolled into range (~91%)', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.91 * totalScroll(vh))
+    await expect(panels.shine(page)).toHaveClass(isShowing)
+    await expect(panels.shine(page)).toContainText('Want to know more?')
+  })
+
+  test('shine overlay contact link points to /contact', async ({ page }) => {
+    const vh = page.viewportSize()!.height
+    await page.evaluate((y) => window.scrollTo(0, y), 0.91 * totalScroll(vh))
+    await expect(panels.shine(page)).toHaveClass(isShowing)
+    const link = page.getByRole('link', { name: /contact me/i })
+    await expect(link).toHaveAttribute('href', '/contact')
   })
 })

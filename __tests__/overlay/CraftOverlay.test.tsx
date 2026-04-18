@@ -5,12 +5,14 @@ import CraftOverlay from '@/components/overlay/CraftOverlay'
 describe('CraftOverlay', () => {
   it('renders the lead line', () => {
     render(<CraftOverlay visible={true} />)
-    expect(screen.getByText(/I solve problems for people/)).toBeInTheDocument()
+    expect(screen.getByText(/I solve big problems/)).toBeInTheDocument()
   })
 
   it('renders the body line', () => {
     render(<CraftOverlay visible={true} />)
-    expect(screen.getByText(/The tools and trends may change/)).toBeInTheDocument()
+    expect(
+      screen.getByText(/The trends and tools change, but my role does not/),
+    ).toBeInTheDocument()
   })
 
   it('applies visible class when visible', () => {

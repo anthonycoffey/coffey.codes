@@ -43,16 +43,9 @@
   &.visible
     transform: translateY(-50%) translateX(0)
 
-// ── Typography ────────────────────────────────────────────────────────────
-.headline
-  font-family: var(--font-outfit), sans-serif
-  font-size: clamp(3.5rem, 5vw, 4rem)
-  font-weight: 700
-  line-height: 1.15
-  color: #f0f0ff
-  margin: 0
-  text-shadow: #000000 0px 0 10px;
+
   
+// ── Typography ────────────────────────────────────────────────────────────
 .leadLine
   font-family: var(--font-outfit), sans-serif
   font-size: clamp(3.5rem, 5vw, 4rem)
@@ -60,8 +53,9 @@
   line-height: 1.15
   color: #f0f0ff
   margin: 0
+  text-shadow: #000000 0px 0 10px;
   letter-spacing: -0.02em
-  // text-shadow: #000000 50px 0 50px;
+  
 
 .byline
   font-family: var(--font-geist-mono), monospace
@@ -76,7 +70,7 @@
   font-size: clamp(1.5rem, 2vw, 1.5rem)
   font-weight: 400
   line-height: 1.7
-  color: rgba(255, 204, 0, 1)
+  color: #FFCC00
   margin: 0
 
 .eyebrow
@@ -110,3 +104,23 @@
   width: 1.5rem
   height: 1.5rem
   stroke-width: 1.5 // Adjusts the Heroicon stroke weight
+
+
+// ── Text styles ──────────────────────────────────────────────────────────
+.boldupper
+  text-transform: uppercase
+  font-weight: 700
+  
+.rainbow
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)
+  background-size: 200% auto
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
+  background-clip: text
+  animation: shimmer 3s linear infinite
+
+@keyframes shimmer
+  0%
+    background-position: 200% center
+  100%
+    background-position: 0% center

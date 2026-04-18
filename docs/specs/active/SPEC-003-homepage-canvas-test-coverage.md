@@ -1,7 +1,7 @@
-ss                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ---
+---
 id: SPEC-003
-title: "Homepage canvas — full Vitest unit test coverage"
-status: draft
+title: 'Homepage canvas — full Vitest unit test coverage'
+status: review-pending
 created: 2026-04-18
 author: Anthony Coffey
 reviewers: []
@@ -18,7 +18,7 @@ affected_repos: []
 
 ## Problem
 
-The homepage cinematic scene (ADR-001 through ADR-003) was iterated rapidly. Unit tests were not kept up to date. The codebase has no tests for `CameraRig`, any canvas object (`Planet`, `UFO`, `Galaxy`, `Satellite`, `TumblingRock`, `Spaceship`), `HUDOverlay`, or `ShineOverlay`. A regression in any of these components would be invisible until visual QA.
+The homepage cinematic scene (ADR-001 through ADR-003) was iterated rapidly. Unit tests were not kept up to date. The codebase has no tests for `CameraRig`, any canvas object (`Planet`, `UFO`, `Galaxy`, `Satellite`, `TumblingRock`, `Spaceship`), `HUDOverlay`, or `FinalOverlay`. A regression in any of these components would be invisible until visual QA.
 
 The existing E2E tests (`e2e/homepage.spec.ts`, `e2e/entrance-animations.spec.ts`, `e2e/mobile.spec.ts`) also reference the old five-panel horizontal-scroll architecture and are stale — these are flagged for a separate bug spec and are **out of scope here**.
 
@@ -31,7 +31,7 @@ The existing E2E tests (`e2e/homepage.spec.ts`, `e2e/entrance-animations.spec.ts
 3. WHEN the `ParticleSystem` dispersal factor reaches 1, the test SHALL verify the points object is hidden (`visible = false`).
 4. WHEN `CameraRig` receives `scrollProgress`, the test SHALL verify camera position and `lookAt` are updated to expected keyframe values.
 5. WHEN `HUDOverlay` receives a `scrollProgress` ref, the test SHALL verify each child overlay becomes visible at its documented threshold.
-6. WHEN `ShineOverlay` receives `visible={true}`, the test SHALL verify the visible CSS class is applied.
+6. WHEN `FinalOverlay` receives `visible={true}`, the test SHALL verify the visible CSS class is applied.
 7. WHEN the existing `sampleMerkaba` tests run, they SHALL continue to pass unchanged.
 8. WHEN the test suite runs (`npm test`), ALL tests SHALL pass with zero failures.
 
@@ -78,18 +78,18 @@ Three.js refs (e.g. `useRef<THREE.Points>`) will need lightweight stubs — plai
 
 ### Files to create
 
-| Test file | Target |
-|---|---|
-| `__tests__/canvas/CameraRig.test.tsx` | `components/canvas/CameraRig.tsx` |
-| `__tests__/canvas/ParticleSystem.test.tsx` | `ParticleSystem` in `WorldCanvas.tsx` |
-| `__tests__/canvas/objects/Planet.test.tsx` | `components/canvas/objects/Planet.tsx` |
-| `__tests__/canvas/objects/UFO.test.tsx` | `components/canvas/objects/UFO.tsx` |
-| `__tests__/canvas/objects/Galaxy.test.tsx` | `components/canvas/objects/Galaxy.tsx` |
-| `__tests__/canvas/objects/Satellite.test.tsx` | `components/canvas/objects/Satellite.tsx` |
+| Test file                                        | Target                                       |
+| ------------------------------------------------ | -------------------------------------------- |
+| `__tests__/canvas/CameraRig.test.tsx`            | `components/canvas/CameraRig.tsx`            |
+| `__tests__/canvas/ParticleSystem.test.tsx`       | `ParticleSystem` in `WorldCanvas.tsx`        |
+| `__tests__/canvas/objects/Planet.test.tsx`       | `components/canvas/objects/Planet.tsx`       |
+| `__tests__/canvas/objects/UFO.test.tsx`          | `components/canvas/objects/UFO.tsx`          |
+| `__tests__/canvas/objects/Galaxy.test.tsx`       | `components/canvas/objects/Galaxy.tsx`       |
+| `__tests__/canvas/objects/Satellite.test.tsx`    | `components/canvas/objects/Satellite.tsx`    |
 | `__tests__/canvas/objects/TumblingRock.test.tsx` | `components/canvas/objects/TumblingRock.tsx` |
-| `__tests__/canvas/objects/Spaceship.test.tsx` | `components/canvas/objects/Spaceship.tsx` |
-| `__tests__/overlay/HUDOverlay.test.tsx` | `components/overlay/HUDOverlay.tsx` |
-| `__tests__/overlay/ShineOverlay.test.tsx` | `components/overlay/ShineOverlay.tsx` |
+| `__tests__/canvas/objects/Spaceship.test.tsx`    | `components/canvas/objects/Spaceship.tsx`    |
+| `__tests__/overlay/HUDOverlay.test.tsx`          | `components/overlay/HUDOverlay.tsx`          |
+| `__tests__/overlay/FinalOverlay.test.tsx`        | `components/overlay/FinalOverlay.tsx`        |
 
 ### Key test cases per component
 
@@ -109,9 +109,9 @@ Three.js refs (e.g. `useRef<THREE.Points>`) will need lightweight stubs — plai
 
 **Spaceship** — not triggered below `progress=0.62`; once triggered, position changes over elapsed time.
 
-**HUDOverlay** — `IntroOverlay` visible at `progress=0.20`, not at `0.10`; `AboutOverlay` visible at `0.40`; `CraftOverlay` visible at `0.60`; `ShineOverlay` visible at `0.85`.
+**HUDOverlay** — `IntroOverlay` visible at `progress=0.20`, not at `0.10`; `AboutOverlay` visible at `0.40`; `CraftOverlay` visible at `0.60`; `FinalOverlay` visible at `0.85`.
 
-**ShineOverlay** — `visible={true}` applies `.visible` class; `visible={false}` does not.
+**FinalOverlay** — `visible={true}` applies `.visible` class; `visible={false}` does not.
 
 ## Edge cases
 
@@ -148,7 +148,7 @@ Three.js refs (e.g. `useRef<THREE.Points>`) will need lightweight stubs — plai
 - [ ] `__tests__/canvas/objects/TumblingRock.test.tsx`
 - [ ] `__tests__/canvas/objects/Spaceship.test.tsx`
 - [ ] `__tests__/overlay/HUDOverlay.test.tsx`
-- [ ] `__tests__/overlay/ShineOverlay.test.tsx`
+- [ ] `__tests__/overlay/FinalOverlay.test.tsx`
 - [ ] Verify `npm test` passes with zero failures
 - [ ] Move this spec to `docs/specs/archive/` after all tasks complete
 

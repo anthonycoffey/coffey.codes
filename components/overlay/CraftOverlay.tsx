@@ -11,8 +11,7 @@ export default function CraftOverlay({ visible }: CraftOverlayProps) {
     <div className={`${styles.hudPanel} ${visible ? styles.visible : ''}`}>
       <p className={styles.leadLine}>I solve problems for people.</p>
       <p className={styles.bodyLine}>
-        The tools and trends change, but what I do remains the same.
-        <br /> How can I help?
+        The tools and trends may change, but my work is the same.
       </p>
     </div>
   );

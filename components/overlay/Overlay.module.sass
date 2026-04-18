@@ -46,36 +46,37 @@
 // ── Typography ────────────────────────────────────────────────────────────
 .headline
   font-family: var(--font-outfit), sans-serif
-  font-size: clamp(2.2rem, 5vw, 4.5rem)
+  font-size: clamp(3.5rem, 5vw, 4rem)
   font-weight: 700
-  line-height: 1.1
+  line-height: 1.15
   color: #f0f0ff
   margin: 0
-  letter-spacing: -0.02em
-
-.byline
-  font-family: var(--font-geist-mono), monospace
-  font-size: 0.75rem
-  letter-spacing: 0.18em
-  text-transform: uppercase
-  color: rgba(240, 240, 255, 0.35)
-  margin: 0
-
+  text-shadow: #000000 0px 0 10px;
+  
 .leadLine
   font-family: var(--font-outfit), sans-serif
-  font-size: clamp(1.6rem, 3.5vw, 3rem)
+  font-size: clamp(3.5rem, 5vw, 4rem)
   font-weight: 700
   line-height: 1.15
   color: #f0f0ff
   margin: 0
   letter-spacing: -0.02em
+  // text-shadow: #000000 50px 0 50px;
+
+.byline
+  font-family: var(--font-geist-mono), monospace
+  font-size: 1rem
+  letter-spacing: -0.02em
+  text-transform: uppercase
+  color: rgba(255, 204, 0, 1)
+  margin: 0
 
 .bodyLine
   font-family: var(--font-outfit), sans-serif
-  font-size: clamp(1rem, 2vw, 1.2rem)
+  font-size: clamp(1.5rem, 2vw, 1.5rem)
   font-weight: 400
   line-height: 1.7
-  color: rgba(240, 240, 255, 0.5)
+  color: rgba(255, 204, 0, 1)
   margin: 0
 
 .eyebrow
@@ -85,3 +86,27 @@
   text-transform: uppercase
   color: rgba(240, 240, 255, 0.3)
   margin: 0
+
+
+// ── Social Icons ──────────────────────────────────────────────────────────
+.socialLinks
+  display: flex
+  gap: 1rem
+  pointer-events: auto // CRITICAL: re-enables interaction inside the overlay
+
+.iconLink
+  color: rgba(240, 240, 255, 0.35)
+  transition: all 0.3s ease
+  display: flex
+  align-items: center
+  justify-content: center
+
+  &:hover
+    color: #f0f0ff
+    transform: translateY(-2px)
+    filter: drop-shadow(0 0 8px rgba(240, 240, 255, 0.2))
+
+.heroSize
+  width: 1.5rem
+  height: 1.5rem
+  stroke-width: 1.5 // Adjusts the Heroicon stroke weight

@@ -254,7 +254,7 @@ function OrbitingMoon({
  * Tuned for low density, a thin radial band, small particle size, and a
  * cool icy color so the ring reads distinctly from the warm galaxy stars.
  */
-const RING_COUNT = 200;
+const RING_COUNT = 250;
 const RING_INNER = 1.1;
 const RING_OUTER = 1.6;
 
@@ -306,10 +306,10 @@ function RingParticles() {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.01}
+        size={0.1}
         color="#4F6178"
         transparent
-        opacity={0.33}
+        opacity={0.1}
         sizeAttenuation
         depthWrite={false}
       />
@@ -457,11 +457,12 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
 
       {/* Galactic core — glowing sun (lighter tint) */}
       <mesh>
-        <sphereGeometry args={[0.8, 16, 16]} />
+        <sphereGeometry args={[2, 16, 16]} />
         <meshStandardMaterial
           color="#fffde0"
           emissive="#ffe895"
-          emissiveIntensity={6}
+          emissiveIntensity={1.1}
+          toneMapped={true}
         />
       </mesh>
 
@@ -547,8 +548,10 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
         />
       </group>
 
-      {/* Center light — illuminates planets */}
-      <pointLight color="#ffeeaa" intensity={20} distance={30} />
+      {/* Center light — illuminates planets
+        TODO: doesnt appear to be working, no surface to catch light
+        */}
+      <pointLight color="#ffeeaa" intensity={30} distance={100} />
     </group>
   );
 }

@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sampleMerkaba } from '@/utils/merkaba';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import CameraRig from './CameraRig';
 import UFO from './objects/UFO';
 import Planet from './objects/Planet';
@@ -14,7 +14,7 @@ import Spaceship from './objects/Spaceship';
 
 // ── Constants ────────────────────────────────────────────────────────────────────────────
 const PARTICLE_COUNT = 2000;
-const MERKABA_RADIUS = 1.6;
+const MERKABA_RADIUS = 2;
 
 // Dispersal: how far each particle drifts outward before being fully faded.
 // Keep > a few units so the explosion clearly moves off-center, but small
@@ -54,7 +54,7 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 }
 
 // ── Colors ───────────────────────────────────────────────────────────────────────────────
-const COLOR_GREEN = '#39FF49';
+const COLOR_GOLD = '#FFCC00';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function smoothstep(t: number): number {
@@ -132,7 +132,7 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
       </bufferGeometry>
       <pointsMaterial
         size={0.013}
-        color={COLOR_GREEN}
+        color={COLOR_GOLD}
         transparent
         opacity={0.75}
         sizeAttenuation
@@ -158,7 +158,13 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
     >
       <Canvas
         camera={{ position: [0, 0, 4], fov: 70 }}
-        gl={{ antialias: false, alpha: true }}
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: false,
+          alpha: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1,
+        }}
         style={{ background: 'transparent' }}
         frameloop="always"
       >
@@ -196,13 +202,16 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         <Galaxy scrollProgress={scrollProgress} />
         <Spaceship scrollProgress={scrollProgress} />
 
-        <EffectComposer>
+        <EffectComposer multisampling={0}>
           <Bloom
-            luminanceThreshold={0.8}
+            luminanceThreshold={0.9}
             luminanceSmoothing={0.3}
             intensity={1.5}
             mipmapBlur
+            radius={0.85}
+            levels={9}
           />
+          <Vignette eskil={false} offset={0.3} darkness={0.55} />
         </EffectComposer>
       </Canvas>
     </div>

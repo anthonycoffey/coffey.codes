@@ -5,7 +5,7 @@ import IntroOverlay from '@/components/overlay/IntroOverlay'
 describe('IntroOverlay', () => {
   it('renders the headline', () => {
     render(<IntroOverlay visible={true} />)
-    expect(screen.getByText(/Art is the point/)).toBeInTheDocument()
+    expect(screen.getByText(/Who Am I/)).toBeInTheDocument()
   })
 
   it('renders the byline', () => {

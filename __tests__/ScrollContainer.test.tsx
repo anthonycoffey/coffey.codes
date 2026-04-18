@@ -4,8 +4,14 @@ import { describe, it, expect, vi } from 'vitest'
 // GSAP touches the DOM — mock it entirely in jsdom
 const mockTrigger = { kill: vi.fn() }
 vi.mock('gsap', () => ({
-  gsap: { registerPlugin: vi.fn() },
-  default: { registerPlugin: vi.fn() },
+  gsap: {
+    registerPlugin: vi.fn(),
+    context: vi.fn((fn: () => void) => { fn(); return { revert: vi.fn() } }),
+  },
+  default: {
+    registerPlugin: vi.fn(),
+    context: vi.fn((fn: () => void) => { fn(); return { revert: vi.fn() } }),
+  },
 }))
 vi.mock('gsap/ScrollTrigger', () => ({
   ScrollTrigger: {

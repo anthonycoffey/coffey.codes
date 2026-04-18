@@ -15,7 +15,11 @@ vi.mock('@react-three/drei', () => ({
 vi.mock('@react-three/postprocessing', () => ({
   EffectComposer: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   Bloom: () => null,
+  Vignette: () => null,
 }))
+// Spaceship's useEffect calls setMatrixAt on an InstancedMesh ref that jsdom
+// cannot satisfy — stub the whole component for the WorldCanvas smoke test.
+vi.mock('@/components/canvas/objects/Spaceship', () => ({ default: () => null }))
 
 import WorldCanvas from '@/components/canvas/WorldCanvas'
 

@@ -117,7 +117,7 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     mat.opacity = (1 - disperse) * 0.75;
 
     // ── Rotation: spin while formed; stop once exploded ────────
-    pointsRef.current.rotation.y = t * 0.08 * (1 - disperse);
+    pointsRef.current.rotation.y = t * 0.5 * (1 - disperse);
     pointsRef.current.rotation.x = 0;
     pointsRef.current.rotation.z = 0;
   });

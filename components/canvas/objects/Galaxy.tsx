@@ -13,16 +13,16 @@ function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
 
-const GALAXY_COUNT = 3000;
+const GALAXY_COUNT = 1000;
 // Minimum spiral-particle radius — creates a visible gap around the core ("eye"
 // of the galaxy) so stars don't overlap the glowing sun sphere.
-const CORE_GAP = 3.2;
+const CORE_GAP = 6;
 // Galaxy Y-axis spin rate (radians/sec).
-const GALAXY_SPIN = 0.24;
+const GALAXY_SPIN = 0.2;
 // Planet axial-rotation rates (rad/s). Picked to approximate natural physics
 // ratios — gas giants spin roughly 2.3× faster than Earth-like terrestrials
 // (Jupiter ≈ 0.41 d, Saturn ≈ 0.45 d vs Earth ≈ 1.0 d). All prograde (+Y).
-const TERRESTRIAL_SPIN = (2 * Math.PI) / 17; // ≈ 0.37 rad/s (17s / rev)
+const TERRESTRIAL_SPIN = (2 * Math.PI) / 15; // ≈ 0.42 rad/s (15s / rev)
 const GAS_GIANT_SPIN = (2 * Math.PI) / 7.5; // ≈ 0.838 rad/s (7.5s / rev)
 
 // Axial tilt (obliquity) in radians. Inspired by real solar-system values:
@@ -57,12 +57,57 @@ function gapPosition(
   return [r * Math.cos(theta), y, r * Math.sin(theta)];
 }
 
-// Planet positions — placed in gaps between the two spiral arms so they never
-// sit inside a star stream. Ringed gas giant (Planet 2) lives in the outer
-// region; earth-tone terrestrial (Planet 3) now occupies the middle slot.
-const PLANET_1_POS = gapPosition(9, 0, 0.3);
+// Planet INITIAL positions — used only for the first render frame before
+// useFrame overrides each planet's position from its PLANET_*_ORBIT config.
+// Radii must match PLANET_*_ORBIT.r below to avoid a one-frame position pop
+// on mount.
+const PLANET_1_POS = gapPosition(4, 0, 0.3);
 const PLANET_2_POS = gapPosition(20, 0, -0.5);
 const PLANET_3_POS = gapPosition(13, 1, 0.2);
+
+// ── Planet orbits around the sun ────────────────────────────────────
+// The galaxy group already rotates rigidly at GALAXY_SPIN, so planets embedded
+// in that group orbit the sun at the same rate as the stars (no visible
+// differential). To make the differential visible, we add a Kepler-scaled
+// extra angular velocity Δω per planet (ω ∝ 1/r^1.5) — inner planets orbit
+// noticeably faster than outer ones. Collisions with the star field are
+// prevented by carving empty "orbital lanes" in the star generator below
+// (see LANE_RADII / LANE_HALF_WIDTH), mimicking the dust-clear gaps seen in
+// protoplanetary discs.
+//   Planet 1 (r=4):  lap ≈ 18 s  (Mercury-like tight inner orbit)
+//   Planet 3 (r=13): lap ≈ 105 s
+//   Planet 2 (r=20): lap ≈ 200 s
+const ORBIT_DW_REF = 0.06; // Δω at reference radius (rad/s)
+const ORBIT_R_REF = 13; // reference radius for Kepler scaling
+function keplerDW(r: number): number {
+  return ORBIT_DW_REF * Math.pow(ORBIT_R_REF / r, 1.5);
+}
+// θ₀ values below match the gap-center angles used by gapPosition() so each
+// planet starts exactly in its gap at t=0.
+const PLANET_1_ORBIT = {
+  r: 4,
+  y: 0.3,
+  theta0: 4 * SPIRAL_PITCH + Math.PI / 2,
+  dw: keplerDW(4),
+};
+const PLANET_2_ORBIT = {
+  r: 20,
+  y: -0.5,
+  theta0: 20 * SPIRAL_PITCH + Math.PI / 2,
+  dw: keplerDW(20),
+};
+const PLANET_3_ORBIT = {
+  r: 13,
+  y: 0.2,
+  theta0: 13 * SPIRAL_PITCH + Math.PI / 2 + Math.PI,
+  dw: keplerDW(13),
+};
+
+// Orbital lanes — narrow radial bands cleared of stars so the planets can
+// orbit at visible Keplerian rates without ever passing through an arm.
+// Mimics dust-clear gaps in real protoplanetary discs / planetary rings.
+const LANE_RADII = [PLANET_1_ORBIT.r, PLANET_3_ORBIT.r, PLANET_2_ORBIT.r];
+const LANE_HALF_WIDTH = 0.6;
 
 // Star-color gradient anchors — inner stars take on the sun's warm tint and
 // fade to cooler near-white toward the spiral arms' outer edge.
@@ -81,15 +126,17 @@ interface GalaxyProps {
  * By scroll ~0.95 it fills the viewport (~41° angular half-width > 35° FOV half).
  *
  * Geometry:
- *   - 3000 disc particles with two spiral arms (exponential radius + core deadzone)
+ *   - 1000 disc particles with two spiral arms (exponential radius + core deadzone)
  *     • per-vertex color gradient: warm yellow near the sun → cool white at the rim
  *     • additive blending so overlap reads as brighter clumps
+ *     • narrow empty lanes at each planet's orbital radius (dust-clear gaps)
  *   - Tilted 36° on X axis for depth and drama
  *   - Glowing yellow-white core sphere
- *   - 3 low-poly icosahedron planets placed in gaps between the spiral arms
- *     • Planet 1 (inner): earth-tone sage + pale moon
- *     • Planet 2 (outer): Neptune-blue ringed planet + swirling particle rings + tan moon
- *     • Planet 3 (middle): earth-tone terracotta, no moon
+ *   - 3 low-poly icosahedron planets at different orbital radii
+ *     • Planet 1 (r=4, tight inner): warm gold + small pale moon
+ *     • Planet 2 (r=20, outer): Neptune-blue ringed planet + swirling particle
+ *       rings + single inclined ice-blue moon
+ *     • Planet 3 (r=13, middle): deep forest green + single steeply-inclined moon
  *   - Point light at center illuminates the planets
  *
  * Motion:
@@ -98,6 +145,9 @@ interface GalaxyProps {
  *   - scroll > 0.95: z continues to -95 (fits viewport with a small margin)
  *   - Constant Y-axis spin (GALAXY_SPIN rad/s)
  *   - Each planet spins on its own axis (prograde) and slowly precesses
+ *   - Each planet orbits the sun at GALAXY_SPIN + Δω(r) — Kepler-scaled rate,
+ *     inner planets noticeably faster than outer ones; orbital lanes in the
+ *     star field keep planets collision-free
  *   - Moons orbit their parent planets on independent, inclined timers
  */
 
@@ -112,10 +162,20 @@ const { positions: GALAXY_POSITIONS, colors: GALAXY_COLORS } = (() => {
     const arm = i % 2; // two arms, 180° apart
     // Exponential radius distribution — dense core, long sparse arms.
     // CORE_GAP pushes the inner edge outward to create the central deadzone.
-    const r = Math.min(
+    // Rejection-sample until the radius falls outside every orbital lane so
+    // planets have clear paths to orbit through. A bounded attempt count
+    // guarantees termination (falls back to accepting the last sample).
+    let r = Math.min(
       STAR_MAX_R,
       CORE_GAP + -Math.log(Math.random() + 0.001) * 5.5,
     );
+    for (let attempt = 0; attempt < 12; attempt++) {
+      if (!LANE_RADII.some((pr) => Math.abs(r - pr) < LANE_HALF_WIDTH)) break;
+      r = Math.min(
+        STAR_MAX_R,
+        CORE_GAP + -Math.log(Math.random() + 0.001) * 5.5,
+      );
+    }
     const armOffset = arm * Math.PI;
     // Spiral: angle grows with radius (tighter at center, opening outward)
     const theta = r * SPIRAL_PITCH + armOffset + (Math.random() - 0.5) * 0.85;
@@ -270,6 +330,12 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
   const planet1TiltRef = useRef<THREE.Group>(null);
   const planet2TiltRef = useRef<THREE.Group>(null);
   const planet3TiltRef = useRef<THREE.Group>(null);
+  // Refs for per-planet orbit-position groups. Each frame we set .position to
+  // (r*cos(θ), y, r*sin(θ)) where θ(t) = θ₀ + Δω*t, producing visible
+  // differential drift through the galaxy's star field.
+  const planet1OrbitRef = useRef<THREE.Group>(null);
+  const planet2OrbitRef = useRef<THREE.Group>(null);
+  const planet3OrbitRef = useRef<THREE.Group>(null);
 
   useFrame(({ clock }) => {
     if (!groupRef.current || !pointsRef.current) return;
@@ -307,6 +373,36 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
     }
     if (planet3MeshRef.current) {
       planet3MeshRef.current.rotation.y = t * TERRESTRIAL_SPIN;
+    }
+
+    // ── Orbital drift around the sun ─────────────────────────────
+    // Planet angular position in the galaxy-local frame advances at Δω; the
+    // galaxy group's own rotation adds GALAXY_SPIN on top for total orbital
+    // rate. Starting angles match the gap-center math so planets begin in
+    // their respective gaps.
+    if (planet1OrbitRef.current) {
+      const th1 = PLANET_1_ORBIT.theta0 + PLANET_1_ORBIT.dw * t;
+      planet1OrbitRef.current.position.set(
+        PLANET_1_ORBIT.r * Math.cos(th1),
+        PLANET_1_ORBIT.y,
+        PLANET_1_ORBIT.r * Math.sin(th1),
+      );
+    }
+    if (planet2OrbitRef.current) {
+      const th2 = PLANET_2_ORBIT.theta0 + PLANET_2_ORBIT.dw * t;
+      planet2OrbitRef.current.position.set(
+        PLANET_2_ORBIT.r * Math.cos(th2),
+        PLANET_2_ORBIT.y,
+        PLANET_2_ORBIT.r * Math.sin(th2),
+      );
+    }
+    if (planet3OrbitRef.current) {
+      const th3 = PLANET_3_ORBIT.theta0 + PLANET_3_ORBIT.dw * t;
+      planet3OrbitRef.current.position.set(
+        PLANET_3_ORBIT.r * Math.cos(th3),
+        PLANET_3_ORBIT.y,
+        PLANET_3_ORBIT.r * Math.sin(th3),
+      );
     }
 
     // ── Axial wobble / precession ───────────────────────────────
@@ -369,45 +465,45 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
         />
       </mesh>
 
-      {/* Planet 1 — inner terrestrial, earth-tone sage/olive with a pale moon.
-          Placed in a spiral-arm gap (PLANET_1_POS). Axial spin (+Y) with a
-          slow obliquity wobble driven from the Galaxy useFrame. */}
-      <group position={PLANET_1_POS}>
+      {/* Planet 1 — tight inner terrestrial (r=4, well inside the core gap),
+          warm gold with a small pale moon. Orbits the sun every ~18 s via
+          PLANET_1_ORBIT. Axial spin (+Y) with a slow obliquity wobble. */}
+      <group ref={planet1OrbitRef} position={PLANET_1_POS}>
         <group ref={planet1TiltRef}>
           <mesh ref={planet1MeshRef}>
-            <icosahedronGeometry args={[0.6, 0]} />
+            <icosahedronGeometry args={[0.4, 0]} />
             <meshStandardMaterial
-              color="#7a8a5a"
-              emissive="#2a3018"
-              emissiveIntensity={0.45}
+              color="#D9B763"
+              emissive="#CD9E26"
+              emissiveIntensity={0.1}
             />
           </mesh>
         </group>
         {/* Moon orbits on its own inclined plane — intentionally outside the
             tilt group so lunar orbit is not tied to the planet's wobble. */}
         <OrbitingMoon
-          radius={1.1}
+          radius={0.85}
           speed={0.7}
-          size={0.12}
+          size={0.1}
           color="#cfd4dd"
           tilt={0.25}
         />
       </group>
 
-      {/* Planet 2 — outer ringed gas giant.
-          Low-poly icosahedron (matches siblings) in Neptune-blue. Wrapped by
-          a swirling particle ring (RingParticles, dark-blue rocks) and a
-          single tan moon on a polar orbit (perpendicular to the ring plane).
-          Sits in the outer spiral-arm gap (PLANET_2_POS). Axial spin (+Y)
-          matches ring revolution direction; axis wobble animated in useFrame. */}
-      <group position={PLANET_2_POS}>
+      {/* Planet 2 — outer ringed gas giant (r=20).
+          Low-poly icosahedron in Neptune-blue with a swirling particle-dust
+          ring system (RingParticles) and a single ice-blue moon inclined
+          ~57° off the ring plane. Orbits the sun every ~200 s via
+          PLANET_2_ORBIT. Axial spin (+Y) matches ring revolution direction;
+          axis wobble animated in useFrame. */}
+      <group ref={planet2OrbitRef} position={PLANET_2_POS}>
         <group ref={planet2TiltRef}>
           <mesh ref={planet2MeshRef}>
-            <icosahedronGeometry args={[0.7, 0]} />
+            <icosahedronGeometry args={[0.75, 0]} />
             <meshStandardMaterial
               color="#3a6fa0"
               emissive="#152a44"
-              emissiveIntensity={0.5}
+              emissiveIntensity={1}
             />
           </mesh>
           {/* Particle rings — swirling dust annulus, Keplerian rotation. */}
@@ -416,50 +512,38 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
               the rings (~57° inclination). Inside the tilt group so the
               inclination is preserved as the planet wobbles. */}
           <OrbitingMoon
-            radius={1.9}
+            radius={1.5}
             speed={0.75}
             phase={1.2}
             size={0.14}
-            color="#d8c8a8"
+            color="#B8ECF6"
             tilt={1.0}
           />
         </group>
       </group>
 
-      {/* Planet 3 — middle terrestrial, earth-tone terracotta/clay.
-          Two moons on distinct inclined orbits with Kepler-scaled speeds
-          (ω ∝ 1/r^1.5): a tiny close-in fast moon on a steep incline, and a
-          larger outer moon on a low retrograde-leaning tilt. Axial spin (+Y)
-          with obliquity wobble. */}
-      <group position={PLANET_3_POS}>
+      {/* Planet 3 — middle terrestrial (r=13), deep forest green with a
+          single steeply-inclined moon. Orbits the sun every ~105 s via
+          PLANET_3_ORBIT. Axial spin (+Y) with obliquity wobble. */}
+      <group ref={planet3OrbitRef} position={PLANET_3_POS}>
         <group ref={planet3TiltRef}>
           <mesh ref={planet3MeshRef}>
             <icosahedronGeometry args={[0.5, 0]} />
             <meshStandardMaterial
-              color="#a86a4a"
-              emissive="#3a1e14"
-              emissiveIntensity={0.55}
+              color="#3A6225"
+              emissive="#3A6225"
+              emissiveIntensity={0.3}
             />
           </mesh>
         </group>
-        {/* Tiny inner moon — fast, steep incline, small size. */}
+        {/* Single moon — pale grey, steeply inclined orbital plane. */}
         <OrbitingMoon
-          radius={0.85}
-          speed={1.03}
+          radius={0.9}
+          speed={0.8}
           phase={0.5}
-          size={0.06}
-          color="#bfc4cc"
-          tilt={0.45}
-        />
-        {/* Larger outer moon — brought in slightly; speed adjusted to stay
-            Kepler-consistent with the tighter orbit (ω ∝ 1/r^1.5). */}
-        <OrbitingMoon
-          radius={1.15}
-          speed={0.66}
-          phase={2.2}
-          size={0.11}
-          color="#9a8a70"
-          tilt={-0.15}
+          size={0.15}
+          color="#CFCFCF"
+          tilt={0 - 35}
         />
       </group>
 

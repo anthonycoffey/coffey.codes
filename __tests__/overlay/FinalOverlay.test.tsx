@@ -10,9 +10,9 @@ describe('FinalOverlay', () => {
 
   it('renders the contact link', () => {
     render(<FinalOverlay visible={true} />);
-    expect(
-      screen.getByRole('link', { name: /contact me/i }),
-    ).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: /reach out/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/contact');
   });
 
   it('applies visible CSS class when visible=true', () => {

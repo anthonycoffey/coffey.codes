@@ -158,7 +158,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
     >
       <Canvas
         camera={{ position: [0, 0, 4], fov: 70 }}
-        gl={{ antialias: false, alpha: true }}
+        gl={{ antialias: false, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1 }}
         style={{ background: 'transparent' }}
         frameloop="always"
       >
@@ -198,7 +198,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
 
         <EffectComposer>
           <Bloom
-            luminanceThreshold={0.8}
+            luminanceThreshold={1.0}
             luminanceSmoothing={0.3}
             intensity={1.5}
             mipmapBlur

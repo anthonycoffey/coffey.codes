@@ -461,7 +461,8 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
         <meshStandardMaterial
           color="#fffde0"
           emissive="#ffe895"
-          emissiveIntensity={6}
+          emissiveIntensity={1.5}
+          toneMapped={false}
         />
       </mesh>
 
@@ -547,8 +548,10 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
         />
       </group>
 
-      {/* Center light — illuminates planets */}
-      <pointLight color="#ffeeaa" intensity={20} distance={30} />
+      {/* Center light — illuminates planets
+        TODO: doesnt appear to be working, no surface to catch light
+        */}
+      <pointLight color="#ffeeaa" intensity={30} distance={100} />
     </group>
   );
 }

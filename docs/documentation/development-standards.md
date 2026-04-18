@@ -52,6 +52,35 @@ With the test passing (green), improve the code quality: extract duplication, cl
 
 ---
 
+## E2E Testing (Playwright)
+
+E2E tests live in `e2e/` and run via `npm run test:e2e` against a live dev server (see `playwright.config.ts`).
+
+### Opacity-based visibility
+
+Playwright's `toBeVisible()` / `toBeHidden()` only check `display: none` and `visibility: hidden`. They do **not** check `opacity`. An element with `opacity: 0` is still considered "visible" by Playwright, even if it is invisible to the user.
+
+This matters whenever a component shows/hides via a CSS opacity transition (e.g. `opacity: 0` → `opacity: 1` on a class toggle). Checking child text with `toBeVisible()` in this pattern produces **false positives** — the text is always "visible" to Playwright regardless of the parent panel's opacity.
+
+**Pattern to use instead:** assert on the CSS module class that controls visibility.
+
+```typescript
+// The compiled CSS module class contains the original name as a substring,
+// so a regex match against the full class string is reliable.
+
+// ✅ Correct — checks the panel container's class, not child opacity
+await expect(panel).toHaveClass(/visible/)      // panel is showing
+await expect(panel).not.toHaveClass(/visible/)  // panel is hidden
+
+// ⚠️  Misleading — passes even when the panel has opacity: 0
+await expect(page.getByText('...')).toBeVisible()
+await expect(page.getByText('...')).toBeHidden()
+```
+
+Use `toContainText()` on the panel container to verify rendered text content; use `toHaveClass(/visible/)` to verify visibility state.
+
+---
+
 ## Spec Lifecycle
 
 ```

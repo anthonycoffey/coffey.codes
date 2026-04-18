@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import IntroOverlay from './IntroOverlay';
 import AboutOverlay from './AboutOverlay';
 import CraftOverlay from './CraftOverlay';
-import ShineOverlay from './ShineOverlay';
+import FinalOverlay from './FinalOverlay';
 import styles from './Overlay.module.sass';
 
 // ── Visibility thresholds — matched to storyboard ──────────────────────────
@@ -69,7 +69,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
       <IntroOverlay visible={vis.intro} />
       <AboutOverlay visible={vis.about} />
       <CraftOverlay visible={vis.craft} />
-      <ShineOverlay visible={vis.shine} />
+      <FinalOverlay visible={vis.shine} />
     </div>
   );
 }

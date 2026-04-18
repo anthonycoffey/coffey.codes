@@ -171,7 +171,7 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
      *   y:  2.20 — yaw: nose faces toward camera and hard left (≈ π - 0.94)
      *   z:  0.45 — banking right into the sharp left turn (~26°)
      */
-    <group ref={groupRef} rotation={[0.04, 2.2, 0.45]} scale={5}>
+    <group ref={groupRef} rotation={[0.04, 2.2, 0.45]} scale={2}>
       {/* ── Thruster fire — 140 InstancedMesh particles ───────────────────── */}
       <instancedMesh
         ref={thrustRef}

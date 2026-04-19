@@ -17,13 +17,14 @@ test.describe('Articles index', () => {
   })
 
   test('pagination navigates to page 2 and updates URL', async ({ page }) => {
-    const nextBtn = page.getByRole('button', { name: /next/i })
-      .or(page.getByRole('link', { name: /next/i }))
+    // Wait for client-side hydration so Pagination buttons become interactive
+    await page.waitForLoadState('networkidle')
+    const nextBtn = page.getByRole('button', { name: 'Next page' })
 
     // Only test pagination if a "Next" control exists (requires > 1 page of posts)
     const hasNext = await nextBtn.count()
     if (hasNext > 0) {
-      await nextBtn.first().click()
+      await nextBtn.click()
       await expect(page).toHaveURL(/[?&]page=2/)
     } else {
       test.info().annotations.push({ type: 'note', description: 'Single page of posts — pagination not exercised' })
@@ -36,20 +37,19 @@ test.describe('Tag filter', () => {
     await page.goto('/articles/tags')
     await expect(page.getByRole('heading', { name: /all tags/i })).toBeVisible()
 
-    const firstTag = page.getByRole('link').filter({ hasText: /\w+/ }).first()
+    const firstTag = page.locator('a[href^="/articles/tag/"]').first()
     const tagText = await firstTag.innerText()
     await firstTag.click()
 
     await expect(page).toHaveURL(/\/articles\/tag\//)
-    await expect(page.getByRole('heading')).toContainText(tagText.trim(), { ignoreCase: true })
+    await expect(page.locator('h1')).toContainText(tagText.trim(), { ignoreCase: true })
   })
 
   test('tag page renders at least one article', async ({ page }) => {
     await page.goto('/articles/tags')
-    const firstTag = page.getByRole('link').filter({ hasText: /\w+/ }).first()
+    const firstTag = page.locator('a[href^="/articles/tag/"]').first()
     await firstTag.click()
 
-    // At least one article link should be present
     const articleLink = page.locator('a[href^="/articles/"]').first()
     await expect(articleLink).toBeVisible()
   })

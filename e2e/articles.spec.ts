@@ -42,7 +42,7 @@ test.describe('Tag filter', () => {
     await firstTag.click()
 
     await expect(page).toHaveURL(/\/articles\/tag\//)
-    await expect(page.getByRole('heading')).toContainText(tagText.trim(), { ignoreCase: true })
+    await expect(page.locator('h1')).toContainText(tagText.trim(), { ignoreCase: true })
   })
 
   test('tag page renders at least one article', async ({ page }) => {

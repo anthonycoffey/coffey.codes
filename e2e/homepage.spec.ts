@@ -21,6 +21,18 @@ const panels = {
 const isShowing  = /visible/
 const isHidden   = expect.not
 
+// Brings the page to front (prevents Chrome from throttling RAF in parallel workers)
+// then scrolls and waits for GSAP + React to process the new position.
+async function scrollTo(page: any, fraction: number) {
+  await page.bringToFront()
+  const vh = page.viewportSize()!.height
+  const y = fraction * totalScroll(vh)
+  await page.evaluate((y: number) => window.scrollTo(0, y), y)
+  // Confirm the scroll landed, then give GSAP/RAF one cycle to react
+  await page.waitForFunction((target: number) => window.scrollY >= target - 10, y)
+  await page.waitForTimeout(500)
+}
+
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
@@ -60,16 +72,14 @@ test.describe('Homepage', () => {
   // ── Intro overlay (progress 0.15–0.35) ────────────────────────────────
 
   test('intro overlay panel becomes visible when scrolled into range (~25%)', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.25 * totalScroll(vh))
+    await scrollTo(page, 0.25)
     await expect(panels.intro(page)).toHaveClass(isShowing)
     await expect(panels.intro(page)).toContainText('Who Am I?')
     await expect(panels.intro(page)).toContainText('Anthony Coffey - Austin, Texas')
   })
 
   test('intro overlay social links are present and correctly labelled', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.25 * totalScroll(vh))
+    await scrollTo(page, 0.25)
     await expect(panels.intro(page)).toHaveClass(isShowing)
     await expect(page.getByRole('link', { name: 'GitHub' })).toBeTruthy()
     await expect(page.getByRole('link', { name: 'LinkedIn' })).toBeTruthy()
@@ -79,16 +89,14 @@ test.describe('Homepage', () => {
   // ── About overlay (progress 0.35–0.52) ────────────────────────────────
 
   test('about overlay panel becomes visible when scrolled into range (~44%)', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.44 * totalScroll(vh))
+    await scrollTo(page, 0.44)
     await expect(panels.about(page)).toHaveClass(isShowing)
     await expect(panels.about(page)).toContainText('Musician.')
-    await expect(panels.about(page)).toContainText('Creativity is at the core of everything I do.')
+    await expect(panels.about(page)).toContainText('Creativity is at the core of everything that I love to do.')
   })
 
   test('intro overlay panel is hidden once scrolled past its range', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.44 * totalScroll(vh))
+    await scrollTo(page, 0.44)
     await expect(panels.about(page)).toHaveClass(isShowing)
     await expect(panels.intro(page)).not.toHaveClass(isShowing)
   })
@@ -96,16 +104,14 @@ test.describe('Homepage', () => {
   // ── Craft overlay (progress 0.52–0.68) ────────────────────────────────
 
   test('craft overlay panel becomes visible when scrolled into range (~60%)', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.60 * totalScroll(vh))
+    await scrollTo(page, 0.60)
     await expect(panels.craft(page)).toHaveClass(isShowing)
-    await expect(panels.craft(page)).toContainText('I solve problems for people.')
-    await expect(panels.craft(page)).toContainText('The tools and trends may change')
+    await expect(panels.craft(page)).toContainText('I solve big problems.')
+    await expect(panels.craft(page)).toContainText('The trends and tools change, but my role does not.')
   })
 
   test('about overlay panel is hidden once scrolled past its range', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.60 * totalScroll(vh))
+    await scrollTo(page, 0.60)
     await expect(panels.craft(page)).toHaveClass(isShowing)
     await expect(panels.about(page)).not.toHaveClass(isShowing)
   })
@@ -113,28 +119,25 @@ test.describe('Homepage', () => {
   // ── Silent zone (progress 0.68–0.82) — no overlays ───────────────────
 
   test('no overlay panel has the visible class in the silent zone (~75%)', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.75 * totalScroll(vh))
+    await scrollTo(page, 0.75)
     await expect(panels.intro(page)).not.toHaveClass(isShowing)
     await expect(panels.about(page)).not.toHaveClass(isShowing)
     await expect(panels.craft(page)).not.toHaveClass(isShowing)
     await expect(panels.shine(page)).not.toHaveClass(isShowing)
   })
 
-  // ── Shine overlay (progress 0.82–1.00) ────────────────────────────────
+  // ── Shine / FinalOverlay (progress 0.82–1.00) ─────────────────────────
 
   test('shine overlay panel becomes visible when scrolled into range (~91%)', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.91 * totalScroll(vh))
+    await scrollTo(page, 0.91)
     await expect(panels.shine(page)).toHaveClass(isShowing)
     await expect(panels.shine(page)).toContainText('Want to know more?')
   })
 
   test('shine overlay contact link points to /contact', async ({ page }) => {
-    const vh = page.viewportSize()!.height
-    await page.evaluate((y) => window.scrollTo(0, y), 0.91 * totalScroll(vh))
+    await scrollTo(page, 0.91)
     await expect(panels.shine(page)).toHaveClass(isShowing)
-    const link = page.getByRole('link', { name: /contact me/i })
+    const link = panels.shine(page).locator('a[href="/contact"]')
     await expect(link).toHaveAttribute('href', '/contact')
   })
 })

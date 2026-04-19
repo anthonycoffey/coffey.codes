@@ -26,10 +26,8 @@ export default function ScrollContainer() {
     const spacer = spacerRef.current
     if (!spacer) return
 
-    // Mobile: CSS handles vertical snap scroll — skip GSAP
-    if (window.innerWidth < 768) return
-
     const ctx = gsap.context(() => {
+      ScrollTrigger.config({ ignoreMobileResize: true })
       ScrollTrigger.create({
         trigger: spacer,
         start: 'top top',
@@ -50,7 +48,7 @@ export default function ScrollContainer() {
   return (
     <div
       ref={spacerRef}
-      style={{ height: `${SCROLL_MULTIPLIER * 100}vh`, position: 'relative' }}
+      style={{ height: `${SCROLL_MULTIPLIER * 100}dvh`, position: 'relative' }}
     >
       <div
         id="scroll-container"
@@ -60,7 +58,7 @@ export default function ScrollContainer() {
           top: 0,
           left: 0,
           width: '100vw',
-          height: '100vh',
+          height: '100dvh',
         }}
       >
         <WorldCanvas scrollProgress={scrollProgress} />

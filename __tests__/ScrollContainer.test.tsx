@@ -18,6 +18,7 @@ vi.mock('gsap/ScrollTrigger', () => ({
     create: vi.fn(() => mockTrigger),
     kill: vi.fn(),
     getAll: vi.fn(() => []),
+    config: vi.fn(),
   },
 }))
 

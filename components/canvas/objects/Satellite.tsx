@@ -46,7 +46,7 @@ export default function Satellite({
   });
 
   return (
-    <group ref={groupRef} scale={4}>
+    <group ref={groupRef} scale={2}>
       <group rotation={[0, Math.PI, 0]}>
         {/* Satellite body */}
         <mesh>

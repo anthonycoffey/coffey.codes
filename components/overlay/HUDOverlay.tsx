@@ -13,7 +13,7 @@ import styles from './Overlay.module.sass';
 // 0.35–0.52: "Musician. Director." UFO flyby happens.
 // 0.52–0.68: "The process is messy." Camera holds at planet horizon.
 // 0.68–0.82: Satellite orbiting, planet zone.
-// 0.82–1.00: "Shine on you crazy diamond." Galaxy fills frame.
+// 0.82–1.00: "Want to know more?" Galaxy fills frame.
 
 interface HUDOverlayProps {
   scrollProgress: React.RefObject<number>;
@@ -23,7 +23,7 @@ interface VisState {
   intro: boolean;
   about: boolean;
   craft: boolean;
-  shine: boolean;
+  final: boolean;
 }
 
 export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
@@ -31,7 +31,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
     intro: false,
     about: false,
     craft: false,
-    shine: false,
+    final: false,
   });
   const rafRef = useRef<number>(0);
 
@@ -43,7 +43,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
         intro: p >= 0.15 && p < 0.35,
         about: p >= 0.35 && p < 0.52,
         craft: p >= 0.52 && p < 0.68,
-        shine: p >= 0.82,
+        final: p >= 0.82,
       };
 
       setVis((prev) => {
@@ -51,7 +51,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
           prev.intro === next.intro &&
           prev.about === next.about &&
           prev.craft === next.craft &&
-          prev.shine === next.shine
+          prev.final === next.final
         )
           return prev;
         return next;
@@ -69,7 +69,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
       <IntroOverlay visible={vis.intro} />
       <AboutOverlay visible={vis.about} />
       <CraftOverlay visible={vis.craft} />
-      <FinalOverlay visible={vis.shine} />
+      <FinalOverlay visible={vis.final} />
     </div>
   );
 }

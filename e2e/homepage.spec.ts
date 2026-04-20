@@ -13,7 +13,7 @@ const totalScroll = (vh: number) => (SCROLL_MULTIPLIER - 1) * vh
 // substring (e.g. "__visible"), so a /visible/ regex match is reliable.
 const panels = {
   intro: (page: any) => page.locator('[class*="introPanel"]').first(),
-  shine: (page: any) => page.locator('[class*="introPanel"]').last(),
+  final: (page: any) => page.locator('[class*="introPanel"]').last(),
   about: (page: any) => page.locator('[class*="hudPanel"]').first(),
   craft: (page: any) => page.locator('[class*="hudPanel"]').last(),
 }
@@ -64,7 +64,7 @@ test.describe('Homepage', () => {
 
   test('no overlay panels have the visible class before scrolling', async ({ page }) => {
     await expect(panels.intro(page)).not.toHaveClass(isShowing)
-    await expect(panels.shine(page)).not.toHaveClass(isShowing)
+    await expect(panels.final(page)).not.toHaveClass(isShowing)
     await expect(panels.about(page)).not.toHaveClass(isShowing)
     await expect(panels.craft(page)).not.toHaveClass(isShowing)
   })
@@ -123,24 +123,25 @@ test.describe('Homepage', () => {
     await expect(panels.intro(page)).not.toHaveClass(isShowing)
     await expect(panels.about(page)).not.toHaveClass(isShowing)
     await expect(panels.craft(page)).not.toHaveClass(isShowing)
-    await expect(panels.shine(page)).not.toHaveClass(isShowing)
+    await expect(panels.final(page)).not.toHaveClass(isShowing)
   })
 
-  // ── Shine / FinalOverlay (progress 0.82–1.00) ─────────────────────────
+  // ── FinalOverlay (progress 0.82–1.00) ───────────────────────────────────
 
-  test('shine overlay panel becomes visible when scrolled into range (~91%)', async ({ page }) => {
+  test('final overlay panel becomes visible when scrolled into range (~91%)', async ({ page }) => {
     await scrollTo(page, 0.91)
-    await expect(panels.shine(page)).toHaveClass(isShowing)
-    await expect(panels.shine(page)).toContainText('Want to know more?')
+    await expect(panels.final(page)).toHaveClass(isShowing)
+    await expect(panels.final(page)).toContainText('Want to know more?')
   })
 
-  test('shine overlay contact link points to /contact and is clickable', async ({ page }) => {
+  test('final overlay contact link points to /contact and is clickable', async ({ page }) => {
     await scrollTo(page, 0.91)
-    await expect(panels.shine(page)).toHaveClass(isShowing)
-    const link = panels.shine(page).locator('a[href="/contact"]')
+    await expect(panels.final(page)).toHaveClass(isShowing)
+    const link = panels.final(page).locator('a[href="/contact"]')
     await expect(link).toHaveAttribute('href', '/contact')
     // Playwright's click action automatically checks for actionability and intercepting elements.
-    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays.
+    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays,
+    // avoiding an actual navigation to keep the test fast.
     await link.click({ trial: true })
   })
 })

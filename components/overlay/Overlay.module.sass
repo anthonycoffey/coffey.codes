@@ -17,9 +17,12 @@
   opacity: 0
   transform: translateY(16px)
 
+  pointer-events: none
+
   &.visible
     opacity: 1
     transform: translateY(0)
+    pointer-events: auto
 
 // ── Intro overlay — centered ──────────────────────────────────────────────
 .introPanel
@@ -86,7 +89,6 @@
 .socialLinks
   display: flex
   gap: 1rem
-  pointer-events: auto // CRITICAL: re-enables interaction inside the overlay
 
 .iconLink
   color: rgba(240, 240, 255, 0.35)

@@ -134,10 +134,13 @@ test.describe('Homepage', () => {
     await expect(panels.shine(page)).toContainText('Want to know more?')
   })
 
-  test('shine overlay contact link points to /contact', async ({ page }) => {
+  test('shine overlay contact link points to /contact and is clickable', async ({ page }) => {
     await scrollTo(page, 0.91)
     await expect(panels.shine(page)).toHaveClass(isShowing)
     const link = panels.shine(page).locator('a[href="/contact"]')
     await expect(link).toHaveAttribute('href', '/contact')
+    // Playwright's click action automatically checks for actionability and intercepting elements.
+    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays.
+    await link.click({ trial: true })
   })
 })

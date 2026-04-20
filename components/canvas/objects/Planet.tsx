@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -139,14 +139,40 @@ const NOISE_GLSL = `
   }
 `;
 
+// Layer 1 is dedicated specifically to the Planet and its exclusive lighting
+const PLANET_LIGHTING_LAYER = 1;
+
 export default function Planet({ scrollProgress }: PlanetProps) {
   const groupRef = useRef<THREE.Group>(null)
+  const meshRef = useRef<THREE.Mesh>(null)
+  
   const eclipseLightRef = useRef<THREE.PointLight>(null)
+  const frontLightRef = useRef<THREE.DirectionalLight>(null)
+  const fillLightRef = useRef<THREE.DirectionalLight>(null)
   const planetMatRef = useRef<THREE.MeshStandardMaterial>(null)
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 }
   }), [])
+
+  useEffect(() => {
+    // 1. Assign the planet mesh to Layer 1 (and keep it on Layer 0 so camera sees it)
+    if (meshRef.current) {
+      meshRef.current.layers.enable(PLANET_LIGHTING_LAYER);
+    }
+    
+    // 2. Isolate the custom planet lights entirely to Layer 1.
+    // This prevents them from hitting the UFO or Spaceship (which are on Layer 0).
+    if (eclipseLightRef.current) {
+      eclipseLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
+    }
+    if (frontLightRef.current) {
+      frontLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
+    }
+    if (fillLightRef.current) {
+      fillLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
+    }
+  }, [])
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
@@ -246,7 +272,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
         PERFECTLY SMOOTH GAS GIANT
         Zero vertex displacement. Beautiful, mathematically generated swirling cloud bands.
       */}
-      <mesh>
+      <mesh ref={meshRef}>
         <sphereGeometry args={[20, 128, 128]} />
         <meshStandardMaterial
           ref={planetMatRef}
@@ -269,12 +295,14 @@ export default function Planet({ scrollProgress }: PlanetProps) {
       />
 
       <directionalLight
+        ref={frontLightRef}
         position={[25, 15, 30]}
         color="#ffffff" 
         intensity={2.5}
       />
       
       <directionalLight
+        ref={fillLightRef}
         position={[-20, -10, 10]}
         color="#1a2b4c"
         intensity={0.8}

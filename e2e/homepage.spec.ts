@@ -140,7 +140,8 @@ test.describe('Homepage', () => {
     const link = panels.shine(page).locator('a[href="/contact"]')
     await expect(link).toHaveAttribute('href', '/contact')
     // Playwright's click action automatically checks for actionability and intercepting elements.
-    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays.
+    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays,
+    // avoiding an actual navigation to keep the test fast.
     await link.click({ trial: true })
   })
 })

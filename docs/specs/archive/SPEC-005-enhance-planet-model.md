@@ -1,7 +1,7 @@
 # SPEC-005: Enhance Planet Model
 
 ## Status
-review-pending
+complete
 
 ## Context
 The current `<Planet/>` model in our `WorldCanvas` component is a bit visually plain. It features a basic `meshStandardMaterial` with an emissive sphere for atmosphere. To improve visual interest and support a "moon surface" visual language with dynamic ambiance, we need a custom shader for terrain generation, localized fog effects, orbital particles, and enhanced illumination.
@@ -21,7 +21,7 @@ The current `<Planet/>` model in our `WorldCanvas` component is a bit visually p
    - Introduce strong directional lighting to emphasize the new procedural craters/surface.
 
 ## Implementation Plan
-1. **Spec Creation**: Create this document and set to `review-pending`.
+1. **Spec Creation**: Create this document and set to `complete`.
 2. **Planet.tsx refactor**:
    - Write reusable GLSL noise functions.
    - Inject noise displacement into `onBeforeCompile` of the planet's `meshStandardMaterial` or use a dedicated `shaderMaterial`.
@@ -29,4 +29,4 @@ The current `<Planet/>` model in our `WorldCanvas` component is a bit visually p
    - Create a new particle system (InstancedMesh or Points) for the orbital ring.
    - Adjust lighting components directly within `<Planet/>`.
 3. **Testing**: Run local tests and verify canvas renders properly without throwing WebGL errors.
-4. **Status Update**: Move to `review-pending`.
+4. **Status Update**: Move to `complete`.

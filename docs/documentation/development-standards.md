@@ -155,6 +155,9 @@ docs: add agent brief for coffey.codes
 
 Trunk-based development. All branches are cut from `master` and merged back via pull request. Branches are deleted after merging.
 
+**CRITICAL RULE: NEVER commit directly to `master`.** 
+All updates, no matter how small or trivial, must be made on a separate branch and merged via Pull Request. No exceptions.
+
 - `master` — production. Auto-deploys to Vercel.
 - Feature/fix branches — short-lived, one spec per branch.
 

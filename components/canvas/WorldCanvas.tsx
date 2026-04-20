@@ -118,7 +118,7 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     mat.opacity = (1 - disperse) * 0.75;
 
     // ── Color/Bloom: over-bright when dense, dimming as it spreads ───
-    const glowIntensity = 1 + (1 - disperse) * 2;
+    const glowIntensity = 0.2 + (1 - disperse) * 2;
     mat.color.copy(BASE_COLOR).multiplyScalar(glowIntensity);
 
     // ── Rotation: spin while formed; stop once exploded ────────

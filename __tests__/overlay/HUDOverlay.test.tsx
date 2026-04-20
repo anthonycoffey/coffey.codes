@@ -20,7 +20,7 @@ vi.mock('@/components/overlay/CraftOverlay', () => ({
 }));
 vi.mock('@/components/overlay/FinalOverlay', () => ({
   default: ({ visible }: { visible: boolean }) => (
-    <div data-testid="shine-overlay" data-visible={String(visible)} />
+    <div data-testid="final-overlay" data-visible={String(visible)} />
   ),
 }));
 
@@ -71,7 +71,7 @@ describe('HUDOverlay', () => {
     expect(visible('intro-overlay')).toBe(false);
     expect(visible('about-overlay')).toBe(false);
     expect(visible('craft-overlay')).toBe(false);
-    expect(visible('shine-overlay')).toBe(false);
+    expect(visible('final-overlay')).toBe(false);
   });
 
   it('shows IntroOverlay at progress=0.20 (threshold 0.15–0.35)', async () => {
@@ -121,7 +121,7 @@ describe('HUDOverlay', () => {
       tickRaf();
     });
     expect(visible('craft-overlay')).toBe(false);
-    expect(visible('shine-overlay')).toBe(false);
+    expect(visible('final-overlay')).toBe(false);
   });
 
   it('shows FinalOverlay at progress=0.85 (threshold ≥ 0.82)', async () => {
@@ -130,7 +130,7 @@ describe('HUDOverlay', () => {
     await act(() => {
       tickRaf();
     });
-    expect(visible('shine-overlay')).toBe(true);
+    expect(visible('final-overlay')).toBe(true);
     expect(visible('craft-overlay')).toBe(false);
   });
 
@@ -140,7 +140,7 @@ describe('HUDOverlay', () => {
     await act(() => {
       tickRaf();
     });
-    expect(visible('shine-overlay')).toBe(true);
+    expect(visible('final-overlay')).toBe(true);
   });
 
   it('reacts to scrollProgress ref updates across multiple ticks', async () => {

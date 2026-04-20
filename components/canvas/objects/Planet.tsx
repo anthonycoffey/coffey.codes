@@ -157,19 +157,20 @@ export default function Planet({ scrollProgress }: PlanetProps) {
 
   useEffect(() => {
     // 1. Assign the planet mesh to Layer 1 (and keep it on Layer 0 so camera sees it)
-    if (meshRef.current) {
+    // Add safety check: react-three-fiber mock in Vitest doesn't always populate `layers`
+    if (meshRef.current && meshRef.current.layers) {
       meshRef.current.layers.enable(PLANET_LIGHTING_LAYER);
     }
     
     // 2. Isolate the custom planet lights entirely to Layer 1.
     // This prevents them from hitting the UFO or Spaceship (which are on Layer 0).
-    if (eclipseLightRef.current) {
+    if (eclipseLightRef.current && eclipseLightRef.current.layers) {
       eclipseLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
     }
-    if (frontLightRef.current) {
+    if (frontLightRef.current && frontLightRef.current.layers) {
       frontLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
     }
-    if (fillLightRef.current) {
+    if (fillLightRef.current && fillLightRef.current.layers) {
       fillLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
     }
   }, [])

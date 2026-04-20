@@ -55,6 +55,7 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 
 // ── Colors ───────────────────────────────────────────────────────────────────────────────
 const COLOR_GOLD = '#FFCC00';
+const BASE_COLOR = new THREE.Color(COLOR_GOLD);
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function smoothstep(t: number): number {
@@ -116,6 +117,10 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     const mat = pointsRef.current.material as THREE.PointsMaterial;
     mat.opacity = (1 - disperse) * 0.75;
 
+    // ── Color/Bloom: over-bright when dense, dimming as it spreads ───
+    const glowIntensity = 1 + (1 - disperse) * 2;
+    mat.color.copy(BASE_COLOR).multiplyScalar(glowIntensity);
+
     // ── Rotation: spin while formed; stop once exploded ────────
     pointsRef.current.rotation.y = t * 0.5 * (1 - disperse);
     pointsRef.current.rotation.x = 0;
@@ -136,6 +141,7 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
         transparent
         opacity={0.75}
         sizeAttenuation
+        toneMapped={false}
       />
     </points>
   );

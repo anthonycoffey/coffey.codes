@@ -10,11 +10,11 @@ interface IntroOverlayProps {
 export default function IntroOverlay({ visible }: IntroOverlayProps) {
   return (
     <div className={`${styles.introPanel} ${visible ? styles.visible : ''}`}>
-      <p className={styles.leadLine}>
+      <h1 className={styles.leadLine}>
         👨‍🚀
         <br />
         Who Am I?
-      </p>
+      </h1>
       <p className={styles.byline}>Anthony Coffey - Austin, Texas</p>
 
       <div className={styles.socialLinks}>

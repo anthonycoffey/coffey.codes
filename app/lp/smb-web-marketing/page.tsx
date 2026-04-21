@@ -3,6 +3,8 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import JsonLd from '@/components/JsonLd';
+import { baseUrl } from '@/app/sitemap';
 import {
   CodeBracketSquareIcon,
   ChartPieIcon,
@@ -12,15 +14,42 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title:
-    'Integrated Web Presence & Marketing Tech for SMBs | Anthony Coffey - Solutions Architect, AI/ML',
+  title: 'Web & Marketing Tech for Small Businesses',
   description:
-    'Expert web development (WordPress, JavaScript) combined with essential marketing tech setup (Analytics, GTM) for SMBs by Anthony Coffey, Solutions Architect & AI/ML Specialist.',
+    'Professional websites (WordPress & JavaScript) wired up with Google Analytics and Tag Manager, so your SMB can track and grow with confidence.',
+  alternates: { canonical: '/lp/smb-web-marketing' },
+  openGraph: {
+    title: 'Web & Marketing Tech for Small Businesses',
+    description:
+      'Professional websites integrated with Google Analytics and Tag Manager — built for SMB growth.',
+    url: '/lp/smb-web-marketing',
+    type: 'website',
+  },
 };
 
 export default function SmbWebMarketingLandingPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'SMB Web & Marketing', item: `${baseUrl}/lp/smb-web-marketing` },
+    ],
+  };
+  const service = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Web Development & Marketing Tech for Small Businesses',
+    provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
+    areaServed: 'US',
+    description:
+      'Professional websites (WordPress & JavaScript) integrated with Google Analytics and Tag Manager for SMB growth.',
+    url: `${baseUrl}/lp/smb-web-marketing`,
+  };
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Stop Worrying About Your Website. Start Growing Your Business.

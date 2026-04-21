@@ -3,6 +3,8 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import JsonLd from '@/components/JsonLd';
+import { baseUrl } from '@/app/sitemap';
 import {
   LightBulbIcon,
   ArrowsPointingOutIcon,
@@ -12,15 +14,42 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title:
-    'Practical AI Solutions for Business Growth | Anthony Coffey - Solutions Architect, AI/ML',
+  title: 'Practical AI Solutions for Business Growth',
   description:
-    'Move beyond AI hype with Anthony Coffey, Solutions Architect & AI/ML Specialist. Get production-ready, scalable AI/ML solutions integrated with your business for tangible results.',
+    'Move past AI hype. Production-ready, scalable AI/ML solutions integrated with your business for tangible, measurable results.',
+  alternates: { canonical: '/lp/practical-ai' },
+  openGraph: {
+    title: 'Practical AI Solutions for Business Growth',
+    description:
+      'Production-ready, scalable AI/ML solutions integrated with your business for measurable ROI.',
+    url: '/lp/practical-ai',
+    type: 'website',
+  },
 };
 
 export default function PracticalAiLandingPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Practical AI', item: `${baseUrl}/lp/practical-ai` },
+    ],
+  };
+  const service = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Practical AI Solutions for Business Growth',
+    provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
+    areaServed: 'US',
+    description:
+      'Production-ready, scalable AI/ML solutions integrated with your business for tangible, measurable results.',
+    url: `${baseUrl}/lp/practical-ai`,
+  };
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Cut Through the AI Hype. Get AI Solutions That Actually Work.

@@ -14,12 +14,12 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title: 'Custom Web & Mobile Apps for SMEs',
+  title: 'Custom Web & Mobile Apps for Growing SMEs',
   description:
     'Reliable, scalable web and mobile apps built with senior-level expertise. Fractional CTO partnership for established SMEs focused on long-term growth.',
   alternates: { canonical: '/lp/sme-web-mobile' },
   openGraph: {
-    title: 'Custom Web & Mobile Apps for SMEs',
+    title: 'Custom Web & Mobile Apps for Growing SMEs',
     description:
       'Reliable, scalable web and mobile apps with senior-level, Fractional-CTO-style partnership.',
     url: '/lp/sme-web-mobile',

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Search Articles',
+  title: 'Search Software Engineering Articles',
   description:
     'Search articles by Anthony Coffey on software engineering, AI/ML, cloud architecture, and web development.',
   alternates: { canonical: '/articles/search' },

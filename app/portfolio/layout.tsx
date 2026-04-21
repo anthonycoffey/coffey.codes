@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
+  title: 'Software Engineering & AI Portfolio',
   description:
-    'Selected software projects by Anthony Coffey — web applications, AI/ML integrations, and custom development work.',
+    'Selected software projects by Anthony Coffey — web apps, mobile apps, AI/ML integrations, and custom development work from an Austin software engineer.',
   alternates: { canonical: '/portfolio' },
 };
 

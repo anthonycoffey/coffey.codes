@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export function generateMetadata(): Metadata {
   return {
-    title: 'All Article Tags',
+    title: 'Software Engineering Article Tags',
     description:
       'Browse articles by tag — React, Next.js, AWS, AI/ML, Git, and other technologies covered by Anthony Coffey.',
     alternates: { canonical: '/articles/tags' },

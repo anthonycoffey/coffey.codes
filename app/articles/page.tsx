@@ -17,12 +17,12 @@ import SearchBox from '@/components/SearchBox';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Software Engineering & AI Articles',
+  title: { absolute: 'Articles by Anthony Coffey' },
   description:
-    'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based software engineer and AI consultant.',
+    'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based AI consultant and software engineer.',
   alternates: { canonical: '/articles' },
   openGraph: {
-    title: 'Software Engineering & AI Articles',
+    title: 'Articles by Anthony Coffey',
     description:
       'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
     url: '/articles',

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import ScrollContainer from '@/components/ScrollContainer'
 
-const HOME_TITLE = 'Anthony Coffey — Austin Software Engineer & AI Consultant'
+const HOME_TITLE = 'Anthony Coffey — AI Consultant & Software Engineer, Austin TX'
 const HOME_DESCRIPTION =
-  'Austin-based software engineer and AI consultant building web apps, mobile apps, and practical AI solutions. Creativity at the core of everything I ship.'
+  'Anthony Coffey is an AI consultant and software engineer in Austin, TX, building web apps, mobile apps, and practical AI solutions with creativity at the core.'
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },

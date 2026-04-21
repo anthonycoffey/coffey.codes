@@ -12,9 +12,9 @@ import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Hire an Austin Software Engineer',
+  title: 'Contact',
   description:
-    'Get in touch with Anthony Coffey, an Austin software engineer and AI consultant, for web, mobile, or AI/ML work. Book a free 30-minute consultation.',
+    'Get in touch with Anthony Coffey, an AI consultant and software engineer in Austin, TX, for web, mobile, or AI/ML work. Book a free 30-minute consultation.',
   alternates: { canonical: '/contact' },
 };
 

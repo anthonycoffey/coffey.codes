@@ -8,7 +8,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Software Engineering Case Studies',
+  title: 'Case Studies',
   description:
     'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
   alternates: { canonical: '/case-studies' },

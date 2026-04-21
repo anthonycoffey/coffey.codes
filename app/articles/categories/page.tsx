@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export function generateMetadata(): Metadata {
   return {
-    title: 'Software Engineering Article Categories',
+    title: 'Articles Categories',
     description:
       'Browse articles by category — software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.',
     alternates: { canonical: '/articles/categories' },

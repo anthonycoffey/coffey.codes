@@ -72,7 +72,7 @@ beforeEach(() => {
 
 describe('CategoryPage', () => {
   it('calls notFound when no posts match the category', async () => {
-    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(EMPTY_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(EMPTY_RESULT as never)
     await CategoryPage({
       params: Promise.resolve({ category: 'nonexistent' }),
       searchParams: Promise.resolve({}),
@@ -81,7 +81,7 @@ describe('CategoryPage', () => {
   })
 
   it('does not call notFound when posts exist', async () => {
-    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as never)
     await CategoryPage({
       params: Promise.resolve({ category: 'backend' }),
       searchParams: Promise.resolve({}),
@@ -90,7 +90,7 @@ describe('CategoryPage', () => {
   })
 
   it('decodes URL-encoded category and passes to utils', async () => {
-    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as never)
     await CategoryPage({
       params: Promise.resolve({ category: 'web%20development' }),
       searchParams: Promise.resolve({}),
@@ -99,7 +99,7 @@ describe('CategoryPage', () => {
   })
 
   it('uses page number from searchParams', async () => {
-    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as never)
     await CategoryPage({
       params: Promise.resolve({ category: 'backend' }),
       searchParams: Promise.resolve({ page: '3' }),
@@ -108,7 +108,7 @@ describe('CategoryPage', () => {
   })
 
   it('excludes the active category from the sidebar list', async () => {
-    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByCategory).mockReturnValue(ONE_POST_RESULT as never)
     const jsx = await CategoryPage({
       params: Promise.resolve({ category: 'backend' }),
       searchParams: Promise.resolve({}),

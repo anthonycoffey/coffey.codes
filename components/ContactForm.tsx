@@ -67,7 +67,7 @@ export default function ContactForm() {
                     `An error occurred: ${response.statusText} (${response.status})`,
                 );
               }
-            } catch (error) {
+            } catch {
               setApiError(
                 'An error occurred while sending your message, please try again.',
               );

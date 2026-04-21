@@ -195,7 +195,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
     }
   })
 
-  const handleBeforeCompile = (shader: any) => {
+  const handleBeforeCompile = (shader: THREE.WebGLProgramParametersWithUniforms) => {
     if (planetMatRef.current) {
       planetMatRef.current.userData.shader = shader
     }

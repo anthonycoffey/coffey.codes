@@ -1,10 +1,14 @@
 import { getAllCategories } from '@/app/articles/utils';
 import Link from 'next/link';
 
-export function generateMetadata() {
+import type { Metadata } from 'next';
+
+export function generateMetadata(): Metadata {
   return {
-    title: 'All Article Categories | Anthony Coffey - Solutions Architect, AI/ML',
-    description: 'Browse articles by category on topics like software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.',
+    title: 'All Article Categories',
+    description:
+      'Browse articles by category — software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.',
+    alternates: { canonical: '/articles/categories' },
   };
 }
 

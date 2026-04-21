@@ -35,8 +35,9 @@ export async function generateMetadata({ params }) {
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
 
   return {
-    title: `Articles in Category: ${decodedCategory} | Anthony Coffey - Solutions Architect, AI/ML`,
-    description: `Explore software development articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, categorized under "${decodedCategory}". Find insights on relevant topics.`,
+    title: `${decodedCategory} Articles`,
+    description: `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`,
+    alternates: { canonical: `/articles/category/${encodeURIComponent(category)}` },
   };
 }
 

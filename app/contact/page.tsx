@@ -9,10 +9,13 @@ import {
 } from '@heroicons/react/24/outline';
 import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 
-export const metadata = {
-  title: 'Contact | Anthony Coffey - Solutions Architect, AI/ML',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact',
   description:
-    'Get in touch with Anthony Coffey, Solutions Architect & AI/ML Specialist, for software development, AI/ML integration, or consulting services. Send a message or schedule a free consultation.',
+    'Get in touch with Anthony Coffey for software engineering, AI/ML, or consulting work. Send a message or book a free 30-minute consultation.',
+  alternates: { canonical: '/contact' },
 };
 
 export default async function ContactPage() {

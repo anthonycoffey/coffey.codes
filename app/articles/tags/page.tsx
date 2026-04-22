@@ -1,10 +1,14 @@
 import { getAllTags } from '@/app/articles/utils';
 import Link from 'next/link';
 
-export function generateMetadata() {
+import type { Metadata } from 'next';
+
+export function generateMetadata(): Metadata {
   return {
-    title: 'All Article Tags | Anthony Coffey - Solutions Architect, AI/ML',
-    description: 'Explore articles by tag on specific technologies and concepts like React, Next.js, AWS, AI/ML, Git, and more from Anthony Coffey.',
+    title: 'Articles Tags',
+    description:
+      'Browse articles by tag — React, Next.js, AWS, AI/ML, Git, and other technologies covered by Anthony Coffey.',
+    alternates: { canonical: '/articles/tags' },
   };
 }
 

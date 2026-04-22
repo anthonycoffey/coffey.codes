@@ -10,8 +10,6 @@ test.describe('Articles index', () => {
   })
 
   test('renders at least one article card', async ({ page }) => {
-    const articles = page.locator('[data-testid="blog-post"], article, .article-card, h2 a[href^="/articles/"]').first()
-    // Fall back to any link pointing at an article slug
     const articleLink = page.locator('a[href^="/articles/"]').first()
     await expect(articleLink).toBeVisible()
   })

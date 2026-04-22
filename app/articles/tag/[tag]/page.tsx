@@ -31,8 +31,9 @@ export async function generateMetadata({ params }) {
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
 
   return {
-    title: `Articles Tagged: ${decodedTag} | Anthony Coffey - Solutions Architect, AI/ML`,
-    description: `Find software development articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, tagged with "${decodedTag}". Explore specific technologies and concepts.`,
+    title: `${decodedTag} Articles`,
+    description: `Articles tagged ${decodedTag} — technical write-ups and deep dives by Anthony Coffey.`,
+    alternates: { canonical: `/articles/tag/${encodeURIComponent(tag)}` },
   };
 }
 

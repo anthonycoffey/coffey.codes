@@ -30,19 +30,16 @@ export async function generateMetadata({ params }) {
     image,
   } = post.metadata;
 
-  // Use simpler title format for articles to prioritize article title and avoid truncation
-  const title = `${postTitle} | Anthony Coffey`;
-
-  // Use the original postTitle for generating the OG image if no specific image is provided
   const ogImage = image
     ? image
     : `${baseUrl}/og?title=${encodeURIComponent(postTitle)}`;
 
   return {
-    title, // Use the modified title
+    title: postTitle,
     description,
+    alternates: { canonical: `/articles/${post.slug}` },
     openGraph: {
-      title, // Use the modified title
+      title: postTitle,
       description,
       type: 'article',
       publishedTime,
@@ -55,7 +52,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: postTitle,
       description,
       images: [ogImage],
     },
@@ -86,14 +83,54 @@ export default async function Blog({ params }) {
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+              : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/articles/${post.slug}`,
             author: {
               '@type': 'Person',
               name: 'Anthony Coffey',
+              url: baseUrl,
+            },
+            publisher: {
+              '@type': 'Person',
+              name: 'Anthony Coffey',
+              url: baseUrl,
+            },
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': `${baseUrl}/articles/${post.slug}`,
             },
             keywords: post.metadata.tags ? post.metadata.tags.join(', ') : '',
             articleSection: post.metadata.category || '',
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: baseUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Articles',
+                item: `${baseUrl}/articles`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: post.metadata.title,
+                item: `${baseUrl}/articles/${post.slug}`,
+              },
+            ],
           }),
         }}
       />

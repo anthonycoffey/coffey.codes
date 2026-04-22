@@ -14,9 +14,9 @@ import { usePagination } from '@/hooks/usePagination'
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as any)
+  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as never)
   vi.mocked(usePathname).mockReturnValue('/articles')
-  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as any)
+  vi.mocked(useRouter).mockReturnValue({ push: mockPush } as never)
 })
 
 describe('usePagination', () => {
@@ -26,7 +26,7 @@ describe('usePagination', () => {
   })
 
   it('reads initial page from ?page search param', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=3') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=3') as never)
     const { result } = renderHook(() => usePagination(5))
     expect(result.current.currentPage).toBe(3)
   })
@@ -37,19 +37,19 @@ describe('usePagination', () => {
   })
 
   it('isFirstPage is false on page 2+', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=2') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=2') as never)
     const { result } = renderHook(() => usePagination(5))
     expect(result.current.isFirstPage).toBe(false)
   })
 
   it('isLastPage is true on the last page', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=5') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=5') as never)
     const { result } = renderHook(() => usePagination(5))
     expect(result.current.isLastPage).toBe(true)
   })
 
   it('hasNextPage is false on the last page', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=5') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=5') as never)
     const { result } = renderHook(() => usePagination(5))
     expect(result.current.hasNextPage).toBe(false)
   })
@@ -65,7 +65,7 @@ describe('usePagination', () => {
   })
 
   it('hasPrevPage is true on page 2+', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=2') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=2') as never)
     const { result } = renderHook(() => usePagination(5))
     expect(result.current.hasPrevPage).toBe(true)
   })
@@ -79,7 +79,7 @@ describe('usePagination', () => {
   })
 
   it('changePage removes ?page param when navigating to page 1', () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=3') as any)
+    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('page=3') as never)
     const { result } = renderHook(() => usePagination(5))
     act(() => {
       result.current.changePage(1)

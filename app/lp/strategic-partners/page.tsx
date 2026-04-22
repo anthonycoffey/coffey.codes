@@ -3,6 +3,8 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import JsonLd from '@/components/JsonLd';
+import { baseUrl } from '@/app/sitemap';
 import {
   BuildingLibraryIcon,
   ServerStackIcon,
@@ -12,15 +14,42 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title:
-    'Senior-Level Expertise for Strategic Partners | Anthony Coffey - Solutions Architect, AI/ML',
+  title: 'Fractional CTO & Tech Partner for Agencies',
   description:
-    'Augment your team with specialized expertise from Anthony Coffey, Solutions Architect & AI/ML Specialist, in software architecture, DevOps, and practical AI/ML integration. Fractional CTO & Specialist Lead services.',
+    'Senior-level expertise in architecture, DevOps, and AI integration. Fractional CTO and Specialist Lead services for agencies, startups, and tech teams.',
+  alternates: { canonical: '/lp/strategic-partners' },
+  openGraph: {
+    title: 'Fractional CTO & Tech Partner for Agencies',
+    description:
+      'Augment your team with senior architecture, DevOps, and AI expertise — Fractional CTO and Specialist Lead services.',
+    url: '/lp/strategic-partners',
+    type: 'website',
+  },
 };
 
 export default function StrategicPartnersLandingPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Strategic Partners', item: `${baseUrl}/lp/strategic-partners` },
+    ],
+  };
+  const service = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Fractional CTO & Specialist Lead Services',
+    provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
+    areaServed: 'US',
+    description:
+      'Senior-level expertise in software architecture, DevOps, and practical AI/ML integration for agencies, startups, and tech teams.',
+    url: `${baseUrl}/lp/strategic-partners`,
+  };
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Need Senior Expertise? Augment Your Team with a Strategic Tech

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
 // Must match the SCROLL_MULTIPLIER constant in ScrollContainer.tsx
 const SCROLL_MULTIPLIER = 6
@@ -12,18 +12,17 @@ const totalScroll = (vh: number) => (SCROLL_MULTIPLIER - 1) * vh
 // present on the panel container.  The class appears in the compiled attribute as a
 // substring (e.g. "__visible"), so a /visible/ regex match is reliable.
 const panels = {
-  intro: (page: any) => page.locator('[class*="introPanel"]').first(),
-  final: (page: any) => page.locator('[class*="introPanel"]').last(),
-  about: (page: any) => page.locator('[class*="hudPanel"]').first(),
-  craft: (page: any) => page.locator('[class*="hudPanel"]').last(),
+  intro: (page: Page) => page.locator('[class*="introPanel"]').first(),
+  final: (page: Page) => page.locator('[class*="introPanel"]').last(),
+  about: (page: Page) => page.locator('[class*="hudPanel"]').first(),
+  craft: (page: Page) => page.locator('[class*="hudPanel"]').last(),
 }
 
 const isShowing  = /visible/
-const isHidden   = expect.not
 
 // Brings the page to front (prevents Chrome from throttling RAF in parallel workers)
 // then scrolls and waits for GSAP + React to process the new position.
-async function scrollTo(page: any, fraction: number) {
+async function scrollTo(page: Page, fraction: number) {
   await page.bringToFront()
   const vh = page.viewportSize()!.height
   const y = fraction * totalScroll(vh)

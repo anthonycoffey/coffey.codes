@@ -3,6 +3,8 @@ import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
+import JsonLd from '@/components/JsonLd';
+import { baseUrl } from '@/app/sitemap';
 import {
   ClockIcon,
   ArrowsPointingOutIcon,
@@ -12,15 +14,42 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title:
-    'Custom Web & Mobile Apps for Established SMEs | Anthony Coffey - Solutions Architect, AI/ML',
+  title: 'Custom Web & Mobile Apps for Growing SMEs',
   description:
-    'Reliable, scalable web and mobile applications built with senior-level expertise by Anthony Coffey, Solutions Architect & AI/ML Specialist, for established SMEs seeking long-term growth.',
+    'Reliable, scalable web and mobile apps built with senior-level expertise. Fractional CTO partnership for established SMEs focused on long-term growth.',
+  alternates: { canonical: '/lp/sme-web-mobile' },
+  openGraph: {
+    title: 'Custom Web & Mobile Apps for Growing SMEs',
+    description:
+      'Reliable, scalable web and mobile apps with senior-level, Fractional-CTO-style partnership.',
+    url: '/lp/sme-web-mobile',
+    type: 'website',
+  },
 };
 
 export default function SmeWebMobileLandingPage() {
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Custom Web & Mobile Apps', item: `${baseUrl}/lp/sme-web-mobile` },
+    ],
+  };
+  const service = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Custom Web & Mobile Application Development',
+    provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
+    areaServed: 'US',
+    description:
+      'Reliable, scalable web and mobile apps with Fractional CTO partnership for established SMEs.',
+    url: `${baseUrl}/lp/sme-web-mobile`,
+  };
   return (
     <div className="container max-w-6xl mx-auto px-4 py-16">
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-c-heading">
           Stop Fighting Unreliable Tech. Get Custom Apps That Fuel Growth.

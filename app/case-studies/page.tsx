@@ -5,10 +5,14 @@ import {
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
-export const metadata = {
-  title: 'Case Studies | Anthony Coffey - Solutions Architect, AI/ML',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Case Studies',
   description:
-    'Explore detailed software development case studies by Anthony Coffey, Solutions Architect & AI/ML Specialist, showcasing problem-solving approaches and results in areas like geospatial tech, optimization, and more.',
+    'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+  alternates: { canonical: '/case-studies' },
+  robots: { index: false, follow: true },
 };
 
 const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {

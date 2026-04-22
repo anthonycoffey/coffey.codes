@@ -14,11 +14,20 @@ import {
 import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
 
-export const metadata = {
-  title:
-    'Articles | Anthony Coffey - Solutions Architect, AI/ML',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Articles by Anthony Coffey' },
   description:
-    'Explore articles by Anthony Coffey, Solutions Architect & AI/ML Specialist, on software engineering, AI/ML integration, cloud architecture, web development best practices, and project management strategies.',
+    'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based AI consultant and software engineer.',
+  alternates: { canonical: '/articles' },
+  openGraph: {
+    title: 'Articles by Anthony Coffey',
+    description:
+      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
+    url: '/articles',
+    type: 'website',
+  },
 };
 
 export default async function ArticlesPage({ searchParams }) {

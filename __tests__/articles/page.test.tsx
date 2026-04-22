@@ -36,7 +36,7 @@ const MOCK_RESULT = {
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(getPaginatedBlogPosts).mockReturnValue(MOCK_RESULT as any)
+  vi.mocked(getPaginatedBlogPosts).mockReturnValue(MOCK_RESULT as never)
   vi.mocked(getAllTags).mockReturnValue(['react', 'typescript'])
   vi.mocked(getAllCategories).mockReturnValue(['backend'])
 })

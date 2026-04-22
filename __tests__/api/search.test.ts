@@ -43,7 +43,7 @@ const MOCK_POSTS = [
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(getAllBlogPosts).mockReturnValue(MOCK_POSTS as any)
+  vi.mocked(getAllBlogPosts).mockReturnValue(MOCK_POSTS as never)
 })
 
 describe('GET /api/search', () => {

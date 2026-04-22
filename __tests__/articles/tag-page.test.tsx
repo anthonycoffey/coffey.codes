@@ -73,12 +73,12 @@ beforeEach(() => {
   vi.mocked(getPaginatedBlogPosts).mockReturnValue({
     posts: ONE_POST_RESULT.posts,
     pagination: ONE_POST_RESULT.pagination,
-  } as any)
+  } as never)
 })
 
 describe('TagPage', () => {
   it('calls notFound when no posts match the tag', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(EMPTY_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(EMPTY_RESULT as never)
     await TagPage({
       params: Promise.resolve({ tag: 'nonexistent' }),
       searchParams: Promise.resolve({}),
@@ -87,7 +87,7 @@ describe('TagPage', () => {
   })
 
   it('does not call notFound when posts exist', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
     await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({}),
@@ -96,7 +96,7 @@ describe('TagPage', () => {
   })
 
   it('decodes URL-encoded tag and passes capitalized value to utils', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
     await TagPage({
       params: Promise.resolve({ tag: 'web%20development' }),
       searchParams: Promise.resolve({}),
@@ -105,7 +105,7 @@ describe('TagPage', () => {
   })
 
   it('uses page number from searchParams', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
     await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({ page: '2' }),
@@ -114,7 +114,7 @@ describe('TagPage', () => {
   })
 
   it('excludes the active tag from the sidebar tag list', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as any)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
     const jsx = await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({}),

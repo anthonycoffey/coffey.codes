@@ -1,12 +1,13 @@
 'use client';
 
 import { useRef, useMemo, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const THRUST_PER_ENGINE = 70;
 const ENGINE_COUNT = 2;
 const TOTAL_THRUST = THRUST_PER_ENGINE * ENGINE_COUNT;
+const SPACESHIP_LAYER = 2;
 
 const ENGINE_OFFSETS = [
   new THREE.Vector3(-0.65, -0.05, 1.5), 
@@ -113,6 +114,27 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const tempColor = useMemo(() => new THREE.Color(), []);
+
+  const { camera } = useThree();
+
+  useEffect(() => {
+    if (camera && camera.layers) {
+      camera.layers.enable(SPACESHIP_LAYER);
+    }
+    if (groupRef.current) {
+      groupRef.current.traverse((child) => {
+        if (child.layers) {
+          child.layers.set(SPACESHIP_LAYER);
+        }
+      });
+    }
+    return () => {
+      if (camera && camera.layers) {
+        camera.layers.disable(SPACESHIP_LAYER);
+      }
+    };
+  }, [camera]);
+
   const pData = useRef(new Float32Array(PARTICLE_DATA));
 
   useEffect(() => {
@@ -148,12 +170,12 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
     }
 
     const elapsed = t - triggerTime.current;
-    const flyT = Math.min(1, elapsed / 5);
+    const flyT = Math.min(1, elapsed / 4.5);
 
     groupRef.current.position.set(
-      lerp(70, -65, flyT),
+      lerp(150, -120, flyT),
       lerp(1, 6, flyT),
-      lerp(-120, -22, flyT)
+      lerp(-180, 0, flyT)
     );
 
     const d = Math.min(delta, 0.05); 
@@ -201,7 +223,7 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
     if (thrustRef.current.instanceColor) thrustRef.current.instanceColor.needsUpdate = true;
 
     const LASER_SPEED = 70;
-    const FIRE_START = 1.6; 
+    const FIRE_START = 1.8; 
 
     for (let i = 0; i < LASER_COUNT; i++) {
       const isPort = i % 2 === 0;
@@ -227,7 +249,7 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
   });
 
   return (
-    <group ref={groupRef} rotation={[0.04, 2.2, 0.45]} scale={2}>
+    <group ref={groupRef} rotation={[0.04, 2.2, 0.45]} scale={4}>
       <instancedMesh ref={thrustRef} args={[null, null, TOTAL_THRUST]} frustumCulled={false}>
         <sphereGeometry args={[1, 5, 4]} />
         <meshBasicMaterial toneMapped={false} />
@@ -243,30 +265,30 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[0, 0, -1.8]} rotation={[-Math.PI / 2, 0, 0]}>
         <coneGeometry args={[0.4, 2.8, 16]} />
-        <meshPhysicalMaterial color="#d0d4d8" metalness={0.6} roughness={0.8} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#ffffff" metalness={0.9} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[0, 0, 0.3]} rotation={[-Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.4, 0.5, 1.8, 16]} />
-        <meshPhysicalMaterial color="#d0d4d8" metalness={0.6} roughness={0.8} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#ffffff" metalness={0.9} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-1.6, -0.05, 0.4]} rotation={[0, 0.4, 0]}>
         <boxGeometry args={[2.5, 0.08, 1.5]} />
-        <meshPhysicalMaterial color="#3a424a" metalness={0.7} roughness={0.85} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[1.6, -0.05, 0.4]} rotation={[0, -0.4, 0]}>
         <boxGeometry args={[2.5, 0.08, 1.5]} />
-        <meshPhysicalMaterial color="#3a424a" metalness={0.7} roughness={0.85} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-2.7, 0.2, 0.8]} rotation={[0, 0, 0.2]}>
         <boxGeometry args={[0.06, 0.6, 1.2]} />
-        <meshPhysicalMaterial color="#c04433" metalness={0.5} roughness={0.9} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#ff3333" metalness={0.6} roughness={0.2} clearcoat={0.8} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[2.7, 0.2, 0.8]} rotation={[0, 0, -0.2]}>
         <boxGeometry args={[0.06, 0.6, 1.2]} />
-        <meshPhysicalMaterial color="#c04433" metalness={0.5} roughness={0.9} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#ff3333" metalness={0.6} roughness={0.2} clearcoat={0.8} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[0, 0.25, -0.5]} scale={[0.6, 0.4, 1.4]}>
@@ -276,11 +298,11 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[-0.65, -0.05, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.22, 0.28, 1.4, 12]} />
-        <meshPhysicalMaterial color="#2a2e33" metalness={0.8} roughness={0.7} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[0.65, -0.05, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.22, 0.28, 1.4, 12]} />
-        <meshPhysicalMaterial color="#2a2e33" metalness={0.8} roughness={0.7} onBeforeCompile={customGrungeShader} />
+        <meshPhysicalMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-0.65, -0.05, 1.5]} rotation={[Math.PI / 2, 0, 0]}>

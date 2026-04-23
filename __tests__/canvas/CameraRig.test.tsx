@@ -39,7 +39,7 @@ describe('CameraRig', () => {
 
   it('at progress=0 calls lookAt toward origin [0,0,0]', () => {
     render(<CameraRig scrollProgress={{ current: 0 }} />)
-    capturedFrameCb?.()
+    (capturedFrameCb as (() => void) | null)?.()
     expect(mockCamera.lookAt).toHaveBeenCalledOnce()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.x).toBeCloseTo(0, 1)
@@ -49,7 +49,7 @@ describe('CameraRig', () => {
 
   it('at progress=1 calls lookAt toward final keyframe z=-80', () => {
     render(<CameraRig scrollProgress={{ current: 1 }} />)
-    capturedFrameCb?.()
+    (capturedFrameCb as (() => void) | null)?.()
     expect(mockCamera.lookAt).toHaveBeenCalledOnce()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.z).toBeCloseTo(-80, 0)
@@ -57,7 +57,7 @@ describe('CameraRig', () => {
 
   it('at progress=0.5 lookAt z is between 0 and -80', () => {
     render(<CameraRig scrollProgress={{ current: 0.5 }} />)
-    capturedFrameCb?.()
+    (capturedFrameCb as (() => void) | null)?.()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.z).toBeLessThan(0)
     expect(look.z).toBeGreaterThan(-80)
@@ -69,7 +69,7 @@ describe('CameraRig', () => {
       capturedFrameCb = null
       mockCamera.lookAt.mockClear()
       render(<CameraRig scrollProgress={{ current: p }} />)
-      capturedFrameCb?.()
+      (capturedFrameCb as (() => void) | null)?.()
       const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
       expect(isNaN(look.x)).toBe(false)
       expect(isNaN(look.y)).toBe(false)

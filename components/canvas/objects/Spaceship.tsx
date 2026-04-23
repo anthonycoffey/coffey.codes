@@ -250,12 +250,12 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
   return (
     <group ref={groupRef} rotation={[0.04, 2.2, 0.45]} scale={4}>
-      <instancedMesh ref={thrustRef} args={[null as any, null as any, TOTAL_THRUST]} frustumCulled={false}>
+      <instancedMesh ref={thrustRef} args={[undefined, undefined, TOTAL_THRUST]} frustumCulled={false}>
         <sphereGeometry args={[1, 5, 4]} />
         <meshBasicMaterial toneMapped={false} />
       </instancedMesh>
 
-      <instancedMesh ref={laserRef} args={[null as any, null as any, LASER_COUNT]} frustumCulled={false}>
+      <instancedMesh ref={laserRef} args={[undefined, undefined, LASER_COUNT]} frustumCulled={false}>
         <cylinderGeometry args={[0.03, 0.03, 1.8, 6]} />
         <meshBasicMaterial color="#ff2255" toneMapped={false} />
       </instancedMesh>

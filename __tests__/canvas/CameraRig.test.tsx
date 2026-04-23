@@ -2,8 +2,12 @@ import { render, cleanup } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import * as THREE from 'three'
 
-// Capture the useFrame callback so we can invoke it manually with test scroll values.
-let capturedFrameCb: (() => void) | null = null
+type FrameCallback = () => void
+
+// Use a ref-like mutable object to hold the callback. 
+// This prevents TypeScript's control-flow analysis from incorrectly narrowing the type to `null` 
+// (which happens with `let` bindings) since object properties can be mutated by external function calls like `render()`.
+const capturedFrame = { current: null as FrameCallback | null }
 
 const mockCamera = {
   position: new THREE.Vector3(0, 0, 4),
@@ -11,7 +15,7 @@ const mockCamera = {
 }
 
 vi.mock('@react-three/fiber', () => ({
-  useFrame: (cb: () => void) => { capturedFrameCb = cb },
+  useFrame: (cb: FrameCallback) => { capturedFrame.current = cb },
   useThree: () => ({ camera: mockCamera }),
 }))
 
@@ -19,7 +23,7 @@ import CameraRig from '@/components/canvas/CameraRig'
 
 describe('CameraRig', () => {
   beforeEach(() => {
-    capturedFrameCb = null
+    capturedFrame.current = null
     mockCamera.lookAt.mockClear()
     mockCamera.position.set(0, 0, 4)
   })
@@ -39,7 +43,7 @@ describe('CameraRig', () => {
 
   it('at progress=0 calls lookAt toward origin [0,0,0]', () => {
     render(<CameraRig scrollProgress={{ current: 0 }} />)
-    ;(capturedFrameCb as (() => void) | null)?.()
+    capturedFrame.current?.()
     expect(mockCamera.lookAt).toHaveBeenCalledOnce()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.x).toBeCloseTo(0, 1)
@@ -49,7 +53,7 @@ describe('CameraRig', () => {
 
   it('at progress=1 calls lookAt toward final keyframe z=-80', () => {
     render(<CameraRig scrollProgress={{ current: 1 }} />)
-    ;(capturedFrameCb as (() => void) | null)?.()
+    capturedFrame.current?.()
     expect(mockCamera.lookAt).toHaveBeenCalledOnce()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.z).toBeCloseTo(-80, 0)
@@ -57,7 +61,7 @@ describe('CameraRig', () => {
 
   it('at progress=0.5 lookAt z is between 0 and -80', () => {
     render(<CameraRig scrollProgress={{ current: 0.5 }} />)
-    ;(capturedFrameCb as (() => void) | null)?.()
+    capturedFrame.current?.()
     const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
     expect(look.z).toBeLessThan(0)
     expect(look.z).toBeGreaterThan(-80)
@@ -66,10 +70,10 @@ describe('CameraRig', () => {
   it('never produces NaN in lookAt target across the scroll range', () => {
     for (const p of [0, 0.15, 0.4, 0.52, 0.68, 0.82, 1.0]) {
       cleanup()
-      capturedFrameCb = null
+      capturedFrame.current = null
       mockCamera.lookAt.mockClear()
       render(<CameraRig scrollProgress={{ current: p }} />)
-      ;(capturedFrameCb as (() => void) | null)?.()
+      capturedFrame.current?.()
       const look = mockCamera.lookAt.mock.calls[0][0] as THREE.Vector3
       expect(isNaN(look.x)).toBe(false)
       expect(isNaN(look.y)).toBe(false)

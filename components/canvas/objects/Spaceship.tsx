@@ -31,7 +31,7 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
-const customGrungeShader = (shader: THREE.Shader) => {
+const customGrungeShader = (shader: { vertexShader: string; fragmentShader: string }) => {
   shader.vertexShader = `
     varying vec3 vWorldPosition;
     ${shader.vertexShader}

@@ -1,9 +1,14 @@
 import { render, screen, waitFor, act } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-vi.mock('next/navigation', () => ({
-  useSearchParams: vi.fn(),
-}))
+vi.mock('next/navigation', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('next/navigation')>()
+  return {
+    ...actual,
+
+  useSearchParams: vi.fn<() => import("next/navigation").ReadonlyURLSearchParams>(),
+  }
+})
 
 vi.mock('next/link', () => ({
   default: ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -31,7 +36,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
   XCircleIcon: () => null,
 }))
 
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, ReadonlyURLSearchParams } from 'next/navigation'
 import SearchPage from '@/app/articles/search/page'
 
 const MOCK_POSTS = [
@@ -53,7 +58,7 @@ function mockFetch(posts: typeof MOCK_POSTS) {
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as never)
+  vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams()) )
 })
 
 describe('SearchPage — empty state', () => {
@@ -68,7 +73,7 @@ describe('SearchPage — empty state', () => {
 
 describe('SearchPage — with query', () => {
   beforeEach(() => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('q=react') as never)
+    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=react')) )
   })
 
   it('renders search results when API returns matches', async () => {
@@ -100,7 +105,7 @@ describe('SearchPage — with query', () => {
 
 describe('SearchPage — custom search event', () => {
   it('re-fetches when search-query-updated event fires', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams() as never)
+    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams()) )
     mockFetch([])
     render(<SearchPage />)
 
@@ -120,7 +125,7 @@ describe('SearchPage — custom search event', () => {
 
 describe('SearchPage — pagination', () => {
   it('renders pagination when results exceed 5 items', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('q=test') as never)
+    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=test')) )
     const manyPosts = Array.from({ length: 6 }, (_, i) => ({
       slug: `post-${i}`,
       title: `Post ${i}`,
@@ -137,7 +142,7 @@ describe('SearchPage — pagination', () => {
   })
 
   it('does not render pagination when results fit on one page', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams('q=test') as never)
+    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=test')) )
     mockFetch(MOCK_POSTS)
     render(<SearchPage />)
     await waitFor(() => {

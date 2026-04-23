@@ -12,7 +12,7 @@ Running `npx tsc` currently outputs 35 type errors across 12 files. These were n
 ## Requirements
 1. **Resolve Type Errors**:
    - `tsconfig.json`: Add types for `@testing-library/jest-dom` and `vitest/globals` to fix missing matcher types.
-   - `__tests__/canvas/CameraRig.test.tsx`: Fix strict null check on `capturedFrameCb`.
+   - `__tests__/canvas/CameraRig.test.tsx`: Eliminate strict null errors by restructuring callback mocks with proper generic typings.
    - `components/canvas/objects/Spaceship.tsx`: Cast `null` to `any` in `args` array for `instancedMesh` to satisfy `@react-three/fiber` strict types.
 2. **Add NPM Script**:
    - Add `"typecheck": "tsc --noEmit"` to `package.json` scripts.

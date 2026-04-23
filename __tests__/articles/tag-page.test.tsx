@@ -8,8 +8,8 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('@/app/articles/utils', () => ({
-  getPaginatedBlogPostsByTag: vi.fn(),
-  getPaginatedBlogPosts: vi.fn(),
+  getPaginatedBlogPostsByTag: vi.fn<(tag: string, page?: number, itemsPerPage?: number) => import("@/app/articles/utils").PaginatedBlogPosts>(),
+  getPaginatedBlogPosts: vi.fn<(page?: number, itemsPerPage?: number) => import("@/app/articles/utils").PaginatedBlogPosts>(),
   getAllTags: vi.fn(),
   getAllCategories: vi.fn(),
   capitalizeWords: vi.fn((text: string) =>
@@ -43,12 +43,12 @@ import {
 } from '@/app/articles/utils'
 import TagPage from '@/app/articles/tag/[tag]/page'
 
-const EMPTY_RESULT = {
+const EMPTY_RESULT: import("@/app/articles/utils").PaginatedBlogPosts = {
   posts: [],
   pagination: { totalItems: 0, totalPages: 0, currentPage: 1, itemsPerPage: 5 },
 }
 
-const ONE_POST_RESULT = {
+const ONE_POST_RESULT: import("@/app/articles/utils").PaginatedBlogPosts = {
   posts: [
     {
       metadata: {
@@ -73,12 +73,12 @@ beforeEach(() => {
   vi.mocked(getPaginatedBlogPosts).mockReturnValue({
     posts: ONE_POST_RESULT.posts,
     pagination: ONE_POST_RESULT.pagination,
-  } as never)
+  } )
 })
 
 describe('TagPage', () => {
   it('calls notFound when no posts match the tag', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(EMPTY_RESULT as never)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(EMPTY_RESULT )
     await TagPage({
       params: Promise.resolve({ tag: 'nonexistent' }),
       searchParams: Promise.resolve({}),
@@ -87,7 +87,7 @@ describe('TagPage', () => {
   })
 
   it('does not call notFound when posts exist', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT )
     await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({}),
@@ -96,7 +96,7 @@ describe('TagPage', () => {
   })
 
   it('decodes URL-encoded tag and passes capitalized value to utils', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT )
     await TagPage({
       params: Promise.resolve({ tag: 'web%20development' }),
       searchParams: Promise.resolve({}),
@@ -105,7 +105,7 @@ describe('TagPage', () => {
   })
 
   it('uses page number from searchParams', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT )
     await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({ page: '2' }),
@@ -114,7 +114,7 @@ describe('TagPage', () => {
   })
 
   it('excludes the active tag from the sidebar tag list', async () => {
-    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT as never)
+    vi.mocked(getPaginatedBlogPostsByTag).mockReturnValue(ONE_POST_RESULT )
     const jsx = await TagPage({
       params: Promise.resolve({ tag: 'typescript' }),
       searchParams: Promise.resolve({}),

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-type Metadata = {
+export type Metadata = {
   title: string;
   publishedAt: string;
   summary: string;
@@ -10,6 +10,22 @@ type Metadata = {
   category?: string;
 };
 
+
+export type BlogPost = {
+  metadata: Metadata;
+  slug: string;
+  content: string;
+};
+
+export type PaginatedBlogPosts = {
+  posts: BlogPost[];
+  pagination: {
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+    itemsPerPage: number;
+  };
+};
 function parseFrontmatter(fileContent: string) {
   const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
   const match = frontmatterRegex.exec(fileContent);
@@ -52,11 +68,11 @@ function parseFrontmatter(fileContent: string) {
 
   return { metadata: metadata as Metadata, content };
 }
-function getMDXFiles(dir) {
+function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
 }
 
-function readMDXFile(filePath) {
+function readMDXFile(filePath: string) {
   const rawContent = fs.readFileSync(filePath, 'utf-8');
   return parseFrontmatter(rawContent);
 }

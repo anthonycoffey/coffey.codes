@@ -10,6 +10,7 @@ interface MutableFrameRef {
 
 // Safely hold the callback in a mutable reference to prevent TS control flow from incorrectly narrowing it to `null`.
 const capturedFrame: MutableFrameRef = { current: null }
+const resetFrame = () => { capturedFrame.current = null }
 
 const mockCamera = {
   position: new THREE.Vector3(0, 0, 4),
@@ -25,7 +26,7 @@ import CameraRig from '@/components/canvas/CameraRig'
 
 describe('CameraRig', () => {
   beforeEach(() => {
-    capturedFrame.current = null
+    resetFrame()
     mockCamera.lookAt.mockClear()
     mockCamera.position.set(0, 0, 4)
   })
@@ -72,7 +73,7 @@ describe('CameraRig', () => {
   it('never produces NaN in lookAt target across the scroll range', () => {
     for (const p of [0, 0.15, 0.4, 0.52, 0.68, 0.82, 1.0]) {
       cleanup()
-      capturedFrame.current = null
+      resetFrame()
       mockCamera.lookAt.mockClear()
       render(<CameraRig scrollProgress={{ current: p }} />)
       capturedFrame.current?.()

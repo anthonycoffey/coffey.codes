@@ -19,27 +19,28 @@ describe('Loader', () => {
   it('renders initially with the loading overlay visible', () => {
     const { container } = render(<Loader />)
     const overlay = container.firstChild as HTMLElement
-    expect(overlay).toHaveClass('opacity-100')
-    expect(overlay).not.toHaveClass('opacity-0')
+    // The component uses 'loading' class initially and slides up when done
+    expect(overlay).toHaveClass('loading')
+    expect(overlay).not.toHaveClass('-translate-y-full')
   })
 
-  it('types out "Please wait..." character by character', () => {
+  it('types out "LOADING..." character by character', () => {
     const { getByText, queryByText } = render(<Loader />)
 
     // Initially, text is empty
-    expect(queryByText('Please wait...')).not.toBeInTheDocument()
+    expect(queryByText('LOADING...')).not.toBeInTheDocument()
 
-    // Fast-forward 500ms -> should have typed "Pleas"
+    // Fast-forward 250ms (5 chars at 50ms each) -> should have typed "LOADI"
     act(() => {
-      vi.advanceTimersByTime(500)
+      vi.advanceTimersByTime(250)
     })
-    expect(getByText(/Pleas/)).toBeInTheDocument()
+    expect(getByText(/LOADI/)).toBeInTheDocument()
 
-    // Fast-forward past the total typing time (14 chars * 100ms = 1400ms)
+    // Fast-forward past the total typing time (10 chars * 50ms = 500ms)
     act(() => {
-      vi.advanceTimersByTime(1000)
+      vi.advanceTimersByTime(300)
     })
-    expect(getByText(/Please wait\.\.\./)).toBeInTheDocument()
+    expect(getByText(/LOADING\.\.\./)).toBeInTheDocument()
   })
 
   it('toggles cursor from solid to blinking after typing completes', () => {
@@ -49,30 +50,30 @@ describe('Loader', () => {
     // Initially solid (no animate-blink class)
     expect(cursor).not.toHaveClass('animate-blink')
 
-    // Fast forward past typing completion (1400ms+)
+    // Fast forward past typing completion (500ms+)
     act(() => {
-      vi.advanceTimersByTime(1500)
+      vi.advanceTimersByTime(600)
     })
 
     // Now it should blink
     expect(cursor).toHaveClass('animate-blink')
   })
 
-  it('fades out completely after 2600ms', () => {
+  it('slides out completely after 2750ms', () => {
     const { container } = render(<Loader />)
     const overlay = container.firstChild as HTMLElement
 
-    // Before timeout
+    // Before timeout (e.g. 2500ms)
     act(() => {
-      vi.advanceTimersByTime(2000)
+      vi.advanceTimersByTime(2500)
     })
-    expect(overlay).toHaveClass('opacity-100')
+    expect(overlay).toHaveClass('loading')
 
-    // After timeout
+    // After timeout (2750ms total)
     act(() => {
-      vi.advanceTimersByTime(700)
+      vi.advanceTimersByTime(300)
     })
-    expect(overlay).toHaveClass('opacity-0')
+    expect(overlay).toHaveClass('-translate-y-full')
     expect(overlay).toHaveClass('pointer-events-none')
   })
 })

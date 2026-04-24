@@ -118,7 +118,7 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
     mat.opacity = (1 - disperse) * 0.75;
 
     // ── Color/Bloom: over-bright when dense, dimming as it spreads ───
-    const glowIntensity = 0.2 + (1 - disperse) * 2;
+    const glowIntensity = 0.02 + (1 - disperse) * 2;
     mat.color.copy(BASE_COLOR).multiplyScalar(glowIntensity);
 
     // ── Rotation: spin while formed; stop once exploded ────────
@@ -215,7 +215,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
             intensity={1.5}
             mipmapBlur
             radius={0.85}
-            levels={9}
+            levels={5}
           />
           <Vignette eskil={false} offset={0.3} darkness={0.55} />
         </EffectComposer>

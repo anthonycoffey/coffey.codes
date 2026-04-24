@@ -265,30 +265,30 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[0, 0, -1.8]} rotation={[-Math.PI / 2, 0, 0]}>
         <coneGeometry args={[0.4, 2.8, 16]} />
-        <meshPhysicalMaterial color="#ffffff" metalness={0.9} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[0, 0, 0.3]} rotation={[-Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.4, 0.5, 1.8, 16]} />
-        <meshPhysicalMaterial color="#ffffff" metalness={0.9} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-1.6, -0.05, 0.4]} rotation={[0, 0.4, 0]}>
         <boxGeometry args={[2.5, 0.08, 1.5]} />
-        <meshPhysicalMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[1.6, -0.05, 0.4]} rotation={[0, -0.4, 0]}>
         <boxGeometry args={[2.5, 0.08, 1.5]} />
-        <meshPhysicalMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#f0f0f0" metalness={0.8} roughness={0.15} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-2.7, 0.2, 0.8]} rotation={[0, 0, 0.2]}>
         <boxGeometry args={[0.06, 0.6, 1.2]} />
-        <meshPhysicalMaterial color="#ff3333" metalness={0.6} roughness={0.2} clearcoat={0.8} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#ff3333" metalness={0.6} roughness={0.2} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[2.7, 0.2, 0.8]} rotation={[0, 0, -0.2]}>
         <boxGeometry args={[0.06, 0.6, 1.2]} />
-        <meshPhysicalMaterial color="#ff3333" metalness={0.6} roughness={0.2} clearcoat={0.8} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#ff3333" metalness={0.6} roughness={0.2} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[0, 0.25, -0.5]} scale={[0.6, 0.4, 1.4]}>
@@ -298,20 +298,20 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[-0.65, -0.05, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.22, 0.28, 1.4, 12]} />
-        <meshPhysicalMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} onBeforeCompile={customGrungeShader} />
       </mesh>
       <mesh position={[0.65, -0.05, 0.8]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.22, 0.28, 1.4, 12]} />
-        <meshPhysicalMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} clearcoat={1.0} onBeforeCompile={customGrungeShader} />
+        <meshStandardMaterial color="#e0e0e0" metalness={0.95} roughness={0.1} onBeforeCompile={customGrungeShader} />
       </mesh>
 
       <mesh position={[-0.65, -0.05, 1.5]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.26, 0.22, 0.2, 12]} />
-        <meshPhysicalMaterial color="#111" metalness={0.9} roughness={0.9} />
+        <meshStandardMaterial color="#111" metalness={0.9} roughness={0.9} />
       </mesh>
       <mesh position={[0.65, -0.05, 1.5]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.26, 0.22, 0.2, 12]} />
-        <meshPhysicalMaterial color="#111" metalness={0.9} roughness={0.9} />
+        <meshStandardMaterial color="#111" metalness={0.9} roughness={0.9} />
       </mesh>
 
       <mesh position={[-0.65, -0.05, 1.51]} rotation={[Math.PI / 2, 0, 0]}>
@@ -325,11 +325,11 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[-2.2, -0.05, -0.4]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.03, 0.04, 1.2, 8]} />
-        <meshPhysicalMaterial color="#222" metalness={0.8} roughness={0.6} />
+        <meshStandardMaterial color="#222" metalness={0.8} roughness={0.6} />
       </mesh>
       <mesh position={[2.2, -0.05, -0.4]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.03, 0.04, 1.2, 8]} />
-        <meshPhysicalMaterial color="#222" metalness={0.8} roughness={0.6} />
+        <meshStandardMaterial color="#222" metalness={0.8} roughness={0.6} />
       </mesh>
 
       <mesh position={[-2.75, -0.05, -0.2]}>
@@ -343,11 +343,11 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
 
       <mesh position={[-0.3, 0.2, 0.2]}>
         <boxGeometry args={[0.1, 0.1, 1.0]} />
-        <meshPhysicalMaterial color="#111" metalness={0.9} roughness={0.8} />
+        <meshStandardMaterial color="#111" metalness={0.9} roughness={0.8} />
       </mesh>
       <mesh position={[0.3, 0.2, 0.2]}>
         <boxGeometry args={[0.1, 0.1, 1.0]} />
-        <meshPhysicalMaterial color="#111" metalness={0.9} roughness={0.8} />
+        <meshStandardMaterial color="#111" metalness={0.9} roughness={0.8} />
       </mesh>
     </group>
   );

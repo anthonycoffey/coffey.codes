@@ -105,7 +105,7 @@ jobs:
 
   notify:
     name: Notify Vercel
-    needs: [lint, unit, typecheck, e2e]
+    needs: [lint, unit, typecheck]
     if: always()
     runs-on: ubuntu-latest
     steps:

@@ -457,11 +457,11 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
 
       {/* Galactic core — glowing sun (lighter tint) */}
       <mesh>
-        <sphereGeometry args={[2, 16, 16]} />
+        <sphereGeometry args={[2.2, 16, 16]} />
         <meshStandardMaterial
           color="#fffde0"
           emissive="#ffe895"
-          emissiveIntensity={1.1}
+          emissiveIntensity={2}
           toneMapped={true}
         />
       </mesh>

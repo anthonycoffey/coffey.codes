@@ -4,6 +4,7 @@ export default function Loader() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [text, setText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
     const fullText = 'Please wait...';
@@ -11,7 +12,10 @@ export default function Loader() {
     const typeInterval = setInterval(() => {
       setText(fullText.substring(0, i + 1));
       i++;
-      if (i >= fullText.length) clearInterval(typeInterval);
+      if (i >= fullText.length) {
+        clearInterval(typeInterval);
+        setIsTyping(false);
+      }
     }, 100);
 
     requestAnimationFrame(() => {
@@ -37,7 +41,7 @@ export default function Loader() {
       <div className="w-64 space-y-4">
         <div className="font-mono text-xl text-[#FFCC00]">
           {text}
-          <span className="animate-pulse">█</span>
+          <span className={isTyping ? '' : 'animate-pulse'}>█</span>
         </div>
         <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-900 shadow-[0_0_10px_#FFCC00]">
           <div

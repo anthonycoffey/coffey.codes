@@ -4,7 +4,7 @@
 This spec outlines the plan to write an article detailing the setup of an enterprise-grade, rock-solid CI/CD pipeline for a Next.js TypeScript project. The article will cover integrating GitHub Actions (for ESLint, Vitest, Playwright, and Typechecking) with Vercel Preview Deployments and native Vercel Deployment Checks to ensure maximum application stability before PRs can be merged.
 
 ## Status
-`planned`
+`complete`
 
 ## Target Audience
 Next.js and TypeScript developers looking to harden their deployment pipeline, prevent broken builds from hitting production, and seamlessly integrate GitHub Actions with Vercel.

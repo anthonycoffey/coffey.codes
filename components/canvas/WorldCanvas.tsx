@@ -215,7 +215,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
             intensity={1.5}
             mipmapBlur
             radius={0.85}
-            levels={9}
+            levels={5}
           />
           <Vignette eskil={false} offset={0.3} darkness={0.55} />
         </EffectComposer>

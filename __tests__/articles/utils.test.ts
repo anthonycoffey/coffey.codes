@@ -60,7 +60,7 @@ beforeEach(() => {
     if (filePath.endsWith('post-c.mdx')) return FIXTURE_C
     return ''
   })
-  vi.mocked(fs.readdirSync).mockReturnValue(['post-a.mdx', 'post-b.mdx', 'post-c.mdx'] as never)
+  vi.mocked(fs.readdirSync).mockClear()
 })
 
 describe('capitalizeWords', () => {

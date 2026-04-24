@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 vi.mock('@/app/articles/utils', () => ({
-  getAllBlogPosts: vi.fn(),
+  getAllBlogPosts: vi.fn<() => BlogPost[]>(),
 }))
 
 vi.mock('next/server', () => ({
@@ -14,9 +14,9 @@ vi.mock('next/server', () => ({
 }))
 
 import { GET } from '@/app/api/search/route'
-import { getAllBlogPosts } from '@/app/articles/utils'
+import { getAllBlogPosts, type BlogPost } from '@/app/articles/utils'
 
-const MOCK_POSTS = [
+const MOCK_POSTS: BlogPost[] = [
   {
     metadata: {
       title: 'Alpha Post',
@@ -43,7 +43,7 @@ const MOCK_POSTS = [
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(getAllBlogPosts).mockReturnValue(MOCK_POSTS as never)
+  vi.mocked(getAllBlogPosts).mockReturnValue(MOCK_POSTS)
 })
 
 describe('GET /api/search', () => {

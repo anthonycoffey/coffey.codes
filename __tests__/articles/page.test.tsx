@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 vi.mock('@/app/articles/utils', () => ({
-  getPaginatedBlogPosts: vi.fn(),
+  getPaginatedBlogPosts: vi.fn<(page?: number, itemsPerPage?: number) => import("@/app/articles/utils").PaginatedBlogPosts>(),
   getAllTags: vi.fn(),
   getAllCategories: vi.fn(),
 }))
@@ -29,14 +29,14 @@ import {
 } from '@/app/articles/utils'
 import ArticlesPage from '@/app/articles/page'
 
-const MOCK_RESULT = {
+const MOCK_RESULT: import("@/app/articles/utils").PaginatedBlogPosts = {
   posts: [],
   pagination: { totalItems: 0, totalPages: 1, currentPage: 1, itemsPerPage: 5 },
 }
 
 beforeEach(() => {
   vi.clearAllMocks()
-  vi.mocked(getPaginatedBlogPosts).mockReturnValue(MOCK_RESULT as never)
+  vi.mocked(getPaginatedBlogPosts).mockReturnValue(MOCK_RESULT )
   vi.mocked(getAllTags).mockReturnValue(['react', 'typescript'])
   vi.mocked(getAllCategories).mockReturnValue(['backend'])
 })

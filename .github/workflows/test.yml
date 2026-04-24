@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  statuses: write
+
 jobs:
   lint:
     name: ESLint
@@ -41,6 +44,24 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+  typecheck:
+    name: TypeScript
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run typecheck
+        run: npm run typecheck
+
   e2e:
     name: Playwright
     runs-on: ubuntu-latest
@@ -71,3 +92,16 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  notify:
+    name: Notify Vercel
+    needs: [lint, unit, typecheck, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'notify vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "Vercel - coffey-codes: Test"
+          state: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'error' || 'success' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -41,7 +41,7 @@ export default function Loader() {
       <div className="w-64 space-y-4">
         <div className="font-mono text-xl text-[#FFCC00]">
           {text}
-          <span className={isTyping ? '' : 'animate-pulse'}>█</span>
+          <span className={isTyping ? '' : 'animate-blink'}>█</span>
         </div>
         <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-900 shadow-[0_0_10px_#FFCC00]">
           <div

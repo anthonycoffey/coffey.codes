@@ -27,7 +27,7 @@ const KEYFRAMES = [
   { t: 0.52, pos: [0, 3, -28] as const, lookAt: [0, -5, -55] as const }, // After UFO — subtle tilt, planet arc appears
   { t: 0.68, pos: [0, 3, -38] as const, lookAt: [0, -5, -62] as const }, // HOLD — craft + satellite (planet stays in frame)
   { t: 0.82, pos: [0, 2, -48] as const, lookAt: [0, 0, -72] as const }, // Level — galaxy incoming
-  { t: 1.0, pos: [0, 1, -56] as const, lookAt: [0, 0, -80] as const }, // Galaxy center-frame
+  { t: 1.0, pos: [0, 1, -73] as const, lookAt: [0, 0, -80] as const }, // Galaxy center-frame
 ];
 
 const KF_POS = KEYFRAMES.map((k) => new THREE.Vector3(...k.pos));

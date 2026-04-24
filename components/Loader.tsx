@@ -7,7 +7,7 @@ export default function Loader() {
   const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    const fullText = 'Please wait...';
+    const fullText = 'LOADING...';
     let i = 0;
     const typeInterval = setInterval(() => {
       setText(fullText.substring(0, i + 1));
@@ -16,7 +16,7 @@ export default function Loader() {
         clearInterval(typeInterval);
         setIsTyping(false);
       }
-    }, 100);
+    }, 50);
 
     requestAnimationFrame(() => {
       setTimeout(() => setProgress(100), 100);
@@ -24,7 +24,7 @@ export default function Loader() {
 
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 2600);
+    }, 2750);
 
     return () => {
       clearInterval(typeInterval);
@@ -34,8 +34,8 @@ export default function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-opacity duration-1000 ease-in-out ${
-        loading ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black opacity-80 transition-transform duration-200 ease-in-out ${
+        loading ? 'loading' : '-translate-y-full pointer-events-none'
       }`}
     >
       <div className="w-64 space-y-4">

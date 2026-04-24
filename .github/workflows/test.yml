@@ -89,3 +89,14 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  notify:
+    name: Notify Vercel
+    needs: [lint, unit, typecheck, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'notify vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "Vercel - coffey-codes: Test"

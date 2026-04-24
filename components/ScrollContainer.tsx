@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import dynamic from 'next/dynamic'
 import HUDOverlay from '@/components/overlay/HUDOverlay'
+import Loader from '@/components/Loader'
 import styles from '@/app/page.module.sass'
 
 // WorldCanvas is browser-only (WebGL) — skip SSR
@@ -63,6 +64,7 @@ export default function ScrollContainer() {
       >
         <WorldCanvas scrollProgress={scrollProgress} />
         <HUDOverlay scrollProgress={scrollProgress} />
+        <Loader />
       </div>
     </div>
   )

@@ -130,7 +130,7 @@ const NOISE_GLSL = `
     float v = 0.0;
     float a = 0.5;
     vec3 shift = vec3(100.0);
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 4; ++i) {
       v += a * snoise(x);
       x = x * 2.0 + shift;
       a *= 0.5;
@@ -274,7 +274,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
         Zero vertex displacement. Beautiful, mathematically generated swirling cloud bands.
       */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[20, 128, 128]} />
+        <sphereGeometry args={[20, 64, 64]} />
         <meshStandardMaterial
           ref={planetMatRef}
           roughness={0.6} // Gas giants are relatively smooth/matte

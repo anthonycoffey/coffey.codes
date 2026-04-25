@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { ArrowDownIcon } from '@heroicons/react/24/outline';
 import IntroOverlay from './IntroOverlay';
 import AboutOverlay from './AboutOverlay';
 import CraftOverlay from './CraftOverlay';
@@ -16,7 +17,7 @@ import styles from './Overlay.module.sass';
 // 0.82–1.00: "Want to know more?" Galaxy fills frame.
 
 interface HUDOverlayProps {
-  scrollProgress: React.RefObject<number>;
+  scrollProgress: React.RefObject<number | null>;
 }
 
 interface VisState {
@@ -26,6 +27,8 @@ interface VisState {
   final: boolean;
 }
 
+type ActiveSection = 'intro' | 'about' | 'craft' | 'final' | null;
+
 export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
   const [vis, setVis] = useState<VisState>({
     intro: false,
@@ -33,6 +36,8 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
     craft: false,
     final: false,
   });
+  const [activeSection, setActiveSection] = useState<ActiveSection>(null);
+  const [showPrompt, setShowPrompt] = useState<boolean>(true);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -57,6 +62,15 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
         return next;
       });
 
+      let nextActive: ActiveSection = null;
+      if (p >= 0.82) nextActive = 'final';
+      else if (p >= 0.52) nextActive = 'craft';
+      else if (p >= 0.35) nextActive = 'about';
+      else if (p >= 0.15) nextActive = 'intro';
+
+      setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
+      setShowPrompt(p < 0.1);
+
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -64,12 +78,71 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
     return () => cancelAnimationFrame(rafRef.current);
   }, [scrollProgress]);
 
+  const scrollTo = (progress: number) => {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({
+      top: progress * scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div className={styles.overlay}>
       <IntroOverlay visible={vis.intro} />
       <AboutOverlay visible={vis.about} />
       <CraftOverlay visible={vis.craft} />
       <FinalOverlay visible={vis.final} />
+
+      {/* Table of Contents */}
+      <div className={styles.tocContainer}>
+        <ul className={styles.tocList}>
+          <li className={styles.tocItem}>
+            <a
+              onClick={() => scrollTo(0.15)}
+              className={`${styles.tocLink} ${activeSection === 'intro' ? styles.active : ''}`}
+            >
+              System.init
+            </a>
+          </li>
+          <li className={styles.tocItem}>
+            <a
+              onClick={() => scrollTo(0.35)}
+              className={`${styles.tocLink} ${activeSection === 'about' ? styles.active : ''}`}
+            >
+              Profiles
+            </a>
+          </li>
+          <li className={styles.tocItem}>
+            <a
+              onClick={() => scrollTo(0.52)}
+              className={`${styles.tocLink} ${activeSection === 'craft' ? styles.active : ''}`}
+            >
+              Craft
+            </a>
+          </li>
+          <li className={styles.tocItem}>
+            <a
+              onClick={() => scrollTo(0.82)}
+              className={`${styles.tocLink} ${activeSection === 'final' ? styles.active : ''}`}
+            >
+              Connect
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Scroll Prompt */}
+      <div className={`${styles.scrollPromptContainer} ${showPrompt ? styles.visible : ''}`}>
+        <span className={styles.scrollPromptText}>System Ready // Scroll to Explore</span>
+        <button
+          className={`${styles.scrollPromptButton} ${styles.bouncing}`}
+          onClick={() => scrollTo(0.15)}
+          aria-label="Scroll to first slide"
+        >
+          <ArrowDownIcon className={styles.heroSize} />
+        </button>
+      </div>
     </div>
   );
 }
+

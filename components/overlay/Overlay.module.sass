@@ -126,3 +126,129 @@
     background-position: 200% center
   100%
     background-position: 0% center
+
+
+// ── Table of Contents ───────────────────────────────────────────────────────
+.tocContainer
+  position: absolute
+  right: 2vw
+  top: 50%
+  transform: translateY(-50%)
+  background: rgba(10, 10, 15, 0.4)
+  border: 1px solid rgba(240, 240, 255, 0.1)
+  border-radius: 12px
+  padding: 1.5rem
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(240, 240, 255, 0.05)
+  backdrop-filter: blur(8px)
+  pointer-events: auto
+  z-index: 10
+  display: flex
+  flex-direction: column
+  gap: 1rem
+
+.tocList
+  list-style: none
+  padding: 0
+  margin: 0
+  display: flex
+  flex-direction: column
+  gap: 0.75rem
+
+.tocItem
+  display: block
+
+.tocLink
+  font-family: var(--font-geist-mono), monospace
+  font-size: 0.8rem
+  letter-spacing: 0.1em
+  text-transform: uppercase
+  color: rgba(240, 240, 255, 0.4)
+  text-decoration: none
+  transition: all 0.3s ease
+  cursor: pointer
+  display: flex
+  align-items: center
+  gap: 0.5rem
+
+  &::before
+    content: ''
+    display: inline-block
+    width: 6px
+    height: 6px
+    background: rgba(240, 240, 255, 0.3)
+    border-radius: 50%
+    transition: all 0.3s ease
+
+  &:hover
+    color: rgba(240, 240, 255, 0.8)
+    text-shadow: 0 0 8px rgba(240, 240, 255, 0.3)
+
+    &::before
+      background: rgba(240, 240, 255, 0.8)
+      box-shadow: 0 0 8px rgba(240, 240, 255, 0.5)
+
+  &.active
+    color: #ffffff
+    font-weight: 700
+    text-shadow: 0 0 12px rgba(240, 240, 255, 0.6), 0 0 20px rgba(240, 240, 255, 0.3)
+    
+    &::before
+      background: #ffffff
+      box-shadow: 0 0 10px #ffffff
+      transform: scale(1.5)
+
+// ── Scroll Prompt ───────────────────────────────────────────────────────────
+.scrollPromptContainer
+  position: absolute
+  bottom: 5vh
+  left: 50%
+  transform: translateX(-50%)
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 1rem
+  pointer-events: auto
+  z-index: 10
+  transition: opacity 0.5s ease
+  opacity: 0
+
+  &.visible
+    opacity: 1
+
+.scrollPromptText
+  font-family: var(--font-geist-mono), monospace
+  font-size: 0.75rem
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  color: rgba(240, 240, 255, 0.7)
+  text-shadow: 0 0 8px rgba(240, 240, 255, 0.3)
+
+.scrollPromptButton
+  background: rgba(240, 240, 255, 0.05)
+  border: 1px solid rgba(240, 240, 255, 0.2)
+  border-radius: 50%
+  width: 3rem
+  height: 3rem
+  display: flex
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  transition: all 0.3s ease
+  color: rgba(240, 240, 255, 0.8)
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5)
+
+  &:hover
+    background: rgba(240, 240, 255, 0.1)
+    border-color: rgba(240, 240, 255, 0.5)
+    color: #ffffff
+    box-shadow: 0 0 15px rgba(240, 240, 255, 0.2)
+    transform: translateY(2px)
+
+  @keyframes bounce
+    0%, 100%
+      transform: translateY(0)
+    50%
+      transform: translateY(5px)
+
+  &.bouncing
+    animation: bounce 2s infinite ease-in-out

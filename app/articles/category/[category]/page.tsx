@@ -88,7 +88,7 @@ export default async function CategoryPage({ params, searchParams }) {
           <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
               <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
-              Search Articles
+              Search
             </h2>
             <SearchBox />
           </div>

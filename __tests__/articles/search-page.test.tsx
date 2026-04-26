@@ -1,43 +1,48 @@
-import { render, screen, waitFor, act } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, waitFor, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('next/navigation', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('next/navigation')>()
+  const actual = await importOriginal<typeof import('next/navigation')>();
   return {
     ...actual,
 
-  useSearchParams: vi.fn<() => import("next/navigation").ReadonlyURLSearchParams>(),
-  }
-})
+    useSearchParams:
+      vi.fn<() => import('next/navigation').ReadonlyURLSearchParams>(),
+  };
+});
 
 vi.mock('next/link', () => ({
-  default: ({ href, children }: { href: string; children: React.ReactNode }) => (
-    <a href={href}>{children}</a>
-  ),
-}))
+  default: ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => <a href={href}>{children}</a>,
+}));
 
 vi.mock('@/components/SearchBox', () => ({
   default: ({ initialValue }: { initialValue?: string }) => (
     <input data-testid="search-box" defaultValue={initialValue} />
   ),
-}))
+}));
 
 vi.mock('@/components/Pagination', () => ({
   default: () => <div data-testid="pagination" />,
-}))
+}));
 
 vi.mock('@/utils/date', () => ({
   formatDate: vi.fn((d: string) => d),
-}))
+}));
 
 vi.mock('@heroicons/react/20/solid', () => ({
   MagnifyingGlassIcon: () => null,
   DocumentTextIcon: () => null,
   XCircleIcon: () => null,
-}))
+}));
 
-import { useSearchParams, ReadonlyURLSearchParams } from 'next/navigation'
-import SearchPage from '@/app/articles/search/page'
+import { useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
+import SearchPage from '@/app/articles/search/page';
 
 const MOCK_POSTS = [
   {
@@ -48,84 +53,94 @@ const MOCK_POSTS = [
     tags: ['react'],
     category: 'frontend',
   },
-]
+];
 
 function mockFetch(posts: typeof MOCK_POSTS) {
   global.fetch = vi.fn().mockResolvedValue({
     json: async () => ({ posts }),
-  } as Response)
+  } as Response);
 }
 
 beforeEach(() => {
-  vi.clearAllMocks()
-  vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams()) )
-})
+  vi.clearAllMocks();
+  vi.mocked(useSearchParams).mockReturnValue(
+    new ReadonlyURLSearchParams(new URLSearchParams()),
+  );
+});
 
 describe('SearchPage — empty state', () => {
   it('shows the empty search prompt when no query is present', async () => {
-    mockFetch([])
-    render(<SearchPage />)
+    mockFetch([]);
+    render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByText(/search articles/i)).toBeInTheDocument()
-    })
-  })
-})
+      expect(screen.getByText(/search/i)).toBeInTheDocument();
+    });
+  });
+});
 
 describe('SearchPage — with query', () => {
   beforeEach(() => {
-    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=react')) )
-  })
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams(new URLSearchParams('q=react')),
+    );
+  });
 
   it('renders search results when API returns matches', async () => {
-    mockFetch(MOCK_POSTS)
-    render(<SearchPage />)
+    mockFetch(MOCK_POSTS);
+    render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByText('First Result')).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByText('First Result')).toBeInTheDocument();
+    });
+  });
 
   it('shows no-results message when API returns empty array', async () => {
-    mockFetch([])
-    render(<SearchPage />)
+    mockFetch([]);
+    render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByText(/no articles found/i)).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByText(/no articles found/i)).toBeInTheDocument();
+    });
+  });
 
   it('calls fetch with the encoded query', async () => {
-    mockFetch(MOCK_POSTS)
-    render(<SearchPage />)
+    mockFetch(MOCK_POSTS);
+    render(<SearchPage />);
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/search?q=react'),
-      )
-    })
-  })
-})
+      );
+    });
+  });
+});
 
 describe('SearchPage — custom search event', () => {
   it('re-fetches when search-query-updated event fires', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams()) )
-    mockFetch([])
-    render(<SearchPage />)
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams(new URLSearchParams()),
+    );
+    mockFetch([]);
+    render(<SearchPage />);
 
     await act(async () => {
       window.dispatchEvent(
-        new CustomEvent('search-query-updated', { detail: { query: 'typescript' } }),
-      )
-    })
+        new CustomEvent('search-query-updated', {
+          detail: { query: 'typescript' },
+        }),
+      );
+    });
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/search?q=typescript'),
-      )
-    })
-  })
-})
+      );
+    });
+  });
+});
 
 describe('SearchPage — pagination', () => {
   it('renders pagination when results exceed 5 items', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=test')) )
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams(new URLSearchParams('q=test')),
+    );
     const manyPosts = Array.from({ length: 6 }, (_, i) => ({
       slug: `post-${i}`,
       title: `Post ${i}`,
@@ -133,21 +148,23 @@ describe('SearchPage — pagination', () => {
       summary: 'Summary',
       tags: [],
       category: '',
-    }))
-    mockFetch(manyPosts)
-    render(<SearchPage />)
+    }));
+    mockFetch(manyPosts);
+    render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByTestId('pagination')).toBeInTheDocument()
-    })
-  })
+      expect(screen.getByTestId('pagination')).toBeInTheDocument();
+    });
+  });
 
   it('does not render pagination when results fit on one page', async () => {
-    vi.mocked(useSearchParams).mockReturnValue(new ReadonlyURLSearchParams(new URLSearchParams('q=test')) )
-    mockFetch(MOCK_POSTS)
-    render(<SearchPage />)
+    vi.mocked(useSearchParams).mockReturnValue(
+      new ReadonlyURLSearchParams(new URLSearchParams('q=test')),
+    );
+    mockFetch(MOCK_POSTS);
+    render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByText('First Result')).toBeInTheDocument()
-    })
-    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument()
-  })
-})
+      expect(screen.getByText('First Result')).toBeInTheDocument();
+    });
+    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument();
+  });
+});

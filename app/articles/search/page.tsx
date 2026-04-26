@@ -108,7 +108,6 @@ function SearchPageContent() {
                 hideDropdown={true}
               />
             </div>
-  
           </div>
         </div>
 
@@ -224,7 +223,8 @@ function SearchPageContent() {
             No articles found
           </h2>
           <p className="mt-2 text-gray-500">
-            We couldn&apos;t find any articles matching &quot;{currentQuery}&quot;.
+            We couldn&apos;t find any articles matching &quot;{currentQuery}
+            &quot;.
           </p>
           <div className="mt-6">
             <Link
@@ -238,9 +238,7 @@ function SearchPageContent() {
       ) : (
         <div className="text-center py-12 bg-white rounded-lg border border-gray-200 shadow-sm">
           <MagnifyingGlassIcon className="h-16 w-16 mx-auto text-gray-300" />
-          <h2 className="mt-4 text-xl font-medium text-gray-900">
-            Search articles
-          </h2>
+          <h2 className="mt-4 text-xl font-medium text-gray-900">Search</h2>
           <p className="mt-2 text-gray-500">
             Use the search box above to find articles.
           </p>

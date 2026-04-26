@@ -39,7 +39,9 @@ export async function generateMetadata({ params }) {
 
 export default async function TagPage({ params, searchParams }) {
   const resolvedSearchParams = await searchParams;
-  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const page = resolvedSearchParams?.page
+    ? Number(resolvedSearchParams.page)
+    : 1;
   const itemsPerPage = 5;
   const { tag } = await params;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
@@ -85,7 +87,7 @@ export default async function TagPage({ params, searchParams }) {
           <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
             <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
               <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
-              Search Articles
+              Search
             </h2>
             <SearchBox />
           </div>

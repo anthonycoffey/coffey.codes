@@ -59,19 +59,19 @@ describe('Loader', () => {
     expect(cursor).toHaveClass('animate-blink')
   })
 
-  it('slides out completely after 2750ms', () => {
+  it('slides out completely after 2000ms', () => {
     const { container } = render(<Loader />)
     const overlay = container.firstChild as HTMLElement
 
-    // Before timeout (e.g. 2500ms)
+    // Before timeout (e.g. 1500ms)
     act(() => {
-      vi.advanceTimersByTime(2500)
+      vi.advanceTimersByTime(1500)
     })
     expect(overlay).toHaveClass('loading')
 
-    // After timeout (2750ms total)
+    // After timeout (2000ms total)
     act(() => {
-      vi.advanceTimersByTime(300)
+      vi.advanceTimersByTime(500)
     })
     expect(overlay).toHaveClass('-translate-y-full')
     expect(overlay).toHaveClass('pointer-events-none')

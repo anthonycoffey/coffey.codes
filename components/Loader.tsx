@@ -24,7 +24,7 @@ export default function Loader() {
 
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 2750);
+    }, 2000);
 
     return () => {
       clearInterval(typeInterval);
@@ -34,7 +34,7 @@ export default function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black opacity-80 transition-transform duration-200 ease-in-out ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-transform duration-200 ease-in-out ${
         loading ? 'loading' : '-translate-y-full pointer-events-none'
       }`}
     >

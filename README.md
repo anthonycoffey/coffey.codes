@@ -29,28 +29,6 @@ This repository is more than just a personal website—it is a playground for bl
 
 ---
 
-## 🏗️ Architecture & Engineering Standards
-
-This project is built to production-grade enterprise standards, showcasing strict architectural discipline. 
-
-### 📚 Documentation Driven
-The [`/docs`](./docs/README.md) directory is the single source of truth for the project. It houses:
-- **Architecture Decision Records (ADRs)**
-- AI Agent Briefs for seamless Claude integration
-- Detailed Spec lifecycles (`draft` → `ready` → `in-progress` → `complete`)
-
-### 🔄 DDD + TDD Workflow
-Development follows a rigorous Domain-Driven and Test-Driven approach:
-1. **Plan & Spec:** Define unknowns and draft specifications.
-2. **Review:** Ensure readiness before writing a single line of code.
-3. **Test (RED):** Write failing tests first.
-4. **Implement (GREEN):** Write the code to pass the tests.
-5. **Refactor:** Clean the codebase while maintaining green tests.
-
-> 💡 **Explore the Architecture:** Check out the [Documentation Hub](./docs/README.md) for a deep dive into the engineering practices.
-
----
-
 ## 🚀 Quick Start
 
 Want to run the codebase locally? Follow these steps:

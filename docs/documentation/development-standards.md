@@ -153,12 +153,12 @@ docs: add agent brief for coffey.codes
 
 ### Branching Strategy
 
-Trunk-based development. All branches are cut from `master` and merged back via pull request. Branches are deleted after merging.
+Trunk-based development. All branches are cut from `main` and merged back via pull request. Branches are deleted after merging.
 
-**CRITICAL RULE: NEVER commit directly to `master`.** 
+**CRITICAL RULE: NEVER commit directly to `main`.** 
 All updates, no matter how small or trivial, must be made on a separate branch and merged via Pull Request. No exceptions.
 
-- `master` — production. Auto-deploys to Vercel.
+- `main` — production. Auto-deploys to Vercel.
 - Feature/fix branches — short-lived, one spec per branch.
 
 ---
@@ -177,4 +177,4 @@ See `CLAUDE.md` at the project root for the full code style guide (TypeScript co
 | Build | `npm build` | Production build |
 | Lint | `npm lint` | ESLint check |
 | Lint fix | `npm lint:fix` | ESLint auto-fix |
-| Deploy | Push to `master` | Auto-deploy via Vercel |
+| Deploy | Push to `main` | Auto-deploy via Vercel |

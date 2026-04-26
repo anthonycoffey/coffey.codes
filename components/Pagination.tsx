@@ -77,7 +77,7 @@ export default function Pagination({
 
   return (
     <nav className="flex items-center justify-center mt-12 mb-8">
-      <ul className="flex items-center -space-x-px">
+      <ul className="flex items-center -space-x-px list-none m-0 p-0">
         {/* Previous button */}
         <li>
           {hasPrevPage ? (

@@ -208,7 +208,7 @@ export default async function Blog({ params }) {
         )}
       </div>
       {/* Add dark:prose-invert for MDX content */}
-      <article className="mx-auto prose prose-lg xl:prose-xl dark:prose-invert">
+      <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
         <CustomMDX source={post.content} />
       </article>
       <GoBack />

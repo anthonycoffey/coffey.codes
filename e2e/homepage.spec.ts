@@ -138,9 +138,31 @@ test.describe('Homepage', () => {
     await expect(panels.final(page)).toHaveClass(isShowing)
     const link = panels.final(page).locator('a[href="/contact"]')
     await expect(link).toHaveAttribute('href', '/contact')
-    // Playwright's click action automatically checks for actionability and intercepting elements.
-    // Setting trial: true verifies the link can be cleanly clicked without getting blocked by invisible overlays,
-    // avoiding an actual navigation to keep the test fast.
     await link.click({ trial: true })
+  })
+
+  // ── ToC Overlay (progress 0–1.0) ────────────────────────────────────────
+
+  test('Table of Contents container is present and interactive', async ({ page }) => {
+    // The ToC Container should always be visible/present
+    const toc = page.locator('[class*="tocContainer"]')
+    await expect(toc).toBeVisible()
+    await expect(toc).toContainText('U7•RΔ9//ZΩ')
+  })
+
+  test('Scroll prompts appear at start and end of page', async ({ page }) => {
+    // At top (start)
+    const promptContainer = page.locator('[class*="scrollPromptContainer"]')
+    await expect(promptContainer).toHaveClass(isShowing)
+    await expect(promptContainer).toContainText('System Ready // Scroll to Explore')
+    
+    // Scroll past 0.1, prompt should hide
+    await scrollTo(page, 0.25)
+    await expect(promptContainer).not.toHaveClass(isShowing)
+
+    // Scroll to very bottom, prompt should reverse
+    await scrollTo(page, 0.98)
+    await expect(promptContainer).toHaveClass(isShowing)
+    await expect(promptContainer).toContainText('SCROLL TO TOP')
   })
 })

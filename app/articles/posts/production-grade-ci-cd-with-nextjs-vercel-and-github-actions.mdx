@@ -72,9 +72,9 @@ To enforce this, I went into GitHub's Branch Protection Rules and required deplo
 
 Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want.
 
-The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
-
 </Callout>
+
+The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
 
 ## Step 3: The Reverse Handshake (Vercel Deployment Checks)
 

@@ -7,7 +7,7 @@ interface CalloutProps {
 }
 
 const Callout: React.FC<CalloutProps> = ({ children, type = 'info' }) => {
-  const baseStyle = 'p-4 rounded-md border my-4'; // Common styles
+  const baseStyle = 'px-2 rounded-md border my-4 text-sm'; // Common styles
 
   const typeStyles = {
     info: 'bg-blue-50 border-blue-200 text-blue-800',
@@ -25,12 +25,13 @@ const Callout: React.FC<CalloutProps> = ({ children, type = 'info' }) => {
   };
 
   return (
-    <div className={`${baseStyle} ${typeStyles[type]} flex items-start`}>
+    <div
+      className={`${baseStyle} ${typeStyles[type]} flex items-start relative`}
+    >
       {/* Added flex items-start */}
-      <span className="mr-2 text-xl leading-tight">{icons[type]}</span>{' '}
+      <span className="text-xl absolute top-5 -left-8">{icons[type]}</span>
       {/* Adjusted size/spacing */}
-      <div className="flex-1 font-medium">{children}</div>{' '}
-      {/* Wrap children for flex */}
+      <div className="leading-6">{children}</div> {/* Wrap children for flex */}
     </div>
   );
 };

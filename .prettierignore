@@ -1,0 +1,17 @@
+# Ignore standard build and module directories
+node_modules/
+.next/
+public/
+
+# Ignore documentation where format tweaks could break markdown engines or schemas
+docs/
+
+# Ignore MD and MDX frontmatter files to prevent destructive auto-formatting
+**/*.md
+**/*.mdx
+
+# Build artifacts
+coverage/
+build/
+dist/
+package-lock.json

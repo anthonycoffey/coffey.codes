@@ -50,6 +50,14 @@ module.exports = {
         blink:  'blink 1s step-end infinite',
         float:  'float 3s ease-in-out infinite',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
+          },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

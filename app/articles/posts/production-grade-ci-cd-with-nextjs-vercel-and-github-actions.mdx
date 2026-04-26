@@ -16,9 +16,15 @@ This guide is the story of how I built a production-grade CI/CD pipeline, the pi
 
 ## The Stack & The Goal
 
-Our stack relies on **Next.js, TypeScript, GitHub Actions, Vercel, Vitest, and Playwright**.
+Our stack relies on:
+- Next.js
+- TypeScript
+- GitHub Actions
+- Vercel
+- Vitest
+- Playwright
 
-The goal was to enforce strict gates. A PR should not be allowed to merge unless **every** check is green. This meant linting, unit tests, strict type-checking, and most importantly, running our Playwright E2E tests against a real deployed environment, rather than a mocked-up `next dev` server on a CI runner.
+The goal was to enforce strict gates. A PR should not be allowed to merge unless every check is green. This meant linting, unit tests, strict type-checking, and most importantly, running our Playwright E2E tests against a real deployed environment, rather than a mocked-up `next dev` server on a CI runner.
 
 ## Step 1: The First Line of Defense (The PR Workflow)
 
@@ -50,17 +56,21 @@ jobs:
 
 Previously, I would build the Next.js app on the GitHub runner, spin it up locally, and run Playwright against that local instance. It was painfully slow, but more importantly, it was fundamentally flawed! It didn't test the actual edge network, serverless functions, or the caching layer that production uses.
 
-Then came the realization: **Vercel is already building a Preview Deployment for every PR.** Why build it twice?
+I thought to myself, "Wait a minute... If Vercel is already building a Preview Deployment for every PR... Why build it twice?" 🤔
 
 So I decided to leverage Vercel's Preview Deployments as the environment for our E2E tests, and this approach provides more confidence that the code is production-ready since our tests run against the actual deployment.
 
 By moving my E2E tests to run against the Vercel Preview, I cut out the build step entirely. This saved ~2–3 minutes per PR _and_ made the test runs more trustworthy because it was hitting a real edge runtime.
 
-To enforce this, I went into GitHub's Branch Protection Rules and required deployments to succeed, specifically checking the **`Preview`** environment.
+To enforce this, I went into GitHub's Branch Protection Rules and required deployments to succeed, specifically checking the `Preview` environment.
 
-<Callout>Only `Preview` worked, and that's a feature, not a bug.</Callout>
+<Callout>
 
-GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, **`Preview` is the one you want**. The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
+Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want. 
+
+The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
+
+</Callout>
 
 ## Step 3: The Reverse Handshake (Vercel Deployment Checks)
 
@@ -83,17 +93,22 @@ notify:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-**Gotcha Alert #1:** While GitHub automatically provides `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_ automatically consume it. You **must** explicitly pass it down via the `with:` block.
 
+<Callout type="danger">
+**Gotcha Alert #1:** While GitHub automatically provides `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_ automatically consume it. You must explicitly pass it down via the `with:` block.
+</Callout>
+
+<Callout type="danger">
 **Gotcha Alert #2:** The string you provide to `name:` in the `with` block (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure in the Vercel Dashboard (Settings > Build & Development > Deployment Checks). They communicate via this arbitrary string.
+</Callout>
 
 ### The Silent Production Hang (The Lesson I Learned the Hard Way)
 
-This configuration worked beautifully for PRs. PR checks went green, I merged cheerfully, and then... **our production deployment hung on Vercel indefinitely.**
+This configuration worked beautifully for PRs. PR checks went green, I merged and noticed the site never updated and then I checked vercel and found the production deployment hanging indefinitely. Vercel has a button to override and deploy anyway, but I wanted to understand why it was hanging in the first place.
 
-It was waiting for status checks that were never going to arrive.
+The answer was simple really, it was waiting for status checks that were never going to arrive.
 
-_Why?_ Vercel Deployment Checks evaluate the commit that's _being deployed_. When a PR is squash-merged, main gets a **brand-new commit SHA** that has never been through CI. Because our `Test` workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no status was posted, and Vercel waited forever.
+_Why?_ Vercel Deployment Checks evaluate the commit that's _being deployed_. When a PR is squash-merged, main gets a brand-new commit SHA that has never been through CI. Because our `Test` workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no status was posted, and Vercel waited forever.
 
 **The Fix:** I had to add a `repository_dispatch` trigger listening for the `vercel.deployment.ready` event that Vercel emits when _any_ deployment (including production) is created.
 
@@ -140,13 +155,13 @@ jobs:
           ref: ${{ github.event.deployment.sha }}
 ```
 
-_Note that I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head._
+>_Note that I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head._
 
 ### The Vercel Protection Bypass
 
 By default, Vercel Preview deployments are password-gated. If Playwright tries to visit the preview URL, it will just test Vercel's login screen.
 
-To fix this, I created a **Protection Bypass for Automation** token in Vercel (Settings → Deployment Protection), stored it as a GitHub secret (`VERCEL_AUTOMATION_BYPASS_SECRET`), and passed it to Playwright as an environment variable, along with the live target URL.
+To fix this, I created a `Protection Bypass for Automation` token in Vercel (Settings → Deployment Protection), stored it as a GitHub secret (`VERCEL_AUTOMATION_BYPASS_SECRET`), and passed it to Playwright as an environment variable, along with the live target URL.
 
 ```yaml
 - name: Run E2E tests against preview
@@ -179,25 +194,23 @@ export default defineConfig({
 });
 ```
 
-**Gotcha Alert #3:** GitHub only runs `deployment_status` workflows from files that exist on the repository's default branch. The first PR that adds this workflow won't trigger it! You have to merge it to main first, then open a second PR to verify the workflow works.
-
 ## Step 5: Hardening the Rules
 
 With all workflows in place, the final step was locking down the repository via GitHub's Branch Protection Rules.
 
 A PR cannot be merged unless the following are completely green:
 
-1. **Required status checks:**
+1. Required status checks:
    - `Test / ESLint`
    - `Test / Vitest`
    - `Test / TypeScript`
    - `Test / Notify Vercel`
    - `E2E (Vercel Preview) / Playwright`
-2. **Require deployments to succeed:**
+2. Require deployments to succeed:
    - `Preview`
 
 ## Conclusion
 
-Building this pipeline took some trial and error, but it has completely transformed our workflow. We no longer waste CI minutes spinning up redundant dev environments; instead, our E2E tests run against the exact infrastructure our users will experience in production. Most importantly, when we click merge, we have total confidence that the build is linted, typed correctly, and free of the errors that would otherwise break production.
+Building this pipeline took some trial and error, but now we no longer waste CI minutes spinning up redundant dev environments. Now, our E2E tests run against the exact infrastructure our users will experience in production. Most importantly, when I click merge, I have total confidence that the build is linted, typed correctly, and free of the errors that may break production.
 
-By cutting those 2–3 minutes of build time per PR, we’re not just saving time—we’re saving money on GitHub Action minutes. Strict branch protection rules ensure that only high-quality code reaches the finish line, which means less time putting out fires and more time to focus on what matters. If you're using Next.js and Vercel, I highly recommend adopting this approach. It’s straightforward to implement, and the payoff in reliability is huge.
+By cutting those 2–3 minutes of build time per PR, I'm saving time and money on GitHub Action minutes. Strict branch protection rules ensure that only high-quality code reaches the finish line, and that means less time putting out fires and more time to focus on what matters. If you're using Next.js and Vercel without a solid CI/CD pipeline, I highly recommend giving this approach a try. Your future self (and your users) will thank you!

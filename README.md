@@ -67,7 +67,6 @@ npm install
 
 **Anthony Coffey**
 - 🌐 [coffey.codes](https://coffey.codes)
-- ✉️ coffey.j.anthony@gmail.com
 - 🐙 [GitHub](https://github.com/anthonycoffey)
 
 ---

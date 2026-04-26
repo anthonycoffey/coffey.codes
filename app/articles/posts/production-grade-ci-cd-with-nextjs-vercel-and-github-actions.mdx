@@ -215,6 +215,6 @@ A PR cannot be merged unless the following are completely green:
 
 ## Conclusion
 
-Building this pipeline took some trial and error, but now we no longer waste CI minutes spinning up redundant dev environments. Now, our E2E tests run against the exact infrastructure our users will experience in production. Most importantly, when I click merge, I have total confidence that the build is linted, typed correctly, and free of the errors that may break production.
+This pipeline eliminates wasted CI time on redundant environments. E2E tests now run efficietly against production-like infrastructure, ensuring total confidence in merges with linted, typed, error-free code.
 
-By cutting those 2–3 minutes of build time per PR, I'm saving time and money on GitHub Action minutes. Strict branch protection rules ensure that only high-quality code reaches the finish line, and that means less time putting out fires and more time to focus on what matters. If you're using Next.js and Vercel without a solid CI/CD pipeline, I highly recommend giving this approach a try. Your future self (and your users) will thank you!
+Saving 2–3 minutes per PR cuts costs and boosts efficiency. Strict branch protections mitigate risk and allow developers to focus on what matters.

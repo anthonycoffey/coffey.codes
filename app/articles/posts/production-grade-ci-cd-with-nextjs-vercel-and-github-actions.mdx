@@ -14,9 +14,9 @@ What started as a standard GitHub Actions setup evolved into a tightly woven, bi
 
 This guide is the story of how I built a production-grade CI/CD pipeline, the pitfalls I encountered, and the exact configurations you can use to protect your own production branch.
 
-## The Stack & The Goal
+## CI/CD Pipeline Overview
 
-Our stack relies on:
+When a PR is opened, we run a series of checks before allowing it to be merged:
 
 ```mermaid
 flowchart LR
@@ -70,7 +70,7 @@ To enforce this, I went into GitHub's Branch Protection Rules and required deplo
 
 <Callout>
 
-Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want. 
+Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want.
 
 The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
 
@@ -97,13 +97,18 @@ notify:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-
 <Callout type="danger">
-**Gotcha Alert #1:** While GitHub automatically provides `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_ automatically consume it. You must explicitly pass it down via the `with:` block.
+  **Gotcha Alert #1:** While GitHub automatically provides
+  `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_
+  automatically consume it. You must explicitly pass it down via the `with:`
+  block.
 </Callout>
 
 <Callout type="danger">
-**Gotcha Alert #2:** The string you provide to `name:` in the `with` block (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure in the Vercel Dashboard (Settings > Build & Development > Deployment Checks). They communicate via this arbitrary string.
+  **Gotcha Alert #2:** The string you provide to `name:` in the `with` block
+  (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure
+  in the Vercel Dashboard (Settings > Build & Development > Deployment Checks).
+  They communicate via this arbitrary string.
 </Callout>
 
 ### The Silent Production Hang (The Lesson I Learned the Hard Way)
@@ -159,7 +164,11 @@ jobs:
           ref: ${{ github.event.deployment.sha }}
 ```
 
->_Note that I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head._
+<Callout>
+
+I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head.
+
+</Callout>
 
 ### The Vercel Protection Bypass
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDownIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
 import IntroOverlay from './IntroOverlay';
 import AboutOverlay from './AboutOverlay';
 import CraftOverlay from './CraftOverlay';
@@ -28,6 +28,7 @@ interface VisState {
 }
 
 type ActiveSection = 'intro' | 'about' | 'craft' | 'final' | null;
+type PromptType = 'start' | 'end';
 
 export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
   const [vis, setVis] = useState<VisState>({
@@ -38,6 +39,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
   });
   const [activeSection, setActiveSection] = useState<ActiveSection>(null);
   const [showPrompt, setShowPrompt] = useState<boolean>(true);
+  const [promptType, setPromptType] = useState<PromptType>('start');
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -69,7 +71,12 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
       else if (p >= 0.15) nextActive = 'intro';
 
       setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
-      setShowPrompt(p < 0.1);
+      
+      const isStart = p < 0.1;
+      const isEnd = p > 0.95;
+      setShowPrompt(isStart || isEnd);
+      if (isStart) setPromptType('start');
+      else if (isEnd) setPromptType('end');
 
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -82,21 +89,22 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
     // Add a tiny offset (0.01) to ensure we land definitively inside the target progress threshold,
     // overcoming any GSAP scrub interpolation rounding errors.
     const targetProgress = progress + 0.01;
-    
+
     // Find the scroll spacer to calculate exact pixel distance
     const container = document.getElementById('scroll-container');
     const spacer = container?.parentElement;
-    
+
     if (spacer) {
       // The track length is spacer height minus one viewport height
       const scrollableDistance = spacer.offsetHeight - window.innerHeight;
       window.scrollTo({
-        top: spacer.offsetTop + (targetProgress * scrollableDistance),
+        top: spacer.offsetTop + targetProgress * scrollableDistance,
         behavior: 'smooth',
       });
     } else {
       // Fallback
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       window.scrollTo({
         top: targetProgress * scrollHeight,
         behavior: 'smooth',
@@ -113,13 +121,13 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
 
       {/* Table of Contents */}
       <div className={styles.tocContainer}>
-        <ul className={styles.tocList}>
+        <ol className={styles.tocList}>
           <li className={styles.tocItem}>
             <a
               onClick={() => scrollTo(0.15)}
               className={`${styles.tocLink} ${activeSection === 'intro' ? styles.active : ''}`}
             >
-              System.init
+              $ whoami
             </a>
           </li>
           <li className={styles.tocItem}>
@@ -127,7 +135,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
               onClick={() => scrollTo(0.35)}
               className={`${styles.tocLink} ${activeSection === 'about' ? styles.active : ''}`}
             >
-              Profiles
+              system // init
             </a>
           </li>
           <li className={styles.tocItem}>
@@ -135,7 +143,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
               onClick={() => scrollTo(0.52)}
               className={`${styles.tocLink} ${activeSection === 'craft' ? styles.active : ''}`}
             >
-              Craft
+              Core.exe
             </a>
           </li>
           <li className={styles.tocItem}>
@@ -146,21 +154,26 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
               Connect
             </a>
           </li>
-        </ul>
+        </ol>
       </div>
 
       {/* Scroll Prompt */}
       <div className={`${styles.scrollPromptContainer} ${showPrompt ? styles.visible : ''}`}>
-        <span className={styles.scrollPromptText}>System Ready // Scroll to Explore</span>
+        <span className={styles.scrollPromptText}>
+          {promptType === 'end' ? 'SCROLL TO TOP' : 'System Ready // Scroll to Explore'}
+        </span>
         <button
           className={`${styles.scrollPromptButton} ${styles.bouncing}`}
-          onClick={() => scrollTo(0.15)}
-          aria-label="Scroll to first slide"
+          onClick={() => scrollTo(promptType === 'end' ? 0 : 0.15)}
+          aria-label={promptType === 'end' ? "Scroll to top" : "Scroll to first slide"}
         >
-          <ArrowDownIcon className={styles.heroSize} />
+          {promptType === 'end' ? (
+            <ArrowUpIcon className={styles.heroSize} />
+          ) : (
+            <ArrowDownIcon className={styles.heroSize} />
+          )}
         </button>
       </div>
     </div>
   );
 }
-

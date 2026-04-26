@@ -79,11 +79,29 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
   }, [scrollProgress]);
 
   const scrollTo = (progress: number) => {
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({
-      top: progress * scrollHeight,
-      behavior: 'smooth',
-    });
+    // Add a tiny offset (0.01) to ensure we land definitively inside the target progress threshold,
+    // overcoming any GSAP scrub interpolation rounding errors.
+    const targetProgress = progress + 0.01;
+    
+    // Find the scroll spacer to calculate exact pixel distance
+    const container = document.getElementById('scroll-container');
+    const spacer = container?.parentElement;
+    
+    if (spacer) {
+      // The track length is spacer height minus one viewport height
+      const scrollableDistance = spacer.offsetHeight - window.innerHeight;
+      window.scrollTo({
+        top: spacer.offsetTop + (targetProgress * scrollableDistance),
+        behavior: 'smooth',
+      });
+    } else {
+      // Fallback
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({
+        top: targetProgress * scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (

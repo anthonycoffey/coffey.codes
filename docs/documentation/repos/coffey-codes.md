@@ -1,7 +1,7 @@
 # coffey.codes — Technical Reference
 
 **Repo:** https://github.com/anthonycoffey/coffey.codes  
-**Deployment:** Vercel (auto-deploys from `master`)  
+**Deployment:** Vercel (auto-deploys from `main`)  
 **Last updated:** 2026-04-13
 
 ---
@@ -61,7 +61,7 @@ coffey.codes/
 | Animation | motion | UI animations |
 | Icons | @heroicons/react | |
 | Package Manager | npm | `package.json` |
-| Hosting | Vercel | Auto-deploy from `master` |
+| Hosting | Vercel | Auto-deploy from `main` |
 | Analytics | Google Tag Manager | GTM-KJC6Q389 |
 
 ## Key Technical Decisions
@@ -137,7 +137,7 @@ npm lint            # ESLint
 npm lint:fix        # ESLint auto-fix
 ```
 
-**Deployment:** Push to `master` → Vercel auto-deploys.
+**Deployment:** Push to `main` → Vercel auto-deploys.
 
 ## Known Issues / Pending Work
 
@@ -150,8 +150,8 @@ npm lint:fix        # ESLint auto-fix
 
 ## Version Control
 
-- **Strategy:** Trunk-based. Feature branches from `master`, short-lived, deleted after merge.
+- **Strategy:** Trunk-based. Feature branches from `main`, short-lived, deleted after merge.
 - **Branch naming:** `feature/`, `fix/`, `chore/`, `refactor/`
-- **Deployment branch:** `master` (protected, auto-deploys to Vercel)
+- **Deployment branch:** `main` (protected, auto-deploys to Vercel)
 
 See [Development Standards](../development-standards.md) for full conventions.

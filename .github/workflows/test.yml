@@ -2,7 +2,7 @@ name: Test
 
 on:
   pull_request:
-    branches: [master]
+    branches: [master, main]
   repository_dispatch:
     types: [vercel.deployment.ready]
 

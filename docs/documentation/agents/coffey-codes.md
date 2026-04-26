@@ -31,7 +31,7 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 | 3D Graphics | Three.js, @react-three/fiber, @react-three/drei |
 | Animation | motion |
 | Icons | @heroicons/react |
-| Hosting | Vercel (auto-deploys from `master`) |
+| Hosting | Vercel (auto-deploys from `main`) |
 | Package Manager | npm |
 
 ## Key Dependencies

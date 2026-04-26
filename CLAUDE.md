@@ -81,11 +81,11 @@ Full detail: `docs/documentation/development-standards.md`
 
 ## Version control
 
-- **Strategy:** Trunk-based — short-lived branches off `master`, deleted after merge
+- **Strategy:** Trunk-based — short-lived branches off `main`, deleted after merge
 - **Branch naming:** `feature/`, `fix/`, `refactor/`
 - **Commit format:** `<type>: <description> [SPEC-XXX]`
 - **Commit types:** `feat`, `fix`, `refactor`, `docs`, `test`, `style`
-- **Deployment:** Push to `master` → Vercel auto-deploys
+- **Deployment:** Push to `main` → Vercel auto-deploys
 
 ## Custom slash commands
 

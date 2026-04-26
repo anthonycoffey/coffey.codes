@@ -17,12 +17,16 @@ This guide is the story of how I built a production-grade CI/CD pipeline, the pi
 ## The Stack & The Goal
 
 Our stack relies on:
-- Next.js
-- TypeScript
-- GitHub Actions
-- Vercel
-- Vitest
-- Playwright
+
+```mermaid
+flowchart LR
+    PR[PR Opened] --> CI[CI: Lint, Vitest, Typecheck]
+    CI -- Pass --> Vercel[Vercel Preview]
+    Vercel --> E2E[Playwright E2E]
+    E2E -- Pass --> Merge[Allow Merge]
+    CI -- Fail --> Block[Block]
+    E2E -- Fail --> Block
+```
 
 The goal was to enforce strict gates. A PR should not be allowed to merge unless every check is green. This meant linting, unit tests, strict type-checking, and most importantly, running our Playwright E2E tests against a real deployed environment, rather than a mocked-up `next dev` server on a CI runner.
 

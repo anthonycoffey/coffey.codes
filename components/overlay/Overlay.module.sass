@@ -146,6 +146,10 @@
   flex-direction: column
   gap: 1rem
 
+  @media (max-width: 768px)
+    top: 80vh
+    transform: translate(-50%, -50%) scale(0.75)
+
 .tocList
   list-style: none
   padding: 0
@@ -225,6 +229,8 @@
   text-transform: uppercase
   color: rgba(240, 240, 255, 0.7)
   text-shadow: 0 0 8px rgba(240, 240, 255, 0.3)
+  white-space: nowrap
+  text-align: center
 
 .scrollPromptButton
   background: rgba(240, 240, 255, 0.05)

@@ -8,8 +8,9 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint": "eslint .",
+    "lint:fix": "prettier --write . && eslint . --fix",
+    "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
@@ -70,6 +71,7 @@
     "jsdom": "^29.0.2",
     "sass": "^1.78.0",
     "typescript-eslint": "^8.28.0",
-    "vitest": "^4.1.4"
+    "vitest": "^4.1.4",
+    "@tailwindcss/typography": "^0.5.10"
   }
 }

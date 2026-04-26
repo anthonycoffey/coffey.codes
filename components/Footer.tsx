@@ -59,7 +59,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-c-muted text-sm leading-relaxed">
-              Full-stack engineer &amp; Fractional CTO based in Austin, TX.
+              AI Consultant &amp; Full-stack Architect based in Austin, TX.
             </p>
             <SocialIcons />
           </div>

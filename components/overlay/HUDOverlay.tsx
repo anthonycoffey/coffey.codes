@@ -121,6 +121,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
 
       {/* Table of Contents */}
       <div className={styles.tocContainer}>
+        <div className={styles.tocTitle}>U7•RΔ9//ZΩ</div>
         <ol className={styles.tocList}>
           <li className={styles.tocItem}>
             <a

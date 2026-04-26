@@ -42,3 +42,4 @@ next-env.d.ts
 .env.sentry-build-plugin
 
 .claude/settings.local.json
+npm-prettier.log

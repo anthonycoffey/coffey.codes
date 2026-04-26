@@ -45,7 +45,7 @@ export default function Loader() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-transform duration-200 ease-in-out ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-transform duration-200 ease-in-out $
         loading ? 'loading' : '-translate-y-full pointer-events-none'
       }`}
     >

@@ -1,13 +1,8 @@
-name: Test
+name: CI
 
 on:
   pull_request:
     branches: [main]
-  repository_dispatch:
-    types: [vercel.deployment.ready]
-
-permissions:
-  statuses: write
 
 jobs:
   lint:
@@ -16,8 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.git.sha || github.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -36,8 +29,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.git.sha || github.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -56,8 +47,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.git.sha || github.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -69,16 +58,3 @@ jobs:
 
       - name: Run typecheck
         run: npm run typecheck
-
-  notify:
-    name: Notify Vercel
-    needs: [lint, unit, typecheck]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'notify vercel'
-        uses: 'vercel/repository-dispatch/actions/status@v1'
-        with:
-          name: "Vercel - coffey-codes: Test"
-          state: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'error' || 'success' }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}

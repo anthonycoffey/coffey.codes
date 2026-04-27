@@ -1,4 +1,4 @@
-name: E2E (Vercel Preview)
+name: E2E Tests
 
 on:
   deployment_status:
@@ -43,3 +43,16 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  notify:
+    name: Notify Vercel
+    needs: [e2e]
+    if: always() && github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'notify vercel'
+        uses: 'vercel/repository-dispatch/actions/status@v1'
+        with:
+          name: "coffey.codes / e2e"
+          state: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'error' || 'success' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

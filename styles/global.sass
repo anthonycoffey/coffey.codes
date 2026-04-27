@@ -31,6 +31,20 @@
   --sh-property:    #EA580C
   --sh-entity:      #EA580C
 
+  // Callout — light theme
+  --callout-info-bg:        #EFF6FF
+  --callout-info-border:    #BFDBFE
+  --callout-info-text:      #1E40AF
+  --callout-tip-bg:         #F0FDF4
+  --callout-tip-border:     #BBF7D0
+  --callout-tip-text:       #166534
+  --callout-warning-bg:     #FEFCE8
+  --callout-warning-border: #FEF08A
+  --callout-warning-text:   #854D0E
+  --callout-danger-bg:      #FEF2F2
+  --callout-danger-border:  #FECACA
+  --callout-danger-text:    #991B1B
+
 
 // ─── Light theme ──────────────────────────────────────────────────────────────
 [data-theme="light"]
@@ -58,6 +72,19 @@
   --sh-jsxliterals: #7C3AED
   --sh-property:    #EA580C
   --sh-entity:      #EA580C
+
+  --callout-info-bg:        #EFF6FF
+  --callout-info-border:    #BFDBFE
+  --callout-info-text:      #1E40AF
+  --callout-tip-bg:         #F0FDF4
+  --callout-tip-border:     #BBF7D0
+  --callout-tip-text:       #166534
+  --callout-warning-bg:     #FEFCE8
+  --callout-warning-border: #FEF08A
+  --callout-warning-text:   #854D0E
+  --callout-danger-bg:      #FEF2F2
+  --callout-danger-border:  #FECACA
+  --callout-danger-text:    #991B1B
 
 
 // ─── Dark theme ───────────────────────────────────────────────────────────────
@@ -91,6 +118,20 @@
   --sh-jsxliterals: #BD93F9
   --sh-property:    #FFB347
   --sh-entity:      #FFB347
+
+  // Callout — dark theme: deep tinted bg, mid-saturation border, light text
+  --callout-info-bg:        #0E1F3A
+  --callout-info-border:    #1E3A8A
+  --callout-info-text:      #BFDBFE
+  --callout-tip-bg:         #0B2A1B
+  --callout-tip-border:     #166534
+  --callout-tip-text:       #BBF7D0
+  --callout-warning-bg:     #2C1F08
+  --callout-warning-border: #854D0E
+  --callout-warning-text:   #FEF08A
+  --callout-danger-bg:      #2A1010
+  --callout-danger-border:  #991B1B
+  --callout-danger-text:    #FECACA
 
 
 // ─── Base ─────────────────────────────────────────────────────────────────────
@@ -351,6 +392,33 @@ table
   100%
     clip-path: inset(58% 0 43% 0)
     transform: translate(2px, 0)
+
+
+// ─── Callout (MDX) ────────────────────────────────────────────────────────────
+// Visual personality intentionally identical to the pre-token implementation:
+// tinted background + matching border + tinted text. The four variants are
+// switched via [data-callout-type] and resolve to the --callout-*-* tokens
+// above so dark mode swaps automatically.
+.callout
+  &[data-callout-type="info"]
+    background: var(--callout-info-bg)
+    border-color: var(--callout-info-border)
+    color: var(--callout-info-text)
+
+  &[data-callout-type="tip"]
+    background: var(--callout-tip-bg)
+    border-color: var(--callout-tip-border)
+    color: var(--callout-tip-text)
+
+  &[data-callout-type="warning"]
+    background: var(--callout-warning-bg)
+    border-color: var(--callout-warning-border)
+    color: var(--callout-warning-text)
+
+  &[data-callout-type="danger"]
+    background: var(--callout-danger-bg)
+    border-color: var(--callout-danger-border)
+    color: var(--callout-danger-text)
 
 
 // ─── Article / Contact page layout ────────────────────────────────────────────

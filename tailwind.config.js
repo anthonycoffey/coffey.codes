@@ -22,6 +22,13 @@ module.exports = {
       },
       fontFamily: {
         outfit: ['var(--font-outfit)', 'sans-serif'],
+        editorial: [
+          'var(--font-editorial)',
+          'Charter',
+          'Iowan Old Style',
+          'Georgia',
+          'serif',
+        ],
       },
       boxShadow: {
         retro:    '4px 4px 0px rgba(0,0,0,0.12)',

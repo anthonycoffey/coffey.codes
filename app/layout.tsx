@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import '../styles/global.sass';
-import { outfit, GeistMono } from '../lib/fonts';
+import { outfit, sourceSerif, GeistMono } from '../lib/fonts';
 import LayoutShell from '../components/LayoutShell';
 import JsonLd from '../components/JsonLd';
 import { baseUrl } from './sitemap';
@@ -123,7 +123,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="light"
-      className={cx(outfit.variable, GeistMono.variable)}
+      className={cx(outfit.variable, sourceSerif.variable, GeistMono.variable)}
       suppressHydrationWarning
     >
       <body className="antialiased bg-bg text-c-text font-outfit">

@@ -69,7 +69,7 @@ export default async function Blog({ params }) {
   }
 
   return (
-    <section>
+    <>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -135,86 +135,90 @@ export default async function Blog({ params }) {
         }}
       />
       <Breadcrumbs title={post.metadata.title} />
-      {/* Style title */}
-      <h1 className="title font-semibold text-2xl tracking-tighter dark:text-white">
-        {post.metadata.title}
-      </h1>
-      <div className="flex flex-col ml-2">
-        <div className="flex items-center space-x-4 mt-4">
-          <Image
-            width={330}
-            height={330}
-            src="/headshot.png"
-            alt="Anthony Coffey"
-            className="w-10 h-10 rounded-full"
-          />
-          <div>
-            <span
-              className="text-lg block"
-              itemProp="author"
-              itemScope
-              itemType="https://schema.org/Person"
-            >
-              {/* Style author name */}
-              <span itemProp="name" className="dark:text-gray-300">
-                Anthony Coffey
+      <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 py-8 sm:py-12">
+        {/* Style title */}
+        <h1 className="title font-semibold text-2xl tracking-tighter dark:text-white">
+          {post.metadata.title}
+        </h1>
+        <div className="flex flex-col ml-2">
+          <div className="flex items-center space-x-4 mt-4">
+            <Image
+              width={330}
+              height={330}
+              src="/headshot.png"
+              alt="Anthony Coffey"
+              className="w-10 h-10 rounded-full"
+            />
+            <div>
+              <span
+                className="text-lg block"
+                itemProp="author"
+                itemScope
+                itemType="https://schema.org/Person"
+              >
+                {/* Style author name */}
+                <span itemProp="name" className="dark:text-gray-300">
+                  Anthony Coffey
+                </span>
               </span>
-            </span>
-            {/* Style date */}
-            <time
-              className="text-sm text-gray-500 dark:text-gray-400"
-              dateTime={post.metadata.publishedAt}
-              itemProp="datePublished"
-            >
-              Published on {formatDate(post.metadata.publishedAt)}
-            </time>
-          </div>
-        </div>
-
-        {post.metadata.category && (
-          <div className="mt-2">
-            {/* Style label */}
-            <span className="font-semibold dark:text-gray-300">Category: </span>
-            {/* Style category chip */}
-            <Link
-              href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
-              className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-sm font-medium px-2.5 py-0.5 rounded-full"
-              itemProp="articleSection"
-            >
-              {post.metadata.category}
-            </Link>
-          </div>
-        )}
-
-        {post.metadata.tags && post.metadata.tags.length > 0 && (
-          <div className="mt-2">
-            <div className="flex flex-wrap gap-2 mt-1">
-              {/* Style label */}
-              <span className="font-semibold dark:text-gray-300">Tags: </span>
-              <div itemProp="keywords">
-                {post.metadata.tags.map((tag) => (
-                  // Style tag chip
-                  <Link
-                    key={tag}
-                    href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                    className="bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
+              {/* Style date */}
+              <time
+                className="text-sm text-gray-500 dark:text-gray-400"
+                dateTime={post.metadata.publishedAt}
+                itemProp="datePublished"
+              >
+                Published on {formatDate(post.metadata.publishedAt)}
+              </time>
             </div>
           </div>
-        )}
-      </div>
-      
-      <hr className="my-8 border-gray-200 dark:border-neutral-800" />
 
-      {/* Add dark:prose-invert for MDX content */}
-      <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
-        <CustomMDX source={post.content} />
-      </article>
-      <GoBack />
-    </section>
+          {post.metadata.category && (
+            <div className="mt-2">
+              {/* Style label */}
+              <span className="font-semibold dark:text-gray-300">
+                Category:{' '}
+              </span>
+              {/* Style category chip */}
+              <Link
+                href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
+                className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-sm font-medium px-2.5 py-0.5 rounded-full"
+                itemProp="articleSection"
+              >
+                {post.metadata.category}
+              </Link>
+            </div>
+          )}
+
+          {post.metadata.tags && post.metadata.tags.length > 0 && (
+            <div className="mt-2">
+              <div className="flex flex-wrap gap-2 mt-1">
+                {/* Style label */}
+                <span className="font-semibold dark:text-gray-300">Tags: </span>
+                <div itemProp="keywords">
+                  {post.metadata.tags.map((tag) => (
+                    // Style tag chip
+                    <Link
+                      key={tag}
+                      href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                      className="bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
+                    >
+                      {tag}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <hr className="my-8 border-gray-200 dark:border-neutral-800" />
+
+        {/* Add dark:prose-invert for MDX content */}
+        <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
+          <CustomMDX source={post.content} />
+        </article>
+        <GoBack />
+      </section>
+    </>
   );
 }

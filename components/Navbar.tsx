@@ -69,7 +69,8 @@ export default function Navbar() {
 
   const renderNavItems = () =>
     Object.entries(navItems).map(([path, { name, icon }]) => {
-      const isActive = path === '/' ? pathname === '/' : pathname.startsWith(path);
+      const isActive =
+        path === '/' ? pathname === '/' : pathname.startsWith(path);
       return (
         <Link
           key={path}
@@ -95,7 +96,7 @@ export default function Navbar() {
       className={`z-50 w-full tracking-tight transition-colors ${
         isOverlay
           ? 'fixed top-0 bg-transparent border-none'
-          : 'sticky top-0 bg-bg border-b-2 border-border'
+          : 'sticky top-0 bg-bg-alt border-b-2 border-border'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 py-2">
@@ -143,7 +144,9 @@ export default function Navbar() {
         {isMobile && isMenuOpen && (
           <nav
             className={`py-3 md:hidden flex flex-col gap-1 ${
-              isOverlay ? 'bg-black/60 backdrop-blur-sm rounded-xl px-2 mt-1' : ''
+              isOverlay
+                ? 'bg-black/60 backdrop-blur-sm rounded-xl px-2 mt-1'
+                : ''
             }`}
           >
             {renderNavItems()}

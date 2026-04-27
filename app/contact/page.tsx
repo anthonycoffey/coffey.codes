@@ -22,12 +22,12 @@ export default async function ContactPage() {
   return (
     <section className="bg-bg min-h-screen">
       <div className="max-w-5xl mx-auto px-4 pt-6 sm:pt-8">
-        <div className="border-b border-border pb-4 mb-10">
+        <div className="border-b border-border pb-4 mb-6">
           <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
             <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Contact Me
           </h1>
-          <p className="text-c-muted">
+          <p className="text-c-muted mb-4">
             Have a project in mind or need technical expertise? Let&apos;s chat!
           </p>
         </div>

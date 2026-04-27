@@ -77,12 +77,12 @@ export default async function CaseStudiesPage() {
   return (
     <section>
       <div className="page-content pt-6 sm:pt-8">
-        <div className="border-b border-border pb-4 mb-8">
+        <div className="border-b border-border pb-4 mb-6">
           <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
             <ClipboardDocumentCheckIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Case Studies
           </h1>
-          <p className="text-c-muted max-w-2xl">
+          <p className="text-c-muted max-w-2xl mb-4">
             Explore detailed case studies that showcase my expertise and
             approach to solving real-world problems with technology.
           </p>

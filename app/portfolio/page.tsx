@@ -165,12 +165,12 @@ const PortfolioSection: React.FC = () => {
   return (
     <section className="bg-bg min-h-screen">
       <div className="max-w-6xl mx-auto px-4 pt-6 sm:pt-8">
-        <div className="border-b border-border pb-6 mb-10">
+        <div className="border-b border-border pb-4 mb-6">
           <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
             <CodeBracketSquareIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Portfolio
           </h1>
-          <p className="text-c-muted">Check out some of my recent work!</p>
+          <p className="text-c-muted mb-4">Check out some of my recent work!</p>
         </div>
 
         {/* Polaroid grid */}

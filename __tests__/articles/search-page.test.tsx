@@ -73,7 +73,9 @@ describe('SearchPage — empty state', () => {
     mockFetch([]);
     render(<SearchPage />);
     await waitFor(() => {
-      expect(screen.getByText(/search/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/use the search box above/i),
+      ).toBeInTheDocument();
     });
   });
 });

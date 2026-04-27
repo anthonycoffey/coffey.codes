@@ -1,4 +1,4 @@
-name: E2E Preview
+name: E2E Tests
 
 on:
   deployment_status:

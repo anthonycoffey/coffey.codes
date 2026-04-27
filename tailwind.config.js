@@ -19,6 +19,8 @@ module.exports = {
         'accent1-dark':  'var(--color-accent-1-dark)',
         link:            'var(--color-link)',
         'code-bg':       'var(--color-code-bg)',
+        nav:             'var(--color-nav)',
+        'nav-border':    'var(--color-nav-border)',
       },
       fontFamily: {
         outfit: ['var(--font-outfit)', 'sans-serif'],

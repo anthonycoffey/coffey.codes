@@ -1,7 +1,7 @@
 ---
 id: SPEC-003
 title: 'Homepage canvas — full Vitest unit test coverage'
-status: review-pending
+status: complete
 created: 2026-04-18
 author: Anthony Coffey
 reviewers: []

@@ -1,7 +1,7 @@
 ---
 id: SPEC-004
 title: "Articles & Taxonomy Test Coverage"
-status: review-pending
+status: complete
 created: 2026-04-18
 author: "Anthony Coffey"
 reviewers: []

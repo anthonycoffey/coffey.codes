@@ -38,8 +38,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run unit tests
-        run: npm test
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
+          if-no-files-found: warn
 
   typecheck:
     name: TypeScript

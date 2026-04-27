@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -43,6 +43,8 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const pathname = usePathname();
   const { theme } = useTheme();
   const isOverlay = pathname === '/';
@@ -50,6 +52,38 @@ export default function Navbar() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Hide on scroll-down, reveal on scroll-up (headroom pattern).
+  // Always visible above the fold, when the mobile menu is open, or on
+  // route change.
+  useEffect(() => {
+    setHidden(false);
+    lastScrollY.current = typeof window !== 'undefined' ? window.scrollY : 0;
+  }, [pathname]);
+
+  useEffect(() => {
+    const SHOW_ABOVE = 80; // px from top — never hide while above the fold
+    const DELTA = 6;       // px direction threshold — prevents jitter
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const last = lastScrollY.current;
+
+      if (isMenuOpen) {
+        setHidden(false);
+      } else if (y < SHOW_ABOVE) {
+        setHidden(false);
+      } else if (y > last + DELTA) {
+        setHidden(true);
+      } else if (y < last - DELTA) {
+        setHidden(false);
+      }
+      lastScrollY.current = y;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isMenuOpen]);
 
   const logoSrc =
     isOverlay || !mounted || theme === 'dark'
@@ -93,7 +127,9 @@ export default function Navbar() {
 
   return (
     <aside
-      className={`z-50 w-full tracking-tight transition-colors ${
+      className={`z-50 w-full tracking-tight transition-[transform,colors] duration-300 ease-out will-change-transform ${
+        hidden ? '-translate-y-full' : 'translate-y-0'
+      } ${
         isOverlay
           ? 'fixed top-0 bg-transparent border-none'
           : 'sticky top-0 bg-bg-alt border-b-2 border-border'

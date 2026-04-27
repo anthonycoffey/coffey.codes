@@ -42,7 +42,7 @@ export default async function ArticlesPage({ searchParams }) {
   return (
     <div className="article-page mx-auto">
       <div className="border-b border-border pb-4 mb-6">
-        <h1 className="font-bold text-3xl tracking-tighter py-2 mb-4 flex items-center text-c-heading">
+        <h1 className="font-bold text-3xl tracking-tighter pt-2 mb-4 flex items-center text-c-heading">
           <DocumentTextIcon className="w-6 h-6 inline mr-2 text-accent1-dark" />
           Articles
         </h1>

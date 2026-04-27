@@ -19,7 +19,7 @@ export default function TagsPage() {
   return (
     <div>
       <div className="border-b border-border pb-4 mb-6">
-        <h1 className="font-bold text-3xl tracking-tighter py-2 mb-4 flex items-center text-c-heading">
+        <h1 className="font-bold text-3xl tracking-tighter pt-2 mb-4 flex items-center text-c-heading">
           <TagIcon className="w-6 h-6 inline mr-2 text-accent1-dark" />
           All Tags
         </h1>

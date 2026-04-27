@@ -55,6 +55,13 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
+    // Homepage uses overlay chrome over the hero — keep it pinned and
+    // never run the headroom hide/reveal there.
+    if (isOverlay) {
+      setHidden(false);
+      return;
+    }
+
     const SHOW_ABOVE = 30; // px from top — never hide while above the fold
     const DELTA = 3;       // px direction threshold — prevents jitter
 
@@ -76,7 +83,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isOverlay]);
 
   // Navbar is always a dark chrome (transparent over hero on home, solid
   // brand-blue elsewhere), so the white-on-dark logo is always correct.

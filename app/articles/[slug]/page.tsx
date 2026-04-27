@@ -136,8 +136,7 @@ export default async function Blog({ params }) {
       />
       <Breadcrumbs title={post.metadata.title} />
       <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 py-8 sm:py-12">
-        {/* Style title */}
-        <h1 className="title font-semibold text-2xl tracking-tighter dark:text-white">
+        <h1 className="title font-semibold text-2xl tracking-tighter text-c-heading">
           {post.metadata.title}
         </h1>
         <div className="flex flex-col ml-2">
@@ -156,14 +155,12 @@ export default async function Blog({ params }) {
                 itemScope
                 itemType="https://schema.org/Person"
               >
-                {/* Style author name */}
-                <span itemProp="name" className="dark:text-gray-300">
+                <span itemProp="name" className="text-c-text">
                   Anthony Coffey
                 </span>
               </span>
-              {/* Style date */}
               <time
-                className="text-sm text-gray-500 dark:text-gray-400"
+                className="text-sm text-c-muted"
                 dateTime={post.metadata.publishedAt}
                 itemProp="datePublished"
               >
@@ -174,14 +171,10 @@ export default async function Blog({ params }) {
 
           {post.metadata.category && (
             <div className="mt-2">
-              {/* Style label */}
-              <span className="font-semibold dark:text-gray-300">
-                Category:{' '}
-              </span>
-              {/* Style category chip */}
+              <span className="font-semibold text-c-text">Category: </span>
               <Link
                 href={`/articles/category/${encodeURIComponent(post.metadata.category.toLowerCase())}`}
-                className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-sm font-medium px-2.5 py-0.5 rounded-full"
+                className="inline-block bg-accent2 text-c-heading text-sm font-medium px-2.5 py-0.5 rounded-full hover:bg-surface-hover transition-colors"
                 itemProp="articleSection"
               >
                 {post.metadata.category}
@@ -192,15 +185,13 @@ export default async function Blog({ params }) {
           {post.metadata.tags && post.metadata.tags.length > 0 && (
             <div className="mt-2">
               <div className="flex flex-wrap gap-2 mt-1">
-                {/* Style label */}
-                <span className="font-semibold dark:text-gray-300">Tags: </span>
+                <span className="font-semibold text-c-text">Tags: </span>
                 <div itemProp="keywords">
                   {post.metadata.tags.map((tag) => (
-                    // Style tag chip
                     <Link
                       key={tag}
                       href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                      className="bg-gray-100 text-gray-800 dark:bg-neutral-800 dark:text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded mr-2"
+                      className="inline-block bg-bg-alt text-c-muted text-xs font-medium px-2.5 py-0.5 rounded mr-2 hover:bg-surface-hover transition-colors"
                     >
                       {tag}
                     </Link>
@@ -211,9 +202,8 @@ export default async function Blog({ params }) {
           )}
         </div>
 
-        <hr className="my-8 border-gray-200 dark:border-neutral-800" />
+        <hr className="my-8 border-border" />
 
-        {/* Add dark:prose-invert for MDX content */}
         <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
           <CustomMDX source={post.content} />
         </article>

@@ -68,15 +68,15 @@ export default async function CategoryPage({ params, searchParams }) {
 
   return (
     <div className="article-page max-w-6xl mx-auto">
-      <div className="border-b border-gray-300 dark:border-neutral-700 pb-4 mb-6">
-        <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center dark:text-white">
-          <FolderIcon className="w-6 h-6 inline mr-2 text-blue-500" />
+      <div className="border-b border-border pb-4 mb-6">
+        <h1 className="font-bold text-3xl tracking-tighter mb-4 flex items-center text-c-heading">
+          <FolderIcon className="w-6 h-6 inline mr-2 text-accent1-dark" />
           Articles in category &quot;{decodedCategory}&quot;
         </h1>
         <div className="mb-4">
           <Link
             href="/articles"
-            className="text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+            className="text-link hover:underline transition-colors"
           >
             ← Back to all articles
           </Link>
@@ -85,18 +85,18 @@ export default async function CategoryPage({ params, searchParams }) {
 
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/3 space-y-6">
-          <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-              <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
+          <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+              <MagnifyingGlassIcon className="w-5 h-5 mr-2 text-c-muted" />
               Search
             </h2>
             <SearchBox />
           </div>
 
           {otherCategories.length > 0 && (
-            <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-              <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-                <FolderIcon className="w-5 h-5 mr-2 text-blue-500" />
+            <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+              <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+                <FolderIcon className="w-5 h-5 mr-2 text-accent1-dark" />
                 Other Categories
               </h2>
               <div className="space-y-2">
@@ -107,11 +107,11 @@ export default async function CategoryPage({ params, searchParams }) {
                   >
                     <Link
                       href={`/articles/category/${encodeURIComponent(otherCategory.toLowerCase())}`}
-                      className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+                      className="text-c-text hover:text-link transition-colors"
                     >
                       {otherCategory}
                     </Link>
-                    <span className="text-xs text-gray-500 bg-gray-100 dark:bg-neutral-800 dark:text-gray-400 px-2 py-1 rounded-full">
+                    <span className="text-xs text-c-muted bg-bg-alt px-2 py-1 rounded-full">
                       {
                         getPaginatedBlogPostsByCategory(otherCategory, 1, 100)
                           .posts.length
@@ -121,7 +121,7 @@ export default async function CategoryPage({ params, searchParams }) {
                 ))}
                 <Link
                   href="/articles/categories"
-                  className="text-sm text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300 flex items-center mt-2"
+                  className="text-sm text-link hover:underline flex items-center mt-2"
                 >
                   View all categories →
                 </Link>
@@ -129,9 +129,9 @@ export default async function CategoryPage({ params, searchParams }) {
             </div>
           )}
 
-          <div className="bg-white dark:bg-neutral-900 p-4 rounded-lg border border-gray-200 dark:border-neutral-800 shadow-sm">
-            <h2 className="text-lg font-semibold mb-3 flex items-center dark:text-white">
-              <TagIcon className="w-5 h-5 mr-2 text-blue-500" />
+          <div className="bg-surface p-4 rounded-lg border border-border shadow-sm">
+            <h2 className="text-lg font-semibold mb-3 flex items-center text-c-heading">
+              <TagIcon className="w-5 h-5 mr-2 text-accent1-dark" />
               Popular Tags
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -139,14 +139,14 @@ export default async function CategoryPage({ params, searchParams }) {
                 <Link
                   key={tag}
                   href={`/articles/tag/${encodeURIComponent(tag.toLowerCase())}`}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-gray-300 text-xs font-medium px-2.5 py-1.5 rounded transition-colors"
+                  className="bg-bg-alt hover:bg-surface-hover text-c-muted text-xs font-medium px-2.5 py-1.5 rounded transition-colors"
                 >
                   {tag}
                 </Link>
               ))}
               <Link
                 href="/articles/tags"
-                className="text-sm text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300 flex items-center mt-2"
+                className="text-sm text-link hover:underline flex items-center mt-2"
               >
                 View all tags →
               </Link>

@@ -8,21 +8,25 @@ category: Cloud & DevOps
 
 We've all been there. You get a PR approved, the local tests pass, you hit merge, and go grab a coffee. By the time you get back, Slack is blowing up. The production build failed, or worse, it deployed successfully but the app is fundamentally broken for users.
 
-I recently went on a journey to harden our deployment pipeline for a Next.js TypeScript project. The goal was simple: **Zero broken builds hitting production, and a faster, more meaningful CI/CD process that actually validates the code.**
+I recently decided to harden my deployment pipeline for this site, which is built with Next.js / TypeScript. The goal was simple: no broken builds hitting production, and a faster, more meaningful CI/CD process that actually validates the code.
 
 What started as a standard GitHub Actions setup evolved into a tightly woven, bidirectional handshake between GitHub and Vercel. I even leveraged Vercel's native preview environments as the actual execution environment for our end-to-end (E2E) tests which saved us minutes of CI time and made our tests infinitely more trustworthy. With this approach, our E2E tests run against the exact infrastructure our users will experience, not a mocked-up environment on a CI runner.
 
 This guide is the story of how I built a production-grade CI/CD pipeline, the pitfalls I encountered, and the exact configurations you can use to protect your own production branch.
 
-## The Stack & The Goal
+## CI/CD Pipeline Overview
 
-Our stack relies on:
-- Next.js
-- TypeScript
-- GitHub Actions
-- Vercel
-- Vitest
-- Playwright
+When a PR is opened, we run a series of checks before allowing it to be merged:
+
+```mermaid
+flowchart LR
+    PR[PR Opened] --> CI[CI: Lint, Vitest, Typecheck]
+    CI -- Pass --> Vercel[Vercel Preview]
+    Vercel --> E2E[Playwright E2E]
+    E2E -- Pass --> Merge[Allow Merge]
+    CI -- Fail --> Block[Block]
+    E2E -- Fail --> Block
+```
 
 The goal was to enforce strict gates. A PR should not be allowed to merge unless every check is green. This meant linting, unit tests, strict type-checking, and most importantly, running our Playwright E2E tests against a real deployed environment, rather than a mocked-up `next dev` server on a CI runner.
 
@@ -66,11 +70,11 @@ To enforce this, I went into GitHub's Branch Protection Rules and required deplo
 
 <Callout>
 
-Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want. 
-
-The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
+Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection's "Require deployments to succeed" dropdown lists several Vercel environment names (Production, Preview, etc.). In practice, `Preview` is the one you want.
 
 </Callout>
+
+The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
 
 ## Step 3: The Reverse Handshake (Vercel Deployment Checks)
 
@@ -93,13 +97,18 @@ notify:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-
 <Callout type="danger">
-**Gotcha Alert #1:** While GitHub automatically provides `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_ automatically consume it. You must explicitly pass it down via the `with:` block.
+  **Gotcha Alert #1:** While GitHub automatically provides
+  `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_
+  automatically consume it. You must explicitly pass it down via the `with:`
+  block.
 </Callout>
 
 <Callout type="danger">
-**Gotcha Alert #2:** The string you provide to `name:` in the `with` block (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure in the Vercel Dashboard (Settings > Build & Development > Deployment Checks). They communicate via this arbitrary string.
+  **Gotcha Alert #2:** The string you provide to `name:` in the `with` block
+  (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure
+  in the Vercel Dashboard (Settings > Build & Development > Deployment Checks).
+  They communicate via this arbitrary string.
 </Callout>
 
 ### The Silent Production Hang (The Lesson I Learned the Hard Way)
@@ -155,7 +164,11 @@ jobs:
           ref: ${{ github.event.deployment.sha }}
 ```
 
->_Note that I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head._
+<Callout>
+
+I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head.
+
+</Callout>
 
 ### The Vercel Protection Bypass
 
@@ -211,6 +224,6 @@ A PR cannot be merged unless the following are completely green:
 
 ## Conclusion
 
-Building this pipeline took some trial and error, but now we no longer waste CI minutes spinning up redundant dev environments. Now, our E2E tests run against the exact infrastructure our users will experience in production. Most importantly, when I click merge, I have total confidence that the build is linted, typed correctly, and free of the errors that may break production.
+This pipeline eliminates wasted CI time on redundant environments. E2E tests now run efficietly against production-like infrastructure, ensuring total confidence in merges with linted, typed, error-free code.
 
-By cutting those 2–3 minutes of build time per PR, I'm saving time and money on GitHub Action minutes. Strict branch protection rules ensure that only high-quality code reaches the finish line, and that means less time putting out fires and more time to focus on what matters. If you're using Next.js and Vercel without a solid CI/CD pipeline, I highly recommend giving this approach a try. Your future self (and your users) will thank you!
+Saving 2–3 minutes per PR cuts costs and boosts efficiency. Strict branch protections mitigate risk and allow developers to focus on what matters.

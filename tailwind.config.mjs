@@ -1,6 +1,9 @@
-// tailwind.config.js
-module.exports = {
-  darkMode: ['attribute', 'data-theme'],
+// tailwind.config.mjs
+import typography from '@tailwindcss/typography';
+
+/** @type {import('tailwindcss').Config} */
+const config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
   content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -19,9 +22,18 @@ module.exports = {
         'accent1-dark':  'var(--color-accent-1-dark)',
         link:            'var(--color-link)',
         'code-bg':       'var(--color-code-bg)',
+        nav:             'var(--color-nav)',
+        'nav-border':    'var(--color-nav-border)',
       },
       fontFamily: {
         outfit: ['var(--font-outfit)', 'sans-serif'],
+        editorial: [
+          'var(--font-editorial)',
+          'Charter',
+          'Iowan Old Style',
+          'Georgia',
+          'serif',
+        ],
       },
       boxShadow: {
         retro:    '4px 4px 0px rgba(0,0,0,0.12)',
@@ -50,7 +62,17 @@ module.exports = {
         blink:  'blink 1s step-end infinite',
         float:  'float 3s ease-in-out infinite',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
+
+export default config;

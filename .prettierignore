@@ -1,0 +1,10 @@
+# Ignore standard build and module directories
+node_modules/
+.next/
+public/
+
+# Build artifacts
+coverage/
+build/
+dist/
+package-lock.json

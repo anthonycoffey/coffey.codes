@@ -33,7 +33,12 @@ export default function SmbWebMarketingLandingPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'SMB Web & Marketing', item: `${baseUrl}/lp/smb-web-marketing` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'SMB Web & Marketing',
+        item: `${baseUrl}/lp/smb-web-marketing`,
+      },
     ],
   };
   const service = {
@@ -159,10 +164,7 @@ export default function SmbWebMarketingLandingPage() {
       </section>
 
       {/* Placeholder section for scheduling call */}
-      <section
-        id="schedule-call"
-        className="text-center py-12 bg-bg-alt rounded-lg"
-      >
+      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Plan Your Integrated Web Presence
         </h2>

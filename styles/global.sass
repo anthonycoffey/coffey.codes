@@ -19,6 +19,8 @@
   --color-accent-1-dark: #1D4ED8
   --color-link:          #2563EB
   --color-code-bg:       #EDEEF2
+  --color-nav:           #1E3A8A
+  --color-nav-border:    #1E40AF
 
   // Syntax highlighting — light theme
   --sh-class:       #2563EB
@@ -30,6 +32,20 @@
   --sh-jsxliterals: #7C3AED
   --sh-property:    #EA580C
   --sh-entity:      #EA580C
+
+  // Callout — light theme
+  --callout-info-bg:        #EFF6FF
+  --callout-info-border:    #BFDBFE
+  --callout-info-text:      #1E40AF
+  --callout-tip-bg:         #F0FDF4
+  --callout-tip-border:     #BBF7D0
+  --callout-tip-text:       #166534
+  --callout-warning-bg:     #FEFCE8
+  --callout-warning-border: #FEF08A
+  --callout-warning-text:   #854D0E
+  --callout-danger-bg:      #FEF2F2
+  --callout-danger-border:  #FECACA
+  --callout-danger-text:    #991B1B
 
 
 // ─── Light theme ──────────────────────────────────────────────────────────────
@@ -48,6 +64,8 @@
   --color-accent-1-dark: #1D4ED8
   --color-link:          #2563EB
   --color-code-bg:       #EDEEF2
+  --color-nav:           #1E3A8A
+  --color-nav-border:    #1E40AF
 
   --sh-class:       #2563EB
   --sh-identifier:  #111827
@@ -58,6 +76,19 @@
   --sh-jsxliterals: #7C3AED
   --sh-property:    #EA580C
   --sh-entity:      #EA580C
+
+  --callout-info-bg:        #EFF6FF
+  --callout-info-border:    #BFDBFE
+  --callout-info-text:      #1E40AF
+  --callout-tip-bg:         #F0FDF4
+  --callout-tip-border:     #BBF7D0
+  --callout-tip-text:       #166534
+  --callout-warning-bg:     #FEFCE8
+  --callout-warning-border: #FEF08A
+  --callout-warning-text:   #854D0E
+  --callout-danger-bg:      #FEF2F2
+  --callout-danger-border:  #FECACA
+  --callout-danger-text:    #991B1B
 
 
 // ─── Dark theme ───────────────────────────────────────────────────────────────
@@ -76,6 +107,8 @@
   --color-accent-1-dark: #00BCD4
   --color-link:          #00E5FF
   --color-code-bg:       #161B22
+  --color-nav:           #0B1220
+  --color-nav-border:    #1F2937
 
   // Fix retro window bar contrast — accent-2 bg clashes with muted text in dark mode
   .retro-window .retro-window-bar
@@ -91,6 +124,20 @@
   --sh-jsxliterals: #BD93F9
   --sh-property:    #FFB347
   --sh-entity:      #FFB347
+
+  // Callout — dark theme: deep tinted bg, mid-saturation border, light text
+  --callout-info-bg:        #0E1F3A
+  --callout-info-border:    #1E3A8A
+  --callout-info-text:      #BFDBFE
+  --callout-tip-bg:         #0B2A1B
+  --callout-tip-border:     #166534
+  --callout-tip-text:       #BBF7D0
+  --callout-warning-bg:     #2C1F08
+  --callout-warning-border: #854D0E
+  --callout-warning-text:   #FEF08A
+  --callout-danger-bg:      #2A1010
+  --callout-danger-border:  #991B1B
+  --callout-danger-text:    #FECACA
 
 
 // ─── Base ─────────────────────────────────────────────────────────────────────
@@ -161,24 +208,31 @@ body
 .prose p
   @apply my-4
 
+// Editorial serif applies to headings only — body remains Outfit (sans).
+// Letter-spacing intentionally moves away from tracking-tight: serif display
+// at these sizes needs open or zero kerning to breathe. See SPEC-008.
 .prose h1
-  @apply text-4xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-4xl font-bold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose h2
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-2xl font-bold mt-8 mb-3
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0.005em
   color: var(--color-heading)
 
 .prose h3
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-xl font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose h4
-  @apply text-lg font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-lg font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose strong
@@ -353,17 +407,31 @@ table
     transform: translate(2px, 0)
 
 
-// ─── Article / Contact page layout ────────────────────────────────────────────
-.article-page, .contact-page
-  @apply relative pb-4
+// ─── Callout (MDX) ────────────────────────────────────────────────────────────
+// Visual personality intentionally identical to the pre-token implementation:
+// tinted background + matching border + tinted text. The four variants are
+// switched via [data-callout-type] and resolve to the --callout-*-* tokens
+// above so dark mode swaps automatically.
+.callout
+  &[data-callout-type="info"]
+    background: var(--callout-info-bg)
+    border-color: var(--callout-info-border)
+    color: var(--callout-info-text)
 
-  .pagination
-    @apply mt-8
-    width: 100%
+  &[data-callout-type="tip"]
+    background: var(--callout-tip-bg)
+    border-color: var(--callout-tip-border)
+    color: var(--callout-tip-text)
 
-    #next-page
-      position: absolute
-      right: 0
+  &[data-callout-type="warning"]
+    background: var(--callout-warning-bg)
+    border-color: var(--callout-warning-border)
+    color: var(--callout-warning-text)
+
+  &[data-callout-type="danger"]
+    background: var(--callout-danger-bg)
+    border-color: var(--callout-danger-border)
+    color: var(--callout-danger-text)
 
 
 // ─── Multiline code line counter ──────────────────────────────────────────────

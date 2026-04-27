@@ -19,11 +19,32 @@ import SocialIcons from './SocialIcons';
 
 const navLinks = [
   { href: '/', text: 'Home', icon: <HomeIcon className="h-4 w-4" /> },
-  { href: '/portfolio', text: 'Portfolio', icon: <BriefcaseIcon className="h-4 w-4" /> },
-  { href: '/articles', text: 'Articles', icon: <DocumentTextIcon className="h-4 w-4" /> },
-  { href: '/contact', text: 'Contact', icon: <EnvelopeIcon className="h-4 w-4" /> },
-  { href: '/case-studies', text: 'Case Studies', icon: <ClipboardDocumentCheckIcon className="h-4 w-4" /> },
-  { href: '/rss', text: 'RSS', icon: <RssIcon className="h-4 w-4" />, external: true },
+  {
+    href: '/portfolio',
+    text: 'Portfolio',
+    icon: <BriefcaseIcon className="h-4 w-4" />,
+  },
+  {
+    href: '/articles',
+    text: 'Articles',
+    icon: <DocumentTextIcon className="h-4 w-4" />,
+  },
+  {
+    href: '/contact',
+    text: 'Contact',
+    icon: <EnvelopeIcon className="h-4 w-4" />,
+  },
+  {
+    href: '/case-studies',
+    text: 'Case Studies',
+    icon: <ClipboardDocumentCheckIcon className="h-4 w-4" />,
+  },
+  {
+    href: '/rss',
+    text: 'RSS',
+    icon: <RssIcon className="h-4 w-4" />,
+    external: true,
+  },
 ];
 
 export default function Footer() {
@@ -33,7 +54,8 @@ export default function Footer() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
       const nearBottom = document.documentElement.scrollHeight - 100;
-      const hasScrollbar = document.documentElement.scrollHeight > window.innerHeight;
+      const hasScrollbar =
+        document.documentElement.scrollHeight > window.innerHeight;
       setShowScrollToTop(hasScrollbar && scrollPosition >= nearBottom);
     };
     window.addEventListener('scroll', handleScroll);
@@ -45,7 +67,6 @@ export default function Footer() {
     <footer className="bg-bg-alt border-t-2 border-border text-c-text">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-
           {/* Col 1: Logo + tagline + social */}
           <div className="flex flex-col gap-4">
             <Link href="/">
@@ -59,14 +80,16 @@ export default function Footer() {
               />
             </Link>
             <p className="text-c-muted text-sm leading-relaxed">
-              Full-stack engineer &amp; Fractional CTO based in Austin, TX.
+              AI Consultant &amp; Full-stack Architect based in Austin, TX.
             </p>
             <SocialIcons />
           </div>
 
           {/* Col 2: Nav links */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-4">Navigation</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-4">
+              Navigation
+            </p>
             <ul className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -86,7 +109,9 @@ export default function Footer() {
 
           {/* Col 3: CTA */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-0">Get in touch</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-c-muted mb-0">
+              Get in touch
+            </p>
             <p className="font-outfit text-xl text-c-heading leading-snug">
               Ready to build something?
             </p>

@@ -33,7 +33,12 @@ export default function PracticalAiLandingPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'Practical AI', item: `${baseUrl}/lp/practical-ai` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Practical AI',
+        item: `${baseUrl}/lp/practical-ai`,
+      },
     ],
   };
   const service = {
@@ -163,10 +168,7 @@ export default function PracticalAiLandingPage() {
       </section>
 
       {/* Placeholder section for scheduling call */}
-      <section
-        id="schedule-call"
-        className="text-center py-12 bg-bg-alt rounded-lg"
-      >
+      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Explore Your AI Potential
         </h2>

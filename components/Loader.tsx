@@ -7,6 +7,17 @@ export default function Loader() {
   const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
+    if (loading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [loading]);
+
+  useEffect(() => {
     const fullText = 'LOADING...';
     let i = 0;
     const typeInterval = setInterval(() => {

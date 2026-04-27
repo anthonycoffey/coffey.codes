@@ -33,7 +33,12 @@ export default function StrategicPartnersLandingPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'Strategic Partners', item: `${baseUrl}/lp/strategic-partners` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Strategic Partners',
+        item: `${baseUrl}/lp/strategic-partners`,
+      },
     ],
   };
   const service = {
@@ -170,10 +175,7 @@ export default function StrategicPartnersLandingPage() {
       </section>
 
       {/* Placeholder section for scheduling call */}
-      <section
-        id="schedule-call"
-        className="text-center py-12 bg-bg-alt rounded-lg"
-      >
+      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Explore Collaboration Opportunities
         </h2>

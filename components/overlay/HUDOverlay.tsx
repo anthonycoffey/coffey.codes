@@ -160,9 +160,6 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
 
       {/* Scroll Prompt */}
       <div className={`${styles.scrollPromptContainer} ${showPrompt ? styles.visible : ''}`}>
-        <span className={styles.scrollPromptText}>
-          {promptType === 'end' ? 'SCROLL TO TOP' : 'System Ready // Scroll to Explore'}
-        </span>
         <button
           className={`${styles.scrollPromptButton} ${styles.bouncing}`}
           onClick={() => scrollTo(promptType === 'end' ? 0 : 0.15)}
@@ -174,6 +171,9 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
             <ArrowDownIcon className={styles.heroSize} />
           )}
         </button>
+        <span className={styles.scrollPromptText}>
+          {promptType === 'end' ? 'SCROLL TO TOP' : 'System Ready // Scroll to Explore'}
+        </span>
       </div>
     </div>
   );

@@ -9,6 +9,10 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
 
 # next.js
 /.next/
@@ -43,3 +47,4 @@ next-env.d.ts
 
 .claude/settings.local.json
 npm-prettier.log
+dev.log

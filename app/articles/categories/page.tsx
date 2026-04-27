@@ -17,31 +17,31 @@ export default function CategoriesPage() {
   
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8 dark:text-white">All Categories</h1>
-      
+      <h1 className="text-3xl font-bold mb-8 text-c-heading">All Categories</h1>
+
       <div className="mb-6">
-        {/* Style back link */}
-        <Link href="/articles" className="text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300">
+        <Link
+          href="/articles"
+          className="text-link hover:underline transition-colors"
+        >
           ← Back to all articles
         </Link>
       </div>
-      
+
       <div className="flex flex-wrap gap-3 mt-4">
         {categories.map((category) => (
-          // Style category chip
           <Link
             key={category}
             href={`/articles/category/${encodeURIComponent(category.toLowerCase())}`}
-            className="bg-blue-100 hover:bg-blue-200 text-blue-800 dark:bg-blue-900 dark:hover:bg-blue-800 dark:text-blue-200 text-sm font-medium px-3 py-1.5 rounded-full transition-colors"
+            className="bg-accent2 hover:bg-surface-hover text-c-heading text-sm font-medium px-3 py-1.5 rounded-full transition-colors"
           >
             {category}
           </Link>
         ))}
       </div>
-      
+
       {categories.length === 0 && (
-        // Style "No categories" message
-        <p className="text-gray-600 dark:text-gray-400">No categories available yet.</p>
+        <p className="text-c-muted">No categories available yet.</p>
       )}
     </div>
   );

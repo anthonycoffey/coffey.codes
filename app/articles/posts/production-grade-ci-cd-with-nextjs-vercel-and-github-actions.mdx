@@ -8,7 +8,7 @@ category: Cloud & DevOps
 
 We've all been there. You get a PR approved, the local tests pass, you hit merge, and go grab a coffee. By the time you get back, Slack is blowing up. The production build failed, or worse, it deployed successfully but the app is fundamentally broken for users.
 
-I recently went on a journey to harden our deployment pipeline for a Next.js TypeScript project. The goal was simple: **Zero broken builds hitting production, and a faster, more meaningful CI/CD process that actually validates the code.**
+I recently decided to harden my deployment pipeline for this site, which is built with Next.js / TypeScript. The goal was simple: Zero broken builds hitting production, and a faster, more meaningful CI/CD process that actually validates the code.
 
 What started as a standard GitHub Actions setup evolved into a tightly woven, bidirectional handshake between GitHub and Vercel. I even leveraged Vercel's native preview environments as the actual execution environment for our end-to-end (E2E) tests which saved us minutes of CI time and made our tests infinitely more trustworthy. With this approach, our E2E tests run against the exact infrastructure our users will experience, not a mocked-up environment on a CI runner.
 

@@ -33,7 +33,12 @@ export default function SmeWebMobileLandingPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
-      { '@type': 'ListItem', position: 2, name: 'Custom Web & Mobile Apps', item: `${baseUrl}/lp/sme-web-mobile` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Custom Web & Mobile Apps',
+        item: `${baseUrl}/lp/sme-web-mobile`,
+      },
     ],
   };
   const service = {
@@ -155,10 +160,7 @@ export default function SmeWebMobileLandingPage() {
         </div>
       </section>
 
-      <section
-        id="schedule-call"
-        className="text-center py-12 bg-bg-alt rounded-lg"
-      >
+      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
           Let&apos;s Strategize Your Next Application
         </h2>

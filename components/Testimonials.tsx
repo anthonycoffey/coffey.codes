@@ -119,18 +119,24 @@ const Testimonials = () => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="relative py-12 px-4 md:px-8 lg:px-12">
+      <div className="relative px-4 md:px-8 lg:px-12">
         {/* Controls */}
         <div className="absolute z-10 top-1/2 left-0 right-0 flex justify-between px-2 md:px-4">
           <button
-            onClick={() => { paginate(-1); setIsAutoPlaying(false); }}
+            onClick={() => {
+              paginate(-1);
+              setIsAutoPlaying(false);
+            }}
             className="p-2 md:p-3 rounded-full bg-surface-hover hover:bg-bg-alt transition-all duration-300 border border-border transform hover:scale-105"
             aria-label="Previous testimonial"
           >
             <ChevronLeftIcon className="h-5 w-5 md:h-6 md:w-6 text-link" />
           </button>
           <button
-            onClick={() => { paginate(1); setIsAutoPlaying(false); }}
+            onClick={() => {
+              paginate(1);
+              setIsAutoPlaying(false);
+            }}
             className="p-2 md:p-3 rounded-full bg-surface-hover hover:bg-bg-alt transition-all duration-300 border border-border transform hover:scale-105"
             aria-label="Next testimonial"
           >
@@ -153,7 +159,18 @@ const Testimonials = () => {
 
         {/* Decorative quote mark */}
         <div className="absolute top-6 left-6 opacity-20">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-accent2"
+          >
             <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
             <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
           </svg>
@@ -196,8 +213,19 @@ const Testimonials = () => {
                         rel="noopener noreferrer"
                         className="hover:text-link transition-colors flex items-center"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-1"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
                         </svg>
                         {testimonials[currentIndex].link}
                       </a>
@@ -216,7 +244,9 @@ const Testimonials = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-accent1 scale-125' : 'bg-border hover:bg-c-muted'
+                index === currentIndex
+                  ? 'bg-accent1 scale-125'
+                  : 'bg-border hover:bg-c-muted'
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />

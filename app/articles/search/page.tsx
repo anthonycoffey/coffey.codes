@@ -129,7 +129,7 @@ function SearchPageContent() {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-12">
+        <div className="text-center">
           <svg
             className="animate-spin h-8 w-8 mx-auto text-gray-500"
             xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +217,7 @@ function SearchPageContent() {
           )}
         </>
       ) : currentQuery ? (
-        <div className="text-center py-12 bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="text-center bg-white rounded-lg border border-gray-200 shadow-sm">
           <DocumentTextIcon className="h-16 w-16 mx-auto text-gray-300" />
           <h2 className="mt-4 text-xl font-medium text-gray-900">
             No articles found
@@ -236,7 +236,7 @@ function SearchPageContent() {
           </div>
         </div>
       ) : (
-        <div className="text-center py-12 bg-white rounded-lg border border-gray-200 shadow-sm">
+        <div className="text-center bg-white rounded-lg border border-gray-200 shadow-sm">
           <MagnifyingGlassIcon className="h-16 w-16 mx-auto text-gray-300" />
           <h2 className="mt-4 text-xl font-medium text-gray-900">Search</h2>
           <p className="mt-2 text-gray-500">

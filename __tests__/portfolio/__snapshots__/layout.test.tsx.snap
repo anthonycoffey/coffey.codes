@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BlogLayout > matches snapshot 1`] = `
+exports[`PortfolioLayout > matches snapshot 1`] = `
 <div
   class="mx-auto max-w-4xl px-4 md:pb-16 min-h-[900px]"
 >

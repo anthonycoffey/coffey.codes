@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PageHeader > matches snapshot with all features 1`] = `
+<header
+  class="pt-6 sm:pt-8 pb-4 mb-6 border-b border-border"
+>
+  <h1
+    class="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading"
+  >
+    <svg
+      class="w-8 h-8 inline mr-3 text-accent1-dark"
+      data-testid="stub-icon"
+    />
+    Articles
+  </h1>
+  <p
+    class="text-c-muted mb-4"
+  >
+    A description.
+  </p>
+  <a
+    href="https://example.com/extra"
+  >
+    extra
+  </a>
+</header>
+`;

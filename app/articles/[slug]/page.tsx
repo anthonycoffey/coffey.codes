@@ -136,7 +136,10 @@ export default async function Blog({ params }) {
       />
       <Breadcrumbs title={post.metadata.title} />
       <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 py-8 sm:py-12">
-        <h1 className="title font-semibold text-2xl tracking-tighter text-c-heading">
+        <h1
+          className="title font-editorial font-bold text-3xl sm:text-4xl text-c-heading"
+          style={{ letterSpacing: '0.005em' }}
+        >
           {post.metadata.title}
         </h1>
         <div className="flex flex-col ml-2">

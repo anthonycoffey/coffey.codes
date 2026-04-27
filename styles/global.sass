@@ -202,24 +202,31 @@ body
 .prose p
   @apply my-4
 
+// Editorial serif applies to headings only — body remains Outfit (sans).
+// Letter-spacing intentionally moves away from tracking-tight: serif display
+// at these sizes needs open or zero kerning to breathe. See SPEC-008.
 .prose h1
-  @apply text-4xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-4xl font-bold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose h2
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-2xl font-bold mt-8 mb-3
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0.005em
   color: var(--color-heading)
 
 .prose h3
-  @apply text-xl font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-xl font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose h4
-  @apply text-lg font-semibold tracking-tight mt-6 mb-2
-  font-family: var(--font-outfit), sans-serif
+  @apply text-lg font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
   color: var(--color-heading)
 
 .prose strong

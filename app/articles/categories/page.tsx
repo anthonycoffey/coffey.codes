@@ -1,5 +1,6 @@
 import { getAllCategories } from '@/app/articles/utils';
 import Link from 'next/link';
+import { FolderIcon } from '@heroicons/react/20/solid';
 
 import type { Metadata } from 'next';
 
@@ -17,15 +18,19 @@ export default function CategoriesPage() {
   
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8 text-c-heading">All Categories</h1>
-
-      <div className="mb-6">
-        <Link
-          href="/articles"
-          className="text-link hover:underline transition-colors"
-        >
-          ← Back to all articles
-        </Link>
+      <div className="border-b border-border pb-4 mb-6">
+        <h1 className="font-bold text-3xl tracking-tighter py-2 mb-4 flex items-center text-c-heading">
+          <FolderIcon className="w-6 h-6 inline mr-2 text-accent1-dark" />
+          All Categories
+        </h1>
+        <div className="mb-4">
+          <Link
+            href="/articles"
+            className="text-link hover:underline transition-colors"
+          >
+            ← Back to all articles
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3 mt-4">

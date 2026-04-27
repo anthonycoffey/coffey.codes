@@ -136,13 +136,13 @@ example — it already uses `text-c-heading`, `text-c-muted`, `bg-surface`,
 `bg-bg-alt`, `border-border`, `text-link`, `text-accent1-dark`. Mirror that
 style on:
 
-| File | Current state | Target |
-|---|---|---|
-| `app/articles/[slug]/page.tsx` | Raw `text-blue-*`, `dark:text-white`, `bg-blue-100 dark:bg-blue-900`, `border-gray-200 dark:border-neutral-800` | Tokens only — title `text-c-heading`, meta `text-c-muted`, category/tag chips reuse the existing `.Chip` component class from `global.sass` (which already uses `--color-accent-2` / `--color-heading`) |
-| `app/articles/category/[category]/page.tsx` | Heavy `dark:` raw palette in sidebars and chips | Same tokens as the index — `bg-surface`, `border-border`, `text-c-heading`, `text-c-muted`, `text-link`, `bg-bg-alt` |
-| `app/articles/tag/[tag]/page.tsx` | Same as above | Same as above |
-| `app/articles/categories/page.tsx` | `bg-blue-100 dark:bg-blue-900`, `text-blue-800 dark:text-blue-200` chips | `.Chip` component class |
-| `app/articles/tags/page.tsx` | `bg-gray-100 dark:bg-neutral-800` chips | `.Chip` component class (or a `.Chip--muted` variant if visual hierarchy demands it) |
+| File                                        | Current state                                                                                                   | Target                                                                                                                                                                                                  |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `app/articles/[slug]/page.tsx`              | Raw `text-blue-*`, `dark:text-white`, `bg-blue-100 dark:bg-blue-900`, `border-gray-200 dark:border-neutral-800` | Tokens only — title `text-c-heading`, meta `text-c-muted`, category/tag chips reuse the existing `.Chip` component class from `global.sass` (which already uses `--color-accent-2` / `--color-heading`) |
+| `app/articles/category/[category]/page.tsx` | Heavy `dark:` raw palette in sidebars and chips                                                                 | Same tokens as the index — `bg-surface`, `border-border`, `text-c-heading`, `text-c-muted`, `text-link`, `bg-bg-alt`                                                                                    |
+| `app/articles/tag/[tag]/page.tsx`           | Same as above                                                                                                   | Same as above                                                                                                                                                                                           |
+| `app/articles/categories/page.tsx`          | `bg-blue-100 dark:bg-blue-900`, `text-blue-800 dark:text-blue-200` chips                                        | `.Chip` component class                                                                                                                                                                                 |
+| `app/articles/tags/page.tsx`                | `bg-gray-100 dark:bg-neutral-800` chips                                                                         | `.Chip` component class (or a `.Chip--muted` variant if visual hierarchy demands it)                                                                                                                    |
 
 ### Dark-mode strategy fix
 
@@ -205,13 +205,13 @@ all do variants of this).
 Tight tracking on a screen serif looks visually wrong, especially at
 display sizes — the letterforms collide. Direction:
 
-| Selector | Current | Target |
-|---|---|---|
-| `.prose h1` (article body H1, rare) | `tracking-tight` | `letter-spacing: 0` (default) |
-| `.prose h2` | `tracking-tight` | `letter-spacing: 0.005em` (slight positive) |
-| `.prose h3, h4` | `tracking-tight` | `letter-spacing: 0` |
-| Article title (the `<h1 class="title">` on the detail page) | `tracking-tighter` | `letter-spacing: 0.005em` |
-| Taxonomy page H1s (Outfit, sans) | `tracking-tighter` | unchanged — sans display is fine tight |
+| Selector                                                    | Current            | Target                                      |
+| ----------------------------------------------------------- | ------------------ | ------------------------------------------- |
+| `.prose h1` (article body H1, rare)                         | `tracking-tight`   | `letter-spacing: 0` (default)               |
+| `.prose h2`                                                 | `tracking-tight`   | `letter-spacing: 0.005em` (slight positive) |
+| `.prose h3, h4`                                             | `tracking-tight`   | `letter-spacing: 0`                         |
+| Article title (the `<h1 class="title">` on the detail page) | `tracking-tighter` | `letter-spacing: 0.005em`                   |
+| Taxonomy page H1s (Outfit, sans)                            | `tracking-tighter` | unchanged — sans display is fine tight      |
 
 Rule of thumb encoded in the spec: **serif display ≥ 0; sans display
 may be tight.** Reviewer can fine-tune by eye during T9.
@@ -272,12 +272,12 @@ distinct `--color-bg-alt`.
 **Target hierarchy** (light-mode swatches; dark mode mirrors via
 existing tokens):
 
-| Layer | Token | Light value | Role |
-|---|---|---|---|
-| Canvas (body, outer viewport) | `--color-bg` | `#F7F8FA` | The "desk" everything sits on. |
-| Chrome (nav, footer, page-section bands) | `--color-bg-alt` | `#EDEEF2` | Establishes that this strip is _not_ content — it is structure. |
-| Page (article reading container, taxonomy page wrapper, sidebar cards) | `--color-surface` | `#FFFFFF` | The "paper". Anything the user is meant to read or interact with sits here. |
-| Hover / nested interactive | `--color-surface-hover` | `#E4E6EC` | Already in use for hover states; no change. |
+| Layer                                                                  | Token                   | Light value | Role                                                                        |
+| ---------------------------------------------------------------------- | ----------------------- | ----------- | --------------------------------------------------------------------------- |
+| Canvas (body, outer viewport)                                          | `--color-bg`            | `#F7F8FA`   | The "desk" everything sits on.                                              |
+| Chrome (nav, footer, page-section bands)                               | `--color-bg-alt`        | `#EDEEF2`   | Establishes that this strip is _not_ content — it is structure.             |
+| Page (article reading container, taxonomy page wrapper, sidebar cards) | `--color-surface`       | `#FFFFFF`   | The "paper". Anything the user is meant to read or interact with sits here. |
+| Hover / nested interactive                                             | `--color-surface-hover` | `#E4E6EC`   | Already in use for hover states; no change.                                 |
 
 **Concrete changes**
 

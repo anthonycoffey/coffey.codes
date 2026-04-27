@@ -21,9 +21,9 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   return (
     <section className="bg-bg min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-5xl mx-auto px-4 pt-6 sm:pt-8">
         <div className="border-b border-border pb-4 mb-10">
-          <h1 className="font-outfit font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+          <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
             <EnvelopeOpenIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Contact Me
           </h1>
@@ -65,7 +65,9 @@ export default async function ContactPage() {
                   <MapPinIcon className="h-5 w-5 text-accent1-dark" />
                 </div>
                 <div>
-                  <p className="font-semibold text-c-heading text-sm">Location</p>
+                  <p className="font-semibold text-c-heading text-sm">
+                    Location
+                  </p>
                   <p className="text-c-text">Austin, Texas</p>
                 </div>
               </div>
@@ -77,12 +79,23 @@ export default async function ContactPage() {
                   <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                     <CalendarDaysIcon className="h-5 w-5 text-accent1-dark" />
                   </div>
-                  <p className="font-semibold text-c-heading text-sm">Schedule a Free Consultation</p>
+                  <p className="font-semibold text-c-heading text-sm">
+                    Schedule a Free Consultation
+                  </p>
                 </div>
                 <p className="text-c-muted text-sm mb-4 leading-relaxed">
-                  The fastest way to discuss your project is to book a free 30-minute consultation. We can discuss your needs and determine if my expertise is the right fit.
+                  The fastest way to discuss your project is to book a free
+                  30-minute consultation. We can discuss your needs and
+                  determine if my expertise is the right fit.
                 </p>
-                <Button as="a" href="https://calendly.com/antcoffpersonal/meet" variant="primary" size="sm" target="_blank" rel="noopener noreferrer">
+                <Button
+                  as="a"
+                  href="https://calendly.com/antcoffpersonal/meet"
+                  variant="primary"
+                  size="sm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <CalendarDaysIcon className="h-4 w-4" />
                   Book Your Free Session
                 </Button>

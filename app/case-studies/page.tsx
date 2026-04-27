@@ -76,9 +76,9 @@ export default async function CaseStudiesPage() {
 
   return (
     <section>
-      <div className="page-content">
+      <div className="page-content pt-6 sm:pt-8">
         <div className="border-b border-border pb-4 mb-8">
-          <h1 className="font-outfit font-bold text-3xl lg:text-4xl tracking-tighter mb-2 flex items-center text-c-heading">
+          <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
             <ClipboardDocumentCheckIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
             Case Studies
           </h1>

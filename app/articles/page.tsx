@@ -40,10 +40,10 @@ export default async function ArticlesPage({ searchParams }) {
   const allCategories = getAllCategories();
 
   return (
-    <div className="article-page mx-auto">
+    <div className="article-page mx-auto pt-6 sm:pt-8">
       <div className="border-b border-border pb-4 mb-6">
-        <h1 className="font-bold text-3xl tracking-tighter pt-2 mb-4 flex items-center text-c-heading">
-          <DocumentTextIcon className="w-6 h-6 inline mr-2 text-accent1-dark" />
+        <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
+          <DocumentTextIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
           Articles
         </h1>
         <p className="text-c-muted mb-4">

@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
+import PageHeader from '@/components/PageHeader';
 
 import type { Metadata } from 'next';
 
@@ -40,17 +41,12 @@ export default async function ArticlesPage({ searchParams }) {
   const allCategories = getAllCategories();
 
   return (
-    <div className="article-page mx-auto pt-6 sm:pt-8">
-      <div className="border-b border-border pb-4 mb-6">
-        <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
-          <DocumentTextIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
-          Articles
-        </h1>
-        <p className="text-c-muted mb-4">
-          Unpacking the strategies, challenges, and breakthroughs in software
-          development, project management, and cloud technology.
-        </p>
-      </div>
+    <>
+      <PageHeader
+        title="Articles"
+        icon={DocumentTextIcon}
+        description="Unpacking the strategies, challenges, and breakthroughs in software development, project management, and cloud technology."
+      />
 
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/3 space-y-6">
@@ -69,7 +65,10 @@ export default async function ArticlesPage({ searchParams }) {
             </h2>
             <div className="space-y-2">
               {allCategories.map((category) => (
-                <div key={category} className="flex justify-between items-center">
+                <div
+                  key={category}
+                  className="flex justify-between items-center"
+                >
                   <Link
                     href={`/articles/category/${encodeURIComponent(category.toLowerCase())}`}
                     className="text-c-text hover:text-link transition-colors"
@@ -81,13 +80,17 @@ export default async function ArticlesPage({ searchParams }) {
                       getPaginatedBlogPosts(1, 100).posts.filter(
                         (post) =>
                           post.metadata.category &&
-                          post.metadata.category.toLowerCase() === category.toLowerCase(),
+                          post.metadata.category.toLowerCase() ===
+                            category.toLowerCase(),
                       ).length
                     }
                   </span>
                 </div>
               ))}
-              <Link href="/articles/categories" className="text-sm text-link hover:underline flex items-center mt-2">
+              <Link
+                href="/articles/categories"
+                className="text-sm text-link hover:underline flex items-center mt-2"
+              >
                 View all categories →
               </Link>
             </div>
@@ -108,7 +111,10 @@ export default async function ArticlesPage({ searchParams }) {
                   {tag}
                 </Link>
               ))}
-              <Link href="/articles/tags" className="text-sm text-link hover:underline flex items-center mt-2">
+              <Link
+                href="/articles/tags"
+                className="text-sm text-link hover:underline flex items-center mt-2"
+              >
                 View all tags →
               </Link>
             </div>
@@ -126,6 +132,6 @@ export default async function ArticlesPage({ searchParams }) {
           initialPage={page}
         />
       </div>
-    </div>
+    </>
   );
 }

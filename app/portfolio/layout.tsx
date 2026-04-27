@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/portfolio' },
 };
 
-export default function PortfolioLayout({ // Renamed function for clarity
+export default function PortfolioLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 md:pb-16 min-h-[900px]">
+    <div className="mx-auto max-w-4xl px-4 md:pb-16 min-h-[900px]">
       {children}
     </div>
   );

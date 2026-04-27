@@ -14,6 +14,7 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid';
 import SearchBox from '@/components/SearchBox';
+import PageHeader from '@/components/PageHeader';
 
 export const dynamicParams = true;
 
@@ -37,13 +38,17 @@ export async function generateMetadata({ params }) {
   return {
     title: `${decodedCategory} Articles`,
     description: `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`,
-    alternates: { canonical: `/articles/category/${encodeURIComponent(category)}` },
+    alternates: {
+      canonical: `/articles/category/${encodeURIComponent(category)}`,
+    },
   };
 }
 
 export default async function CategoryPage({ params, searchParams }) {
   const resolvedSearchParams = await searchParams;
-  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const page = resolvedSearchParams?.page
+    ? Number(resolvedSearchParams.page)
+    : 1;
   const itemsPerPage = 5;
   const { category } = await params;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
@@ -67,21 +72,18 @@ export default async function CategoryPage({ params, searchParams }) {
   }
 
   return (
-    <div className="article-page max-w-6xl mx-auto pt-6 sm:pt-8">
-      <div className="border-b border-border pb-4 mb-6">
-        <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
-          <FolderIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
-          Articles in category &quot;{decodedCategory}&quot;
-        </h1>
-        <div className="mb-4">
-          <Link
-            href="/articles"
-            className="text-link hover:underline transition-colors"
-          >
-            ← Back to all articles
-          </Link>
-        </div>
-      </div>
+    <>
+      <PageHeader
+        title={<>Articles in category &quot;{decodedCategory}&quot;</>}
+        icon={FolderIcon}
+      >
+        <Link
+          href="/articles"
+          className="text-link hover:underline transition-colors"
+        >
+          ← Back to all articles
+        </Link>
+      </PageHeader>
 
       <div className="flex flex-col md:flex-row gap-8">
         <aside className="md:w-1/3 space-y-6">
@@ -162,6 +164,6 @@ export default async function CategoryPage({ params, searchParams }) {
       <div className="w-full mt-8 flex justify-center">
         <Pagination totalPages={totalPages} initialPage={page} />
       </div>
-    </div>
+    </>
   );
 }

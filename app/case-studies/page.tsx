@@ -4,6 +4,7 @@ import {
   CpuChipIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import PageHeader from '@/components/PageHeader';
 
 import type { Metadata } from 'next';
 
@@ -25,13 +26,18 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
           <Icon className="w-6 h-6 text-accent1-dark" />
         </div>
         <div className="flex-1">
-          <h2 className="font-outfit font-medium text-lg text-c-heading mb-2">{title}</h2>
+          <h2 className="font-outfit font-medium text-lg text-c-heading mb-2">
+            {title}
+          </h2>
           <p className="text-c-text mb-4">{description}</p>
 
           {tags && (
             <div className="flex flex-wrap gap-2 mb-4">
               {tags.map((tag, index) => (
-                <span key={index} className="text-xs bg-bg-alt text-c-muted px-2 py-1 rounded-md border border-border">
+                <span
+                  key={index}
+                  className="text-xs bg-bg-alt text-c-muted px-2 py-1 rounded-md border border-border"
+                >
                   {tag}
                 </span>
               ))}
@@ -75,48 +81,41 @@ export default async function CaseStudiesPage() {
   ];
 
   return (
-    <section>
-      <div className="page-content pt-6 sm:pt-8">
-        <div className="border-b border-border pb-4 mb-6">
-          <h1 className="font-bold text-3xl lg:text-4xl mb-2 flex items-center text-c-heading">
-            <ClipboardDocumentCheckIcon className="w-8 h-8 inline mr-3 text-accent1-dark" />
-            Case Studies
-          </h1>
-          <p className="text-c-muted max-w-2xl mb-4">
-            Explore detailed case studies that showcase my expertise and
-            approach to solving real-world problems with technology.
-          </p>
-        </div>
+    <>
+      <PageHeader
+        title="Case Studies"
+        icon={ClipboardDocumentCheckIcon}
+        description="Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology."
+      />
 
-        <div className="space-y-6">
-          {caseStudies.map((study, index) => (
-            <CaseStudyCard
-              key={index}
-              icon={study.icon}
-              title={study.title}
-              description={study.description}
-              pdfPath={study.pdfPath}
-              tags={study.tags}
-            />
-          ))}
-        </div>
-
-        <div className="mt-12 bg-bg-alt p-6 rounded-xl border border-border">
-          <h2 className="font-outfit text-xl font-medium text-c-heading mb-2">
-            Need a custom solution?
-          </h2>
-          <p className="text-c-text mb-4">
-            I specialize in solving problems with tech. Let&apos;s discuss how
-            my expertise can help your business.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-5 py-2.5 bg-accent1-dark text-surface font-medium rounded-full hover:opacity-90 transition-opacity"
-          >
-            Get in touch
-          </Link>
-        </div>
+      <div className="space-y-6">
+        {caseStudies.map((study, index) => (
+          <CaseStudyCard
+            key={index}
+            icon={study.icon}
+            title={study.title}
+            description={study.description}
+            pdfPath={study.pdfPath}
+            tags={study.tags}
+          />
+        ))}
       </div>
-    </section>
+
+      <div className="mt-12 bg-bg-alt p-6 rounded-xl border border-border">
+        <h2 className="font-outfit text-xl font-medium text-c-heading mb-2">
+          Need a custom solution?
+        </h2>
+        <p className="text-c-text mb-4">
+          I specialize in solving problems with tech. Let&apos;s discuss how my
+          expertise can help your business.
+        </p>
+        <Link
+          href="/contact"
+          className="inline-block px-5 py-2.5 bg-accent1-dark text-surface font-medium rounded-full hover:opacity-90 transition-opacity"
+        >
+          Get in touch
+        </Link>
+      </div>
+    </>
   );
 }

@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   lint:
     name: ESLint
@@ -38,8 +42,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run unit tests
-        run: npm test
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
+          if-no-files-found: warn
 
   typecheck:
     name: TypeScript
@@ -47,6 +59,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -58,3 +72,11 @@ jobs:
 
       - name: Run typecheck
         run: npm run typecheck
+
+      - name: Notify Vercel
+        if: always()
+        uses: vercel/repository-dispatch/actions/status@v1
+        with:
+          name: 'Vercel - coffey-codes: ESLint, Vitest & TypeScript'
+          state: ${{ steps.playwright.outcome == 'success' && 'success' || 'error' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

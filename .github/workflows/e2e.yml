@@ -7,11 +7,16 @@ permissions:
   contents: read
   statuses: write
 
+concurrency:
+  group: e2e-${{ github.event.deployment.sha }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     name: Playwright
     if: github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +35,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run E2E tests against preview
+        id: playwright
         run: npx playwright test --project=chromium
         env:
           CI: true
@@ -44,15 +50,10 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-  notify:
-    name: Notify Vercel
-    needs: [e2e]
-    if: always() && github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'notify vercel'
-        uses: 'vercel/repository-dispatch/actions/status@v1'
+      - name: Notify Vercel
+        if: always()
+        uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: "coffey.codes / e2e"
-          state: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'error' || 'success' }}
+          name: 'Vercel - coffey-codes: Playwright E2E Tests'
+          state: ${{ steps.playwright.outcome == 'success' && 'success' || 'error' }}
           github_token: ${{ secrets.GITHUB_TOKEN }}

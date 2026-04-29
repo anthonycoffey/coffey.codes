@@ -16,6 +16,27 @@ export default defineConfig({
       '**/*.e2e.{ts,tsx}',
       '**/*.playwright.{ts,tsx}',
     ],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov'],
+      include: ['app/**', 'components/**', 'utils/**', 'hooks/**'],
+      exclude: [
+        '**/*.d.ts',
+        '**/layout.tsx',
+        '**/loading.tsx',
+        '**/not-found.tsx',
+        '**/types.ts',
+        'app/og/**',
+        '**/__tests__/**',
+        'e2e/**',
+      ],
+      thresholds: {
+        lines: 40,
+        branches: 30,
+        functions: 35,
+        statements: 40,
+      },
+    },
   },
   resolve: {
     alias: {

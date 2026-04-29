@@ -55,6 +55,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
 
       - uses: actions/setup-node@v4
         with:

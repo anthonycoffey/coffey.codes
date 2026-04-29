@@ -3,6 +3,7 @@ import { CustomMDX } from '@/components/mdx';
 import { getAllBlogPosts } from '@/app/articles/utils';
 import { baseUrl } from '@/app/sitemap';
 import GoBack from '@/components/GoBack';
+import Comments from '@/components/Comments';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
@@ -210,6 +211,7 @@ export default async function Blog({ params }) {
         <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
           <CustomMDX source={post.content} />
         </article>
+        <Comments />
         <GoBack />
       </section>
     </>

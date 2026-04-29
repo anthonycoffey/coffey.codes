@@ -14,7 +14,7 @@ concurrency:
 jobs:
   e2e:
     name: Playwright
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

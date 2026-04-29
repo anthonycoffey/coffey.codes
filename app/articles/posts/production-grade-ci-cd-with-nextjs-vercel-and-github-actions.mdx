@@ -10,7 +10,7 @@ We've all been there. You get a PR approved, the local tests pass, you hit merge
 
 I recently decided to harden my deployment pipeline for this site, which is built with Next.js / TypeScript. The goal was simple: no broken builds hitting production, and a faster, more meaningful CI/CD process that actually validates the code.
 
-What started as a standard GitHub Actions setup evolved into a tightly woven, bidirectional handshake between GitHub and Vercel. I even leveraged Vercel's native preview environments as the actual execution environment for our end-to-end (E2E) tests which saved us minutes of CI time and made our tests infinitely more trustworthy. With this approach, our E2E tests run against the exact infrastructure our users will experience, not a mocked-up environment on a CI runner.
+What started as a standard GitHub Actions setup evolved into a layered handshake between GitHub and Vercel — using Vercel's Native Deployment Checks where I could, GitHub Actions where I had to, and the Vercel preview deployment as the actual execution environment for end-to-end (E2E) tests. Running E2E against the real preview saved minutes of CI time per PR and made the tests infinitely more trustworthy: they hit the same edge runtime, serverless functions, and caching that production uses, not a mocked-up `next dev` server on a CI runner.
 
 This guide is the story of how I built a production-grade CI/CD pipeline, the pitfalls I encountered, and the exact configurations you can use to protect your own production branch.
 
@@ -19,13 +19,24 @@ This guide is the story of how I built a production-grade CI/CD pipeline, the pi
 When a PR is opened, we run a series of checks before allowing it to be merged:
 
 ```mermaid
-flowchart LR
-    PR[PR Opened] --> CI[CI: Lint, Vitest, Typecheck]
-    CI -- Pass --> Vercel[Vercel Preview]
-    Vercel --> E2E[Playwright E2E]
-    E2E -- Pass --> Merge[Allow Merge]
-    CI -- Fail --> Block[Block]
-    E2E -- Fail --> Block
+flowchart TD
+    PR([PR opened]) --> Preview[Vercel preview build]
+    PR --> PRCI[CI: lint • typecheck • vitest]
+    Preview --> E2E[Playwright E2E vs preview]
+
+    PRCI --> PreviewGate{{Preview Deployment Checks}}
+    E2E --> PreviewGate
+    Preview --> PreviewGate
+
+    PreviewGate -->|all green| Merge[Squash-merge to main]
+
+    Merge --> Prod[Vercel production build<br/>staged]
+    Merge --> MainCI[CI re-runs on push: main]
+
+    MainCI --> ProdGate{{Production Deployment Checks}}
+    Prod --> ProdGate
+
+    ProdGate -->|all green| Live[[Promoted to coffey.codes]]
 ```
 
 The goal was to enforce strict gates. A PR should not be allowed to merge unless every check is green. This meant linting, unit tests, strict type-checking, and most importantly, running our Playwright E2E tests against a real deployed environment, rather than a mocked-up `next dev` server on a CI runner.
@@ -76,87 +87,115 @@ Only `Preview` worked, and that's a feature, not a bug. GitHub Branch Protection
 
 The other names never turn green in a PR context because PRs don't trigger production deploys. Selecting only `Preview` aligned perfectly with our strategy to test the artifact Vercel is about to serve.
 
-## Step 3: The Reverse Handshake (Vercel Deployment Checks)
+## Step 3: Vercel Deployment Checks — Three Flavors
 
-While GitHub verifies Vercel builds successfully, Vercel also needs to verify that GitHub's tests pass before it considers a deployment "successful." This is done via **Vercel Deployment Checks**.
+While GitHub verifies that Vercel built the artifact successfully, **Vercel** wants verification of its own — that *your* tests passed against the SHA it's about to ship. That's the role of **Vercel Deployment Checks**.
 
-I added a final job to our `test.yml` to notify Vercel of the outcome of our linting, unit, and typecheck jobs:
+Vercel matches required deployment checks to GitHub status checks **by name on the SHA being deployed**. There are three different ways those statuses can land on the SHA, and which one you use changes how much plumbing you have to write.
+
+### Flavor 1: Native Deployment Checks (zero plumbing)
+
+Vercel will run lint and typecheck for you, on Vercel's own infrastructure, using the scripts already in your `package.json`. No GitHub Actions needed.
+
+<Callout>
+  Native Deployment Checks only run if your `package.json` has a compatible
+  script. The supported names are `lint` (for the lint check), and one of
+  `typecheck`, `type-check`, or `check-types` (for the typecheck check). If no
+  matching script is found, the check is automatically skipped.
+</Callout>
+
+If all you want is `npm run lint` and `npm run typecheck` gating your deploys, you can stop here — Vercel handles it natively and the post-merge SHA problem (more on that below) does not apply, because Vercel doesn't depend on your CI to satisfy these.
+
+### Flavor 2: Match a GitHub Actions job name
+
+For anything Vercel doesn't natively run — Vitest, Playwright, custom scripts — you can let GitHub Actions do the work and have Vercel watch for the resulting status check by name.
+
+GitHub Actions automatically posts a status check named after each job's `name:` field on the SHA the workflow ran against. So if your job is named `Vitest`, GitHub auto-posts a status named `Vitest`. Add a Vercel Deployment Check with that exact name and the wiring is done — no `vercel/repository-dispatch` action required.
+
+To wire this up in the Vercel dashboard, paste a recent commit SHA into the deployment-checks "Add" UI and Vercel will let you pick from the status checks that have run on it. That's how you guarantee the names match — pick from the actual list rather than typing one and hoping.
+
+<Callout type="danger">
+  **Gotcha Alert #1:** If you rename a GitHub Actions job, the auto-generated
+  status check name changes with it. The Vercel Deployment Check will keep
+  watching for the old name and stall every deployment until you update it in
+  the Vercel dashboard. Renames are silent breakage.
+</Callout>
+
+### Flavor 3: Explicitly notify Vercel
+
+If you want a Vercel check whose name *doesn't* match any single GitHub Actions job — for example, one consolidated `Vercel - coffey-codes: Playwright E2E Tests` status that depends on a multi-step job — use the `vercel/repository-dispatch/actions/status` action to post the status manually:
 
 ```yaml
-notify:
-  name: Notify Vercel
-  needs: [lint, unit, typecheck]
+- name: Notify Vercel
   if: always()
-  runs-on: ubuntu-latest
-  steps:
-    - name: 'notify vercel'
-      uses: 'vercel/repository-dispatch/actions/status@v1'
-      with:
-        name: 'Vercel - coffey-codes: Test'
-        state: ${{ (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')) && 'error' || 'success' }}
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+  uses: vercel/repository-dispatch/actions/status@v1
+  with:
+    name: 'Vercel - coffey-codes: Playwright E2E Tests'
+    state: ${{ steps.playwright.outcome == 'success' && 'success' || 'error' }}
+    github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 <Callout type="danger">
-  **Gotcha Alert #1:** While GitHub automatically provides
-  `secrets.GITHUB_TOKEN`, the `vercel/repository-dispatch` action does _not_
-  automatically consume it. You must explicitly pass it down via the `with:`
-  block.
+  **Gotcha Alert #2:** GitHub provides `secrets.GITHUB_TOKEN` automatically to
+  workflows, but the `vercel/repository-dispatch` action does *not* consume it
+  for you. You must explicitly pass it via the `with:` block, or the status
+  call silently fails.
 </Callout>
 
 <Callout type="danger">
-  **Gotcha Alert #2:** The string you provide to `name:` in the `with` block
-  (e.g., `"Vercel - coffey-codes: Test"`) must exactly match what you configure
-  in the Vercel Dashboard (Settings > Build & Development > Deployment Checks).
-  They communicate via this arbitrary string.
+  **Gotcha Alert #3:** Always set `if: always()` on the Notify Vercel step.
+  Otherwise a failed test step skips the notify entirely, Vercel never gets a
+  result, and the deployment hangs waiting on a status that will never arrive.
 </Callout>
 
-### The Silent Production Hang (The Lesson I Learned the Hard Way)
+### The Silent Production Hang (the lesson I learned the hard way)
 
-This configuration worked beautifully for PRs. PR checks went green, I merged and noticed the site never updated and then I checked vercel and found the production deployment hanging indefinitely. Vercel has a button to override and deploy anyway, but I wanted to understand why it was hanging in the first place.
+This configuration worked beautifully for PRs. CI went green, the preview deployed, I merged, walked away — and came back to find production hanging indefinitely. Vercel has a button to admin-override and deploy anyway, but I wanted to understand why it was hanging in the first place.
 
-The answer was simple really, it was waiting for status checks that were never going to arrive.
+The answer: Vercel was waiting for status checks that were never going to arrive.
 
-_Why?_ Vercel Deployment Checks evaluate the commit that's _being deployed_. When a PR is squash-merged, main gets a brand-new commit SHA that has never been through CI. Because our `Test` workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no status was posted, and Vercel waited forever.
+_Why?_ Vercel Deployment Checks evaluate the commit that's *being deployed*. When a PR is squash-merged, main gets a **brand-new commit SHA** that has never been through CI. Because the CI workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no GitHub Actions status was posted on the merge SHA, and Vercel waited forever.
 
-**The Fix:** I had to add a `repository_dispatch` trigger listening for the `vercel.deployment.ready` event that Vercel emits when _any_ deployment (including production) is created.
+This only affects Flavors 2 and 3 above. Native Deployment Checks (Flavor 1) keep working because Vercel runs them itself regardless of GitHub.
 
-I updated our workflow trigger and checkout steps:
+**The Fix:** add a `push: branches: [main]` trigger so the same workflow re-runs against the merge commit. GitHub auto-posts the named statuses against the merge SHA, and the Notify Vercel step (if you have one) does the same for any custom-named checks.
 
 ```yaml
 on:
   pull_request:
     branches: [main]
-  repository_dispatch:
-    types: [vercel.deployment.ready]
-
-jobs:
-  lint:
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # When triggered by Vercel, check out the SHA being deployed.
-          # When triggered by a PR, fall back to the default ref.
-          ref: ${{ github.event.client_payload.git.sha || github.sha }}
+  push:
+    branches: [main]
 ```
 
-Without this, the "reverse handshake" silently breaks the moment you merge to production.
+That's the entire fix — no `client_payload` plumbing, no per-event branching in your `checkout` step.
+
+<Callout>
+  An alternative is listening to `repository_dispatch` events with type
+  `vercel.deployment.success` (Vercel emits these via its GitHub app) and
+  checking out `${{ github.event.client_payload.git.sha }}`. It works, and it
+  has the bonus of giving you the deployment URL via
+  `github.event.client_payload.url`. The `push` trigger above is the path of
+  least resistance for plain CI; the `repository_dispatch` route is more useful
+  when the workflow needs the deployment URL (for example, post-merge E2E
+  tests).
+</Callout>
 
 ## Step 4: Playwright vs. The Vercel Protection Wall
 
-I created a separate workflow file, `e2e-preview.yml`, to run Playwright. Why separate it? Keeping linting and unit tests on `pull_request` means they run instantly. The E2E job waits for Vercel to finish building, which takes a few minutes. Splitting them keeps fast feedback fast.
+I created a separate workflow file, `e2e.yml`, to run Playwright. Why separate it? Keeping lint, unit, and typecheck on `pull_request` means they run instantly. The E2E job waits for Vercel to finish building, which takes a few minutes. Splitting them keeps fast feedback fast.
 
-This workflow triggers on `deployment_status`, waiting for Vercel to announce the preview is live:
+This workflow triggers on `deployment_status`, waiting for Vercel to announce a preview is live:
 
 ```yaml
-name: E2E (Vercel Preview)
+name: E2E Tests
 on:
   deployment_status:
 
 jobs:
   e2e:
     name: Playwright
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment != 'Production'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -165,10 +204,46 @@ jobs:
 ```
 
 <Callout>
-
-I check out `github.event.deployment.sha` to ensure Playwright tests match the exact code that was deployed, not just the branch head.
-
+  I check out `github.event.deployment.sha` to ensure Playwright tests match
+  the exact code that was deployed, not just the branch head.
 </Callout>
+
+<Callout>
+  Vercel also exposes a more direct trigger via `repository_dispatch` events
+  fired from its GitHub app. The same workflow could listen for
+  `vercel.deployment.success` and grab both the SHA and the deployment URL
+  from `client_payload`:
+
+  ```yaml
+  on:
+    repository_dispatch:
+      types: ['vercel.deployment.success']
+
+  jobs:
+    e2e:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            ref: ${{ github.event.client_payload.git.sha }}
+        - run: npm ci && npx playwright install --with-deps
+        - run: npx playwright test
+          env:
+            BASE_URL: ${{ github.event.client_payload.url }}
+  ```
+
+  Both patterns work. `deployment_status` is more idiomatic GitHub-Actions;
+  `repository_dispatch` is the path Vercel's docs recommend and is handy when
+  you also want the deployment URL handed to you directly.
+</Callout>
+
+### Don't run E2E against the live custom domain post-merge
+
+It's tempting to also run E2E after merge to validate production. Don't do it the obvious way.
+
+When a Production deployment is gated on Vercel Deployment Checks, Vercel **stages** the new build — it's deployed to a unique `*.vercel.app` URL but is not promoted to your custom domain (e.g. `coffey.codes`) until the checks pass. If your post-merge E2E job hits the custom domain, it's testing the **previous** production deployment, not the merge being validated. Any new feature in the merge will appear missing, the test fails, the check fails, the deployment is never promoted, and the domain is now permanently stuck on old code. Classic deadlock.
+
+If you really need post-merge E2E, point Playwright at the staged deployment URL (via the Vercel API or `repository_dispatch` event payload), not the custom domain. Or — simpler — drop E2E from your **Production** required deployment checks entirely. The same source already passed E2E on its preview deployment; re-running it post-merge mostly buys you a deadlock.
 
 ### The Vercel Protection Bypass
 
@@ -214,16 +289,67 @@ With all workflows in place, the final step was locking down the repository via 
 A PR cannot be merged unless the following are completely green:
 
 1. Required status checks:
-   - `Test / ESLint`
-   - `Test / Vitest`
-   - `Test / TypeScript`
-   - `Test / Notify Vercel`
-   - `E2E (Vercel Preview) / Playwright`
+   - `CI / ESLint`
+   - `CI / Vitest`
+   - `CI / TypeScript`
+   - `E2E Tests / Playwright`
 2. Require deployments to succeed:
    - `Preview`
 
+On the Vercel side, Production-only required Deployment Checks are kept lean:
+
+- Native lint check (auto)
+- Native typecheck check (auto)
+- `Vitest` (matches the GitHub Actions job name)
+
+Note what's *not* required on Production: the Playwright E2E check. Preview already validated the same source content, and re-running E2E against staged production hits the deadlock described above. Better to trust the preview gate and keep production promotion fast and predictable.
+
+## Lessons & Gotchas
+
+A condensed list of everything that bit me — useful as a checklist when you're wiring this up on a new project.
+
+### How Vercel Deployment Checks actually work
+
+- Vercel matches required deployment checks to GitHub status checks **by name on the SHA being deployed**. Not by workflow, not by job ID — pure string match.
+- **Native** checks (`lint`, `typecheck`) run on Vercel's infrastructure using your `package.json` scripts. No GitHub Actions involvement, no SHA gotcha.
+- **Auto-named** GitHub Actions statuses use the job's `name:` field. As long as the Vercel check name matches, no `vercel/repository-dispatch` step is needed.
+- **Custom-named** statuses (e.g. `Vercel - coffey-codes: Playwright E2E Tests`) require the `vercel/repository-dispatch/actions/status` action to post the status explicitly.
+- When adding a deployment check in the Vercel UI, paste a recent commit SHA and pick from the actual list of statuses that ran on it. Don't type a name from memory — typos are silent breakage.
+
+### The post-merge SHA
+
+- Squash- or merge-commits create a **brand-new SHA** that has never been through CI.
+- If your CI only triggers on `pull_request`, no statuses exist on the new SHA, and Vercel waits forever.
+- Fix: `push: branches: [main]` on the CI workflow.
+
+### Production E2E is a deadlock trap
+
+- A Production deployment gated on E2E is **staged** (deployed to a unique `*.vercel.app` URL, not yet promoted to your custom domain) until checks pass.
+- If your post-merge E2E hits the custom domain, it's testing the *previous* production. Tests fail on any new content, the check never goes green, the deployment never promotes, the domain is stuck on old code forever.
+- Workable answers:
+  1. **Drop E2E from required Production checks.** Preview already validated the same source.
+  2. **Point Playwright at the staged URL** via the Vercel API or `repository_dispatch` payload, not the custom domain.
+  3. **No-op the post-merge run** and post `success` directly. Honest only because preview already validated.
+
+### Don't trust `deployment_status` event timing
+
+- For previews, `deployment_status: state=success` fires reliably when the preview build finishes.
+- For production with deployment-check gating, the `success` state may not fire until *after* checks pass, or in some configurations no GitHub deployment record is created at all until promotion. Don't build production-side automation around the assumption that the event will land at a predictable point in the lifecycle.
+
+### Workflow design rules of thumb
+
+- **Split fast checks from slow ones.** Lint/typecheck/unit on `pull_request` for instant feedback. E2E on `deployment_status` so you don't double-build.
+- **Always check out the deployment's SHA** in deployment-triggered jobs (`ref: ${{ github.event.deployment.sha }}`); the branch HEAD may have moved on.
+- **Always pass `github_token` explicitly** to `vercel/repository-dispatch/actions/status`. The action does not auto-consume `secrets.GITHUB_TOKEN`.
+- **Always set `if: always()` on the Notify Vercel step.** Otherwise a failed test step skips notify and Vercel hangs.
+- **Use a `concurrency` group keyed on the deployment SHA** so a re-deploy cancels stale e2e runs against the previous URL.
+
+### Renaming a job is silent breakage
+
+Changing the `name:` of a GitHub Actions job changes the auto-generated status check name. The Vercel Deployment Check keeps watching for the old name and stalls every deployment until you update it in the Vercel dashboard. There is no warning. Treat job-name changes as a coordinated edit across both repos.
+
 ## Conclusion
 
-This pipeline eliminates wasted CI time on redundant environments. E2E tests now run efficietly against production-like infrastructure, ensuring total confidence in merges with linted, typed, error-free code.
+This pipeline eliminates wasted CI time on redundant environments. E2E tests now run efficiently against production-like infrastructure, ensuring confidence in merges with linted, typed, error-free code.
 
-Saving 2–3 minutes per PR cuts costs and boosts efficiency. Strict branch protections mitigate risk and allow developers to focus on what matters.
+Saving 2–3 minutes per PR cuts costs and boosts efficiency, and strict branch protection — combined with a sane Vercel Deployment Checks setup — mitigates the risk of broken builds reaching users without backing developers into a deadlock.

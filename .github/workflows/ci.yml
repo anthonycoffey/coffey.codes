@@ -66,3 +66,11 @@ jobs:
 
       - name: Run typecheck
         run: npm run typecheck
+
+      - name: Notify Vercel
+        if: always()
+        uses: vercel/repository-dispatch/actions/status@v1
+        with:
+          name: 'Vercel - coffey-codes: ESLint, Vitest & TypeScript'
+          state: ${{ steps.playwright.outcome == 'success' && 'success' || 'error' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

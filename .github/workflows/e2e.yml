@@ -50,10 +50,10 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-      - name: Notify Vercel of e2e result
+      - name: Notify Vercel
         if: always()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: 'coffey.codes / e2e'
+          name: 'Vercel - coffey-codes: Playwright E2E Tests'
           state: ${{ steps.playwright.outcome == 'success' && 'success' || 'error' }}
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -2,30 +2,26 @@ name: E2E Tests
 
 on:
   deployment_status:
-  push:
-    branches: [main]
 
 permissions:
   contents: read
   statuses: write
 
 concurrency:
-  group: e2e-${{ github.event.deployment.sha || github.sha }}
+  group: e2e-${{ github.event.deployment.sha }}
   cancel-in-progress: true
 
 jobs:
   e2e:
     name: Playwright
-    if: |
-      (github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success')
-      || github.event_name == 'push'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.deployment.sha || github.sha }}
+          ref: ${{ github.event.deployment.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -38,14 +34,12 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Run E2E tests
+      - name: Run E2E tests against preview
         id: playwright
         run: npx playwright test --project=chromium
         env:
           CI: true
-          # On deployment_status events, hit the deployment's target URL (preview or production).
-          # On push to main, hit the live production domain since no deployment URL is in the event payload.
-          PLAYWRIGHT_BASE_URL: ${{ github.event.deployment_status.target_url || 'https://coffey.codes' }}
+          PLAYWRIGHT_BASE_URL: ${{ github.event.deployment_status.target_url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Upload Playwright report

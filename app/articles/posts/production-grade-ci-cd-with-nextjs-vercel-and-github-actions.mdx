@@ -89,7 +89,7 @@ The other names never turn green in a PR context because PRs don't trigger produ
 
 ## Step 3: Vercel Deployment Checks — Three Flavors
 
-While GitHub verifies that Vercel built the artifact successfully, **Vercel** wants verification of its own — that *your* tests passed against the SHA it's about to ship. That's the role of **Vercel Deployment Checks**.
+While GitHub verifies that Vercel built the artifact successfully, **Vercel** wants verification of its own — that _your_ tests passed against the SHA it's about to ship. That's the role of **Vercel Deployment Checks**.
 
 Vercel matches required deployment checks to GitHub status checks **by name on the SHA being deployed**. There are three different ways those statuses can land on the SHA, and which one you use changes how much plumbing you have to write.
 
@@ -123,7 +123,7 @@ To wire this up in the Vercel dashboard, paste a recent commit SHA into the depl
 
 ### Flavor 3: Explicitly notify Vercel
 
-If you want a Vercel check whose name *doesn't* match any single GitHub Actions job — for example, one consolidated `Vercel - coffey-codes: Playwright E2E Tests` status that depends on a multi-step job — use the `vercel/repository-dispatch/actions/status` action to post the status manually:
+If you want a Vercel check whose name _doesn't_ match any single GitHub Actions job — for example, one consolidated `Vercel - coffey-codes: Playwright E2E Tests` status that depends on a multi-step job — use the `vercel/repository-dispatch/actions/status` action to post the status manually:
 
 ```yaml
 - name: Notify Vercel
@@ -138,8 +138,8 @@ If you want a Vercel check whose name *doesn't* match any single GitHub Actions 
 <Callout type="danger">
   **Gotcha Alert #2:** GitHub provides `secrets.GITHUB_TOKEN` automatically to
   workflows, but the `vercel/repository-dispatch` action does *not* consume it
-  for you. You must explicitly pass it via the `with:` block, or the status
-  call silently fails.
+  for you. You must explicitly pass it via the `with:` block, or the status call
+  silently fails.
 </Callout>
 
 <Callout type="danger">
@@ -154,7 +154,7 @@ This configuration worked beautifully for PRs. CI went green, the preview deploy
 
 The answer: Vercel was waiting for status checks that were never going to arrive.
 
-_Why?_ Vercel Deployment Checks evaluate the commit that's *being deployed*. When a PR is squash-merged, main gets a **brand-new commit SHA** that has never been through CI. Because the CI workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no GitHub Actions status was posted on the merge SHA, and Vercel waited forever.
+_Why?_ Vercel Deployment Checks evaluate the commit that's _being deployed_. When a PR is squash-merged, main gets a **brand-new commit SHA** that has never been through CI. Because the CI workflow only triggered on `pull_request`, it didn't fire for the new push to main. No workflow ran, no GitHub Actions status was posted on the merge SHA, and Vercel waited forever.
 
 This only affects Flavors 2 and 3 above. Native Deployment Checks (Flavor 1) keep working because Vercel runs them itself regardless of GitHub.
 
@@ -204,8 +204,8 @@ jobs:
 ```
 
 <Callout>
-  I check out `github.event.deployment.sha` to ensure Playwright tests match
-  the exact code that was deployed, not just the branch head.
+  I check out `github.event.deployment.sha` to ensure Playwright tests match the
+  exact code that was deployed, not just the branch head.
 </Callout>
 
 <Callout>
@@ -214,27 +214,28 @@ jobs:
   `vercel.deployment.success` and grab both the SHA and the deployment URL
   from `client_payload`:
 
-  ```yaml
-  on:
-    repository_dispatch:
-      types: ['vercel.deployment.success']
+```yaml
+on:
+  repository_dispatch:
+    types: ['vercel.deployment.success']
 
-  jobs:
-    e2e:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-          with:
-            ref: ${{ github.event.client_payload.git.sha }}
-        - run: npm ci && npx playwright install --with-deps
-        - run: npx playwright test
-          env:
-            BASE_URL: ${{ github.event.client_payload.url }}
-  ```
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.git.sha }}
+      - run: npm ci && npx playwright install --with-deps
+      - run: npx playwright test
+        env:
+          BASE_URL: ${{ github.event.client_payload.url }}
+```
 
-  Both patterns work. `deployment_status` is more idiomatic GitHub-Actions;
-  `repository_dispatch` is the path Vercel's docs recommend and is handy when
-  you also want the deployment URL handed to you directly.
+Both patterns work. `deployment_status` is more idiomatic GitHub-Actions;
+`repository_dispatch` is the path Vercel's docs recommend and is handy when
+you also want the deployment URL handed to you directly.
+
 </Callout>
 
 ### Don't run E2E against the live custom domain post-merge
@@ -302,7 +303,7 @@ On the Vercel side, Production-only required Deployment Checks are kept lean:
 - Native typecheck check (auto)
 - `Vitest` (matches the GitHub Actions job name)
 
-Note what's *not* required on Production: the Playwright E2E check. Preview already validated the same source content, and re-running E2E against staged production hits the deadlock described above. Better to trust the preview gate and keep production promotion fast and predictable.
+Note what's _not_ required on Production: the Playwright E2E check. Preview already validated the same source content, and re-running E2E against staged production hits the deadlock described above. Better to trust the preview gate and keep production promotion fast and predictable.
 
 ## Lessons & Gotchas
 
@@ -325,7 +326,7 @@ A condensed list of everything that bit me — useful as a checklist when you're
 ### Production E2E is a deadlock trap
 
 - A Production deployment gated on E2E is **staged** (deployed to a unique `*.vercel.app` URL, not yet promoted to your custom domain) until checks pass.
-- If your post-merge E2E hits the custom domain, it's testing the *previous* production. Tests fail on any new content, the check never goes green, the deployment never promotes, the domain is stuck on old code forever.
+- If your post-merge E2E hits the custom domain, it's testing the _previous_ production. Tests fail on any new content, the check never goes green, the deployment never promotes, the domain is stuck on old code forever.
 - Workable answers:
   1. **Drop E2E from required Production checks.** Preview already validated the same source.
   2. **Point Playwright at the staged URL** via the Vercel API or `repository_dispatch` payload, not the custom domain.
@@ -334,7 +335,7 @@ A condensed list of everything that bit me — useful as a checklist when you're
 ### Don't trust `deployment_status` event timing
 
 - For previews, `deployment_status: state=success` fires reliably when the preview build finishes.
-- For production with deployment-check gating, the `success` state may not fire until *after* checks pass, or in some configurations no GitHub deployment record is created at all until promotion. Don't build production-side automation around the assumption that the event will land at a predictable point in the lifecycle.
+- For production with deployment-check gating, the `success` state may not fire until _after_ checks pass, or in some configurations no GitHub deployment record is created at all until promotion. Don't build production-side automation around the assumption that the event will land at a predictable point in the lifecycle.
 
 ### Workflow design rules of thumb
 

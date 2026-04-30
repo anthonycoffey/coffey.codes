@@ -14,7 +14,7 @@ The Module pattern is a widely used design pattern in Javascript, which allows d
 
 ```javascript
 const module = (function () {
-  let privateVariable = "Hello World";
+  let privateVariable = 'Hello World';
 
   function privateMethod() {
     console.log(privateVariable);
@@ -39,7 +39,7 @@ const Singleton = (function () {
   let instance;
 
   function createInstance() {
-    const object = new Object({ name: "ChatGPT" });
+    const object = new Object({ name: 'ChatGPT' });
     return object;
   }
 
@@ -64,15 +64,15 @@ console.log(instance1 === instance2); // true
 The Observer pattern is a design pattern where an object, known as the subject, maintains a list of its dependents, called observers, and notifies them automatically of any state changes. This pattern is useful when we need to notify multiple objects about a change in state. In Javascript, the Observer pattern can be implemented using the built-in Event Emitter object.
 
 ```javascript
-const EventEmitter = require("events");
+const EventEmitter = require('events');
 
 class MyEmitter extends EventEmitter {}
 
 const myEmitter = new MyEmitter();
-myEmitter.on("event", () => {
-  console.log("an event occurred!");
+myEmitter.on('event', () => {
+  console.log('an event occurred!');
 });
-myEmitter.emit("event");
+myEmitter.emit('event');
 ```
 
 ### Prototype Pattern
@@ -81,7 +81,7 @@ The Prototype pattern is a design pattern in which an object is used as a protot
 
 ```javascript
 const Person = {
-  name: "",
+  name: '',
   age: 0,
   greet: function () {
     console.log(
@@ -91,11 +91,11 @@ const Person = {
 };
 
 const person1 = Object.create(Person);
-person1.name = "Alice";
+person1.name = 'Alice';
 person1.age = 20;
 
 const person2 = Object.create(Person);
-person2.name = "Bob";
+person2.name = 'Bob';
 person2.age = 25;
 
 person1.greet(); // Hello, my name is Alice, and I'm 20 years old.
@@ -120,8 +120,8 @@ function createPerson(name, age, gender) {
   return person;
 }
 
-const person1 = createPerson("Alice", 20, "female");
-const person2 = createPerson("Bob", 25, "male");
+const person1 = createPerson('Alice', 20, 'female');
+const person2 = createPerson('Bob', 25, 'male');
 
 person1.greet(); // Hello, my name is Alice, and I'm 20 years old.
 person2.greet(); // Hello, my name is Bob, and I'm 25 years old.
@@ -157,7 +157,7 @@ class StudentDecorator {
   }
 }
 
-const person = new Person("Alice", 20);
+const person = new Person('Alice', 20);
 const student = new StudentDecorator(person);
 
 student.study(); // Alice is studying...
@@ -172,7 +172,7 @@ The Facade pattern is a design pattern that provides a simplified interface to a
 class CustomerService {
   getCustomer(id) {
     console.log(`Fetching customer with id ${id}...`);
-    return { id: id, name: "Alice", age: 20 };
+    return { id: id, name: 'Alice', age: 20 };
   }
 }
 
@@ -197,7 +197,7 @@ class Facade {
 }
 
 const facade = new Facade();
-facade.placeOrder(1, "book");
+facade.placeOrder(1, 'book');
 ```
 
 ### But wait... there's more!

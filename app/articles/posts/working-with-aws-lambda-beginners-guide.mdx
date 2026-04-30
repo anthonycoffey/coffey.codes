@@ -33,6 +33,7 @@ Before diving into Lambda, it's important to understand some key limitations:
 3. **Memory and CPU Allocation:** Lambda allows you to configure memory allocation from 128MB to 10GB. CPU power is allocated proportionally to memory, so increasing memory also increases CPU capacity. Choosing the right memory setting is crucial for both performance and cost optimization.
 
 4. **Deployment Package Size:** Lambda has limits on deployment package sizes:
+
    - Direct upload: 50MB (compressed) and 250MB (uncompressed)
    - Using S3: 250MB (compressed) and 10GB (uncompressed)
 
@@ -43,7 +44,9 @@ Before diving into Lambda, it's important to understand some key limitations:
 ### Step 1: Setting Up
 
 <Callout type="info">
-Before you start, make sure you have an AWS account and the AWS CLI (Command Line Interface) installed and configured on your machine with appropriate permissions.
+  Before you start, make sure you have an AWS account and the AWS CLI (Command
+  Line Interface) installed and configured on your machine with appropriate
+  permissions.
 </Callout>
 
 ### Step 2: Creating a Lambda Function
@@ -52,7 +55,7 @@ Before you start, make sure you have an AWS account and the AWS CLI (Command Lin
 
 2. **Create a New Function:** Click on the "Create function" button. You can choose to author a function from scratch, use a blueprint, or browse the AWS Serverless Application Repository.
 
-3. **Configure the Function:** 
+3. **Configure the Function:**
    - Enter a name for your function
    - Select a runtime (e.g., Node.js, Python, Java, Ruby, .NET, Go)
    - Choose an execution role that grants the function permission to access AWS resources
@@ -67,22 +70,22 @@ Write your function code in the inline editor provided by the AWS console or upl
 exports.handler = async (event, context) => {
   // Log the event for debugging purposes
   console.log('Event:', JSON.stringify(event, null, 2));
-  
+
   // Process the event and return a response
   try {
     const result = {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Hello from Lambda!',
-        input: event
-      })
+        input: event,
+      }),
     };
     return result;
   } catch (error) {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Function execution failed' })
+      body: JSON.stringify({ error: 'Function execution failed' }),
     };
   }
 };
@@ -107,7 +110,7 @@ If your Lambda function needs to access resources in a VPC (like RDS databases, 
 3. Ensure your Lambda execution role has the necessary permissions (`AWSLambdaVPCAccessExecutionRole`)
 
 <Callout type="warning">
-Note that connecting Lambda to a VPC may increase cold start times.
+  Note that connecting Lambda to a VPC may increase cold start times.
 </Callout>
 
 ### Step 6: Deploying and Testing
@@ -143,29 +146,34 @@ To eliminate cold starts for latency-sensitive applications, you can configure p
 1. **Function Size and Scope:** Keep functions small and focused on a single task. Follow the microservices principle of "do one thing and do it well."
 
 2. **Optimize Performance:**
+
    - Declare dependencies outside the handler function to reuse them across invocations
    - Choose the appropriate memory setting for your function
    - Implement caching where appropriate
    - Consider using Provisioned Concurrency for latency-sensitive functions
 
 3. **Manage Cold Starts:**
+
    - Use lightweight runtimes (Node.js, Python) for latency-sensitive functions
    - Implement "keep-warm" strategies for critical functions
    - Modularize code to minimize initialization time
 
 4. **Monitor and Debug:**
+
    - Use AWS CloudWatch to monitor your Lambda functions' performance
    - Set up appropriate alarms for errors, throttles, and duration
    - Implement structured logging with appropriate detail levels
    - Use X-Ray for tracing requests across multiple services
 
 5. **Security Best Practices:**
+
    - Follow the principle of least privilege for IAM roles
    - Store sensitive information in AWS Secrets Manager or Parameter Store
    - Validate and sanitize all inputs
    - Encrypt environment variables when needed
 
 6. **Cost Optimization:**
+
    - Monitor and analyze function metrics regularly
    - Optimize memory allocation based on actual usage patterns
    - Use Lambda's timeout setting appropriately

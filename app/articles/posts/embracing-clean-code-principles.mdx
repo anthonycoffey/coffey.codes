@@ -16,6 +16,7 @@ variable names, writing small and focused functions, and avoiding deep nesting. 
 **Example 1: Use Descriptive Names**
 
 _Before:_
+
 ```javascript
 function calc(a, b, c) {
   return a * b + c;
@@ -23,11 +24,11 @@ function calc(a, b, c) {
 ```
 
 _After:_
+
 ```javascript
 function calculateAreaOfRectangle(length, width, padding) {
   return length * width + padding;
 }
-
 ```
 
 As you can see, the second version of the function is much clearer in its intent. By using descriptive names for variables and functions,
@@ -42,6 +43,7 @@ building blocks that can be easily understood and rearranged.
 **Example 2: Functions Should Do One Thing**
 
 _Before:_
+
 ```javascript
 function processUser(data) {
   const user = parseData(data);
@@ -53,6 +55,7 @@ function processUser(data) {
 ```
 
 _After:_
+
 ```javascript
 function processUser(data) {
   const user = parseData(data);
@@ -73,7 +76,6 @@ In the second example, we've extracted the logic for determining if a user is an
 Also, writing test cases for functions like `isAdult` is much easier. Writing test cases for a function that does a dozen things will have
 you pulling your hair out. It's much easier to test smaller, focused functions and the code becomes much easier to maintain this way.
 
-
 ### Comments: A Double-Edged Sword
 
 While comments can be helpful, Uncle Bob advocates for expressing your intent through code itself whenever possible. If you find yourself relying
@@ -83,6 +85,7 @@ explaining why something is done a certain way, not what is being done.
 **Example 3: Comments Should Explain Why, Not What!**
 
 _Before:_
+
 ```javascript
 // Check if user is adult
 if (user.age > 18) {
@@ -91,6 +94,7 @@ if (user.age > 18) {
 ```
 
 _After:_
+
 ```javascript
 // Legal age for adulthood is 19 in this jurisdiction
 if (user.age > 18) {
@@ -107,6 +111,7 @@ Clean code is not about writing perfect code on the first try. It's about contin
 **Example 4: Refactoring for Clarity**
 
 _Before:_
+
 ```javascript
 function processData(data) {
   if (isEligibleForProcessing(data)) {
@@ -116,14 +121,14 @@ function processData(data) {
 ```
 
 _After:_
+
 ```javascript
 function isEligibleForProcessing(data) {
-  return data.length > 10 && data.includes("special");
+  return data.length > 10 && data.includes('special');
 }
 ```
 
 If you take a quick gander at the code above, I am certain you will find that the function on the bottom is much easier to read and understand. This is the power of refactoring! It's not about changing the functionality of the code, but about making it easier to read and maintain.
-
 
 ### Conclusion
 
@@ -132,4 +137,3 @@ Writing clean code requires dedication and practice, and by adhering to the prin
 If you found this article helpful and want to dive deeper into the world of clean code, check out Uncle Bob's website, <a href="http://cleancoder.com/" target="_blank">cleancoder.com</a>, and be sure to give him a follow on <a href="https://twitter.com/unclebobmartin" target="_blank">Twitter</a>. He has a new book coming out soon, and posts regularly on software craftsmanship and clean coding practices!
 
 Happy coding, y'all!! 🤠
-

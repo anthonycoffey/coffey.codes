@@ -1,9 +1,9 @@
 ---
 id: SPEC-004
-title: "Articles & Taxonomy Test Coverage"
+title: 'Articles & Taxonomy Test Coverage'
 status: complete
 created: 2026-04-18
-author: "Anthony Coffey"
+author: 'Anthony Coffey'
 reviewers: []
 affected_repos: []
 ---
@@ -51,10 +51,10 @@ This spec establishes a regression-prevention test suite for all article and tax
 
 Two complementary layers:
 
-| Layer | Framework | Runs against | Location |
-|---|---|---|---|
-| Unit / integration | Vitest v4 + jsdom | Mocked modules | `__tests__/` |
-| E2E | Playwright v1.59 | Live dev server | `e2e/` |
+| Layer              | Framework         | Runs against    | Location     |
+| ------------------ | ----------------- | --------------- | ------------ |
+| Unit / integration | Vitest v4 + jsdom | Mocked modules  | `__tests__/` |
+| E2E                | Playwright v1.59  | Live dev server | `e2e/`       |
 
 - **Unit mocking:** `vi.mock()` for `fs`, `path`, `next/navigation`, `next/headers`
 - **File naming (unit):** `__tests__/<area>/<filename>.test.ts[x]`
@@ -94,6 +94,7 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 ### Key test cases per file
 
 #### `utils/date.ts`
+
 - Returns correctly formatted absolute date string
 - Appends `T00:00:00` when no time component is present
 - Returns "Today" for same-day dates (when `includeRelative=true`)
@@ -103,6 +104,7 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 - Does not append relative string when `includeRelative=false` (default)
 
 #### `app/articles/utils.ts`
+
 - `parseFrontmatter`: parses valid frontmatter, throws on missing required fields, strips surrounding quotes
 - `getAllBlogPosts`: returns all posts sorted by `publishedAt` descending
 - `getPaginatedBlogPosts`: returns correct slice for page 1, 2, N; computes `totalPages` correctly; handles `page < 1` and `page > totalPages` gracefully
@@ -113,6 +115,7 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 - `capitalizeWords`: capitalizes first letter of each word; handles empty string, single word, multiple spaces
 
 #### `app/api/search/route.ts`
+
 - Returns `[]` when `?q` param is absent
 - Returns `[]` when query matches nothing
 - Matches on `title` field (case-insensitive)
@@ -122,6 +125,7 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 - Returns 500 status when `getAllBlogPosts` throws
 
 #### `hooks/usePagination.ts`
+
 - Defaults to page 1 when no `?page` param is present
 - Reads initial page from `?page` search param
 - Clamps invalid page numbers to valid range
@@ -131,6 +135,7 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 - `setPage` sets `?page=N` when navigating to page N > 1
 
 #### `app/articles/search/page.tsx`
+
 - Parses `?q` param from URL on mount and triggers API call
 - Renders loading state during fetch
 - Renders "no results" message when API returns empty array
@@ -140,17 +145,20 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 - Cleans up event listener on unmount
 
 #### `app/articles/page.tsx`
+
 - Passes `page=1` when searchParams has no `?page`
 - Passes correct page number when `?page=3`
 - Renders category list in sidebar
 - Renders at most 24 tags in sidebar
 
 #### `app/articles/tag/[tag]/page.tsx`
+
 - Decodes URL-encoded tag param (`%20` → space)
 - Calls `notFound()` when no posts match the tag
 - Excludes the active tag from the "Popular Tags" sidebar list
 
 #### `app/articles/category/[category]/page.tsx`
+
 - Decodes URL-encoded category param
 - Calls `notFound()` when no posts match the category
 - Excludes the active category from the "Other Categories" sidebar list
@@ -180,12 +188,14 @@ Next.js server-component dependencies (`next/navigation`, `next/headers`, `notFo
 The E2E suite exercises the live articles routes end-to-end in a real browser (Chromium + Firefox per existing `playwright.config.ts`). Two focused scenarios:
 
 **Articles index loads and paginates**
+
 - Navigate to `/articles`
 - Assert the page heading is visible
 - Assert at least one article card is rendered
 - If a pagination control is visible, click "Next" and assert the URL contains `?page=2` and a new set of articles is shown
 
 **Tag filter returns relevant results**
+
 - Navigate to `/articles/tags`
 - Click the first tag chip
 - Assert the URL matches `/articles/tag/<tag>`

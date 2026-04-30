@@ -38,6 +38,7 @@ The four DDD commands live at:
 ```
 
 Claude will ask:
+
 > What is the title of this feature spec?
 > What is the next available SPEC ID?
 
@@ -62,12 +63,12 @@ Fill in the **Problem**, **Requirements**, and **Design** sections, then change 
 
 ### Severity guide
 
-| Level | Meaning | Example |
-|-------|---------|---------|
-| P0 | Site down, data loss, security breach | Server returning 500 on all routes |
-| P1 | Major feature broken, no workaround | Search returns no results for any query |
-| P2 | Feature degraded, workaround exists | Search works but is slow |
-| P3 | Minor, cosmetic, low impact | Typo in footer text |
+| Level | Meaning                               | Example                                 |
+| ----- | ------------------------------------- | --------------------------------------- |
+| P0    | Site down, data loss, security breach | Server returning 500 on all routes      |
+| P1    | Major feature broken, no workaround   | Search returns no results for any query |
+| P2    | Feature degraded, workaround exists   | Search works but is slow                |
+| P3    | Minor, cosmetic, low impact           | Typo in footer text                     |
 
 ### Example
 
@@ -76,6 +77,7 @@ Fill in the **Problem**, **Requirements**, and **Design** sections, then change 
 ```
 
 Claude will ask:
+
 > What is the title of this bug?
 > What is the next available BUG ID?
 > What is the severity? (P0/P1/P2/P3)
@@ -106,6 +108,7 @@ Fill in **Steps to Reproduce**, **Expected vs Actual Behavior**, and **Root Caus
 ```
 
 Claude will ask:
+
 > What is the title of this ADR? (e.g., "Use Resend for transactional email")
 > What is the next available ADR ID?
 
@@ -119,6 +122,7 @@ proposed → accepted → deprecated
 ```
 
 When you change your mind later, **do not delete or edit the old ADR**. Instead:
+
 1. Create a new ADR documenting the new decision
 2. Set `superseded_by: ADR-XXX` on the old ADR
 3. Set `supersedes: ADR-XXX` on the new ADR
@@ -150,6 +154,7 @@ ADRs are permanent records. They document the reasoning behind past decisions ev
 ```
 
 Claude will ask:
+
 > What is the service name for this agent brief?
 > What is the repo URL (if applicable)?
 
@@ -201,9 +206,9 @@ Point Claude at the agent brief to establish context immediately:
 
 ## Quick reference
 
-| Command | Template | Output location | When to use |
-|---------|----------|----------------|-------------|
-| `/new-spec` | `docs/templates/feature-template.md` | `docs/specs/active/` | New feature or significant change |
-| `/new-bug` | `docs/templates/bug-template.md` | `docs/specs/active/` | Bug report and investigation |
-| `/new-adr` | `docs/templates/adr-template.md` | `docs/specs/adrs/` | Architectural decision to record |
-| `/new-agent-brief` | `docs/templates/agent-brief-template.md` | `docs/documentation/agents/` | New service/repo context for AI |
+| Command            | Template                                 | Output location              | When to use                       |
+| ------------------ | ---------------------------------------- | ---------------------------- | --------------------------------- |
+| `/new-spec`        | `docs/templates/feature-template.md`     | `docs/specs/active/`         | New feature or significant change |
+| `/new-bug`         | `docs/templates/bug-template.md`         | `docs/specs/active/`         | Bug report and investigation      |
+| `/new-adr`         | `docs/templates/adr-template.md`         | `docs/specs/adrs/`           | Architectural decision to record  |
+| `/new-agent-brief` | `docs/templates/agent-brief-template.md` | `docs/documentation/agents/` | New service/repo context for AI   |

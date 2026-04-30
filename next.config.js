@@ -54,14 +54,13 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source:
-          '/articles/avoiding-unnecessary-re-renders-in-react-apps',
-        destination: '/articles/preventing-unnecessary-re-renders-in-react-apps',
+        source: '/articles/avoiding-unnecessary-re-renders-in-react-apps',
+        destination:
+          '/articles/preventing-unnecessary-re-renders-in-react-apps',
         permanent: true,
       },
       {
-        source:
-          '/articles/using-css-gradients-for-dynamic-post-thumbnails',
+        source: '/articles/using-css-gradients-for-dynamic-post-thumbnails',
         destination: '/articles',
         permanent: true,
       },

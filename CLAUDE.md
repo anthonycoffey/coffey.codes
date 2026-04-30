@@ -38,25 +38,25 @@ No test framework is configured yet. TDD is to be adopted for new features going
 
 ### Key directories
 
-| Path | Purpose |
-|---|---|
-| `app/articles/posts/` | MDX blog post files |
-| `app/lp/` | ICP-targeted landing pages (use `LandingPageHeader`) |
-| `app/og/` | Dynamic OG image generation |
-| `components/mdx.tsx` | MDX component registry — add new MDX components here |
-| `utils/` | Shared utilities |
-| `hooks/` | Custom React hooks |
-| `styles/` | Global SASS |
+| Path                  | Purpose                                              |
+| --------------------- | ---------------------------------------------------- |
+| `app/articles/posts/` | MDX blog post files                                  |
+| `app/lp/`             | ICP-targeted landing pages (use `LandingPageHeader`) |
+| `app/og/`             | Dynamic OG image generation                          |
+| `components/mdx.tsx`  | MDX component registry — add new MDX components here |
+| `utils/`              | Shared utilities                                     |
+| `hooks/`              | Custom React hooks                                   |
+| `styles/`             | Global SASS                                          |
 
 ### Blog post frontmatter
 
 ```yaml
-title: ""
-summary: ""
-publishedAt: "YYYY-MM-DD"
+title: ''
+summary: ''
+publishedAt: 'YYYY-MM-DD'
 tags: []
-category: ""
-image: ""   # optional
+category: ''
+image: '' # optional
 ```
 
 ### Critical implementation paths

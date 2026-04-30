@@ -1,11 +1,11 @@
 ---
 id: ADR-004
-title: "Fix Mobile Scroll Animation by Re-enabling GSAP ScrollTrigger"
+title: 'Fix Mobile Scroll Animation by Re-enabling GSAP ScrollTrigger'
 status: proposed
 date: 2026-04-18
 deciders: [coffey]
-supersedes: ""
-superseded_by: ""
+supersedes: ''
+superseded_by: ''
 ---
 
 # ADR-004: Fix Mobile Scroll Animation by Re-enabling GSAP ScrollTrigger
@@ -20,7 +20,7 @@ The homepage relies on a continuous 3D cinematic scene (`WorldCanvas`) and text 
 
 ```tsx
 // Mobile: CSS handles vertical snap scroll — skip GSAP
-if (window.innerWidth < 768) return
+if (window.innerWidth < 768) return;
 ```
 
 While this was historically valid for an earlier design using discrete CSS snap-scroll panels, it broke the new continuous 3D experience. Since GSAP was skipped on mobile, the `scrollProgress` value remained stuck at `0`, meaning mobile users experienced a static scene with no animations. Furthermore, mobile browsers present unique challenges for scroll-linked animations due to dynamically resizing address bars, which repeatedly alter the value of `100vh` and force costly layout recalculations.
@@ -51,6 +51,7 @@ While this was historically valid for an earlier design using discrete CSS snap-
 ## Alternatives Considered
 
 ### Option A: Maintain CSS Snap Scrolling on Mobile
+
 - **Description:** Leave GSAP disabled on mobile, and somehow rewrite the `HUDOverlay` text and `WorldCanvas` logic to react to native CSS snap-scroll events or Intersection Observers instead of `scrollProgress`.
 - **Pros:** Reduces Javascript overhead.
 - **Cons:** Fractures the architecture. It would require maintaining two completely distinct interaction paradigms (GSAP for desktop, Intersection Observers for mobile) and would strip the 3D timeline-driven cinematic feel from mobile devices entirely.

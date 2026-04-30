@@ -1,7 +1,7 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test';
 
-const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL
-const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL;
+const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
 
 export default defineConfig({
   timeout: 120000,
@@ -31,9 +31,10 @@ export default defineConfig({
   webServer: externalBaseURL
     ? undefined
     : {
-        command: 'NEXT_TELEMETRY_DISABLED=1 npm run dev -- -H 127.0.0.1 -p 3000 --turbo',
+        command:
+          'NEXT_TELEMETRY_DISABLED=1 npm run dev -- -H 127.0.0.1 -p 3000 --turbo',
         url: 'http://127.0.0.1:3000',
         reuseExistingServer: !process.env.CI,
         timeout: 120000,
       },
-})
+});

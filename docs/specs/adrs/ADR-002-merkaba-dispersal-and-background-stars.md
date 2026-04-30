@@ -1,11 +1,11 @@
 ---
 id: ADR-002
-title: "Separate Merkaba dispersal from the background star field"
+title: 'Separate Merkaba dispersal from the background star field'
 status: accepted
 date: 2026-04-17
 deciders: [coffey]
-supersedes: ""
-superseded_by: ""
+supersedes: ''
+superseded_by: ''
 ---
 
 # ADR-002: Separate Merkaba dispersal from the background star field
@@ -35,7 +35,7 @@ The root cause of all three defects was the same: a single particle system was b
 
 The Merkaba and the background star field are now two separate, single-purpose objects:
 
-- **Merkaba `ParticleSystem`** is a finite, scroll-driven *event*. Each particle has a pre-computed random outward unit vector (`DISPERSE_DIRECTIONS`) and a per-particle speed multiplier (`DISPERSE_SPEEDS`, 0.6×–1.8×). A scroll-derived `disperse ∈ [0,1]` factor drives position (`merkaba + dir * disperse * DISPERSE_DISTANCE * speed`), opacity (`(1 - disperse) * 0.75`), and rotation. Once `disperse >= 1`, the `<points>` object sets `visible = false`, which removes it from the Three.js draw list entirely.
+- **Merkaba `ParticleSystem`** is a finite, scroll-driven _event_. Each particle has a pre-computed random outward unit vector (`DISPERSE_DIRECTIONS`) and a per-particle speed multiplier (`DISPERSE_SPEEDS`, 0.6×–1.8×). A scroll-derived `disperse ∈ [0,1]` factor drives position (`merkaba + dir * disperse * DISPERSE_DISTANCE * speed`), opacity (`(1 - disperse) * 0.75`), and rotation. Once `disperse >= 1`, the `<points>` object sets `visible = false`, which removes it from the Three.js draw list entirely.
 - **Background star field** (`BG_STAR_POSITIONS`, 1500 points across 160×160 xy) is the sole, constant source of stars throughout the entire cinematic. It is static, never animated, and never interacts with the Merkaba.
 
 Positions are now a pure function of `scrollProgress` — no per-frame IIR, no secondary lerp — so the animation is fully deterministic and reversible.
@@ -54,7 +54,7 @@ Implemented in `components/canvas/WorldCanvas.tsx`.
 
 ### Negative / Trade-offs
 
-- The original "morph-into-stars" metaphor is gone. The Merkaba now visibly *explodes and vanishes* rather than *dissolving into the background*.
+- The original "morph-into-stars" metaphor is gone. The Merkaba now visibly _explodes and vanishes_ rather than _dissolving into the background_.
 - The background star field must carry the full ambient-space aesthetic on its own. If it feels sparse, `BG_STAR_COUNT` and/or `<pointsMaterial>` size/opacity in `WorldCanvas.tsx` are the single point of adjustment.
 - Per-particle outward directions and speeds are computed once at module load with `Math.random()`. The result is stable for the lifetime of the module but will differ between page loads. This is intentional (no seeded RNG) and consistent with the existing background-star generation.
 

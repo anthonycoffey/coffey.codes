@@ -34,6 +34,7 @@ This repository is more than just a personal website—it is a playground for bl
 Want to run the codebase locally? Follow these steps:
 
 ### Prerequisites
+
 - Node.js `>=24.0.0`
 - npm, yarn, or pnpm
 
@@ -52,20 +53,21 @@ npm install
 
 ### Development Commands
 
-| Command | Action |
-|---------|--------|
-| `npm run dev` | Starts the local development server at `http://localhost:3000` |
-| `npm run build` | Builds the application for production |
-| `npm run lint` | Runs ESLint across the codebase |
-| `npm run test` | Executes unit tests via Vitest |
-| `npm run test:e2e`| Runs End-to-End tests via Playwright |
-| `npm run typecheck`| Runs TypeScript compiler checks |
+| Command             | Action                                                         |
+| ------------------- | -------------------------------------------------------------- |
+| `npm run dev`       | Starts the local development server at `http://localhost:3000` |
+| `npm run build`     | Builds the application for production                          |
+| `npm run lint`      | Runs ESLint across the codebase                                |
+| `npm run test`      | Executes unit tests via Vitest                                 |
+| `npm run test:e2e`  | Runs End-to-End tests via Playwright                           |
+| `npm run typecheck` | Runs TypeScript compiler checks                                |
 
 ---
 
 ## 👨‍💻 Author
 
 **Anthony Coffey**
+
 - 🌐 [coffey.codes](https://coffey.codes)
 - 🐙 [GitHub](https://github.com/anthonycoffey)
 

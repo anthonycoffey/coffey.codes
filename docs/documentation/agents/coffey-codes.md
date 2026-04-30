@@ -11,6 +11,7 @@ updated: 2026-04-13
 ## Purpose
 
 Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serves as:
+
 - A digital resume and portfolio showcasing work history, skills, and projects
 - A blog for publishing technical articles (MDX-powered)
 - A point of contact for potential clients and employers
@@ -20,19 +21,19 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Language | TypeScript |
-| Framework | Next.js (App Router, canary) |
-| UI | React (Server + Client Components) |
-| Styling | Tailwind CSS v4 + SASS (`styles/global.sass`) |
-| Theming | next-themes (system preference, no manual toggle) |
-| Content | MDX via next-mdx-remote + sugar-high |
-| 3D Graphics | Three.js, @react-three/fiber, @react-three/drei |
-| Animation | motion |
-| Icons | @heroicons/react |
-| Hosting | Vercel (auto-deploys from `main`) |
-| Package Manager | npm |
+| Layer           | Technology                                        |
+| --------------- | ------------------------------------------------- |
+| Language        | TypeScript                                        |
+| Framework       | Next.js (App Router, canary)                      |
+| UI              | React (Server + Client Components)                |
+| Styling         | Tailwind CSS v4 + SASS (`styles/global.sass`)     |
+| Theming         | next-themes (system preference, no manual toggle) |
+| Content         | MDX via next-mdx-remote + sugar-high              |
+| 3D Graphics     | Three.js, @react-three/fiber, @react-three/drei   |
+| Animation       | motion                                            |
+| Icons           | @heroicons/react                                  |
+| Hosting         | Vercel (auto-deploys from `main`)                 |
+| Package Manager | npm                                               |
 
 ## Key Dependencies
 
@@ -83,12 +84,12 @@ Returns filtered blog post metadata matching the query. Used by `components/Sear
 
 ```yaml
 ---
-title: "Article Title"
-summary: "Short description for SEO and previews"
-publishedAt: "YYYY-MM-DD"
-tags: ["tag1", "tag2"]
-category: "category-name"
-image: "/path/to/og-image.jpg"  # optional
+title: 'Article Title'
+summary: 'Short description for SEO and previews'
+publishedAt: 'YYYY-MM-DD'
+tags: ['tag1', 'tag2']
+category: 'category-name'
+image: '/path/to/og-image.jpg' # optional
 ---
 ```
 

@@ -155,10 +155,7 @@ export default function ContactForm() {
                   />
                 </div>
                 <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="consent"
-                    className="font-medium text-c-text"
-                  >
+                  <label htmlFor="consent" className="font-medium text-c-text">
                     Consent to Contact <span className="text-red-500">*</span>
                   </label>
                   <p className="text-c-muted text-xs">
@@ -182,9 +179,7 @@ export default function ContactForm() {
                     className="h-5 w-5 text-red-500 mr-2 flex-shrink-0"
                     aria-hidden="true"
                   />
-                  <span className="text-sm text-red-500">
-                    {apiError}
-                  </span>
+                  <span className="text-sm text-red-500">{apiError}</span>
                 </div>
               )}
 

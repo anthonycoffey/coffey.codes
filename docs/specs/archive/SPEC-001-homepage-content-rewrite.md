@@ -1,11 +1,11 @@
 ---
 id: SPEC-001
-title: "Homepage Rebuild — Immersive Interactive Storytelling Layout"
+title: 'Homepage Rebuild — Immersive Interactive Storytelling Layout'
 status: complete
 created: 2026-04-15
 author: Anthony Coffey
 reviewers: []
-affected_repos: ["coffey.codes"]
+affected_repos: ['coffey.codes']
 ---
 
 ## Reviewer Notes
@@ -67,6 +67,7 @@ Two things need to change simultaneously:
 The kawaii pastel palette is gone. The new palette should feel dark, vibrant, and psychedelic — like a rave poster designed by someone who also reads philosophy. Think: deep blacks and near-blacks as the base, punchy saturated neon/electric accents, a warm orange, and something weird and unexpected.
 
 **Direction (not final hex values — needs design iteration):**
+
 ```
 bg:        deep inky black / dark navy        (~#09090F or #0B0B1A)
 surface:   slightly lighter dark             (~#13131F)
@@ -89,6 +90,7 @@ Scroll ↓ → Page translates ← (horizontally through scenes)
 ```
 
 Structure:
+
 ```
 <main id="scroll-container">          ← fixed height triggers scroll
   <div id="scroll-track">            ← translates horizontally via GSAP
@@ -102,34 +104,36 @@ Structure:
 ```
 
 GSAP ScrollTrigger configuration (conceptual):
+
 ```js
 // Pin the track, scrub it horizontally based on scroll position
-gsap.to("#scroll-track", {
+gsap.to('#scroll-track', {
   x: () => -(scrollTrack.scrollWidth - window.innerWidth),
-  ease: "none",
+  ease: 'none',
   scrollTrigger: {
-    trigger: "#scroll-container",
+    trigger: '#scroll-container',
     pin: true,
     scrub: 1,
-    end: () => "+=" + (scrollTrack.scrollWidth - window.innerWidth),
-  }
-})
+    end: () => '+=' + (scrollTrack.scrollWidth - window.innerWidth),
+  },
+});
 ```
 
 Between or within scenes, additional ScrollTrigger instances handle:
+
 - Per-scene entrance animations (text fades, staggered reveals)
 - Three.js canvas moments triggered at specific scroll positions
 - Parallax depth layers within individual scenes
 
 ### Scene Breakdown
 
-| # | Scene ID | Content | Interaction |
-|---|---|---|---|
-| 1 | `intro` | Name + personality-first tagline. The "who are you?" moment. | Three.js particle/noise field on canvas reacting to mouse |
-| 2 | `about` | Short weird honest bio. No bullet points. Just Anthony talking. | Text entrance with ScrollTrigger stagger |
-| 3 | `craft` | What Anthony actually builds and how he thinks about it — opinionated, not listed | Optional Three.js or CSS visual |
-| 4 | `now` | Currently: what he's building, reading, obsessing over | Simple card layout, data from JSON |
-| 5 | `connect` | Invite-style CTA. Not "Start a Project." More like "say hi." | Big, weird, confident |
+| #   | Scene ID  | Content                                                                           | Interaction                                               |
+| --- | --------- | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| 1   | `intro`   | Name + personality-first tagline. The "who are you?" moment.                      | Three.js particle/noise field on canvas reacting to mouse |
+| 2   | `about`   | Short weird honest bio. No bullet points. Just Anthony talking.                   | Text entrance with ScrollTrigger stagger                  |
+| 3   | `craft`   | What Anthony actually builds and how he thinks about it — opinionated, not listed | Optional Three.js or CSS visual                           |
+| 4   | `now`     | Currently: what he's building, reading, obsessing over                            | Simple card layout, data from JSON                        |
+| 5   | `connect` | Invite-style CTA. Not "Start a Project." More like "say hi."                      | Big, weird, confident                                     |
 
 ### Three.js Integration
 
@@ -145,6 +149,7 @@ Three.js canvases render inside `<canvas>` elements positioned absolutely within
 Guiding philosophy: **Win Without Pitching** (Blair Enns). Present who you are, don't sell. Expert positioning — you select, you're not selected. No pursuit, no pitch. The homepage is a self-portrait, not a proposal.
 
 **Scene 1 — Intro**
+
 ```
 Art is the point.
 Everything else is the medium.
@@ -153,6 +158,7 @@ Anthony Coffey  —  Austin, TX
 ```
 
 **Scene 2 — About**
+
 ```
 Musician. Director. Engineer. Actor.
 Not a list — a life.
@@ -162,6 +168,7 @@ Art is the purpose. Code is one of the languages.
 ```
 
 **Scene 3 — Craft**
+
 ```
 The process is supposed to be messy.
 The work isn't.
@@ -170,6 +177,7 @@ Chaos is fine. Clarity is the goal.
 ```
 
 **Scene 4 — Now**
+
 ```
 Right now —
 
@@ -179,6 +187,7 @@ Writing songs for an album nobody's heard.
 ```
 
 **Scene 5 — Connect**
+
 ```
 I don't pitch.
 I talk.
@@ -187,6 +196,7 @@ I talk.
 ```
 
 **Anti-patterns — explicitly banned in all copy:**
+
 - "I specialize in..." / "I'm passionate about..."
 - "With X years of experience..."
 - "Let's build something together" / "Start your project"
@@ -195,25 +205,26 @@ I talk.
 
 ### Components & Files
 
-| Path | Action |
-|---|---|
-| `app/page.tsx` | Complete rewrite — horizontal scroll layout, scene components |
-| `app/page.module.sass` (new) | Scene-specific styles, scroll container sizing |
-| `components/scenes/IntroScene.tsx` (new) | Scene 1 — hero + Three.js canvas |
-| `components/scenes/AboutScene.tsx` (new) | Scene 2 — bio copy |
-| `components/scenes/CraftScene.tsx` (new) | Scene 3 — philosophy/craft |
-| `components/scenes/NowScene.tsx` (new) | Scene 4 — "currently" content |
-| `components/scenes/ConnectScene.tsx` (new) | Scene 5 — CTA |
-| `components/canvas/ParticleField.tsx` (new) | Three.js particle/noise canvas for intro |
-| `data/now.json` (new) | Editable "now" section content (no redeploy needed) |
-| `components/Testimonials.tsx` | Remove from homepage (leave component on disk) |
-| `components/LogoGrid.tsx` | Remove from homepage (leave component on disk) |
-| `styles/global.sass` | Update palette CSS vars — new dark/vibrant direction |
-| Page metadata | Rewrite title + description |
+| Path                                        | Action                                                        |
+| ------------------------------------------- | ------------------------------------------------------------- |
+| `app/page.tsx`                              | Complete rewrite — horizontal scroll layout, scene components |
+| `app/page.module.sass` (new)                | Scene-specific styles, scroll container sizing                |
+| `components/scenes/IntroScene.tsx` (new)    | Scene 1 — hero + Three.js canvas                              |
+| `components/scenes/AboutScene.tsx` (new)    | Scene 2 — bio copy                                            |
+| `components/scenes/CraftScene.tsx` (new)    | Scene 3 — philosophy/craft                                    |
+| `components/scenes/NowScene.tsx` (new)      | Scene 4 — "currently" content                                 |
+| `components/scenes/ConnectScene.tsx` (new)  | Scene 5 — CTA                                                 |
+| `components/canvas/ParticleField.tsx` (new) | Three.js particle/noise canvas for intro                      |
+| `data/now.json` (new)                       | Editable "now" section content (no redeploy needed)           |
+| `components/Testimonials.tsx`               | Remove from homepage (leave component on disk)                |
+| `components/LogoGrid.tsx`                   | Remove from homepage (leave component on disk)                |
+| `styles/global.sass`                        | Update palette CSS vars — new dark/vibrant direction          |
+| Page metadata                               | Rewrite title + description                                   |
 
 ### Mobile Strategy
 
 Full horizontal scroll pinning is desktop-first. On mobile:
+
 - Detect via media query or `window.innerWidth`
 - Fall back to vertical snap-scroll layout (CSS `scroll-snap-type: y mandatory` on each scene)
 - GSAP still handles entrance animations per scene via `ScrollTrigger` with vertical config
@@ -255,6 +266,7 @@ Full horizontal scroll pinning is desktop-first. On mobile:
 ## Tasks
 
 ### Phase 0 — Test infrastructure (prerequisite — nothing else starts without this)
+
 - [ ] Install Vitest + React Testing Library (`vitest`, `@vitejs/plugin-react`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`)
 - [ ] Configure `vitest.config.ts` — jsdom environment, path aliases matching `tsconfig`
 - [ ] Install Playwright (`@playwright/test`) and run `npx playwright install`
@@ -263,6 +275,7 @@ Full horizontal scroll pinning is desktop-first. On mobile:
 - [ ] Verify both runners execute with zero errors on an empty test suite
 
 ### Phase 1 — Scroll skeleton (RED → GREEN → REFACTOR)
+
 - [ ] RED: Write Vitest unit tests — scroll container renders, track renders, 5 scene slots present in DOM
 - [ ] RED: Write Playwright E2E test — scrolling drives horizontal translation, each scene enters viewport at expected scroll position
 - [ ] GREEN: Rewrite `app/page.tsx` — scroll container + track, 5 placeholder scene components (colored divs, labeled)
@@ -272,6 +285,7 @@ Full horizontal scroll pinning is desktop-first. On mobile:
 - [ ] REFACTOR: Clean up, verify tests still green
 
 ### Phase 2 — Scenes (RED → GREEN per scene)
+
 - [ ] RED: Write tests for IntroScene — renders correct copy, contains canvas slot
 - [ ] GREEN: Create `components/scenes/IntroScene.tsx` with approved Scene 1 copy
 - [ ] RED: Write tests for AboutScene — renders correct copy
@@ -285,6 +299,7 @@ Full horizontal scroll pinning is desktop-first. On mobile:
 - [ ] REFACTOR: All scene tests green
 
 ### Phase 3 — Three.js canvas (RED → GREEN → REFACTOR)
+
 - [ ] RED: Write Vitest test — `ParticleField` mounts a `<canvas>` element, cleanup disposes renderer
 - [ ] GREEN: Create `components/canvas/ParticleField.tsx` — Three.js particle/noise field with resize + dispose lifecycle
 - [ ] GREEN: Integrate into IntroScene
@@ -292,20 +307,24 @@ Full horizontal scroll pinning is desktop-first. On mobile:
 - [ ] REFACTOR: Verify no memory leaks, tests green
 
 ### Phase 4 — Entrance animations
+
 - [ ] Add per-scene text stagger/fade via ScrollTrigger (visual — validated manually + Playwright viewport assertions)
 - [ ] Verify `ScrollTrigger.kill()` called on unmount
 
 ### Phase 5 — Mobile fallback (RED → GREEN → REFACTOR)
+
 - [ ] RED: Write Playwright E2E test — at 375px viewport, scenes stack vertically with snap behavior, no horizontal scroll
 - [ ] GREEN: Implement CSS `scroll-snap-type: y mandatory` fallback for mobile, conditional GSAP config
 - [ ] GREEN: Make Phase 5 tests pass
 - [ ] REFACTOR
 
 ### Color & palette (runs alongside Phase 2)
+
 - [ ] Define final dark/vibrant palette hex values
 - [ ] Update CSS var values in `styles/global.sass` for both themes
 
 ### Verification
+
 - [ ] Audit and remove internal links to `/#services`, `/#principles`
 - [ ] Rewrite page `<title>` and `<meta description>`
 - [ ] `npm run build` — zero errors

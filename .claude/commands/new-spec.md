@@ -1,6 +1,7 @@
 Create a new feature spec from the canonical template.
 
 Steps:
+
 1. Read `docs/templates/feature-template.md`
 2. Ask the user for:
    - **Title** — short descriptive name for the feature

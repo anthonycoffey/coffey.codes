@@ -17,14 +17,14 @@ Satisfied clients and professional contacts are often willing to recommend servi
 
 - **Target Audience for Referrals:** Who can refer? (e.g., Current clients, past clients, specific partners, anyone).
 - **Incentive for the Referrer:** What does the person making the referral receive?
-    - **Options:**
-        - Fixed cash bonus upon the referred client signing a contract.
-        - Percentage of the first project value.
-        - Service credits or discounts on future work.
-        - Non-monetary rewards (e.g., donation to their chosen charity).
-    - **Timing:** When is the reward paid? (e.g., upon signed contract, upon first payment).
+  - **Options:**
+    - Fixed cash bonus upon the referred client signing a contract.
+    - Percentage of the first project value.
+    - Service credits or discounts on future work.
+    - Non-monetary rewards (e.g., donation to their chosen charity).
+  - **Timing:** When is the reward paid? (e.g., upon signed contract, upon first payment).
 - **Incentive for the Referred Client (Optional):** Does the new client receive anything for being referred?
-    - **Options:** Discount on their first project, extended support period.
+  - **Options:** Discount on their first project, extended support period.
 - **Clarity:** Ensure the terms are simple, clear, and easy to understand.
 
 ### 2. Communication & Promotion
@@ -37,9 +37,9 @@ Satisfied clients and professional contacts are often willing to recommend servi
 ### 3. Tracking & Management
 
 - **Mechanism:** How will referrals be tracked?
-    - **Manual:** Ask new leads "How did you hear about us?". If referred, ask for the referrer's name. Keep track in a spreadsheet or CRM.
-    - **Referral Codes (More Complex):** Assign unique codes to referrers (requires more setup).
-    - **Dedicated Form Field:** Add an optional "Referred By" field to the contact form.
+  - **Manual:** Ask new leads "How did you hear about us?". If referred, ask for the referrer's name. Keep track in a spreadsheet or CRM.
+  - **Referral Codes (More Complex):** Assign unique codes to referrers (requires more setup).
+  - **Dedicated Form Field:** Add an optional "Referred By" field to the contact form.
 - **Process:** Define the internal process for verifying a referral and disbursing the reward.
 
 ### 4. Legal & Ethical Considerations
@@ -51,10 +51,10 @@ Satisfied clients and professional contacts are often willing to recommend servi
 ## Measurement
 
 - **Key Metrics:**
-    - Number of referrals received.
-    - Conversion rate of referred leads to clients.
-    - Cost per acquisition via referrals (compared to other channels).
-    - Participation rate among eligible referrers.
+  - Number of referrals received.
+  - Conversion rate of referred leads to clients.
+  - Cost per acquisition via referrals (compared to other channels).
+  - Participation rate among eligible referrers.
 - **Review:** Periodically assess the program's effectiveness and adjust incentives or processes as needed.
 
 ## Next Steps

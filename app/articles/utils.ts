@@ -10,7 +10,6 @@ export type Metadata = {
   category?: string;
 };
 
-
 export type BlogPost = {
   metadata: Metadata;
   slug: string;

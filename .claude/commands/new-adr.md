@@ -1,6 +1,7 @@
 Create a new Architecture Decision Record (ADR) from the canonical template.
 
 Steps:
+
 1. Read `docs/templates/adr-template.md`
 2. Ask the user for:
    - **Title** — short description of the decision (e.g., "Use Resend for transactional email")
@@ -16,6 +17,7 @@ Steps:
 5. Present the new file to the user for editing
 
 Important reminders about ADRs:
+
 - ADRs are **permanent records** — never delete or archive them
 - Status transitions: `proposed` → `accepted` | `deprecated` | `superseded`
 - If a decision is reversed, create a new ADR and set `superseded_by` on the old one

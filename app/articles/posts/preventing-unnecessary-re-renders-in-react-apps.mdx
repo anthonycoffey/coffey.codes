@@ -30,13 +30,15 @@ Before diving into optimization techniques, it's crucial to understand how React
 3. **DOM Updates**: Only the necessary changes are applied to the actual DOM.
 
 A component re-renders when:
+
 - Its state changes
 - Its props change
 - Its parent component re-renders
 - Its context value changes
 
 <Callout type="warning">
-Not all re-renders are problematic, but unnecessary ones can impact performance, especially in complex applications.
+  Not all re-renders are problematic, but unnecessary ones can impact
+  performance, especially in complex applications.
 </Callout>
 
 ## Common Causes of Unnecessary Re-Renders
@@ -45,36 +47,37 @@ Several patterns commonly lead to unnecessary re-renders:
 
 1. **Creating Functions in Render**: Defining functions inside component bodies creates new function references on every render.
 
-  ```jsx
-  // Problematic: New function reference on every render
-  function UserProfile({ user }) {
-    const handleClick = () => {
-      console.log(user.id);
-    };
-    
-    return <Button onClick={handleClick}>View Profile</Button>;
-  }
-  ```
+```jsx
+// Problematic: New function reference on every render
+function UserProfile({ user }) {
+  const handleClick = () => {
+    console.log(user.id);
+  };
 
-  It's worth mentioning that declaring functions in the component body is generally fine for most use cases, especially when:
-  - The component is simple and doesn't render frequently
-  - The function doesn't create complex objects or calculations on every render
-  - The function isn't passed as a prop to child components that might re-render unnecessarily
+  return <Button onClick={handleClick}>View Profile</Button>;
+}
+```
 
-  When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
+It's worth mentioning that declaring functions in the component body is generally fine for most use cases, especially when:
+
+- The component is simple and doesn't render frequently
+- The function doesn't create complex objects or calculations on every render
+- The function isn't passed as a prop to child components that might re-render unnecessarily
+
+When you do encounter performance issues or need to optimize, consider using `useCallback` and `useMemo` hooks to memoize functions and values.
 
 2. **Creating Objects/Arrays in Render**: Similar to functions, inline objects and arrays create new references each render.
 
-  ```jsx
-  // Problematic: New object reference on every render
-  function ProductCard({ product }) {
-    return (
-      <Card style={{ padding: 16, margin: 8 }}>
-        <CardContent>{product.name}</CardContent>
-      </Card>
-    );
-  }
-  ```
+```jsx
+// Problematic: New object reference on every render
+function ProductCard({ product }) {
+  return (
+    <Card style={{ padding: 16, margin: 8 }}>
+      <CardContent>{product.name}</CardContent>
+    </Card>
+  );
+}
+```
 
 3. **Passing Down Everything**: Passing unnecessary props to child components triggers re-renders when those values change.
 
@@ -106,12 +109,12 @@ Use `useMemo` to cache calculations between renders, but avoid using it indiscri
 function ProductList({ products, category }) {
   // Only recalculates when products or category changes
   const filteredProducts = useMemo(() => {
-    return products.filter(product => product.category === category);
+    return products.filter((product) => product.category === category);
   }, [products, category]);
-  
+
   return (
     <ul>
-      {filteredProducts.map(product => (
+      {filteredProducts.map((product) => (
         <li key={product.id}>{product.name}</li>
       ))}
     </ul>
@@ -129,7 +132,7 @@ function UserActions({ userId }) {
   const handleDelete = useCallback(() => {
     deleteUser(userId);
   }, [userId]);
-  
+
   return <Button onClick={handleDelete}>Delete User</Button>;
 }
 ```
@@ -161,19 +164,19 @@ Keep state as close as possible to where it's used:
 // Good: State is colocated with its usage
 function SearchableList({ items }) {
   const [query, setQuery] = useState('');
-  
+
   const filteredItems = useMemo(() => {
-    return items.filter(item => 
-      item.name.toLowerCase().includes(query.toLowerCase())
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase()),
     );
   }, [items, query]);
-  
+
   return (
     <>
-      <input 
-        type="text" 
-        value={query} 
-        onChange={e => setQuery(e.target.value)} 
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
       <ItemList items={filteredItems} />
     </>
@@ -184,7 +187,7 @@ function SearchableList({ items }) {
 const ItemList = React.memo(function ItemList({ items }) {
   return (
     <ul>
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.id}>{item.name}</li>
       ))}
     </ul>
@@ -199,15 +202,18 @@ Create stable references for objects and arrays:
 ```jsx
 function StyleExample() {
   // Stable style object reference
-  const cardStyle = useMemo(() => ({ 
-    padding: 16, 
-    margin: 8,
-    border: '1px solid #ccc' 
-  }), []);
-  
+  const cardStyle = useMemo(
+    () => ({
+      padding: 16,
+      margin: 8,
+      border: '1px solid #ccc',
+    }),
+    [],
+  );
+
   // Stable array reference
   const options = useMemo(() => ['Option 1', 'Option 2', 'Option 3'], []);
-  
+
   return (
     <>
       <Card style={cardStyle}>Content</Card>
@@ -226,14 +232,19 @@ Avoid inline object and function creation in render:
 ```jsx
 // Avoid this
 function BadExample() {
-  return <Component options={{ key: 'value' }} onAction={() => console.log('clicked')} />;
+  return (
+    <Component
+      options={{ key: 'value' }}
+      onAction={() => console.log('clicked')}
+    />
+  );
 }
 
 // Do this instead
 function GoodExample() {
   const options = useMemo(() => ({ key: 'value' }), []);
   const handleAction = useCallback(() => console.log('clicked'), []);
-  
+
   return <Component options={options} onAction={handleAction} />;
 }
 ```
@@ -248,7 +259,7 @@ function UserComponent({ userId }) {
   const fetchData = useCallback(() => {
     fetchUserData(userId);
   }, []); // Missing userId dependency
-  
+
   // ...
 }
 
@@ -257,7 +268,7 @@ function UserComponent({ userId }) {
   const fetchData = useCallback(() => {
     fetchUserData(userId);
   }, [userId]);
-  
+
   // ...
 }
 ```
@@ -265,7 +276,8 @@ function UserComponent({ userId }) {
 ### 3. Don't Over-Optimize Prematurely
 
 <Callout type="warning">
-I touched on this briefly above, but don't memoize everything without measuring!
+  I touched on this briefly above, but don't memoize everything without
+  measuring!
 </Callout>
 
 ```jsx
@@ -292,7 +304,13 @@ function ParentComponent(props) {
 }
 
 // Better: Pass only what's needed
-function ParentComponent({ user, settings, theme, notifications, ...otherProps }) {
+function ParentComponent({
+  user,
+  settings,
+  theme,
+  notifications,
+  ...otherProps
+}) {
   return <ChildComponent user={user} theme={theme} />;
 }
 ```
@@ -317,7 +335,7 @@ function BadListExample({ items }) {
 function GoodListExample({ items }) {
   return (
     <ul>
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.id}>{item.name}</li>
       ))}
     </ul>
@@ -337,13 +355,13 @@ React 18 automatically batches state updates across event handlers, timeouts, pr
 function UserProfile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  
+
   function handleSubmit() {
     // In React 18, these trigger only ONE render
     setName(formData.name);
     setEmail(formData.email);
   }
-  
+
   // ...
 }
 ```
@@ -357,19 +375,19 @@ function SearchComponent() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isPending, startTransition] = useTransition();
-  
+
   function handleSearch(e) {
     // Urgent: Update input immediately
     const value = e.target.value;
     setQuery(value);
-    
+
     // Non-urgent: Can be interrupted by more important updates
     startTransition(() => {
       const results = performExpensiveSearch(value);
       setSearchResults(results);
     });
   }
-  
+
   return (
     <>
       <input value={query} onChange={handleSearch} />
@@ -388,13 +406,13 @@ function ProductSearch() {
   const [query, setQuery] = useState('');
   // Creates a deferred version of query
   const deferredQuery = useDeferredValue(query);
-  
+
   // This component only re-renders with the deferred value
   const isStale = query !== deferredQuery;
-  
+
   return (
     <>
-      <input value={query} onChange={e => setQuery(e.target.value)} />
+      <input value={query} onChange={(e) => setQuery(e.target.value)} />
       <div style={{ opacity: isStale ? 0.7 : 1 }}>
         <ExpensiveProductList searchQuery={deferredQuery} />
       </div>
@@ -417,12 +435,12 @@ function ProductGrid({ products, filters }) {
   // The compiler automatically detects that this component
   // only needs to re-render when products or filters change
   const filteredProducts = products.filter(
-    product => product.category === filters.category
+    (product) => product.category === filters.category,
   );
-  
+
   return (
     <div className="grid">
-      {filteredProducts.map(product => (
+      {filteredProducts.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
@@ -440,13 +458,13 @@ Use React Server Components to completely eliminate client-side re-rendering cos
 // Server Component - never re-renders on the client
 async function ProductDetails({ productId }) {
   const product = await fetchProductFromDatabase(productId);
-  
+
   return (
     <article>
       <h1>{product.name}</h1>
       <p className="description">{product.description}</p>
       <div className="price">${product.price}</div>
-      
+
       {/* Client component for interactive elements */}
       <AddToCartButton productId={product.id} />
     </article>
@@ -465,13 +483,13 @@ function ProductPage({ product }) {
       {/* Static content - no client JS needed */}
       <ProductHeader product={product} />
       <ProductDescription product={product} />
-      
+
       {/* Interactive elements - selectively hydrated */}
       <Suspense fallback={<p>Loading...</p>}>
         <LazyHydrate whenVisible>
           <ProductReviews productId={product.id} />
         </LazyHydrate>
-        
+
         <LazyHydrate whenInteracted="#buy-button">
           <BuyNowForm product={product} />
         </LazyHydrate>
@@ -491,12 +509,12 @@ function BlogPost({ post, comments }) {
     <StaticLayout>
       <StaticHeader title={post.title} author={post.author} />
       <StaticContent content={post.content} />
-      
+
       {/* Interactive "island" */}
       <ClientIsland>
         <InteractiveCommentSection initialComments={comments} />
       </ClientIsland>
-      
+
       <StaticFooter />
     </StaticLayout>
   );
@@ -548,16 +566,16 @@ function MeasuredComponent({ data }) {
   useEffect(() => {
     // Start timing
     const startTime = performance.now();
-    
+
     // End timing (next frame after render)
     const rafId = requestAnimationFrame(() => {
       const endTime = performance.now();
       console.log(`Component render time: ${endTime - startTime}ms`);
     });
-    
+
     return () => cancelAnimationFrame(rafId);
   }, [data]);
-  
+
   // Component rendering
 }
 ```

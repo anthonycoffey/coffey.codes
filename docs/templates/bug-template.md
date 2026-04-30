@@ -1,10 +1,10 @@
 ---
 id: BUG-000
-title: ""
+title: ''
 status: draft
 severity: P2
 created: YYYY-MM-DD
-author: ""
+author: ''
 reviewers: []
 affected_repos: []
 ---
@@ -37,9 +37,9 @@ affected_repos: []
 
 ## Environment
 
-- **Browser/Platform:** 
-- **Version/Commit:** 
-- **OS:** 
+- **Browser/Platform:**
+- **Version/Commit:**
+- **OS:**
 
 ## Root Cause
 
@@ -62,6 +62,7 @@ affected_repos: []
 ---
 
 **Severity guide:**
+
 - P0 — Site down / data loss / security breach
 - P1 — Major feature broken, no workaround
 - P2 — Feature degraded, workaround exists

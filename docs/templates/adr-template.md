@@ -1,11 +1,11 @@
 ---
 id: ADR-000
-title: ""
+title: ''
 status: proposed
 date: YYYY-MM-DD
 deciders: []
-supersedes: ""
-superseded_by: ""
+supersedes: ''
+superseded_by: ''
 ---
 
 # ADR-000: [Title]
@@ -40,17 +40,17 @@ superseded_by: ""
 
 ### Option A: [Name]
 
-- **Description:** 
-- **Pros:** 
-- **Cons:** 
-- **Why rejected:** 
+- **Description:**
+- **Pros:**
+- **Cons:**
+- **Why rejected:**
 
 ### Option B: [Name]
 
-- **Description:** 
-- **Pros:** 
-- **Cons:** 
-- **Why rejected:** 
+- **Description:**
+- **Pros:**
+- **Cons:**
+- **Why rejected:**
 
 ## Notes
 

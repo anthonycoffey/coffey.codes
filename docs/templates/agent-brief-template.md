@@ -1,6 +1,6 @@
 ---
-service: ""
-repo: ""
+service: ''
+repo: ''
 updated: YYYY-MM-DD
 ---
 
@@ -14,15 +14,15 @@ updated: YYYY-MM-DD
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Language | |
-| Framework | |
-| Styling | |
-| Database / Storage | |
-| Auth | |
-| Hosting / Deployment | |
-| Package Manager | |
+| Layer                | Technology |
+| -------------------- | ---------- |
+| Language             |            |
+| Framework            |            |
+| Styling              |            |
+| Database / Storage   |            |
+| Auth                 |            |
+| Hosting / Deployment |            |
+| Package Manager      |            |
 
 ## Key Dependencies
 
@@ -45,8 +45,8 @@ updated: YYYY-MM-DD
 <!-- Required env vars and what they control -->
 
 | Variable | Required | Description |
-|----------|----------|-------------|
-| | | |
+| -------- | -------- | ----------- |
+|          |          |             |
 
 ## Common Tasks
 
@@ -54,8 +54,8 @@ updated: YYYY-MM-DD
 
 ### Add a new [feature type]
 
-1. 
-2. 
+1.
+2.
 
 ### Run locally
 

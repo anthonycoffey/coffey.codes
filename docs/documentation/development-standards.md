@@ -69,12 +69,12 @@ This matters whenever a component shows/hides via a CSS opacity transition (e.g.
 // so a regex match against the full class string is reliable.
 
 // ✅ Correct — checks the panel container's class, not child opacity
-await expect(panel).toHaveClass(/visible/)      // panel is showing
-await expect(panel).not.toHaveClass(/visible/)  // panel is hidden
+await expect(panel).toHaveClass(/visible/); // panel is showing
+await expect(panel).not.toHaveClass(/visible/); // panel is hidden
 
 // ⚠️  Misleading — passes even when the panel has opacity: 0
-await expect(page.getByText('...')).toBeVisible()
-await expect(page.getByText('...')).toBeHidden()
+await expect(page.getByText('...')).toBeVisible();
+await expect(page.getByText('...')).toBeHidden();
 ```
 
 Use `toContainText()` on the panel container to verify rendered text content; use `toHaveClass(/visible/)` to verify visibility state.
@@ -89,16 +89,17 @@ draft → ready → in-progress → review-pending → complete
                                deprecated (from any status)
 ```
 
-| Status | Meaning | Who sets it |
-|--------|---------|-------------|
-| `draft` | Being written; not ready for development | Author |
-| `ready` | Approved for development; requirements are complete | Author + reviewer |
-| `in-progress` | Development is underway | Developer |
-| `review-pending` | Implementation complete; awaiting code review | Developer |
-| `complete` | Shipped, verified, and closed | Reviewer |
-| `deprecated` | No longer relevant; superseded or cancelled | Author |
+| Status           | Meaning                                             | Who sets it       |
+| ---------------- | --------------------------------------------------- | ----------------- |
+| `draft`          | Being written; not ready for development            | Author            |
+| `ready`          | Approved for development; requirements are complete | Author + reviewer |
+| `in-progress`    | Development is underway                             | Developer         |
+| `review-pending` | Implementation complete; awaiting code review       | Developer         |
+| `complete`       | Shipped, verified, and closed                       | Reviewer          |
+| `deprecated`     | No longer relevant; superseded or cancelled         | Author            |
 
 **Rules:**
+
 - Never start coding on a spec with status `draft`
 - ADR status transitions: `proposed` → `accepted` | `deprecated` | `superseded`
 - ADRs are never deleted or archived — they are permanent records
@@ -117,6 +118,7 @@ refactor/short-description     # Code restructuring without behavior change
 ```
 
 Examples:
+
 ```
 feature/contact-form-backend
 fix/broken-taxonomy-routes
@@ -135,6 +137,7 @@ Use the imperative mood. Reference the spec ID when applicable.
 ```
 
 **Types:**
+
 - `feat` — new feature
 - `fix` — bug fix
 - `chore` — tooling, deps, CI, non-functional changes
@@ -144,6 +147,7 @@ Use the imperative mood. Reference the spec ID when applicable.
 - `style` — formatting, linting (no logic change)
 
 **Examples:**
+
 ```
 feat: add contact form API route with Resend integration [SPEC-001]
 fix: resolve broken category routes after Next.js 16 upgrade [BUG-003]
@@ -155,7 +159,7 @@ docs: add agent brief for coffey.codes
 
 Trunk-based development. All branches are cut from `main` and merged back via pull request. Branches are deleted after merging.
 
-**CRITICAL RULE: NEVER commit directly to `main`.** 
+**CRITICAL RULE: NEVER commit directly to `main`.**
 All updates, no matter how small or trivial, must be made on a separate branch and merged via Pull Request. No exceptions.
 
 - `main` — production. Auto-deploys to Vercel.
@@ -171,10 +175,10 @@ See `CLAUDE.md` at the project root for the full code style guide (TypeScript co
 
 ## Tooling
 
-| Tool | Command | Purpose |
-|------|---------|---------|
-| Dev server | `npm dev` | Local development on port 3000 |
-| Build | `npm build` | Production build |
-| Lint | `npm lint` | ESLint check |
-| Lint fix | `npm lint:fix` | ESLint auto-fix |
-| Deploy | Push to `main` | Auto-deploy via Vercel |
+| Tool       | Command        | Purpose                        |
+| ---------- | -------------- | ------------------------------ |
+| Dev server | `npm dev`      | Local development on port 3000 |
+| Build      | `npm build`    | Production build               |
+| Lint       | `npm lint`     | ESLint check                   |
+| Lint fix   | `npm lint:fix` | ESLint auto-fix                |
+| Deploy     | Push to `main` | Auto-deploy via Vercel         |

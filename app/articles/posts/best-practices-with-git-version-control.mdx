@@ -12,7 +12,7 @@ Version control is a fundamental tool for software developers, ensuring smooth c
 
 Trunk-based development is a version control strategy where developers work in short-lived branches and integrate changes frequently into the main branch (or "trunk"). This approach reduces merge conflicts, encourages continuous integration, and helps teams release software faster.
 
-##  **Key Principles of Trunk-Based Development:**
+## **Key Principles of Trunk-Based Development:**
 
 - **Short-lived branches:** Keep branches small and merge them quickly to avoid long-running feature branches that lead to complex merges.
 - **Frequent integration:** Merge code into the main branch at least once a day to minimize drift and ensure early conflict detection.
@@ -27,7 +27,7 @@ Git stash is a powerful yet often underutilized feature that allows you to tempo
 
 This is personally one of my favorite git features, and if you aren't familiar with it here are some commands to get you started:
 
-##  **Common Git Stash Commands:**
+## **Common Git Stash Commands:**
 
 - **Save your work:**
   - `git stash` (stores uncommitted changes)
@@ -44,7 +44,7 @@ This is personally one of my favorite git features, and if you aren't familiar w
 - **Clear all stashes:**
   - `git stash clear`
 
-##  **When to Use Git Stash:**
+## **When to Use Git Stash:**
 
 - Switching branches without committing unfinished work.
 - Keeping a clean working directory while debugging an issue.
@@ -52,7 +52,7 @@ This is personally one of my favorite git features, and if you aren't familiar w
 
 ### **Other Essential Version Control Practices**
 
-##  **1. Meaningful Branch Naming**
+## **1. Meaningful Branch Naming**
 
 Naming conventions improve clarity and maintainability. Examples:
 
@@ -60,14 +60,14 @@ Naming conventions improve clarity and maintainability. Examples:
 - `bugfix/fix-login-issue`
 - `hotfix/security-patch`
 
-##  **2. Commit Messages That Tell a Story**
+## **2. Commit Messages That Tell a Story**
 
 Good commit messages should be clear and informative:
 
 - **Bad:** `Fixed bug`
 - **Good:** `Fix login issue by ensuring session token is refreshed on logout`
 
-##  **3. Using Tags for Milestones**
+## **3. Using Tags for Milestones**
 
 Tags help mark significant releases or stable versions:
 
@@ -76,14 +76,14 @@ git tag -a v1.0 -m "Initial production release"
 git push origin v1.0
 ```
 
-##  **4. Secure Handling of Sensitive Information**
+## **4. Secure Handling of Sensitive Information**
 
 Never commit API keys, credentials, or sensitive data. Instead, use:
 
 - `.gitignore` to prevent unwanted files from being committed.
 - Environment variables to store sensitive configuration settings.
 
-##  **5. Code Reviews and Branch Protection**
+## **5. Code Reviews and Branch Protection**
 
 Code reviews help maintain quality and catch bugs early. Protect your main branch by enforcing:
 

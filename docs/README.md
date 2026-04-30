@@ -4,18 +4,18 @@ This folder is the single source of truth for all project documentation, specifi
 
 ## Folder Rules
 
-| Folder | Purpose | Never put here |
-|--------|---------|----------------|
-| `templates/` | Canonical document templates. Do not modify without review. | Project-specific content |
-| `specs/plans/` | Multi-phase project plans and roadmaps | Completed work |
-| `specs/active/` | Current feature and bug specs (draft → complete) | Archived work |
-| `specs/adrs/` | Architecture Decision Records — permanent, never archived | Anything other than ADRs |
-| `specs/archive/` | Completed or deprecated specs | Active work |
-| `documentation/agents/` | AI agent briefs — repo context for Claude and other AI tools | Specs |
-| `documentation/guides/` | Procedural how-to documentation | Deep technical analysis |
-| `documentation/deep-dives/` | Narrow-focus technical deep dives and strategy docs | Step-by-step guides |
-| `documentation/repos/` | Comprehensive repo/service technical reference | |
-| `archive/` | General archive for deprecated non-spec documents | Active documents |
+| Folder                      | Purpose                                                      | Never put here           |
+| --------------------------- | ------------------------------------------------------------ | ------------------------ |
+| `templates/`                | Canonical document templates. Do not modify without review.  | Project-specific content |
+| `specs/plans/`              | Multi-phase project plans and roadmaps                       | Completed work           |
+| `specs/active/`             | Current feature and bug specs (draft → complete)             | Archived work            |
+| `specs/adrs/`               | Architecture Decision Records — permanent, never archived    | Anything other than ADRs |
+| `specs/archive/`            | Completed or deprecated specs                                | Active work              |
+| `documentation/agents/`     | AI agent briefs — repo context for Claude and other AI tools | Specs                    |
+| `documentation/guides/`     | Procedural how-to documentation                              | Deep technical analysis  |
+| `documentation/deep-dives/` | Narrow-focus technical deep dives and strategy docs          | Step-by-step guides      |
+| `documentation/repos/`      | Comprehensive repo/service technical reference               |                          |
+| `archive/`                  | General archive for deprecated non-spec documents            | Active documents         |
 
 ## Spec Lifecycle
 
@@ -50,25 +50,29 @@ ADRs are permanent records. They are never archived or deleted.
 
 Use these Claude Code commands to create new documents from canonical templates:
 
-| Command | Creates | Destination |
-|---------|---------|-------------|
-| `/new-spec` | Feature spec | `docs/specs/active/` |
-| `/new-bug` | Bug report | `docs/specs/active/` |
-| `/new-adr` | Architecture Decision Record | `docs/specs/adrs/` |
-| `/new-agent-brief` | AI agent brief | `docs/documentation/agents/` |
+| Command            | Creates                      | Destination                  |
+| ------------------ | ---------------------------- | ---------------------------- |
+| `/new-spec`        | Feature spec                 | `docs/specs/active/`         |
+| `/new-bug`         | Bug report                   | `docs/specs/active/`         |
+| `/new-adr`         | Architecture Decision Record | `docs/specs/adrs/`           |
+| `/new-agent-brief` | AI agent brief               | `docs/documentation/agents/` |
 
 For detailed usage instructions, examples, and tips for each command, see the [Claude Commands Guide](documentation/guides/using-claude-commands.md).
 
 ## Common Prompts for Claude
 
 **Start a new feature:**
+
 > "Read docs/specs/active/SPEC-XXX-title.md and implement it. Follow the tasks checklist and update the spec status to in-progress."
 
 **Review a spec before coding:**
+
 > "Review docs/specs/active/SPEC-XXX-title.md. Identify any gaps in the requirements or design before I approve it."
 
 **Update the agent brief after major changes:**
+
 > "Read docs/documentation/agents/coffey-codes.md and update it to reflect recent changes in [area]."
 
 **Create an ADR for a decision:**
+
 > "Use /new-adr to document the decision to [choice]. Context: [reason]."

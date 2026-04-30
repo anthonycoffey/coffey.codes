@@ -13,16 +13,16 @@ If you recently upgraded to Next.js 15 or 16 and suddenly your dynamic routes st
 After upgrading my MDX-powered blog to Next.js 16, I encountered this frustrating error:
 
 ```
-Error: Route "/articles/category/[category]" used `params.category`. 
-`params` is a Promise and must be unwrapped with `await` or `React.use()` 
+Error: Route "/articles/category/[category]" used `params.category`.
+`params` is a Promise and must be unwrapped with `await` or `React.use()`
 before accessing its properties.
 ```
 
 The same error appeared for `searchParams`:
 
 ```
-Error: Route "/articles/tag/[tag]" used `searchParams.page`. 
-`searchParams` is a Promise and must be unwrapped with `await` or `React.use()` 
+Error: Route "/articles/tag/[tag]" used `searchParams.page`.
+`searchParams` is a Promise and must be unwrapped with `await` or `React.use()`
 before accessing its properties.
 ```
 
@@ -61,7 +61,9 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params, searchParams }) {
   const resolvedSearchParams = await searchParams;
-  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const page = resolvedSearchParams?.page
+    ? Number(resolvedSearchParams.page)
+    : 1;
   const { category } = await params;
   // ... rest of component
 }
@@ -92,7 +94,7 @@ Let's fix a real-world example—a category page for a blog's taxonomy system.
 export function generateMetadata({ params }) {
   const category = params.category;
   const decodedCategory = decodeURIComponent(category);
-  
+
   return {
     title: `Articles in Category: ${decodedCategory}`,
     description: `Explore articles categorized under "${decodedCategory}".`,
@@ -104,13 +106,13 @@ export default function CategoryPage({ params, searchParams }) {
   const itemsPerPage = 5;
   const category = params.category;
   const decodedCategory = decodeURIComponent(category);
-  
+
   const posts = getPaginatedBlogPostsByCategory(
     decodedCategory,
     page,
-    itemsPerPage
+    itemsPerPage,
   );
-  
+
   return (
     <div>
       <h1>Articles in "{decodedCategory}"</h1>
@@ -129,7 +131,7 @@ export default function CategoryPage({ params, searchParams }) {
 export async function generateMetadata({ params }) {
   const { category } = await params; // Await and destructure
   const decodedCategory = decodeURIComponent(category);
-  
+
   return {
     title: `Articles in Category: ${decodedCategory}`,
     description: `Explore articles categorized under "${decodedCategory}".`,
@@ -138,17 +140,19 @@ export async function generateMetadata({ params }) {
 
 export default async function CategoryPage({ params, searchParams }) {
   const resolvedSearchParams = await searchParams; // Await first
-  const page = resolvedSearchParams?.page ? Number(resolvedSearchParams.page) : 1;
+  const page = resolvedSearchParams?.page
+    ? Number(resolvedSearchParams.page)
+    : 1;
   const itemsPerPage = 5;
   const { category } = await params; // Await and destructure
   const decodedCategory = decodeURIComponent(category);
-  
+
   const posts = getPaginatedBlogPostsByCategory(
     decodedCategory,
     page,
-    itemsPerPage
+    itemsPerPage,
   );
-  
+
   return (
     <div>
       <h1>Articles in "{decodedCategory}"</h1>
@@ -179,6 +183,7 @@ npm run dev
 ```
 
 Visit your dynamic routes to confirm:
+
 - Category pages: `/articles/category/web-development`
 - Tag pages: `/articles/tag/nextjs`
 - Paginated routes: `/articles/category/web-development?page=2`
@@ -190,6 +195,7 @@ Check the terminal for any lingering errors about params or searchParams.
 This breaking change affects any page component using dynamic routes. Here are common patterns to search for and update:
 
 ### Pattern 1: Direct param access
+
 ```tsx
 // ❌ Old way
 const id = params.id;
@@ -199,6 +205,7 @@ const { id } = await params;
 ```
 
 ### Pattern 2: Optional chaining with searchParams
+
 ```tsx
 // ❌ Old way
 const query = searchParams?.q || '';
@@ -209,6 +216,7 @@ const query = resolvedSearchParams?.q || '';
 ```
 
 ### Pattern 3: Multiple params
+
 ```tsx
 // ❌ Old way
 const { slug, id } = params;
@@ -226,7 +234,7 @@ If you want to maintain static generation with `generateStaticParams`, ensure yo
 ```tsx
 export async function generateStaticParams() {
   const categories = getAllCategories();
-  
+
   return categories.map((category) => ({
     category: category.toLowerCase().trim(),
   }));

@@ -1,4 +1,4 @@
- # Regular Strategy Review Protocol
+# Regular Strategy Review Protocol
 
 This document outlines the protocol for conducting regular quarterly reviews of the marketing and advertising strategy to ensure continuous improvement, adaptability, and alignment with business goals.
 

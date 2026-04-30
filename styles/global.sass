@@ -181,9 +181,11 @@ body
 
 .prose pre
   background: var(--color-code-bg)
-  @apply rounded-lg overflow-x-auto border py-2 px-3 text-sm
+  @apply rounded-lg overflow-x-auto text-sm p-1 m-0 border
   border-color: var(--color-border)
-
+  &.multiline, &.mermaid
+    border: none
+  
 .prose code
   background: var(--color-code-bg)
   color: var(--color-text)

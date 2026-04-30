@@ -1,34 +1,34 @@
-'use client'
+'use client';
 
-import { useLayoutEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import dynamic from 'next/dynamic'
-import HUDOverlay from '@/components/overlay/HUDOverlay'
-import Loader from '@/components/Loader'
-import styles from '@/app/page.module.sass'
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import dynamic from 'next/dynamic';
+import HUDOverlay from '@/components/overlay/HUDOverlay';
+import Loader from '@/components/Loader';
+import styles from '@/app/page.module.sass';
 
 // WorldCanvas is browser-only (WebGL) — skip SSR
 const WorldCanvas = dynamic(() => import('@/components/canvas/WorldCanvas'), {
   ssr: false,
-})
+});
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 // Scroll track is 6× viewport (1 for the initial hold + 5 of scrub).
 // Matches the previous GSAP `end: +=innerHeight * 5` range.
-const SCROLL_MULTIPLIER = 6
+const SCROLL_MULTIPLIER = 6;
 
 export default function ScrollContainer() {
-  const spacerRef      = useRef<HTMLDivElement>(null)
-  const scrollProgress = useRef(0)
+  const spacerRef = useRef<HTMLDivElement>(null);
+  const scrollProgress = useRef(0);
 
   useLayoutEffect(() => {
-    const spacer = spacerRef.current
-    if (!spacer) return
+    const spacer = spacerRef.current;
+    if (!spacer) return;
 
     const ctx = gsap.context(() => {
-      ScrollTrigger.config({ ignoreMobileResize: true })
+      ScrollTrigger.config({ ignoreMobileResize: true });
       ScrollTrigger.create({
         trigger: spacer,
         start: 'top top',
@@ -36,15 +36,15 @@ export default function ScrollContainer() {
         scrub: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          scrollProgress.current = self.progress
+          scrollProgress.current = self.progress;
         },
-      })
-    }, spacerRef)
+      });
+    }, spacerRef);
 
     return () => {
-      ctx.revert()
-    }
-  }, [])
+      ctx.revert();
+    };
+  }, []);
 
   return (
     <div
@@ -67,5 +67,5 @@ export default function ScrollContainer() {
         <Loader />
       </div>
     </div>
-  )
+  );
 }

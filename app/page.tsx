@@ -1,9 +1,10 @@
-import type { Metadata } from 'next'
-import ScrollContainer from '@/components/ScrollContainer'
+import type { Metadata } from 'next';
+import ScrollContainer from '@/components/ScrollContainer';
 
-const HOME_TITLE = 'Anthony Coffey — AI Consultant & Software Engineer, Austin TX'
+const HOME_TITLE =
+  'Anthony Coffey — AI Consultant & Software Engineer, Austin TX';
 const HOME_DESCRIPTION =
-  'Anthony Coffey is an AI consultant and software engineer in Austin, TX, building web apps, mobile apps, and practical AI solutions with creativity at the core.'
+  'Anthony Coffey is an AI consultant and software engineer in Austin, TX, building web apps, mobile apps, and practical AI solutions with creativity at the core.';
 
 export const metadata: Metadata = {
   title: { absolute: HOME_TITLE },
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
     description: HOME_DESCRIPTION,
     images: ['/og-image.jpg'],
   },
-}
+};
 
 export default function Page() {
-  return <ScrollContainer />
+  return <ScrollContainer />;
 }

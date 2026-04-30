@@ -1,6 +1,6 @@
 ---
 id: SPEC-002
-title: "Homepage Scene Cross-Platform Glow Fix"
+title: 'Homepage Scene Cross-Platform Glow Fix'
 status: in-progress
 created: 2026-04-18
 author: Anthony Coffey
@@ -102,9 +102,9 @@ when post-processing is active.
 ### 4. Vignette effect
 
 ```jsx
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 
-<Vignette eskil={false} offset={0.3} darkness={0.7} />
+<Vignette eskil={false} offset={0.3} darkness={0.7} />;
 ```
 
 Single-pass effect added after Bloom. Darkens scene edges for cinematic depth at no geometry cost.

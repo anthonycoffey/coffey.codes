@@ -1,6 +1,6 @@
 # Project Progress
 
-*This file tracks the overall status of the project, what works, what's left, known issues, and the evolution of decisions.*
+_This file tracks the overall status of the project, what works, what's left, known issues, and the evolution of decisions._
 
 ## Current Status
 
@@ -8,22 +8,23 @@ The project is substantially built out and actively maintained. Core sections (B
 
 ## What Works
 
-*(Based on file structure and Memory Bank context)*
+_(Based on file structure and Memory Bank context)_
+
 - **Framework/Routing:** Next.js App Router structure is in place for major sections (Home, Articles, Portfolio, Case Studies, Contact).
 - **Blog:**
-    - MDX post rendering (`app/articles/[slug]/page.tsx`, `components/mdx.tsx`).
-    - Article listing (`app/articles/page.tsx`, `components/posts.tsx`).
-    - Category and Tag pages (`app/articles/category/[category]/page.tsx`, `app/articles/tag/[tag]/page.tsx`).
-    - Article Search API (`app/api/search/route.ts`) and UI (`components/SearchBox.tsx`, `app/articles/search/page.tsx`).
-    - RSS Feed (`app/rss/route.ts`).
-    - Custom MDX components (`components/mdx.tsx`) including `Callout` (`components/Callout.tsx`).
+  - MDX post rendering (`app/articles/[slug]/page.tsx`, `components/mdx.tsx`).
+  - Article listing (`app/articles/page.tsx`, `components/posts.tsx`).
+  - Category and Tag pages (`app/articles/category/[category]/page.tsx`, `app/articles/tag/[tag]/page.tsx`).
+  - Article Search API (`app/api/search/route.ts`) and UI (`components/SearchBox.tsx`, `app/articles/search/page.tsx`).
+  - RSS Feed (`app/rss/route.ts`).
+  - Custom MDX components (`components/mdx.tsx`) including `Callout` (`components/Callout.tsx`).
 - **Portfolio/Case Studies:** Sections exist (`app/portfolio/`, `app/case-studies/`). Content structure seems present (e.g., `public/portfolio/`, `public/case-studies/`).
 - **Contact:** Contact page (`app/contact/page.tsx`) and form component (`components/ContactForm.tsx`) exist. (Backend handling is TBD - see "What's Left").
 - **Landing Pages (ICP-Specific):** Created four landing pages under `app/lp/` targeting specific ICPs identified in `docs/marketing/uvp.md`, each including tailored UVP, contact form, and scheduling CTA.
-    - `app/lp/sme-web-mobile/page.tsx`
-    - `app/lp/practical-ai/page.tsx`
-    - `app/lp/smb-web-marketing/page.tsx`
-    - `app/lp/strategic-partners/page.tsx`
+  - `app/lp/sme-web-mobile/page.tsx`
+  - `app/lp/practical-ai/page.tsx`
+  - `app/lp/smb-web-marketing/page.tsx`
+  - `app/lp/strategic-partners/page.tsx`
 - **Styling:** Tailwind CSS and SASS (`styles/global.sass`) are set up.
 - **Package Manager:** npm is used
 - **Components:** A library of reusable components exists in `components/` (e.g., `Callout`, `SearchBox`, `Posts`).
@@ -35,7 +36,8 @@ The project is substantially built out and actively maintained. Core sections (B
 
 ## What's Left to Build
 
-*(Based on current state and `activeContext.md`)*
+_(Based on current state and `activeContext.md`)_
+
 1.  **Implement Contact Form Backend:** Decide on and implement the handling mechanism for `components/ContactForm.tsx` (API route vs. third-party).
 2.  **Add Social Links:** Integrate social media profile links (GitHub, LinkedIn, etc.) into `components/footer.tsx`.
 3.  **Content Population:** Continue writing blog articles (`app/articles/posts/`) and ensure portfolio/case study content is current.
@@ -45,13 +47,15 @@ The project is substantially built out and actively maintained. Core sections (B
 
 ## Known Issues / Bugs
 
-*(To be identified through testing or user feedback)*
+_(To be identified through testing or user feedback)_
+
 - None reported currently.
 
 ## Evolution of Decisions
 
-*(To be documented as the project progresses)*
-- *(Initial):* Project likely started or migrated to Next.js App Router.
-- *(Initial):* Chose MDX for blog content flexibility.
-- *(Initial):* Adopted Tailwind CSS for styling.
-- *(Date TBD):* Switched package manager to npm.
+_(To be documented as the project progresses)_
+
+- _(Initial):_ Project likely started or migrated to Next.js App Router.
+- _(Initial):_ Chose MDX for blog content flexibility.
+- _(Initial):_ Adopted Tailwind CSS for styling.
+- _(Date TBD):_ Switched package manager to npm.

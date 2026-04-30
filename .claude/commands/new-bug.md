@@ -1,6 +1,7 @@
 Create a new bug report from the canonical template.
 
 Steps:
+
 1. Read `docs/templates/bug-template.md`
 2. Ask the user for:
    - **Title** — short descriptive name for the bug
@@ -18,6 +19,7 @@ Steps:
 5. Present the new file to the user for editing
 
 Severity guide:
+
 - **P0** — Site down / data loss / security breach — fix immediately
 - **P1** — Major feature broken, no workaround
 - **P2** — Feature degraded, workaround exists

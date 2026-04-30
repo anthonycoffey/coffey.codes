@@ -1,12 +1,15 @@
 # SPEC-005: Enhance Planet Model
 
 ## Status
+
 complete
 
 ## Context
+
 The current `<Planet/>` model in our `WorldCanvas` component is a bit visually plain. It features a basic `meshStandardMaterial` with an emissive sphere for atmosphere. To improve visual interest and support a "moon surface" visual language with dynamic ambiance, we need a custom shader for terrain generation, localized fog effects, orbital particles, and enhanced illumination.
 
 ## Requirements
+
 1. **Custom Shader (Moon Surface Effect)**
    - Replace standard simple material setup with procedural noise displacement and texture.
    - Utilize GLSL to give a high-contrast, grayish, cratered lunar look while still reacting to scene lighting.
@@ -21,6 +24,7 @@ The current `<Planet/>` model in our `WorldCanvas` component is a bit visually p
    - Introduce strong directional lighting to emphasize the new procedural craters/surface.
 
 ## Implementation Plan
+
 1. **Spec Creation**: Create this document and set to `complete`.
 2. **Planet.tsx refactor**:
    - Write reusable GLSL noise functions.

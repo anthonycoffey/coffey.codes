@@ -35,12 +35,12 @@ Hitting 99% in one PR would mean ~40 new test files and 8–15 hours of work. In
 
 ### Baseline (recorded 2026-04-27 on `main`)
 
-| Metric | Baseline | Phase 1 floor | Final target |
-|---|---|---|---|
-| Statements | 44.05% | 40 | 99 |
-| Branches | 31.49% | 30 | 99 |
-| Functions | 39.6% | 35 | 99 |
-| Lines | 44% | 40 | 99 |
+| Metric     | Baseline | Phase 1 floor | Final target |
+| ---------- | -------- | ------------- | ------------ |
+| Statements | 44.05%   | 40            | 99           |
+| Branches   | 31.49%   | 30            | 99           |
+| Functions  | 39.6%    | 35            | 99           |
+| Lines      | 44%      | 40            | 99           |
 
 ## Requirements
 
@@ -103,13 +103,13 @@ Add npm scripts:
 
 Run baseline once on `main`, then work file-by-file. Reuse existing test patterns rather than inventing new ones:
 
-| Area | Pattern to mirror |
-|---|---|
-| Pure utils / hooks | `__tests__/utils/`, `__tests__/hooks/usePagination.test.ts` |
-| Server components / pages | `__tests__/articles/` (mocks `next/navigation`) |
-| Client components with state | `__tests__/overlay/` |
-| Three.js / R3F components | `__tests__/canvas/` (paired with `vitest.setup.ts` console filtering) |
-| API route handlers | `__tests__/api/search.test.ts` |
+| Area                         | Pattern to mirror                                                     |
+| ---------------------------- | --------------------------------------------------------------------- |
+| Pure utils / hooks           | `__tests__/utils/`, `__tests__/hooks/usePagination.test.ts`           |
+| Server components / pages    | `__tests__/articles/` (mocks `next/navigation`)                       |
+| Client components with state | `__tests__/overlay/`                                                  |
+| Three.js / R3F components    | `__tests__/canvas/` (paired with `vitest.setup.ts` console filtering) |
+| API route handlers           | `__tests__/api/search.test.ts`                                        |
 
 ### CI gate
 

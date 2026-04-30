@@ -1,11 +1,11 @@
 ---
 id: SPEC-010
-title: "Add Giscus comments to articles"
+title: 'Add Giscus comments to articles'
 status: review-pending
 created: 2026-04-29
-author: "Anthony Coffey"
+author: 'Anthony Coffey'
 reviewers: []
-affected_repos: ["coffey.codes"]
+affected_repos: ['coffey.codes']
 ---
 
 ## Reviewer Notes

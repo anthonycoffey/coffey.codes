@@ -1,9 +1,9 @@
 ---
 id: SPEC-000
-title: ""
+title: ''
 status: draft
 created: YYYY-MM-DD
-author: ""
+author: ''
 reviewers: []
 affected_repos: []
 ---

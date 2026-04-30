@@ -1,11 +1,11 @@
 ---
 id: ADR-001
-title: "Homepage redesign as a scroll-driven 3D cinematic"
+title: 'Homepage redesign as a scroll-driven 3D cinematic'
 status: accepted
 date: 2026-04-17
 deciders: [coffey]
-supersedes: ""
-superseded_by: ""
+supersedes: ''
+superseded_by: ''
 ---
 
 # ADR-001: Homepage redesign as a scroll-driven 3D cinematic
@@ -16,7 +16,7 @@ superseded_by: ""
 
 ## Context
 
-The prior homepage was a vertical brochure — services list, logo grid, testimonials, corporate CTA. It was pleasant, forgettable, and indistinguishable from any other contractor site. The business goal is to attract higher-quality work by being *memorable and evidently skilled*, not by pitching. The decision to rebuild the homepage around a scroll-driven cinematic originates in `SPEC-001-homepage-content-rewrite.md` (now `complete`). This ADR records the architectural shape of the implementation as shipped on the `feature/homepage-cinematic-rebuild` branch, which diverges from the original spec in several ways.
+The prior homepage was a vertical brochure — services list, logo grid, testimonials, corporate CTA. It was pleasant, forgettable, and indistinguishable from any other contractor site. The business goal is to attract higher-quality work by being _memorable and evidently skilled_, not by pitching. The decision to rebuild the homepage around a scroll-driven cinematic originates in `SPEC-001-homepage-content-rewrite.md` (now `complete`). This ADR records the architectural shape of the implementation as shipped on the `feature/homepage-cinematic-rebuild` branch, which diverges from the original spec in several ways.
 
 ## Decision
 
@@ -31,17 +31,17 @@ The homepage is a single continuous Three.js scene driven by vertical scroll. A 
 
 ### Scene graph (as shipped)
 
-| Object | File | Role | Scroll window |
-|---|---|---|---|
-| `CameraRig` | `components/canvas/CameraRig.tsx` | Dolly through hand-authored keyframe path; camera never follows objects | 0 → 1 |
-| Background stars | inline in `WorldCanvas.tsx` | 1500-point static field, sole ambient star source | always |
-| `ParticleSystem` (Merkaba) | `WorldCanvas.tsx` | "Start" symbol; spins slowly, then explodes outward to the left and we fade opacity to 0 | 0 → 0.25 |
-| `UFO` | `components/canvas/objects/UFO.tsx` | Enters right, hovers left-of-center, then sweeps up-and-right past the camera (rises above, passes into +Z) for a dramatic underside reveal | 0.15 → 0.52 |
-| `Planet` | `components/canvas/objects/Planet.tsx` | Large sphere with atmospheric Fresnel glow; always rendered at `(0, -30, -50)`. Camera tilt reveals it into frame around 0.40–0.52; eclipse backlight intensity ramps 0→8 across 0.35–0.55 | always rendered; active reveal 0.35–0.55 |
-| `Satellite` | `components/canvas/objects/Satellite.tsx` | Scroll-locked start, then orbits the Planet on a fixed angular velocity | 0.50 → end |
-| `Spaceship` | `components/canvas/objects/Spaceship.tsx` | Rebel-style fighter with instanced-mesh thruster fire, flies past camera on a **time-based** path once scroll crosses its trigger | triggered at 0.62, then time-driven |
-| `Galaxy` | `components/canvas/objects/Galaxy.tsx` | Spiral disc + core + three planets; always rendered, parked at `z=-220` (visible as a distant speck). Rushes to `z=-70` across 0.75–0.95, then closes to `z=-65` by 1.0, filling frame | always rendered; active motion 0.75–1.0 |
-| `EffectComposer` / `Bloom` | `@react-three/postprocessing` | HDR bloom on emissive materials (engines, stars, galactic core) | always |
+| Object                     | File                                      | Role                                                                                                                                                                                       | Scroll window                            |
+| -------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| `CameraRig`                | `components/canvas/CameraRig.tsx`         | Dolly through hand-authored keyframe path; camera never follows objects                                                                                                                    | 0 → 1                                    |
+| Background stars           | inline in `WorldCanvas.tsx`               | 1500-point static field, sole ambient star source                                                                                                                                          | always                                   |
+| `ParticleSystem` (Merkaba) | `WorldCanvas.tsx`                         | "Start" symbol; spins slowly, then explodes outward to the left and we fade opacity to 0                                                                                                   | 0 → 0.25                                 |
+| `UFO`                      | `components/canvas/objects/UFO.tsx`       | Enters right, hovers left-of-center, then sweeps up-and-right past the camera (rises above, passes into +Z) for a dramatic underside reveal                                                | 0.15 → 0.52                              |
+| `Planet`                   | `components/canvas/objects/Planet.tsx`    | Large sphere with atmospheric Fresnel glow; always rendered at `(0, -30, -50)`. Camera tilt reveals it into frame around 0.40–0.52; eclipse backlight intensity ramps 0→8 across 0.35–0.55 | always rendered; active reveal 0.35–0.55 |
+| `Satellite`                | `components/canvas/objects/Satellite.tsx` | Scroll-locked start, then orbits the Planet on a fixed angular velocity                                                                                                                    | 0.50 → end                               |
+| `Spaceship`                | `components/canvas/objects/Spaceship.tsx` | Rebel-style fighter with instanced-mesh thruster fire, flies past camera on a **time-based** path once scroll crosses its trigger                                                          | triggered at 0.62, then time-driven      |
+| `Galaxy`                   | `components/canvas/objects/Galaxy.tsx`    | Spiral disc + core + three planets; always rendered, parked at `z=-220` (visible as a distant speck). Rushes to `z=-70` across 0.75–0.95, then closes to `z=-65` by 1.0, filling frame     | always rendered; active motion 0.75–1.0  |
+| `EffectComposer` / `Bloom` | `@react-three/postprocessing`             | HDR bloom on emissive materials (engines, stars, galactic core)                                                                                                                            | always                                   |
 
 ### Divergences from SPEC-001
 
@@ -50,7 +50,7 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 - **No meteor.** The spec's meteor moment was cut.
 - **No wormhole/gate.** Replaced with a solar-system sequence: a `Planet` in the foreground and a spiral `Galaxy` approaching from deep z late in the scroll.
 - **Satellite retained but simplified.** The original "holograph" projection and its contents were cut (read poorly in testing). The satellite's path was rewritten from a static perch to a continuous orbit around the focal `Planet`, computed from a trigger-locked clock so it always starts at 3 o'clock when scroll first crosses 0.50.
-- **Merkaba is a logo moment, not a morph.** Rather than forming and dissolving mid-scroll, the Merkaba renders as the opening brand symbol. The moment scroll begins, it spins with *exponential* angular velocity over a very short window — the visual reads as "spinning into pieces" — and then explodes outward and fully unmounts itself from the draw list. (Dispersal mechanics are the subject of ADR-002.)
+- **Merkaba is a logo moment, not a morph.** Rather than forming and dissolving mid-scroll, the Merkaba renders as the opening brand symbol. The moment scroll begins, it spins with _exponential_ angular velocity over a very short window — the visual reads as "spinning into pieces" — and then explodes outward and fully unmounts itself from the draw list. (Dispersal mechanics are the subject of ADR-002.)
 - **UFO pathing re-authored.** The flyby was tightened to pass very close to the camera on a diagonal that reveals the underside lighting for maximum drama, rather than the wider arc originally planned.
 - **Spaceship flyby added.** Not in SPEC-001. A rebel-fighter-style ship with an `InstancedMesh` thruster particle rig enters before the galaxy. Its trigger is scroll-position gated, but its motion is **time-driven** once triggered — it flies on its own clock regardless of further scroll input, so the sequence reads as a deliberate beat rather than a scrubbable animation.
 
@@ -58,7 +58,7 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 
 ### Positive
 
-- The homepage is memorable: it is a *place*, not a page.
+- The homepage is memorable: it is a _place_, not a page.
 - A single shared `scrollProgress` ref is the only coupling between components; each object's behavior is a pure function of scroll progress (and in one case, elapsed time since a trigger). No cross-object state, no React re-renders driving the animation.
 - The CSS-fixed + scroll-spacer layout avoids GSAP's `pin-spacer` DOM mutation, eliminating the class of reconciler-vs-DOM bugs that plagued the first pinning attempt.
 - Scene composition is purely additive — adding a new object is a new file in `components/canvas/objects/` and one line in `WorldCanvas`.
@@ -89,7 +89,7 @@ The spec proposed a horizontal-scroll, five-pinned-panel layout with separate sc
 - **Description:** Leave the layout model alone, rewrite the corporate copy, repaint with the new palette.
 - **Pros:** Cheapest; lowest risk; no new runtime dependencies exercised.
 - **Cons:** Does not advance the core business goal (memorability, credibility-by-demonstration). The deliverable would still look like every other contractor site.
-- **Why rejected:** Low ceiling. The point of the rebuild was to *be different*, not to tidy up.
+- **Why rejected:** Low ceiling. The point of the rebuild was to _be different_, not to tidy up.
 
 ### Option C (accepted): Single continuous 3D scene on a scroll timeline
 

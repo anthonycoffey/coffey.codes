@@ -1,23 +1,23 @@
-'use client'
+'use client';
 
-import Giscus from '@giscus/react'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import Giscus from '@giscus/react';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
-const GISCUS_REPO = 'anthonycoffey/coffey.codes' as const
-const GISCUS_REPO_ID = 'R_kgDOKkWaSw'
-const GISCUS_CATEGORY = 'General'
-const GISCUS_CATEGORY_ID = 'DIC_kwDOKkWaS84C78m8'
+const GISCUS_REPO = 'anthonycoffey/coffey.codes' as const;
+const GISCUS_REPO_ID = 'R_kgDOKkWaSw';
+const GISCUS_CATEGORY = 'General';
+const GISCUS_CATEGORY_ID = 'DIC_kwDOKkWaS84C78m8';
 
 export default function Comments() {
-  const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  const theme = mounted && resolvedTheme === 'dark' ? 'dark' : 'light'
+  const theme = mounted && resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
     <section aria-label="Comments" className="mt-12">
@@ -37,5 +37,5 @@ export default function Comments() {
         loading="lazy"
       />
     </section>
-  )
+  );
 }

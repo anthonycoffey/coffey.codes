@@ -12,16 +12,18 @@ const AnimatedSection = ({
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  
+
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
       className={`w-full ${background} ${className}`}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-22`}>{children}</div>
+      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-22`}>
+        {children}
+      </div>
     </motion.div>
   );
 };

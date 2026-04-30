@@ -63,7 +63,7 @@ export default function Navbar() {
     }
 
     const SHOW_ABOVE = 30; // px from top — never hide while above the fold
-    const DELTA = 3;       // px direction threshold — prevents jitter
+    const DELTA = 3; // px direction threshold — prevents jitter
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -147,9 +147,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {renderNavItems()}
-            {!isOverlay && (
-              <ThemeToggle variant="chrome" className="ml-2" />
-            )}
+            {!isOverlay && <ThemeToggle variant="chrome" className="ml-2" />}
           </nav>
 
           {/* Mobile controls */}

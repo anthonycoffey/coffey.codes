@@ -7,7 +7,9 @@ export default function StaticSection({
 }) {
   return (
     <div className={`w-full ${background} ${className}`}>
-      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-22`}>{children}</div>
+      <div className={`${maxWidth} mx-auto px-4 py-16 md:py-22`}>
+        {children}
+      </div>
     </div>
   );
 }

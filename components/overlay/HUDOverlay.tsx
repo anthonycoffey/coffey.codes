@@ -71,7 +71,7 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
       else if (p >= 0.15) nextActive = 'intro';
 
       setActiveSection((prev) => (prev === nextActive ? prev : nextActive));
-      
+
       const isStart = p < 0.1;
       const isEnd = p > 0.95;
       setShowPrompt(isStart || isEnd);
@@ -159,11 +159,15 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
       </div>
 
       {/* Scroll Prompt */}
-      <div className={`${styles.scrollPromptContainer} ${showPrompt ? styles.visible : ''}`}>
+      <div
+        className={`${styles.scrollPromptContainer} ${showPrompt ? styles.visible : ''}`}
+      >
         <button
           className={`${styles.scrollPromptButton} ${styles.bouncing}`}
           onClick={() => scrollTo(promptType === 'end' ? 0 : 0.15)}
-          aria-label={promptType === 'end' ? "Scroll to top" : "Scroll to first slide"}
+          aria-label={
+            promptType === 'end' ? 'Scroll to top' : 'Scroll to first slide'
+          }
         >
           {promptType === 'end' ? (
             <ArrowUpIcon className={styles.heroSize} />
@@ -172,7 +176,9 @@ export default function HUDOverlay({ scrollProgress }: HUDOverlayProps) {
           )}
         </button>
         <span className={styles.scrollPromptText}>
-          {promptType === 'end' ? 'SCROLL TO TOP' : 'System Ready // Scroll to Explore'}
+          {promptType === 'end'
+            ? 'SCROLL TO TOP'
+            : 'System Ready // Scroll to Explore'}
         </span>
       </div>
     </div>

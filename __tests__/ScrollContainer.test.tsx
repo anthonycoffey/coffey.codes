@@ -1,18 +1,24 @@
-import { render } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { render } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 
 // GSAP touches the DOM — mock it entirely in jsdom
-const mockTrigger = { kill: vi.fn() }
+const mockTrigger = { kill: vi.fn() };
 vi.mock('gsap', () => ({
   gsap: {
     registerPlugin: vi.fn(),
-    context: vi.fn((fn: () => void) => { fn(); return { revert: vi.fn() } }),
+    context: vi.fn((fn: () => void) => {
+      fn();
+      return { revert: vi.fn() };
+    }),
   },
   default: {
     registerPlugin: vi.fn(),
-    context: vi.fn((fn: () => void) => { fn(); return { revert: vi.fn() } }),
+    context: vi.fn((fn: () => void) => {
+      fn();
+      return { revert: vi.fn() };
+    }),
   },
-}))
+}));
 vi.mock('gsap/ScrollTrigger', () => ({
   ScrollTrigger: {
     create: vi.fn(() => mockTrigger),
@@ -20,25 +26,25 @@ vi.mock('gsap/ScrollTrigger', () => ({
     getAll: vi.fn(() => []),
     config: vi.fn(),
   },
-}))
+}));
 
-import ScrollContainer from '@/components/ScrollContainer'
+import ScrollContainer from '@/components/ScrollContainer';
 
 describe('ScrollContainer', () => {
   it('renders the scroll container', () => {
-    render(<ScrollContainer />)
-    expect(document.getElementById('scroll-container')).toBeInTheDocument()
-  })
+    render(<ScrollContainer />);
+    expect(document.getElementById('scroll-container')).toBeInTheDocument();
+  });
 
   it('renders the HUD overlay layer', () => {
-    const { container } = render(<ScrollContainer />)
+    const { container } = render(<ScrollContainer />);
     // The overlay div should be present (from HUDOverlay)
-    const overlayDivs = container.querySelectorAll('[class*="overlay"]')
-    expect(overlayDivs.length).toBeGreaterThan(0)
-  })
+    const overlayDivs = container.querySelectorAll('[class*="overlay"]');
+    expect(overlayDivs.length).toBeGreaterThan(0);
+  });
 
   it('does not render a scroll track', () => {
-    render(<ScrollContainer />)
-    expect(document.getElementById('scroll-track')).toBeNull()
-  })
-})
+    render(<ScrollContainer />);
+    expect(document.getElementById('scroll-track')).toBeNull();
+  });
+});

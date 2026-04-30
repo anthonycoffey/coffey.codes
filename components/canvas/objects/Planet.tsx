@@ -1,60 +1,58 @@
-'use client'
+'use client';
 
-import { useRef, useMemo, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { useRef, useMemo, useEffect } from 'react';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
 interface PlanetProps {
-  scrollProgress: React.RefObject<number>
+  scrollProgress: React.RefObject<number>;
 }
 
 // ── Flat, Saturn-like Orbital Rings ───────────────────────────────────────
 function OrbitalParticles() {
-  const count = 5000 // More particles for a dense ring
-  const particlesRef = useRef<THREE.Points>(null)
-  
+  const count = 5000; // More particles for a dense ring
+  const particlesRef = useRef<THREE.Points>(null);
+
   const positions = useMemo(() => {
-    const p = new Float32Array(count * 3)
+    const p = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2
-      
+      const angle = Math.random() * Math.PI * 2;
+
       // Create a dense inner ring and a sparser outer ring
-      const isInner = Math.random() > 0.3
-      const radius = isInner 
-        ? 24 + Math.random() * 4 
-        : 29 + Math.random() * 8
-        
+      const isInner = Math.random() > 0.3;
+      const radius = isInner ? 24 + Math.random() * 4 : 29 + Math.random() * 8;
+
       // VERY flat height spread to look like a true planetary ring
-      const height = (Math.random() - 0.5) * 0.15
-      
-      p[i * 3] = Math.cos(angle) * radius
-      p[i * 3 + 1] = height
-      p[i * 3 + 2] = Math.sin(angle) * radius
+      const height = (Math.random() - 0.5) * 0.15;
+
+      p[i * 3] = Math.cos(angle) * radius;
+      p[i * 3 + 1] = height;
+      p[i * 3 + 2] = Math.sin(angle) * radius;
     }
-    return p
-  }, [count])
+    return p;
+  }, [count]);
 
   const colors = useMemo(() => {
-    const c = new Float32Array(count * 3)
-    const baseColor = new THREE.Color('#4488ff') // Cyan/Blue
-    const dustColor = new THREE.Color('#88aaff') // Light Ice
-    
+    const c = new Float32Array(count * 3);
+    const baseColor = new THREE.Color('#4488ff'); // Cyan/Blue
+    const dustColor = new THREE.Color('#88aaff'); // Light Ice
+
     for (let i = 0; i < count; i++) {
-      const color = Math.random() > 0.5 ? baseColor : dustColor
+      const color = Math.random() > 0.5 ? baseColor : dustColor;
       // Add slight variation
-      c[i * 3] = color.r * (0.8 + Math.random() * 0.2)
-      c[i * 3 + 1] = color.g * (0.8 + Math.random() * 0.2)
-      c[i * 3 + 2] = color.b * (0.8 + Math.random() * 0.2)
+      c[i * 3] = color.r * (0.8 + Math.random() * 0.2);
+      c[i * 3 + 1] = color.g * (0.8 + Math.random() * 0.2);
+      c[i * 3 + 2] = color.b * (0.8 + Math.random() * 0.2);
     }
-    return c
-  }, [count])
+    return c;
+  }, [count]);
 
   useFrame(({ clock }) => {
     if (particlesRef.current) {
       // Ring rotation
-      particlesRef.current.rotation.y = clock.getElapsedTime() * 0.05
+      particlesRef.current.rotation.y = clock.getElapsedTime() * 0.05;
     }
-  })
+  });
 
   return (
     // Tilt the ring so it looks majestic from the camera angle
@@ -63,17 +61,17 @@ function OrbitalParticles() {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
-      <pointsMaterial 
-        size={0.05} 
+      <pointsMaterial
+        size={0.05}
         vertexColors
-        transparent 
-        opacity={0.6} 
-        sizeAttenuation 
+        transparent
+        opacity={0.6}
+        sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
     </points>
-  )
+  );
 }
 
 const NOISE_GLSL = `
@@ -143,17 +141,20 @@ const NOISE_GLSL = `
 const PLANET_LIGHTING_LAYER = 1;
 
 export default function Planet({ scrollProgress }: PlanetProps) {
-  const groupRef = useRef<THREE.Group>(null)
-  const meshRef = useRef<THREE.Mesh>(null)
-  
-  const eclipseLightRef = useRef<THREE.PointLight>(null)
-  const frontLightRef = useRef<THREE.DirectionalLight>(null)
-  const fillLightRef = useRef<THREE.DirectionalLight>(null)
-  const planetMatRef = useRef<THREE.MeshStandardMaterial>(null)
+  const groupRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 }
-  }), [])
+  const eclipseLightRef = useRef<THREE.PointLight>(null);
+  const frontLightRef = useRef<THREE.DirectionalLight>(null);
+  const fillLightRef = useRef<THREE.DirectionalLight>(null);
+  const planetMatRef = useRef<THREE.MeshStandardMaterial>(null);
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+    }),
+    [],
+  );
 
   useEffect(() => {
     // 1. Assign the planet mesh to Layer 1 (and keep it on Layer 0 so camera sees it)
@@ -161,7 +162,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
     if (meshRef.current && meshRef.current.layers) {
       meshRef.current.layers.enable(PLANET_LIGHTING_LAYER);
     }
-    
+
     // 2. Isolate the custom planet lights entirely to Layer 1.
     // This prevents them from hitting the UFO or Spaceship (which are on Layer 0).
     if (eclipseLightRef.current && eclipseLightRef.current.layers) {
@@ -173,38 +174,41 @@ export default function Planet({ scrollProgress }: PlanetProps) {
     if (fillLightRef.current && fillLightRef.current.layers) {
       fillLightRef.current.layers.set(PLANET_LIGHTING_LAYER);
     }
-  }, [])
+  }, []);
 
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime()
+    const t = clock.getElapsedTime();
     if (groupRef.current) {
       // Very slow, majestic rotation
-      groupRef.current.rotation.y = t * 0.05 
+      groupRef.current.rotation.y = t * 0.05;
     }
 
     if (eclipseLightRef.current) {
-      const progress = scrollProgress.current ?? 0
-      const localT = Math.max(0, Math.min(1, (progress - 0.35) / 0.2))
-      eclipseLightRef.current.intensity = localT * 12
+      const progress = scrollProgress.current ?? 0;
+      const localT = Math.max(0, Math.min(1, (progress - 0.35) / 0.2));
+      eclipseLightRef.current.intensity = localT * 12;
     }
 
-    uniforms.uTime.value = t
-    
+    uniforms.uTime.value = t;
+
     if (planetMatRef.current && planetMatRef.current.userData?.shader) {
-      planetMatRef.current.userData.shader.uniforms.uTime.value = t
+      planetMatRef.current.userData.shader.uniforms.uTime.value = t;
     }
-  })
+  });
 
-  const handleBeforeCompile = (shader: THREE.WebGLProgramParametersWithUniforms) => {
+  const handleBeforeCompile = (
+    shader: THREE.WebGLProgramParametersWithUniforms,
+  ) => {
     if (planetMatRef.current) {
-      planetMatRef.current.userData.shader = shader
+      planetMatRef.current.userData.shader = shader;
     }
-    shader.uniforms.uTime = uniforms.uTime
+    shader.uniforms.uTime = uniforms.uTime;
 
     // Add local position varying
-    shader.vertexShader = `
+    shader.vertexShader =
+      `
       varying vec3 vLocalPos;
-    ` + shader.vertexShader
+    ` + shader.vertexShader;
 
     shader.vertexShader = shader.vertexShader.replace(
       '#include <begin_vertex>',
@@ -213,14 +217,15 @@ export default function Planet({ scrollProgress }: PlanetProps) {
       // Crucial fix: We pass the UNTRANSFORMED local position to the fragment shader.
       // This means the textures/noise will rotate WITH the planet, fixing the "swimming" effect.
       vLocalPos = position;
-      `
-    )
+      `,
+    );
 
-    shader.fragmentShader = `
+    shader.fragmentShader =
+      `
       uniform float uTime;
       varying vec3 vLocalPos;
       ${NOISE_GLSL}
-    ` + shader.fragmentShader
+    ` + shader.fragmentShader;
 
     shader.fragmentShader = shader.fragmentShader.replace(
       '#include <color_fragment>',
@@ -263,9 +268,9 @@ export default function Planet({ scrollProgress }: PlanetProps) {
       finalColor = mix(finalColor, colorStorm, clamp((gasNoise - 0.6) * 4.0, 0.0, 1.0));
       
       diffuseColor.rgb = finalColor;
-      `
-    )
-  }
+      `,
+    );
+  };
 
   return (
     <group ref={groupRef} position={[0, -30, -50]}>
@@ -298,10 +303,10 @@ export default function Planet({ scrollProgress }: PlanetProps) {
       <directionalLight
         ref={frontLightRef}
         position={[25, 15, 30]}
-        color="#ffffff" 
+        color="#ffffff"
         intensity={2.5}
       />
-      
+
       <directionalLight
         ref={fillLightRef}
         position={[-20, -10, 10]}
@@ -309,5 +314,5 @@ export default function Planet({ scrollProgress }: PlanetProps) {
         intensity={0.8}
       />
     </group>
-  )
+  );
 }

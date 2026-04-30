@@ -32,14 +32,7 @@ export default function WorkHistory() {
       title: 'Full Stack Engineer',
       location: 'Austin, Texas',
       start: 'August, 2023',
-      skills: [
-        'AWS',
-        'Heroku',
-        'Nuxt',
-        'Twilio',
-        'Twilio Flex',
-        'PostGIS',
-      ],
+      skills: ['AWS', 'Heroku', 'Nuxt', 'Twilio', 'Twilio Flex', 'PostGIS'],
     },
     {
       company: 'Marani Health',

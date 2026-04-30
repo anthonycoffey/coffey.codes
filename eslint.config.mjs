@@ -37,7 +37,14 @@ const config = [
     },
   },
   {
-    ignores: ['node_modules', '.next', 'public', 'coverage', '**/*.d.ts', '**/*.mdx'],
+    ignores: [
+      'node_modules',
+      '.next',
+      'public',
+      'coverage',
+      '**/*.d.ts',
+      '**/*.mdx',
+    ],
   },
 ];
 

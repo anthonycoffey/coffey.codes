@@ -27,12 +27,10 @@ test.describe('Articles index', () => {
       await nextBtn.click();
       await expect(page).toHaveURL(/[?&]page=2/);
     } else {
-      test
-        .info()
-        .annotations.push({
-          type: 'note',
-          description: 'Single page of posts — pagination not exercised',
-        });
+      test.info().annotations.push({
+        type: 'note',
+        description: 'Single page of posts — pagination not exercised',
+      });
     }
   });
 });

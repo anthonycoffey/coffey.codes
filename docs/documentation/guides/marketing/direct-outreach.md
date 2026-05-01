@@ -6,9 +6,9 @@ While inbound marketing (SEO, content) attracts leads over time, targeted direct
 
 ## Objectives
 
-- Identify and connect with key decision-makers at companies matching the ICP.
-- Initiate conversations about potential challenges that your services can solve.
-- Generate qualified leads for freelance projects or consulting engagements.
+- Identify and connect with key decision-makers at companies matching the ICP (founders, CTOs, eng managers, agency owners — they're buyers of senior IC capacity).
+- Initiate conversations about a specific piece of work they likely need shipped.
+- Generate qualified leads for project work, retainer engagements, or embedded senior-IC roles.
 - Build relationships with potential long-term clients.
 
 ## Execution Plan
@@ -19,8 +19,8 @@ While inbound marketing (SEO, content) attracts leads over time, targeted direct
 - **Components:**
   - **Industry/Niche:** Specific sectors (e.g., SaaS, FinTech, HealthTech).
   - **Company Size:** Revenue, number of employees (e.g., startups, mid-market).
-  - **Specific Roles/Titles:** Target decision-makers (e.g., CTO, VP of Engineering, Head of Product, Technical Lead).
-  - **Technical Needs/Pain Points:** Common challenges they face that your skills address (e.g., need for specific tech stack expertise, scaling issues, AI integration).
+  - **Specific Roles/Titles:** Target buyers of senior IC capacity (e.g., CTO, VP of Engineering, Head of Product, Eng Manager, Founder, Agency Owner). Note: these people *hire* a senior dev — Anthony isn't being pitched as their peer.
+  - **Technical Needs/Pain Points:** Common challenges they face that hands-on senior engineering addresses (e.g., need for specific tech stack expertise, scaling issues, an AI feature that needs to actually ship, a project they can't staff in time).
   - **Geography (if applicable):** Location constraints or preferences.
 - **Reference:** Store the detailed ICP definition (or link to it if in another file).
 
@@ -39,9 +39,10 @@ While inbound marketing (SEO, content) attracts leads over time, targeted direct
 - **Primary Channels:** LinkedIn (InMail or connection requests with notes), Email.
 - **Messaging Principles:**
   - **Personalization:** Reference specific research findings (company news, individual's role/posts). AVOID generic templates.
-  - **Value Proposition:** Clearly articulate how your skills/services can address a _potential_ pain point or help them achieve a specific goal relevant to _them_. Reference the UVP (`uvp.md`).
+  - **Value Proposition:** Clearly articulate how senior hands-on engineering capacity can address a _specific_ piece of work they likely have in flight. Reference the UVP (`uvp.md`).
+  - **Pitch the work, not a strategy session:** Frame the call around the actual project / problem, not "let's talk strategy." Anthony is the senior IC who'd ship it, not an advisor delivering a deck.
   - **Concise & Respectful:** Keep messages brief and focused. Respect their time.
-  - **Clear Call-to-Action (CTA):** Suggest a brief introductory call (15-20 minutes) to discuss further, _not_ a hard sell. Example: "Would you be open to a brief chat next week to explore if my expertise in [Specific Skill] could support your work on [Specific Project/Area]?"
+  - **Clear Call-to-Action (CTA):** Suggest a short discovery call (15-20 minutes) about a specific piece of work, _not_ a hard sell. Example: "Would you be open to a brief chat next week to explore whether bringing in a senior dev with [Specific Skill] could help you ship [Specific Project/Area] faster?"
 - **Sequence (Optional):** Plan a short sequence of follow-up messages if there's no initial response (e.g., 2-3 messages over a couple of weeks), adding value or a different angle each time.
 
 ### 4. Tracking & Measurement

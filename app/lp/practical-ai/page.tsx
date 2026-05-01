@@ -60,11 +60,11 @@ export default function PracticalAiLandingPage() {
           Cut Through the AI Hype. Get AI Solutions That Actually Work.
         </h1>
         <p className="text-xl text-c-muted max-w-3xl mx-auto">
-          Ready to leverage AI but tired of the buzzwords? For businesses
-          seeking tangible results, not just experiments, Anthony Coffey is your
-          Practical Innovation Partner. Get production-ready AI solutions, built
-          on robust, scalable foundations, and integrated seamlessly into your
-          operations.
+          Ready to use AI but tired of the buzzwords? For businesses that want
+          tangible results — not another experiment — Anthony Coffey is the
+          senior engineer who actually ships the work. Production-ready AI
+          features, built on robust, scalable foundations and integrated
+          cleanly into your existing systems.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -98,11 +98,11 @@ export default function PracticalAiLandingPage() {
           </h2>
           <p className="text-lg text-c-text mb-4">
             Successful AI isn&apos;t just about algorithms; it&apos;s about
-            solid engineering. Leverage 12+ years of disciplined software
-            development experience to ensure your AI initiatives are not just
-            innovative, but also robust, well-integrated, and focused on
-            measurable business value. Get the strategic oversight of a
-            Fractional CTO combined with hands-on implementation expertise.
+            solid engineering. With 12+ years of disciplined software
+            development under the belt, you get AI work that&apos;s not just
+            interesting — it&apos;s robust, well-integrated, and focused on
+            measurable business value. Senior engineering judgment and
+            hands-on implementation from the same person.
           </p>
           {/* Enhanced Benefits List with Icons */}
           <div className="space-y-4 text-lg text-c-text mb-6">
@@ -131,9 +131,10 @@ export default function PracticalAiLandingPage() {
               <MapIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
-                  Clear Strategy & Guidance:
+                  Clear on the WHAT, WHY and HOW:
                 </span>{' '}
-                Understand the WHAT, WHY and HOW.
+                You always know what&apos;s being built and why — no black-box
+                handoffs.
               </span>
             </div>
             <div className="flex items-start">
@@ -148,7 +149,7 @@ export default function PracticalAiLandingPage() {
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
-            Schedule Your Free AI Strategy Call
+            Book a Free Intro Call
           </a>
         </div>
         {/* Right column now includes headshot ABOVE the contact form */}
@@ -173,8 +174,9 @@ export default function PracticalAiLandingPage() {
           Explore Your AI Potential
         </h2>
         <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a complimentary 30-minute strategy call to discuss how practical
-          AI solutions can drive innovation and efficiency in your business.
+          Book a free 20-minute intro call to talk through the AI feature or
+          automation you have in mind, and how to ship it on a solid
+          engineering foundation.
         </p>
         <a
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link

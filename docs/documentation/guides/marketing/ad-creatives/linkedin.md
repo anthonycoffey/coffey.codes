@@ -16,7 +16,7 @@ This document provides example ad copy frameworks for LinkedIn campaigns, based 
 
 ## Ad Examples: Targeting ICP 1 (SMEs needing Web/Mobile Expertise)
 
-- **Target Audience:** CTOs, VPs of Engineering, Heads of Product, CEOs/Founders in Tech, Prof. Services, E-commerce (20-200 employees).
+- **Target Audience:** CTOs, VPs of Engineering, Heads of Product, CEOs/Founders in Tech, Prof. Services, E-commerce (20-200 employees). They are *buyers* of senior IC capacity — the role being offered is senior developer, not peer-level CTO.
 
 ### Ad Example 1.1 (Focus: Reliability & Experience)
 
@@ -29,25 +29,25 @@ This document provides example ad copy frameworks for LinkedIn campaigns, based 
 
 - **Image:** Abstract graphic representing growth or system upgrade.
 - **Headline:** Modernize Your Legacy Systems. Scale with Confidence.
-- **Body:** Is outdated software holding your business back? Partner with an experienced (12 yrs) engineer specializing in modernizing and scaling web/mobile applications (Node.js, Python, Cloud). Ensure your tech foundation supports future growth. Based in Austin.
+- **Body:** Is outdated software holding your business back? Bring in a senior engineer (12 yrs) who specializes in modernizing and scaling web/mobile applications (Node.js, Python, Cloud) — hands-on the keyboard from day one. Based in Austin.
 - **CTA:** Learn More (Link to Web/Mobile Service Page)
 
 ## Ad Examples: Targeting ICP 2 (Businesses Exploring Practical AI)
 
-- **Target Audience:** CTOs, CIOs, Heads of Innovation, Directors of Data Science, Business Unit Leaders in Tech, Finance, Healthcare, Logistics (50-500 employees).
+- **Target Audience:** CTOs, CIOs, Heads of Innovation, Directors of Data Science, Eng Managers in Tech, Finance, Healthcare, Logistics (50-500 employees). Buyers of an embedded senior engineer to actually ship the AI work.
 
 ### Ad Example 2.1 (Focus: Pragmatic AI & Engineering Rigor)
 
 - **Image:** Clean graphic illustrating AI concepts (e.g., connected nodes) or a professional headshot.
-- **Headline:** Bridge the AI Gap: Practical AI Solutions, Proven Engineering.
-- **Body:** Cut through the AI hype. As a software engineer with 12+ years' experience, I help businesses implement practical AI (LLM integration, automation, custom models) grounded in solid architecture. Move from AI potential to real-world value. Explore pragmatic AI strategies for your business. #AIconsulting #ArtificialIntelligence #CustomAI #LLM #SoftwareEngineering #AustinTech
-- **CTA:** Book Strategy Call (Link to scheduling tool or Contact Page)
+- **Headline:** Practical AI, Built by an Engineer Who Ships.
+- **Body:** Cut through the AI hype. With 12+ years writing production software, I plug in as a senior engineer to actually implement practical AI — LLM integration, automation, custom models — grounded in solid architecture. Hands-on the keyboard, no slide-deck deliverables. #PracticalAI #LLM #SoftwareEngineering #AustinTech
+- **CTA:** Book Intro Call (Link to scheduling tool or Contact Page)
 
 ### Ad Example 2.2 (Focus: Specific AI Use Case - Automation)
 
 - **Image:** Graphic illustrating process automation or efficiency gains.
 - **Headline:** Automate Processes with Custom AI, Built by an Engineer.
-- **Body:** Ready to leverage AI for efficiency but unsure where to start? Get practical AI automation solutions (workflow integration, data processing) built on a reliable engineering foundation (12 yrs exp). Let's identify high-ROI automation opportunities for your business.
+- **Body:** Ready to use AI for efficiency but unsure where to start? Bring in a senior dev (12 yrs) to scope and ship a real automation pilot — workflow integration, data processing, the works — on a reliable engineering foundation. Working code, not a roadmap deck.
 - **CTA:** Visit Website (Link to AI Service Page)
 
 ## Testing & Optimization

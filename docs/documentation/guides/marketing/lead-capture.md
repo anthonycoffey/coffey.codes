@@ -8,10 +8,10 @@ Make it easy and compelling for potential clients (ICPs) to initiate contact or 
 
 ## Website Conversion Elements (`coffey.codes`)
 
-- **Primary Call-to-Action (CTA): "Schedule a Strategy Call" / "Book a Consultation"**
+- **Primary Call-to-Action (CTA): "Book an Intro Call" / "Discuss Your Project"**
   - **Placement:** Prominently on the Homepage, Service Pages (Web/Mobile, AI), Contact Page, potentially at the end of relevant Blog Posts/Case Studies.
   - **Mechanism:** Link to a scheduling tool (e.g., Calendly) or the Contact Page with clear instructions.
-  - **Goal:** Encourage high-intent prospects ready to discuss specific needs.
+  - **Goal:** Encourage high-intent prospects with a specific project in mind. Frame the call around the work, not a strategy session.
 - **Secondary CTA: "Discuss Your Project" / "Request a Quote"**
   - **Placement:** Contact Page, potentially Service Pages.
   - **Mechanism:** Link to the Contact Form (`components/ContactForm.tsx`).
@@ -46,7 +46,7 @@ Make it easy and compelling for potential clients (ICPs) to initiate contact or 
 1.  **Immediate:** Automated confirmation email (if possible via form backend) - "Thanks for reaching out! I've received your message and will respond within 1 business day."
 2.  **Within 1 Business Day:** Personalized email response.
     - Acknowledge their message.
-    - If need is clear: Suggest scheduling a brief call ("Strategy Call") to discuss further. Provide scheduling link.
+    - If need is clear: Suggest scheduling a brief intro call to discuss the specific project. Provide scheduling link.
     - If need is unclear: Ask 1-2 clarifying questions to better understand their goals/challenges.
 3.  **Follow-up (if no response after 3-4 days):** Brief, polite follow-up email. "Just checking in on my previous message. Let me know if you'd like to schedule a brief chat this week."
 4.  **Nurturing (If not ready):** If they downloaded a lead magnet or expressed interest but aren't ready, add them to an email list (with permission) for future content updates/newsletters.

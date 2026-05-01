@@ -26,7 +26,7 @@ coffey.codes/
 │   │   ├── [slug]/page.tsx     # Individual article rendering
 │   │   ├── category/[category]/page.tsx
 │   │   └── tag/[tag]/page.tsx
-│   ├── case-studies/           # TEMPORARILY DISABLED (redirects to /)
+│   ├── case-studies/           # Case studies listing
 │   ├── contact/                # Contact page
 │   ├── lp/                     # ICP-targeted landing pages
 │   ├── og/                     # OG image generation (route handler)
@@ -85,10 +85,6 @@ Allows JSX components within markdown, enabling rich interactive blog posts. Pro
 ### npm as Package Manager
 
 npm is preferred for stability/practicality. Lock file is `package.json`.
-
-### System-Preference Theming Only
-
-Manual theme toggle was removed (April 2025) due to persistent issues with dynamic style updates. The site now relies solely on `next-themes` with `enableSystem`.
 
 ## Design Patterns
 
@@ -156,7 +152,6 @@ npm lint:fix        # ESLint auto-fix
 | ---------------------- | -------------------- | ----------------------------------------------------------------- |
 | Contact form backend   | Not implemented      | `ContactForm.tsx` exists, API route TBD (Resend/Formspree/custom) |
 | Social links in footer | Not added            | GitHub/LinkedIn links missing from `components/footer.tsx`        |
-| Case studies section   | Temporarily disabled | Redirects to `/`, links commented out in nav/footer               |
 | Testing                | No framework         | No tests currently; TDD approach to be adopted for new features   |
 
 ## Version Control

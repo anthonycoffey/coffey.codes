@@ -13,13 +13,13 @@ _Goal: Ensure the primary online presence (website, LinkedIn) powerfully tells t
   - **Elevate Case Studies:** Develop 1-2 compelling case studies as _narratives_ of client transformation. Highlight the 'dependable' process and the 'transformation' results. Make these prominent.
   - **Showcase Trust Signals:** Request and prominently display 2-3 client testimonials focusing on reliability and results. Add logos where permitted.
 - **Website - Clear Next Steps:**
-  - Implement clear Calls-to-Action (CTAs) framed around the client's desired transformation (e.g., "Start Your Transformation," "Discuss Your Growth Project," "Get AI Clarity"). Link CTAs to the contact page/booking system.
+  - Implement clear Calls-to-Action (CTAs) framed around the actual work (e.g., "Discuss Your Project," "Scope a Pilot," "Book an Intro Call"). Link CTAs to the contact page/booking system. Avoid CTAs that imply advisory engagements ("Book a Strategy Session," etc.) — frame around shipping work, not strategy.
   - Ensure the contact form (`components/ContactForm.tsx`) is functional (**CRITICAL DEPENDENCY:** Backend implementation required).
 - **LinkedIn Profile - Align Narrative:**
   - **Rewrite Headline & Summary:** Update profile to strongly reflect the "Dependable Transformation" narrative and the refined UVP for your primary target audience(s).
   - Ensure experience section showcases projects as examples of dependable transformation.
 - **Analytics & Tracking Setup:**
-  - Configure Google Analytics (GA4) with goal tracking for transformation-oriented conversions (e.g., strategy call bookings, case study downloads).
+  - Configure Google Analytics (GA4) with goal tracking for transformation-oriented conversions (e.g., intro call bookings, case study downloads).
   - Set up a basic lead tracking system (CRM or spreadsheet) to log inquiries, sources, and alignment with ICPs.
   - Install LinkedIn Insight Tag on `coffey.codes`.
 - **Phase Completion Check:** Verify all Phase 0 items effectively communicate the core narrative before proceeding.

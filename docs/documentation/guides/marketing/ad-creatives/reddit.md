@@ -19,15 +19,15 @@ This document provides example ad copy frameworks for Reddit campaigns, based on
 
 ### Ad Example 1.1 (Focus: Experience & Specific Skills)
 
-- **Headline:** 12 Yrs Full-Stack Dev (Node/Python/React) | Freelance/Consulting
-- **Body:** Senior engineer available for complex web/mobile builds or tackling tricky integrations. Experience scaling apps and leading projects. Based in Austin, work remote. No agency overhead. See portfolio/discuss your challenge: [Link to Website Portfolio or Service Page]
+- **Headline:** 12 Yrs Full-Stack Dev (Node/Python/React) | Senior IC, Available for Project Work
+- **Body:** Senior engineer / lead dev available for complex web/mobile builds or tricky integrations. Experience scaling apps and owning delivery end to end. Based in Austin, work remote. No agency overhead, no junior bait-and-switch. See portfolio/discuss your challenge: [Link to Website Portfolio or Service Page]
 - **Subreddits:** r/node, r/Python, r/webdev, r/reactjs
 - **CTA:** Learn More
 
 ### Ad Example 1.2 (Focus: Bridging AI & Engineering)
 
-- **Headline:** Practical AI Implementation Needs Solid Engineering (12 Yrs Exp)
-- **Body:** Seeing AI projects fail due to weak foundations? I help integrate LLMs, build custom AI tools, and automate workflows on robust Node.js/Python backends. Pragmatic approach, focus on results. DM or visit [Link to AI Service Page] to discuss.
+- **Headline:** Practical AI Needs Solid Engineering (Senior Dev, 12 Yrs)
+- **Body:** Seeing AI projects fail due to weak foundations? I plug in as a senior dev to integrate LLMs, build custom AI tools, and automate workflows on robust Node.js/Python backends. Hands-on the keyboard, no hype. DM or visit [Link to AI Service Page] to discuss.
 - **Subreddits:** r/node, r/Python, r/MachineLearning (use with caution, ensure relevance), r/programming
 - **CTA:** Visit Website / Send Message
 
@@ -44,10 +44,10 @@ This document provides example ad copy frameworks for Reddit campaigns, based on
 
 ### Ad Example 2.2 (Focus: AI for Business Growth)
 
-- **Headline:** Leverage AI Pragmatically for Your Business (Consulting/Dev)
-- **Body:** Cut through the AI noise. Experienced engineer (12 yrs) helping businesses identify and implement high-ROI AI use cases (automation, insights, chatbots) without breaking the bank. Based in Austin. Free initial consultation: [Link to Scheduling Tool or Contact Page]
+- **Headline:** Practical AI for Your Business — Built by an Engineer
+- **Body:** Cut through the AI noise. Senior engineer (12 yrs) helping businesses scope and ship high-ROI AI use cases (automation, insights, chatbots) without breaking the bank. Working code, not a deck. Based in Austin. Free intro call: [Link to Scheduling Tool or Contact Page]
 - **Subreddits:** r/smallbusiness, r/Entrepreneur, potentially industry-specific subs if relevant.
-- **CTA:** Book Consultation
+- **CTA:** Book Intro Call
 
 ## Testing & Optimization
 

@@ -5,7 +5,7 @@ This document outlines a content calendar focused on demonstrating **Dependable 
 **Core Principles:**
 
 - **Narrative Focus:** Every piece of content should reinforce the "Dependable Transformation" story – reliability, expertise, and tangible positive outcomes for clients.
-- **Unique Voice:** Share _your_ hard-won insights and opinions from 12 years of experience. Don't just state facts; offer perspective. This embodies the "Strategic Partnership" value.
+- **Unique Voice:** Share _your_ hard-won insights and opinions from 12 years of shipping production systems. Don't just state facts; offer perspective. This is what "Senior Hands on the Keyboard" sounds like in writing — the take only someone who's actually built the thing can give.
 - **Show, Don't Just Tell:** Prioritize real examples and mini-case studies within posts. Elevate full case studies as cornerstone content.
 - **Generosity:** Offer genuine value and clear next steps that help the reader, building trust and demonstrating expertise.
 
@@ -19,7 +19,7 @@ This document outlines a content calendar focused on demonstrating **Dependable 
 - **Achieving Project Certainty (Web/Mobile):** Targeting ICP 1. Focus on overcoming unreliability, building for growth, making smart tech choices for long-term success.
 - **Gaining Practical AI Advantage:** Targeting ICP 2. Focus on cutting through hype, implementing AI for real business value, integrating reliably, measuring ROI.
 - **Building an Effective Web Presence (SMBs):** Targeting ICP 3. Focus on integrating tech for measurable results, making websites dependable growth engines.
-- **Expert Insights & Partnership:** Broader appeal (including ICP 4). Showcasing senior-level thinking, strategic approaches, and lessons learned from complex projects.
+- **Expert Insights from the Keyboard:** Broader appeal (including ICP 4). Showcasing senior-level engineering thinking, hands-on approaches, and lessons learned from complex projects — the kind of perspective that signals "this is a senior IC you'd want on your team."
 
 ## Publishing Cadence
 
@@ -43,8 +43,8 @@ _(Mix themes, prioritize showing transformation)_
     - **Generous CTA:** Offer a "5-Point Tech Scalability Check" download or link to a relevant case study on modernization/scaling.
 3.  **Case Study:** "Transformation Story: From Legacy Bottleneck to Reliable Growth Engine for [Client Type/Industry]"
     - **Theme:** Achieving Project Certainty / Expert Insights (ICP 1 & 4)
-    - **Angle:** Structure as a narrative: The client's challenge/pain -> Your dependable process/approach -> The tangible transformation/results (metrics!). Highlight the _partnership_ aspect.
-    - **Keywords:** legacy modernization case study, software transformation, reliable development partner, [Client Industry] tech solutions.
+    - **Angle:** Structure as a narrative: The client's challenge/pain -> Your hands-on process/approach -> The tangible transformation/results (metrics!). Highlight that a single senior engineer owned the work end to end.
+    - **Keywords:** legacy modernization case study, software transformation, senior developer for hire, [Client Industry] tech solutions.
     - **Generous CTA:** Invite readers with similar challenges to schedule a "Project Certainty Assessment" call.
 
 ## Potential Future Topics (Months 3+) - Deepening the Narrative
@@ -57,7 +57,7 @@ _(Mix themes, prioritize showing transformation)_
   - "Integrating OpenAI/Anthropic APIs Without Breaking Your Existing Systems: A Practical Guide"
   - "Data Prep for AI: Lessons Learned from the Trenches"
   - "Building Custom Chatbots That Actually Enhance Customer Experience" (Focus on practical application)
-- **Expert Insights/Partnership:**
+- **Expert Insights from the Keyboard:**
   - "Lessons from 12 Years: Avoiding Common Pitfalls in Complex Software Projects"
   - "Serverless: Hype vs. Reality for Cost-Effective Backends (My Take)"
   - "Architecting for Failure: Building Resilient Systems"

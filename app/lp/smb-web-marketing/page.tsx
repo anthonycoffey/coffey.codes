@@ -147,7 +147,7 @@ export default function SmbWebMarketingLandingPage() {
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
-            Schedule Your Free Web Strategy Call
+            Book a Free Intro Call
           </a>
         </div>
         {/* Right column now includes headshot ABOVE the contact form */}
@@ -169,9 +169,9 @@ export default function SmbWebMarketingLandingPage() {
           Plan Your Integrated Web Presence
         </h2>
         <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a complimentary 30-minute strategy call to discuss your website
-          needs and how integrating marketing technology can help achieve your
-          business objectives.
+          Book a free 20-minute intro call to talk through your website needs
+          and how integrating marketing technology can help you actually
+          measure growth.
         </p>
         <a
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link

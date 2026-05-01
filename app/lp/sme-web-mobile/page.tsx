@@ -16,12 +16,12 @@ import {
 export const metadata: Metadata = {
   title: 'Custom Web & Mobile Apps for Growing SMEs',
   description:
-    'Reliable, scalable web and mobile apps built with senior-level expertise. Fractional CTO partnership for established SMEs focused on long-term growth.',
+    'Reliable, scalable web and mobile apps built by a senior developer. Direct, hands-on engineering for established SMEs focused on long-term growth — no junior hand-off, no agency overhead.',
   alternates: { canonical: '/lp/sme-web-mobile' },
   openGraph: {
     title: 'Custom Web & Mobile Apps for Growing SMEs',
     description:
-      'Reliable, scalable web and mobile apps with senior-level, Fractional-CTO-style partnership.',
+      'Reliable, scalable web and mobile apps built directly by a senior engineer with 12+ years shipping production systems.',
     url: '/lp/sme-web-mobile',
     type: 'website',
   },
@@ -48,7 +48,7 @@ export default function SmeWebMobileLandingPage() {
     provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
     areaServed: 'US',
     description:
-      'Reliable, scalable web and mobile apps with Fractional CTO partnership for established SMEs.',
+      'Reliable, scalable web and mobile apps built directly by a senior engineer for established SMEs.',
     url: `${baseUrl}/lp/sme-web-mobile`,
   };
   return (
@@ -62,9 +62,10 @@ export default function SmeWebMobileLandingPage() {
         <p className="text-xl text-c-muted max-w-3xl mx-auto">
           Tired of tech projects that derail or agencies that disappear?
           Established SMEs need reliable, scalable web and mobile applications
-          built for the long haul. Anthony Coffey offers a direct, senior-level
-          partnership – think of it as your Fractional CTO – focused squarely on
-          delivering robust solutions you can depend on.
+          built for the long haul. Anthony Coffey is the senior developer you
+          work with directly — 12+ years shipping production systems,
+          hands-on the keyboard, focused squarely on delivering robust
+          solutions you can depend on.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -124,8 +125,9 @@ export default function SmeWebMobileLandingPage() {
             <div className="flex items-start">
               <UserGroupIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
-                <span className="font-semibold">Your Fractional CTO:</span>{' '}
-                Direct access to senior-level strategic guidance.
+                <span className="font-semibold">Direct Senior Access:</span>{' '}
+                Work directly with the engineer doing the work — no
+                account-manager middle layer.
               </span>
             </div>
             <div className="flex items-start">
@@ -147,7 +149,7 @@ export default function SmeWebMobileLandingPage() {
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
-            Schedule Your Free Strategy Call
+            Book a Free Intro Call
           </a>
         </div>
         <div className="flex flex-col items-center gap-10">
@@ -162,11 +164,12 @@ export default function SmeWebMobileLandingPage() {
 
       <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-          Let&apos;s Strategize Your Next Application
+          Let&apos;s Talk Through Your Next Application
         </h2>
         <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a complimentary 30-minute strategy call to discuss your specific
-          needs and how we can build a reliable, scalable solution together.
+          Book a free 20-minute intro call to walk through what you&apos;re
+          building. If it&apos;s a fit, we&apos;ll talk scope and how to ship
+          a reliable, scalable solution.
         </p>
         <a
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link

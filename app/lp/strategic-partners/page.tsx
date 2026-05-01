@@ -14,14 +14,14 @@ import {
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
 export const metadata: Metadata = {
-  title: 'Fractional CTO & Tech Partner for Agencies',
+  title: 'Senior Engineer on Retainer for Agencies & Tech Teams',
   description:
-    'Senior-level expertise in architecture, DevOps, and AI integration. Fractional CTO and Specialist Lead services for agencies, startups, and tech teams.',
+    'Embedded senior developer / lead dev for agencies, startups, and tech teams. 12+ years shipping production work in architecture, DevOps, and practical AI integration — no ramp, no hiring loop.',
   alternates: { canonical: '/lp/strategic-partners' },
   openGraph: {
-    title: 'Fractional CTO & Tech Partner for Agencies',
+    title: 'Senior Engineer on Retainer for Agencies & Tech Teams',
     description:
-      'Augment your team with senior architecture, DevOps, and AI expertise — Fractional CTO and Specialist Lead services.',
+      'Embedded senior developer / lead dev for agencies, startups, and tech teams — architecture, DevOps, and practical AI, hands-on the keyboard.',
     url: '/lp/strategic-partners',
     type: 'website',
   },
@@ -36,7 +36,7 @@ export default function StrategicPartnersLandingPage() {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Strategic Partners',
+        name: 'Senior Engineer on Retainer',
         item: `${baseUrl}/lp/strategic-partners`,
       },
     ],
@@ -44,11 +44,11 @@ export default function StrategicPartnersLandingPage() {
   const service = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'Fractional CTO & Specialist Lead Services',
+    name: 'Senior Developer / Lead Dev on Retainer',
     provider: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
     areaServed: 'US',
     description:
-      'Senior-level expertise in software architecture, DevOps, and practical AI/ML integration for agencies, startups, and tech teams.',
+      'Embedded senior engineer for agencies, startups, and tech teams — architecture, DevOps, and practical AI/ML integration. Hands-on delivery, no ramp, no hiring loop.',
     url: `${baseUrl}/lp/strategic-partners`,
   };
   return (
@@ -57,15 +57,15 @@ export default function StrategicPartnersLandingPage() {
       <JsonLd data={service} />
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-c-heading">
-          Need Senior Expertise? Augment Your Team with a Strategic Tech
-          Partner.
+          Need Senior Hands on the Keyboard? Plug in a Lead Dev Without the
+          Hiring Loop.
         </h1>
         <p className="text-xl text-c-muted max-w-3xl mx-auto">
-          Facing complex technical hurdles or need strategic leadership for a
-          critical project? Anthony Coffey partners with startups, agencies, and
-          tech teams as a Fractional CTO or Specialist Lead. Augment your
-          existing team with deep expertise in architecture, DevOps, and AI to
-          confidently tackle ambitious goals and deliver superior results.
+          Have a critical project you can&apos;t staff fast enough? Anthony
+          Coffey embeds with startups, agencies, and tech teams as a senior
+          developer / lead dev on retainer. 12+ years shipping production
+          systems in architecture, DevOps, and practical AI integration — no
+          ramp time, no junior bait-and-switch, no slide decks.
         </p>
         <div className="flex justify-center mb-24 mt-10">
           <div className="relative w-64 h-64 md:w-72 md:h-72">
@@ -95,15 +95,15 @@ export default function StrategicPartnersLandingPage() {
       <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
           <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-            Your On-Demand Technical Leadership
+            A Senior Engineer Who Owns Delivery
           </h2>
           <p className="text-lg text-c-text mb-4">
-            Gain immediate access to 12+ years of specialized experience in
-            software architecture, DevOps, and practical AI integration. Whether
-            you need high-level strategic guidance or hands-on leadership for
-            complex implementations, partner with a proven expert to navigate
-            technical challenges, ensure best practices, and drive your most
-            important projects forward.
+            Get immediate access to 12+ years of hands-on experience in
+            software architecture, DevOps, and practical AI integration.
+            Whether you need someone to lead a tricky implementation or just an
+            extra senior pair of hands that can ship without daily oversight,
+            you bring on an experienced IC who&apos;s done this before — many
+            times.
           </p>
           {/* Enhanced Benefits List with Icons */}
           <div className="space-y-4 text-lg text-c-text mb-6">
@@ -111,16 +111,17 @@ export default function StrategicPartnersLandingPage() {
               <BuildingLibraryIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
-                  Expert Architecture & Tech Strategy:
+                  Architecture & Tech Decisions:
                 </span>{' '}
-                Make confident technology decisions.
+                Confident calls on the structural choices that bite later.
               </span>
             </div>
             <div className="flex items-start">
               <ServerStackIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
-                <span className="font-semibold">DevOps & CI/CD Mastery:</span>{' '}
-                Streamline development and deployment.
+                <span className="font-semibold">DevOps & CI/CD:</span>{' '}
+                Streamline development and deployment with status checks and
+                uptime monitoring done right.
               </span>
             </div>
             <div className="flex items-start">
@@ -129,7 +130,8 @@ export default function StrategicPartnersLandingPage() {
                 <span className="font-semibold">
                   Practical AI Implementation:
                 </span>{' '}
-                Integrate AI to enhance your offerings.
+                Ship real AI features — LLM integration, automation — not
+                experiments.
               </span>
             </div>
             <div className="flex items-start">
@@ -145,9 +147,9 @@ export default function StrategicPartnersLandingPage() {
               <UserPlusIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
               <span>
                 <span className="font-semibold">
-                  Seamless Team Augmentation:
+                  Embedded Senior Capacity:
                 </span>{' '}
-                Add senior expertise exactly when needed.
+                Plug in for a project or stay on retainer — no hiring loop.
               </span>
             </div>
           </div>
@@ -155,7 +157,7 @@ export default function StrategicPartnersLandingPage() {
             href="#schedule-call" // Placeholder link/anchor
             className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
           >
-            Schedule Your Free Partnership Call
+            Book a Free Intro Call
           </a>
         </div>
         {/* Right column now includes headshot ABOVE the contact form */}
@@ -167,7 +169,7 @@ export default function StrategicPartnersLandingPage() {
             {' '}
             {/* Ensure form takes full width */}
             <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
-              Discuss a Strategic Partnership
+              Discuss Your Project
             </h3>
             <ContactForm />
           </div>
@@ -177,11 +179,12 @@ export default function StrategicPartnersLandingPage() {
       {/* Placeholder section for scheduling call */}
       <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
         <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-          Explore Collaboration Opportunities
+          Talk Through the Work
         </h2>
         <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a complimentary 30-minute call to discuss how specialized
-          expertise can augment your team and accelerate your project success.
+          Book a free 20-minute call to walk through the project. If it&apos;s
+          a fit, we&apos;ll talk scope and how to get a senior dev on it
+          without the hiring loop.
         </p>
         <a
           href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
@@ -189,7 +192,7 @@ export default function StrategicPartnersLandingPage() {
           rel="noopener noreferrer"
           className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
         >
-          Book Partnership Call Now
+          Book Free Intro Call
         </a>
       </section>
     </div>

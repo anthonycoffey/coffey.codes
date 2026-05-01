@@ -98,5 +98,4 @@ These commands scaffold documents from canonical templates in `docs/templates/`:
 
 ## Known issues
 
-- `/case-studies` is temporarily disabled — permanently redirects to home
-- Node.js >= 22 is required; the project will not build on older versions
+- Node.js >= 24 is required; the project will not build on older versions

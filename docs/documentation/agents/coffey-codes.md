@@ -15,7 +15,7 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 - A digital resume and portfolio showcasing work history, skills, and projects
 - A blog for publishing technical articles (MDX-powered)
 - A point of contact for potential clients and employers
-- A platform for thought leadership in software development and AI/ML
+- A place to publish hands-on technical writing on software development and AI/ML — the kind of content that signals senior IC depth, not advisory positioning
 
 **Target audience:** Recruiters, potential clients, freelance collaborators, and developer peers.
 
@@ -128,11 +128,10 @@ npm start
 
 ## Known Gotchas
 
-- **Case studies are temporarily disabled** — `/case-studies` redirects to home (via `next.config.js`). Links are commented out in `components/nav.tsx` and `components/footer.tsx`, and the route is removed from `app/sitemap.ts`.
 - **Async params in Next.js 15+** — `params` and `searchParams` must be awaited in page components. See the article `fixing-broken-routes-after-nextjs-16-upgrade.mdx` for full context.
 - **Client vs Server Components** — Components with `'use client';` cannot export `metadata`. Use a wrapping `layout.tsx` (Server Component) to handle metadata for Client Component pages (e.g., `app/portfolio/layout.tsx`).
 - **Contact form backend is TBD** — `components/ContactForm.tsx` exists but the API route/service handling submissions has not yet been implemented.
-- **Node.js >= 22 required** — `camera-controls` (dependency of `@react-three/drei`) requires Node 22+. This is enforced in `package.json` engines field and `.nvmrc`.
+- **Node.js >= 24 required** — `camera-controls` (dependency of `@react-three/drei`) requires Node 22+. This is enforced in `package.json` engines field and `.nvmrc`.
 
 ## Related Docs
 

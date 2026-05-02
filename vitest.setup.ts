@@ -1,5 +1,14 @@
 import '@testing-library/jest-dom';
 
+// jsdom lacks ResizeObserver, which @visx/tooltip's useTooltipInPortal needs.
+if (typeof globalThis.ResizeObserver === 'undefined') {
+  globalThis.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  } as unknown as typeof ResizeObserver;
+}
+
 const filterMessage = (msg: string) =>
   msg.includes('is using incorrect casing') ||
   msg.includes('is unrecognized in this browser') ||

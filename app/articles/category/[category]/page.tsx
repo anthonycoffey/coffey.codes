@@ -34,13 +34,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { category } = await params;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
+  const title = `${decodedCategory} Articles`;
+  const description = `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`;
+  const url = `/articles/category/${encodeURIComponent(category)}`;
 
   return {
-    title: `${decodedCategory} Articles`,
-    description: `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`,
-    alternates: {
-      canonical: `/articles/category/${encodeURIComponent(category)}`,
-    },
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: 'website', url, title, description },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 

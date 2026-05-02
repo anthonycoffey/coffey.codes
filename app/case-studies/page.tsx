@@ -1,10 +1,10 @@
 import {
   ClipboardDocumentCheckIcon,
-  ArrowDownTrayIcon,
-  CpuChipIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
+import { caseStudies } from './case-studies';
 
 import type { Metadata } from 'next';
 
@@ -13,10 +13,22 @@ export const metadata: Metadata = {
   description:
     'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
   alternates: { canonical: '/case-studies' },
-  robots: { index: false, follow: true },
+  openGraph: {
+    type: 'website',
+    url: '/case-studies',
+    title: 'Case Studies by Anthony Coffey',
+    description:
+      'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Case Studies by Anthony Coffey',
+    description:
+      'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+  },
 };
 
-const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
+const CaseStudyCard = ({ icon, title, description, slug, tags }) => {
   const Icon = icon;
 
   return (
@@ -27,7 +39,12 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
         </div>
         <div className="flex-1">
           <h2 className="font-outfit font-medium text-lg text-c-heading mb-2">
-            {title}
+            <Link
+              href={`/case-study/${slug}`}
+              className="hover:text-accent1-dark transition-colors"
+            >
+              {title}
+            </Link>
           </h2>
           <p className="text-c-text mb-4">{description}</p>
 
@@ -45,14 +62,13 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
           )}
 
           <div className="flex justify-between items-center">
-            <span className="text-sm text-c-muted">PDF Case Study</span>
+            <span className="text-sm text-c-muted">Case Study</span>
             <Link
-              href={pdfPath}
+              href={`/case-study/${slug}`}
               className="flex items-center space-x-2 px-4 py-2 bg-accent1-dark text-surface rounded-full hover:opacity-90 transition-opacity"
-              target="_blank"
             >
-              <ArrowDownTrayIcon className="w-4 h-4" />
-              <span>Download</span>
+              <span>Read Case Study</span>
+              <ChevronRightIcon className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -62,23 +78,6 @@ const CaseStudyCard = ({ icon, title, description, pdfPath, tags }) => {
 };
 
 export default async function CaseStudiesPage() {
-  const caseStudies = [
-    {
-      icon: CpuChipIcon,
-      title:
-        'PostGIS in Action: Streamlining Fleet Operations with Geospatial Precision',
-      description:
-        'Integrated PostGIS extension for PostgreSQL to optimize technician dispatch by leveraging pre-existing location data for efficient, scalable geospatial queries. This solution streamlined operations without disrupting legacy workflows.',
-      pdfPath: '/case-studies/Case%20Study%20-%20PostGIS%20in%20Action.pdf',
-      tags: [
-        'PostgreSQL',
-        'PostGIS',
-        'Geospatial',
-        'Fleet Management',
-        'Optimization',
-      ],
-    },
-  ];
 
   return (
     <>
@@ -95,27 +94,12 @@ export default async function CaseStudiesPage() {
             icon={study.icon}
             title={study.title}
             description={study.description}
-            pdfPath={study.pdfPath}
+            slug={study.slug}
             tags={study.tags}
           />
         ))}
       </div>
 
-      <div className="mt-12 bg-bg-alt p-6 rounded-xl border border-border">
-        <h2 className="font-outfit text-xl font-medium text-c-heading mb-2">
-          Need a custom solution?
-        </h2>
-        <p className="text-c-text mb-4">
-          I specialize in solving problems with tech. Let&apos;s discuss how my
-          expertise can help your business.
-        </p>
-        <Link
-          href="/contact"
-          className="inline-block px-5 py-2.5 bg-accent1-dark text-surface font-medium rounded-full hover:opacity-90 transition-opacity"
-        >
-          Get in touch
-        </Link>
-      </div>
     </>
   );
 }

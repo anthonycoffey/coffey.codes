@@ -29,6 +29,12 @@ export const metadata: Metadata = {
     url: '/articles',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Articles by Anthony Coffey',
+    description:
+      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
+  },
 };
 
 export default async function ArticlesPage({ searchParams }) {

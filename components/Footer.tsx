@@ -88,7 +88,8 @@ export default function Footer() {
               />
             </Link>
             <p className="text-c-muted text-sm leading-relaxed">
-              Hello, my name is Anthony Coffey. I like to make things and write about it. Follow me on social media!
+              Hello, my name is Anthony Coffey. I like to make things and write
+              about it.
             </p>
             <SocialIcons align="left" />
           </div>

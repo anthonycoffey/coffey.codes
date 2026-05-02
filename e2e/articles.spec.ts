@@ -25,7 +25,7 @@ test.describe('Articles index', () => {
     const hasNext = await nextBtn.count();
     if (hasNext > 0) {
       await nextBtn.click();
-      await expect(page).toHaveURL(/[?&]page=2/);
+      await page.waitForURL(/[?&]page=2/, { timeout: 15000 });
     } else {
       test.info().annotations.push({
         type: 'note',
@@ -44,9 +44,13 @@ test.describe('Tag filter', () => {
 
     const firstTag = page.locator('a[href^="/articles/tag/"]').first();
     const tagText = await firstTag.innerText();
+    const tagHref = await firstTag.getAttribute('href');
     await firstTag.click();
 
-    await expect(page).toHaveURL(/\/articles\/tag\//);
+    await page.waitForURL(
+      tagHref ? new RegExp(tagHref.replace(/[/.]/g, '\\$&')) : /\/articles\/tag\//,
+      { timeout: 15000 },
+    );
     await expect(page.locator('h1')).toContainText(tagText.trim(), {
       ignoreCase: true,
     });

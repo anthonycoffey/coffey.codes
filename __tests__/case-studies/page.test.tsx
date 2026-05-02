@@ -18,7 +18,7 @@ vi.mock('next/link', () => ({
 
 vi.mock('@heroicons/react/20/solid', () => ({
   ClipboardDocumentCheckIcon: () => null,
-  ArrowDownTrayIcon: () => null,
+  ChevronRightIcon: () => null,
   CpuChipIcon: () => null,
 }));
 
@@ -36,25 +36,20 @@ describe('CaseStudiesPage', () => {
   it('renders the case study cards with their titles and tags', async () => {
     const jsx = await CaseStudiesPage();
     render(jsx as React.ReactElement);
-    // Title pulled directly from the page's hard-coded data.
     expect(
       screen.getByText(/PostGIS in Action: Streamlining Fleet Operations/i),
     ).toBeInTheDocument();
-    // A representative tag from the same case study
     expect(screen.getByText('PostGIS')).toBeInTheDocument();
   });
 
-  it('renders a download link for each case study PDF', async () => {
+  it('links each card to its /case-study/:slug detail page', async () => {
     const jsx = await CaseStudiesPage();
     render(jsx as React.ReactElement);
-    const download = screen.getByRole('link', { name: /download/i });
-    expect(download).toHaveAttribute('href', expect.stringMatching(/\.pdf$/));
-  });
-
-  it('renders a "Get in touch" CTA pointing to /contact', async () => {
-    const jsx = await CaseStudiesPage();
-    render(jsx as React.ReactElement);
-    const cta = screen.getByRole('link', { name: /get in touch/i });
-    expect(cta).toHaveAttribute('href', '/contact');
+    const readLinks = screen.getAllByRole('link', { name: /read case study/i });
+    expect(readLinks.length).toBeGreaterThan(0);
+    expect(readLinks[0]).toHaveAttribute(
+      'href',
+      '/case-study/postgis-fleet-optimization',
+    );
   });
 });

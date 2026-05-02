@@ -32,7 +32,7 @@ export default defineConfig({
     ? undefined
     : {
         command:
-          'NEXT_TELEMETRY_DISABLED=1 npm run dev -- -H 127.0.0.1 -p 3000 --turbo',
+          'npm run dev -- -H 127.0.0.1 -p 3000',
         url: 'http://127.0.0.1:3000',
         reuseExistingServer: !process.env.CI,
         timeout: 120000,

@@ -69,20 +69,29 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Col 1: Logo + tagline + social */}
           <div className="flex flex-col gap-4">
-            <Link href="/">
+            <Link href="/" aria-label="Anthony Coffey home">
+              <Image
+                width={300}
+                height={82}
+                src="/logo-horizontal-light.svg"
+                alt="Anthony Coffey logo"
+                className="h-14 w-auto block dark:hidden"
+                priority
+              />
               <Image
                 width={300}
                 height={82}
                 src="/logo-horizontal.svg"
                 alt="Anthony Coffey logo"
-                className="h-14 w-auto"
+                className="h-14 w-auto hidden dark:block"
                 priority
               />
             </Link>
             <p className="text-c-muted text-sm leading-relaxed">
-              AI Consultant &amp; Full-stack Architect based in Austin, TX.
+              Hello, my name is Anthony Coffey. I like to make things and write
+              about it.
             </p>
-            <SocialIcons />
+            <SocialIcons align="left" />
           </div>
 
           {/* Col 2: Nav links */}

@@ -30,11 +30,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { tag } = await params;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
+  const title = `${decodedTag} Articles`;
+  const description = `Articles tagged ${decodedTag} — technical write-ups and deep dives by Anthony Coffey.`;
+  const url = `/articles/tag/${encodeURIComponent(tag)}`;
 
   return {
-    title: `${decodedTag} Articles`,
-    description: `Articles tagged ${decodedTag} — technical write-ups and deep dives by Anthony Coffey.`,
-    alternates: { canonical: `/articles/tag/${encodeURIComponent(tag)}` },
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: 'website', url, title, description },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 

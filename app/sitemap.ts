@@ -3,6 +3,7 @@ import {
   getAllCategories,
   getAllTags,
 } from '@/app/articles/utils';
+import { caseStudies } from '@/app/case-studies/case-studies';
 
 export const baseUrl = 'https://coffey.codes';
 
@@ -44,6 +45,13 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
     priority: 0.4,
   }));
 
+  const caseStudyEntries: SitemapEntry[] = caseStudies.map((study) => ({
+    url: `${baseUrl}/case-study/${study.slug}`,
+    lastModified: today,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
   const staticRoutes: SitemapEntry[] = [
     {
       url: `${baseUrl}/`,
@@ -68,6 +76,12 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
       lastModified: today,
       changeFrequency: 'monthly',
       priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/case-studies`,
+      lastModified: today,
+      changeFrequency: 'monthly',
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/portfolio`,
@@ -107,5 +121,11 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
     },
   ];
 
-  return [...staticRoutes, ...articles, ...categories, ...tags];
+  return [
+    ...staticRoutes,
+    ...articles,
+    ...categories,
+    ...tags,
+    ...caseStudyEntries,
+  ];
 }

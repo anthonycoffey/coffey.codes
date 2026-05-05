@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import BlogLayout from '@/app/articles/layout';
+import BlogLayout from '@/app/(site)/articles/layout';
 
 describe('BlogLayout', () => {
   it('renders children inside the layout wrapper', () => {

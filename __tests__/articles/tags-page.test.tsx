@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@/app/articles/utils', () => ({
+vi.mock('@/app/(site)/articles/utils', () => ({
   getAllTags: vi.fn(),
 }));
 
@@ -15,8 +15,8 @@ vi.mock('next/link', () => ({
   }) => <a href={href}>{children}</a>,
 }));
 
-import { getAllTags } from '@/app/articles/utils';
-import TagsPage from '@/app/articles/tags/page';
+import { getAllTags } from '@/app/(site)/articles/utils';
+import TagsPage from '@/app/(site)/articles/tags/page';
 
 beforeEach(() => {
   vi.clearAllMocks();

@@ -7,7 +7,10 @@ test.describe('Article comments (Giscus)', () => {
   test('renders the Giscus widget on an article page', async ({ page }) => {
     await page.goto(ARTICLE_PATH);
 
+    // Comments are lazy-mounted via IntersectionObserver — scroll into view
+    // first so the actual user flow (reader reaching the bottom) is exercised.
     const commentsSection = page.locator('section[aria-label="Comments"]');
+    await commentsSection.scrollIntoViewIfNeeded();
     await expect(commentsSection).toBeVisible();
 
     const widget = commentsSection.locator('giscus-widget');
@@ -21,7 +24,10 @@ test.describe('Article comments (Giscus)', () => {
     await page.goto(ARTICLE_PATH);
 
     await expect(page.locator('article').first()).toBeVisible();
-    await expect(page.locator('section[aria-label="Comments"]')).toBeVisible();
+
+    const commentsSection = page.locator('section[aria-label="Comments"]');
+    await commentsSection.scrollIntoViewIfNeeded();
+    await expect(commentsSection).toBeVisible();
 
     const ordering = await page.evaluate(() => {
       const a = document.querySelector('article');

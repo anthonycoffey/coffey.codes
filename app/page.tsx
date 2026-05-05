@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Navbar from '@/components/Navbar';
 import ScrollContainer from '@/components/ScrollContainer';
 
 const HOME_TITLE =
@@ -26,5 +27,12 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ScrollContainer />;
+  return (
+    <>
+      <Navbar />
+      <main>
+        <ScrollContainer />
+      </main>
+    </>
+  );
 }

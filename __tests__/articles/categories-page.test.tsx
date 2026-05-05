@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@/app/articles/utils', () => ({
+vi.mock('@/app/(site)/articles/utils', () => ({
   getAllCategories: vi.fn(),
 }));
 
@@ -15,8 +15,8 @@ vi.mock('next/link', () => ({
   }) => <a href={href}>{children}</a>,
 }));
 
-import { getAllCategories } from '@/app/articles/utils';
-import CategoriesPage from '@/app/articles/categories/page';
+import { getAllCategories } from '@/app/(site)/articles/utils';
+import CategoriesPage from '@/app/(site)/articles/categories/page';
 
 beforeEach(() => {
   vi.clearAllMocks();

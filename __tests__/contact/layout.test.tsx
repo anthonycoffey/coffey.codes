@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import ContactLayout from '@/app/contact/layout';
+import ContactLayout from '@/app/(site)/contact/layout';
 
 describe('ContactLayout', () => {
   it('renders children inside the layout wrapper', () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CaseStudiesLayout from '@/app/case-studies/layout';
+import CaseStudiesLayout from '@/app/(site)/case-studies/layout';
 
 describe('CaseStudiesLayout', () => {
   it('renders children inside the layout wrapper', () => {

@@ -3,7 +3,7 @@ import {
   getPaginatedBlogPosts,
   getAllTags,
   getAllCategories,
-} from '@/app/articles/utils';
+} from '@/app/(site)/articles/utils';
 import Pagination from '@/components/Pagination';
 import {
   DocumentTextIcon,

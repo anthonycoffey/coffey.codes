@@ -20,22 +20,20 @@ export default function Comments() {
   const theme = mounted && resolvedTheme === 'dark' ? 'dark' : 'light';
 
   return (
-    <section aria-label="Comments" className="mt-12">
-      <Giscus
-        id="comments"
-        repo={GISCUS_REPO}
-        repoId={GISCUS_REPO_ID}
-        category={GISCUS_CATEGORY}
-        categoryId={GISCUS_CATEGORY_ID}
-        mapping="pathname"
-        strict="0"
-        reactionsEnabled="1"
-        emitMetadata="0"
-        inputPosition="bottom"
-        theme={theme}
-        lang="en"
-        loading="lazy"
-      />
-    </section>
+    <Giscus
+      id="comments"
+      repo={GISCUS_REPO}
+      repoId={GISCUS_REPO_ID}
+      category={GISCUS_CATEGORY}
+      categoryId={GISCUS_CATEGORY_ID}
+      mapping="pathname"
+      strict="0"
+      reactionsEnabled="1"
+      emitMetadata="0"
+      inputPosition="bottom"
+      theme={theme}
+      lang="en"
+      loading="lazy"
+    />
   );
 }

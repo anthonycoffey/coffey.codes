@@ -1,6 +1,6 @@
-import ContactForm from '../../components/ContactForm';
-import RetroWindow from '../../components/ui/RetroWindow';
-import Button from '../../components/ui/Button';
+import ContactForm from '@/components/ContactForm';
+import RetroWindow from '@/components/ui/RetroWindow';
+import Button from '@/components/ui/Button';
 import PageHeader from '@/components/PageHeader';
 import {
   CalendarDaysIcon,

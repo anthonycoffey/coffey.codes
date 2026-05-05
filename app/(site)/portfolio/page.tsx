@@ -11,8 +11,8 @@ import {
   CodeBracketSquareIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid';
-import RetroWindow from '../../components/ui/RetroWindow';
-import Button from '../../components/ui/Button';
+import RetroWindow from '@/components/ui/RetroWindow';
+import Button from '@/components/ui/Button';
 import PageHeader from '@/components/PageHeader';
 
 import Image from 'next/image';

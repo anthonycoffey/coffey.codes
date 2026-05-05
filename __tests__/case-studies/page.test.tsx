@@ -22,7 +22,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
   CpuChipIcon: () => null,
 }));
 
-import CaseStudiesPage from '@/app/case-studies/page';
+import CaseStudiesPage from '@/app/(site)/case-studies/page';
 
 describe('CaseStudiesPage', () => {
   it('renders the page heading', async () => {

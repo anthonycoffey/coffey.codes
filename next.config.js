@@ -2,6 +2,21 @@
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'mdx'],
   transpilePackages: ['next-mdx-remote'],
+  experimental: {
+    optimizePackageImports: [
+      '@heroicons/react',
+      '@visx/axis',
+      '@visx/event',
+      '@visx/gradient',
+      '@visx/group',
+      '@visx/responsive',
+      '@visx/scale',
+      '@visx/shape',
+      '@visx/text',
+      '@visx/tooltip',
+      '@react-three/drei',
+    ],
+  },
   async redirects() {
     return [
       {

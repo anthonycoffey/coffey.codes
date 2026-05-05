@@ -7,21 +7,21 @@ vi.mock('next/navigation', () => ({
   notFound: mockNotFound,
 }));
 
-vi.mock('@/app/articles/utils', () => ({
+vi.mock('@/app/(site)/articles/utils', () => ({
   getPaginatedBlogPostsByTag:
     vi.fn<
       (
         tag: string,
         page?: number,
         itemsPerPage?: number,
-      ) => import('@/app/articles/utils').PaginatedBlogPosts
+      ) => import('@/app/(site)/articles/utils').PaginatedBlogPosts
     >(),
   getPaginatedBlogPosts:
     vi.fn<
       (
         page?: number,
         itemsPerPage?: number,
-      ) => import('@/app/articles/utils').PaginatedBlogPosts
+      ) => import('@/app/(site)/articles/utils').PaginatedBlogPosts
     >(),
   getAllTags: vi.fn(),
   getAllCategories: vi.fn(),
@@ -63,15 +63,15 @@ import {
   getPaginatedBlogPosts,
   getAllTags,
   getAllCategories,
-} from '@/app/articles/utils';
-import TagPage from '@/app/articles/tag/[tag]/page';
+} from '@/app/(site)/articles/utils';
+import TagPage from '@/app/(site)/articles/tag/[tag]/page';
 
-const EMPTY_RESULT: import('@/app/articles/utils').PaginatedBlogPosts = {
+const EMPTY_RESULT: import('@/app/(site)/articles/utils').PaginatedBlogPosts = {
   posts: [],
   pagination: { totalItems: 0, totalPages: 0, currentPage: 1, itemsPerPage: 5 },
 };
 
-const ONE_POST_RESULT: import('@/app/articles/utils').PaginatedBlogPosts = {
+const ONE_POST_RESULT: import('@/app/(site)/articles/utils').PaginatedBlogPosts = {
   posts: [
     {
       metadata: {

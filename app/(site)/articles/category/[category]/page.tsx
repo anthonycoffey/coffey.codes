@@ -3,7 +3,7 @@ import {
   getAllCategories,
   getAllTags,
   capitalizeWords,
-} from '@/app/articles/utils';
+} from '@/app/(site)/articles/utils';
 import { BlogPosts } from '@/components/posts';
 import Pagination from '@/components/Pagination';
 import Link from 'next/link';

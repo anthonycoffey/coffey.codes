@@ -1,4 +1,4 @@
-import { getAllCategories } from '@/app/articles/utils';
+import { getAllCategories } from '@/app/(site)/articles/utils';
 import Link from 'next/link';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import PageHeader from '@/components/PageHeader';

@@ -1,5 +1,5 @@
 import { CaseStudyData } from '../../case-studies/case-studies';
-import { BarChart } from '@/components/charts';
+import CaseStudyChartBlock from './CaseStudyChartBlock';
 
 export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
   if (!study.story) return null;
@@ -38,7 +38,7 @@ export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
             );
           case 'chart':
             return (
-              <BarChart
+              <CaseStudyChartBlock
                 key={idx}
                 title={block.title}
                 data={block.data}

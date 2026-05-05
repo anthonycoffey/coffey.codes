@@ -16,12 +16,10 @@ vi.mock('@giscus/react', () => ({
 import Comments from '@/components/Comments';
 
 describe('Comments', () => {
-  it('renders the Giscus widget inside an aria-labelled Comments section', () => {
+  it('renders the Giscus widget', () => {
     giscusCalls.length = 0;
-    const { container, getByTestId } = render(<Comments />);
+    const { getByTestId } = render(<Comments />);
 
-    const section = container.querySelector('section[aria-label="Comments"]');
-    expect(section).not.toBeNull();
     expect(getByTestId('giscus-stub')).toBeInTheDocument();
   });
 

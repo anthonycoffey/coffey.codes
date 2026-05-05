@@ -4,10 +4,12 @@ import { highlight } from 'sugar-high';
 import React from 'react';
 import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
-import ThreeScene from './ThreeScene';
-import FishbowlScene from './FishbowlScene';
-import SceneExplorer from './SceneExplorer';
-import MermaidChart from './MermaidChart';
+import {
+  ThreeScene,
+  FishbowlScene,
+  SceneExplorer,
+  MermaidChart,
+} from './mdx-clients';
 import { Callout } from './Callout';
 import Link from 'next/link';
 

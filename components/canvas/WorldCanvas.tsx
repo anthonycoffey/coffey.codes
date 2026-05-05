@@ -5,6 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sampleMerkaba } from '@/utils/merkaba';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import CameraRig from './CameraRig';
 import UFO from './objects/UFO';
 import Planet from './objects/Planet';
@@ -153,6 +154,10 @@ interface WorldCanvasProps {
 }
 
 export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
+  // Spaceship (with thrust particles, lasers, and per-frame work) is desktop-only.
+  // Below 1024px the scene reads cleaner and avoids the GPU/CPU cost on mobile.
+  const showSpaceship = useMediaQuery('(min-width: 1024px)');
+
   return (
     <div
       style={{
@@ -206,7 +211,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         <Planet scrollProgress={scrollProgress} />
         <Satellite scrollProgress={scrollProgress} />
         <Galaxy scrollProgress={scrollProgress} />
-        <Spaceship scrollProgress={scrollProgress} />
+        {showSpaceship && <Spaceship scrollProgress={scrollProgress} />}
 
         <EffectComposer multisampling={0}>
           <Bloom

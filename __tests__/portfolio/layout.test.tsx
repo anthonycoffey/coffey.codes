@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import PortfolioLayout, { metadata } from '@/app/portfolio/layout';
+import PortfolioLayout, { metadata } from '@/app/(site)/portfolio/layout';
 
 describe('PortfolioLayout', () => {
   it('renders children inside the layout wrapper', () => {

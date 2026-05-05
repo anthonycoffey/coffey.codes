@@ -1,4 +1,4 @@
-import { getAllTags } from '@/app/articles/utils';
+import { getAllTags } from '@/app/(site)/articles/utils';
 import Link from 'next/link';
 import { TagIcon } from '@heroicons/react/20/solid';
 import PageHeader from '@/components/PageHeader';

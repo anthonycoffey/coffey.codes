@@ -51,7 +51,7 @@ import {
   getAllTags,
   getAllCategories,
   capitalizeWords,
-} from '@/app/articles/utils';
+} from '@/app/(site)/articles/utils';
 
 beforeEach(() => {
   vi.mocked(fs.readFileSync).mockImplementation((filePath: string) => {

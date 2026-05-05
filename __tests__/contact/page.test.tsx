@@ -48,7 +48,7 @@ vi.mock('@heroicons/react/24/solid', () => ({
   EnvelopeOpenIcon: () => null,
 }));
 
-import ContactPage from '@/app/contact/page';
+import ContactPage from '@/app/(site)/contact/page';
 
 describe('ContactPage', () => {
   it('renders the page heading', async () => {

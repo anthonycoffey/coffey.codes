@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import '../styles/global.sass';
 import { outfit, sourceSerif, GeistMono } from '../lib/fonts';
-import LayoutShell from '../components/LayoutShell';
+import { ThemeProvider } from '../components/ThemeProvider';
+import ConsentManagerLazy from '../components/ConsentManagerLazy';
+import GoogleAnalyticsLazy from '../components/GoogleAnalyticsLazy';
 import JsonLd from '../components/JsonLd';
 import { baseUrl } from './sitemap';
 
@@ -126,10 +128,21 @@ export default function RootLayout({
       className={cx(outfit.variable, sourceSerif.variable, GeistMono.variable)}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+      </head>
       <body className="antialiased bg-bg text-c-text font-outfit">
         <JsonLd data={personSchema} />
         <JsonLd data={websiteSchema} />
-        <LayoutShell>{children}</LayoutShell>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="light"
+          storageKey="theme"
+        >
+          <ConsentManagerLazy />
+          <GoogleAnalyticsLazy />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

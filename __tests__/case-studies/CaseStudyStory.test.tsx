@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CaseStudyStory from '@/app/case-study/[slug]/CaseStudyStory';
-import { CaseStudyData } from '@/app/case-studies/case-studies';
+import CaseStudyStory from '@/app/(site)/case-study/[slug]/CaseStudyStory';
+import { CaseStudyData } from '@/app/(site)/case-studies/case-studies';
 
 describe('CaseStudyStory', () => {
   const mockStudy: CaseStudyData = {

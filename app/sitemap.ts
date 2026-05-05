@@ -2,8 +2,8 @@ import {
   getAllBlogPosts,
   getAllCategories,
   getAllTags,
-} from '@/app/articles/utils';
-import { caseStudies } from '@/app/case-studies/case-studies';
+} from '@/app/(site)/articles/utils';
+import { caseStudies } from '@/app/(site)/case-studies/case-studies';
 
 export const baseUrl = 'https://coffey.codes';
 

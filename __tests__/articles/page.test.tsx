@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@/app/articles/utils', () => ({
+vi.mock('@/app/(site)/articles/utils', () => ({
   getPaginatedBlogPosts:
     vi.fn<
       (
         page?: number,
         itemsPerPage?: number,
-      ) => import('@/app/articles/utils').PaginatedBlogPosts
+      ) => import('@/app/(site)/articles/utils').PaginatedBlogPosts
     >(),
   getAllTags: vi.fn(),
   getAllCategories: vi.fn(),
@@ -42,10 +42,10 @@ import {
   getPaginatedBlogPosts,
   getAllTags,
   getAllCategories,
-} from '@/app/articles/utils';
-import ArticlesPage from '@/app/articles/page';
+} from '@/app/(site)/articles/utils';
+import ArticlesPage from '@/app/(site)/articles/page';
 
-const MOCK_RESULT: import('@/app/articles/utils').PaginatedBlogPosts = {
+const MOCK_RESULT: import('@/app/(site)/articles/utils').PaginatedBlogPosts = {
   posts: [],
   pagination: { totalItems: 0, totalPages: 1, currentPage: 1, itemsPerPage: 5 },
 };

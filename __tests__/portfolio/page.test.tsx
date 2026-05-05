@@ -52,7 +52,7 @@ vi.mock('@heroicons/react/24/solid', () => ({
   XMarkIcon: () => null,
 }));
 
-import PortfolioPage from '@/app/portfolio/page';
+import PortfolioPage from '@/app/(site)/portfolio/page';
 
 describe('PortfolioPage', () => {
   it('renders the page heading', () => {

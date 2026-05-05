@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@/app/articles/utils', () => ({
+vi.mock('@/app/(site)/articles/utils', () => ({
   getAllBlogPosts: vi.fn<() => BlogPost[]>(),
 }));
 
@@ -14,7 +14,7 @@ vi.mock('next/server', () => ({
 }));
 
 import { GET } from '@/app/api/search/route';
-import { getAllBlogPosts, type BlogPost } from '@/app/articles/utils';
+import { getAllBlogPosts, type BlogPost } from '@/app/(site)/articles/utils';
 
 const MOCK_POSTS: BlogPost[] = [
   {

@@ -42,7 +42,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
 }));
 
 import { useSearchParams, ReadonlyURLSearchParams } from 'next/navigation';
-import SearchPage from '@/app/articles/search/page';
+import SearchPage from '@/app/(site)/articles/search/page';
 
 const MOCK_POSTS = [
   {

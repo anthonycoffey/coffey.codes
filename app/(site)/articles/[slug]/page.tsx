@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { CustomMDX } from '@/components/mdx';
-import { getAllBlogPosts } from '@/app/articles/utils';
+import { getAllBlogPosts } from '@/app/(site)/articles/utils';
 import { baseUrl } from '@/app/sitemap';
 import GoBack from '@/components/GoBack';
 import Comments from '@/components/Comments';

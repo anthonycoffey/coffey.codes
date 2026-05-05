@@ -127,7 +127,7 @@ function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
 }
 
 export function getAllBlogPosts() {
-  return getRSSMDXData(path.join(process.cwd(), 'app', 'articles', 'posts'));
+  return getRSSMDXData(path.join(process.cwd(), 'app', '(site)', 'articles', 'posts'));
 }
 
 export function getPaginatedBlogPosts(
@@ -135,7 +135,7 @@ export function getPaginatedBlogPosts(
   itemsPerPage: number = 10,
 ) {
   return getMDXData(
-    path.join(process.cwd(), 'app', 'articles', 'posts'),
+    path.join(process.cwd(), 'app', '(site)', 'articles', 'posts'),
     page,
     itemsPerPage,
   );
@@ -146,7 +146,7 @@ export function getPaginatedBlogPostsByTag(
   page: number = 1,
   itemsPerPage: number = 10,
 ) {
-  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  const postsDir = path.join(process.cwd(), 'app', '(site)', 'articles', 'posts');
 
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
     const { metadata, content } = readMDXFile(path.join(postsDir, file));
@@ -200,7 +200,7 @@ export function getPaginatedBlogPostsByCategory(
   page: number = 1,
   itemsPerPage: number = 10,
 ) {
-  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  const postsDir = path.join(process.cwd(), 'app', '(site)', 'articles', 'posts');
 
   let mdxFiles = getMDXFiles(postsDir).map((file) => {
     const { metadata, content } = readMDXFile(path.join(postsDir, file));
@@ -248,7 +248,7 @@ export function getPaginatedBlogPostsByCategory(
 }
 
 export function getAllTags() {
-  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  const postsDir = path.join(process.cwd(), 'app', '(site)', 'articles', 'posts');
 
   const allTags = new Set<string>();
 
@@ -266,7 +266,7 @@ export function getAllTags() {
 }
 
 export function getAllCategories() {
-  const postsDir = path.join(process.cwd(), 'app', 'articles', 'posts');
+  const postsDir = path.join(process.cwd(), 'app', '(site)', 'articles', 'posts');
 
   const allCategories = new Set<string>();
 

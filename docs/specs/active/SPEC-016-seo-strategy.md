@@ -1,7 +1,7 @@
 ---
 id: SPEC-016
 title: 'SEO strategy, post-audit (technical and on-page)'
-status: draft
+status: in-progress
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []

@@ -9,6 +9,23 @@ import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';
 
+// Per-slug component overrides — keeps heavy 3D scene clients out of
+// the global MDX registry so non-3D articles don't ship dynamic-import
+// wrappers for three.js / @react-three/* code.
+const slugComponentLoaders: Record<
+  string,
+  () => Promise<Record<string, React.ComponentType<unknown>>>
+> = {
+  'building-interactive-3d-experiences-with-react-three-fiber': async () => {
+    const m = await import('@/components/mdx-scene-clients');
+    return {
+      ThreeScene: m.ThreeScene as unknown as React.ComponentType<unknown>,
+      FishbowlScene: m.FishbowlScene as unknown as React.ComponentType<unknown>,
+      SceneExplorer: m.SceneExplorer as unknown as React.ComponentType<unknown>,
+    };
+  },
+};
+
 export async function generateStaticParams() {
   const posts = getAllBlogPosts();
 
@@ -68,6 +85,10 @@ export default async function Blog({ params }) {
   if (!post) {
     notFound();
   }
+
+  const extraComponents = slugComponentLoaders[slug]
+    ? await slugComponentLoaders[slug]()
+    : undefined;
 
   return (
     <>
@@ -215,7 +236,7 @@ export default async function Blog({ params }) {
         <hr className="my-8 border-border" />
 
         <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
-          <CustomMDX source={post.content} />
+          <CustomMDX source={post.content} components={extraComponents} />
         </article>
         <CommentsLazy />
         <GoBack />

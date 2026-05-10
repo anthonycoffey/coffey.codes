@@ -4,12 +4,7 @@ import { highlight } from 'sugar-high';
 import React from 'react';
 import Counter from '@/components/Counter';
 import CopyButton from './CopyButton';
-import {
-  ThreeScene,
-  FishbowlScene,
-  SceneExplorer,
-  MermaidChart,
-} from './mdx-clients';
+import { MermaidChart } from './mdx-clients';
 import { Callout } from './Callout';
 import Link from 'next/link';
 
@@ -139,9 +134,6 @@ const components = {
   code: Code,
   Table,
   Counter,
-  ThreeScene,
-  FishbowlScene,
-  SceneExplorer,
   Callout,
 };
 

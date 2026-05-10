@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: [
       '@heroicons/react',
+      'mermaid',
       '@visx/axis',
       '@visx/event',
       '@visx/gradient',

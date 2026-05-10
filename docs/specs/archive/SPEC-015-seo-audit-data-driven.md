@@ -1,7 +1,7 @@
 ---
 id: SPEC-015
 title: 'SEO audit — data-driven, via search-console MCP'
-status: review-pending
+status: complete
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []

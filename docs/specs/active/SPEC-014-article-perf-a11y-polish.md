@@ -1,7 +1,7 @@
 ---
 id: SPEC-014
 title: 'Article perf + a11y polish — Lighthouse mobile 75 → 90+'
-status: draft
+status: review-pending
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []

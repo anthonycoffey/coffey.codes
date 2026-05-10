@@ -2,6 +2,7 @@
 import { ReactElement, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
+import '@/styles/logo-grid.sass';
 
 type Props = {
   logos: string[];

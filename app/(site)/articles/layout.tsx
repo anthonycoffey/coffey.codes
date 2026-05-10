@@ -1,3 +1,5 @@
+import '@/styles/article-prose.sass';
+
 export default function BlogLayout({
   children,
 }: {

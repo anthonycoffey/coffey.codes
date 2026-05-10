@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@/styles/portfolio-cards.sass';
 
 export const metadata: Metadata = {
   title: 'Portfolio',

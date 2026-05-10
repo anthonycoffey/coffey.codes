@@ -1,0 +1,39 @@
+// Retro window frame — used by the RetroWindow component on the
+// portfolio modal and the case-study chart blocks. Imported by the
+// component itself so it's only parsed where used.
+
+.retro-window
+  border: 2px solid var(--color-border)
+  border-radius: 8px
+  overflow: hidden
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.12)
+
+  .retro-window-bar
+    display: flex
+    align-items: center
+    gap: 8px
+    padding: 8px 12px
+    background: var(--color-accent-2)
+    border-bottom: 2px solid var(--color-border)
+
+  .retro-dot
+    width: 12px
+    height: 12px
+    border-radius: 50%
+    border: 1.5px solid rgba(0,0,0,0.15)
+    flex-shrink: 0
+
+  .retro-dot-red
+    background: #FF5F57
+  .retro-dot-yellow
+    background: #FFBD2E
+  .retro-dot-green
+    background: #28CA41
+
+
+// Dark-theme retro window bar override — accent-2 background clashes
+// with muted text in dark mode, so use bg-alt instead.
+[data-theme="dark"]
+  .retro-window .retro-window-bar
+    background: var(--color-bg-alt)
+    border-bottom-color: var(--color-border)

@@ -9,6 +9,7 @@ export type Metadata = {
   tags?: string[];
   category?: string;
   updated?: string;
+  youtubeId?: string;
 };
 
 export type BlogPost = {
@@ -57,7 +58,8 @@ function parseFrontmatter(fileContent: string) {
       x === 'publishedAt' ||
       x === 'summary' ||
       x === 'image' ||
-      x === 'updated'
+      x === 'updated' ||
+      x === 'youtubeId'
     ) {
       (metadata as Record<string, string>)[x] = value;
     }

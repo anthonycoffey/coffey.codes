@@ -48,9 +48,16 @@ export async function generateMetadata({ params }) {
     image,
   } = post.metadata;
 
-  const ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(postTitle)}`;
+  const youtubeId = post.metadata.youtubeId;
+
+  // For video articles, the YouTube thumbnail beats the generated /og card
+  // because social sharers expect a play-button preview. Falls back to the
+  // dynamic OG route for non-video articles.
+  const ogImage = youtubeId
+    ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+    : image
+      ? image
+      : `${baseUrl}/og?title=${encodeURIComponent(postTitle)}`;
 
   return {
     title: postTitle,
@@ -67,13 +74,40 @@ export async function generateMetadata({ params }) {
           url: ogImage,
         },
       ],
+      ...(youtubeId && {
+        videos: [
+          {
+            url: `https://www.youtube.com/embed/${youtubeId}`,
+            type: 'text/html',
+            width: 1280,
+            height: 720,
+          },
+        ],
+      }),
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: postTitle,
-      description,
-      images: [ogImage],
-    },
+    // Player card lets the video play inline in tweets; falls back to
+    // summary_large_image for non-video articles.
+    twitter: youtubeId
+      ? {
+          card: 'player',
+          title: postTitle,
+          description,
+          images: [ogImage],
+          players: [
+            {
+              playerUrl: `https://www.youtube.com/embed/${youtubeId}`,
+              streamUrl: `https://www.youtube.com/embed/${youtubeId}`,
+              width: 1280,
+              height: 720,
+            },
+          ],
+        }
+      : {
+          card: 'summary_large_image',
+          title: postTitle,
+          description,
+          images: [ogImage],
+        },
   };
 }
 
@@ -130,6 +164,17 @@ export default async function Blog({ params }) {
             },
             keywords: post.metadata.tags ? post.metadata.tags.join(', ') : '',
             articleSection: post.metadata.category || '',
+            ...(post.metadata.youtubeId && {
+              video: {
+                '@type': 'VideoObject',
+                name: post.metadata.title,
+                description: post.metadata.summary,
+                thumbnailUrl: `https://img.youtube.com/vi/${post.metadata.youtubeId}/maxresdefault.jpg`,
+                uploadDate: post.metadata.updated || post.metadata.publishedAt,
+                embedUrl: `https://www.youtube.com/embed/${post.metadata.youtubeId}`,
+                contentUrl: `https://www.youtube.com/watch?v=${post.metadata.youtubeId}`,
+              },
+            }),
           }),
         }}
       />

@@ -1,0 +1,46 @@
+---
+title: 'Three.js Portfolio Website for a Software Engineer'
+publishedAt: '2026-05-10'
+summary: 'Build log for the coffey.codes redesign. The old homepage was a wall of copy nobody read; the new one is a Three.js scroll experience built with React Three Fiber and GSAP. Includes the video walk-through.'
+tags: Three.js, React Three Fiber, Portfolio, Web Development, GSAP, Next.js
+category: Web Development
+---
+
+One day it hit me: nobody was reading the copy on my homepage. The old site had a marketing-style hero with a tagline, a CTA, a bio paragraph, the usual. None of it was doing work. So I redid the homepage as a Three.js scroll experience. The site is the portfolio now, not the words about the portfolio.
+
+The video walks through the build:
+
+<iframe
+  src="https://www.youtube-nocookie.com/embed/H0wzqgMeGpU"
+  title="Three.js Portfolio Website for Software Engineer, coffey.codes"
+  loading="lazy"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+  style={{ aspectRatio: '16 / 9', width: '100%', height: 'auto', border: 0 }}
+/>
+
+## What it does
+
+The homepage at [coffey.codes](/) is a single scroll experience. A WebGL canvas renders the 3D scene underneath; layered overlay panels render on top. GSAP ScrollTrigger maps scroll progress to a scrubbed timeline, so the same physical scroll gesture drives the camera through the scene and the overlay text in and out of view.
+
+The canvas component is mounted with `dynamic(..., { ssr: false })` because WebGL is a browser thing. The Three.js bundle only ships on the homepage route. Every other page on the site skips the WebGL code entirely.
+
+## The stack
+
+- **react-three-fiber** for the Three.js renderer
+- **@react-three/drei** for camera helpers and shader utilities
+- **GSAP with ScrollTrigger** for the scroll-driven animation
+- **Next.js App Router**, server components by default, client only where state and effects need it
+- **Tailwind CSS** for the overlay chrome
+
+## Why it works better
+
+The old homepage tried to do landing-page work and about-page work and portfolio-page work in a single vertical stack. Information density was high; engagement was low.
+
+The redesign moves each concern to the page that actually needs it. The bio belongs on the pages where someone is deciding whether to reach out, not where someone is deciding whether to stay. Testimonials moved to [/portfolio](/portfolio) and [/contact](/contact). Work samples moved to [/portfolio](/portfolio). The homepage stopped competing for attention with itself.
+
+## What this is not
+
+This is not a "Three.js for every site" recommendation. A 3D scene is a strong fit for a personal portfolio because the medium is the message: I build interactive things, here is an interactive thing. For a SaaS marketing site, a docs site, a content-heavy blog, the same approach would be theater rather than information.
+
+If you want the technical deep-dive on react-three-fiber patterns, that lives in a separate article: [Building Interactive 3D Experiences with React Three Fiber](/articles/building-interactive-3d-experiences-with-react-three-fiber).

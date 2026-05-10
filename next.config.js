@@ -26,6 +26,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/articles/category/development',
+        destination: '/articles/category/mobile%20development',
+        permanent: true,
+      },
+      {
         source: '/articles/console-log-nested-object-in-javascript',
         destination: '/articles',
         permanent: true,

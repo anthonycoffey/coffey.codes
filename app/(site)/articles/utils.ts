@@ -8,12 +8,14 @@ export type Metadata = {
   image?: string;
   tags?: string[];
   category?: string;
+  updated?: string;
 };
 
 export type BlogPost = {
   metadata: Metadata;
   slug: string;
   content: string;
+  mtime?: string;
 };
 
 export type PaginatedBlogPosts = {
@@ -54,7 +56,8 @@ function parseFrontmatter(fileContent: string) {
       x === 'title' ||
       x === 'publishedAt' ||
       x === 'summary' ||
-      x === 'image'
+      x === 'image' ||
+      x === 'updated'
     ) {
       (metadata as Record<string, string>)[x] = value;
     }
@@ -73,18 +76,20 @@ function getMDXFiles(dir: string) {
 
 function readMDXFile(filePath: string) {
   const rawContent = fs.readFileSync(filePath, 'utf-8');
-  return parseFrontmatter(rawContent);
+  const mtime = fs.statSync(filePath).mtime.toISOString();
+  return { ...parseFrontmatter(rawContent), mtime };
 }
 
 function getRSSMDXData(dir: string) {
   return getMDXFiles(dir).map((file) => {
-    const { metadata, content } = readMDXFile(path.join(dir, file));
+    const { metadata, content, mtime } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
 
     return {
       metadata,
       slug,
       content,
+      mtime,
     };
   });
 }
@@ -126,7 +131,7 @@ function getMDXData(dir: string, page: number = 1, itemsPerPage: number = 10) {
   };
 }
 
-export function getAllBlogPosts() {
+export function getAllBlogPosts(): BlogPost[] {
   return getRSSMDXData(path.join(process.cwd(), 'app', '(site)', 'articles', 'posts'));
 }
 

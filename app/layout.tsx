@@ -12,12 +12,12 @@ const cx = (...classes: (string | undefined | false)[]) =>
 
 const SITE_NAME = 'Anthony Coffey';
 const SITE_DESCRIPTION =
-  'Anthony Coffey — musician, director, and software engineer in Austin, TX. Creativity is at the core of everything I build, design, and ship.';
+  'Anthony Coffey is a musician, director, and software engineer in Austin, TX, building web apps, mobile apps, and creative tools.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: `${SITE_NAME} — Musician, Engineer, Maker in Austin`,
+    default: `${SITE_NAME}, Musician, Engineer, and Maker in Austin`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: baseUrl,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Musician, Engineer, Maker in Austin`,
+    title: `${SITE_NAME}, Musician, Engineer, and Maker in Austin`,
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Musician, Engineer, Maker in Austin`,
+    title: `${SITE_NAME}, Musician, Engineer, and Maker in Austin`,
     description: SITE_DESCRIPTION,
     images: ['/og-image.jpg'],
   },

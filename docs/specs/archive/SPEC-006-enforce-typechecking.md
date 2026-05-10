@@ -6,7 +6,7 @@ Currently, the CI pipeline on GitHub Actions runs linting and testing but does n
 
 ## Status
 
-`review-pending`
+`complete`
 
 ## Context & Rationale
 

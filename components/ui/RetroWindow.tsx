@@ -1,3 +1,5 @@
+import '@/styles/retro-window.sass';
+
 interface RetroWindowProps {
   title: string;
   children: React.ReactNode;

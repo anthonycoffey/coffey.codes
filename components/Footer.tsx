@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -49,18 +49,31 @@ const navLinks = [
 
 export default function Footer() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const scrollHeightRef = useRef(0);
 
   useEffect(() => {
+    const docEl = document.documentElement;
+    scrollHeightRef.current = docEl.scrollHeight;
+
+    const ro = new ResizeObserver(() => {
+      scrollHeightRef.current = docEl.scrollHeight;
+    });
+    ro.observe(docEl);
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight;
-      const nearBottom = document.documentElement.scrollHeight - 100;
-      const hasScrollbar =
-        document.documentElement.scrollHeight > window.innerHeight;
-      setShowScrollToTop(hasScrollbar && scrollPosition >= nearBottom);
+      const cachedScrollHeight = scrollHeightRef.current;
+      const hasScrollbar = cachedScrollHeight > window.innerHeight;
+      setShowScrollToTop(
+        hasScrollbar && scrollPosition >= cachedScrollHeight - 100,
+      );
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      ro.disconnect();
+    };
   }, []);
 
   return (

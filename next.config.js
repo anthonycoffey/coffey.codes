@@ -1,3 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'mdx'],
@@ -5,6 +10,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: [
       '@heroicons/react',
+      'mermaid',
       '@visx/axis',
       '@visx/event',
       '@visx/gradient',
@@ -94,4 +100,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

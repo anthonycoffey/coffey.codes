@@ -16,7 +16,8 @@
     "test:coverage": "vitest run --coverage",
     "test:coverage:ui": "vitest run --coverage --coverage.reporter=html",
     "test:e2e": "playwright test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -62,8 +63,10 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.23.0",
+    "@next/bundle-analyzer": "^16.2.6",
     "@next/eslint-plugin-next": "^15.2.4",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/typography": "^0.5.10",
@@ -76,6 +79,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.5",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^10.1.0",
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.4",
     "eslint-plugin-import": "^2.31.0",

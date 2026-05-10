@@ -1,6 +1,6 @@
 # SPEC-002: Case Study Web Migration
 
-**Status:** `in-progress`  
+**Status:** `complete`  
 **Author:** AI Agent (Cline)  
 **Date:** 2026-05-01
 

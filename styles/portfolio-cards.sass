@@ -1,0 +1,59 @@
+// Portfolio polaroid + VHS glitch overlay styles. Imported only by the
+// portfolio route so other pages don't parse this CSS.
+
+// Polaroid card
+.polaroid-card
+  background: var(--color-surface)
+  border: 1px solid var(--color-border)
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.12)
+  border-radius: 4px
+  padding: 10px 10px 32px
+  transform: rotate(var(--card-tilt, -1deg))
+  transition: transform 0.3s ease, box-shadow 0.3s ease
+  &:hover
+    transform: rotate(0deg) scale(1.02)
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.2)
+
+// VHS glitch overlay
+.vhs-card
+  position: relative
+  overflow: hidden
+  &::before, &::after
+    content: ''
+    position: absolute
+    inset: 0
+    pointer-events: none
+    opacity: 0
+    background: inherit
+  &:hover::before
+    opacity: 1
+    animation: glitch 0.4s infinite linear alternate-reverse
+    background: rgba(255,45,120,0.15)
+    mix-blend-mode: color-dodge
+  &:hover::after
+    opacity: 1
+    animation: glitch 0.4s 0.1s infinite linear alternate-reverse
+    background: rgba(0,229,255,0.15)
+    mix-blend-mode: color-dodge
+
+
+// Glitch keyframes — only used by .vhs-card so it travels with this file.
+@keyframes glitch
+  0%
+    clip-path: inset(40% 0 61% 0)
+    transform: translate(-2px, 0)
+  20%
+    clip-path: inset(92% 0 1% 0)
+    transform: translate(2px, 0)
+  40%
+    clip-path: inset(43% 0 1% 0)
+    transform: translate(-2px, 0)
+  60%
+    clip-path: inset(25% 0 58% 0)
+    transform: translate(2px, 0)
+  80%
+    clip-path: inset(54% 0 7% 0)
+    transform: translate(-2px, 0)
+  100%
+    clip-path: inset(58% 0 43% 0)
+    transform: translate(2px, 0)

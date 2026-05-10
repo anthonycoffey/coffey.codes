@@ -1,0 +1,151 @@
+// Article + case-study MDX content styles. Imported by route-segment
+// layouts so non-MDX pages (homepage, portfolio, contact, LPs) don't
+// pay the parse cost for these rules.
+
+// ─── Prose ────────────────────────────────────────────────────────────────────
+.prose .anchor
+  @apply absolute invisible no-underline
+  margin-left: -1em
+  padding-right: 0.5em
+  width: 80%
+  max-width: 700px
+  cursor: pointer
+
+.anchor:hover
+  @apply visible underline
+
+.prose a
+  @apply underline transition-all underline-offset-2 decoration-[0.1em]
+  color: var(--color-link)
+  &:hover
+    @apply no-underline
+
+.prose .anchor:after
+  content: '#'
+
+.prose *:hover > .anchor
+  @apply visible
+
+.prose pre
+  background: var(--color-code-bg)
+  @apply rounded-lg overflow-x-auto text-sm p-1 m-0 border
+  border-color: var(--color-border)
+  &.multiline, &.mermaid
+    border: none
+
+.prose code
+  background: var(--color-code-bg)
+  color: var(--color-text)
+  margin: 0 1px
+  border-radius: 5px
+  padding: 5px 3px
+
+.prose pre code
+  @apply p-0
+  border: initial
+  line-height: 1
+
+.prose code span
+  @apply font-medium
+
+.prose code span.singleline
+  white-space: nowrap
+
+.prose img
+  @apply mx-auto my-0
+
+.prose p
+  @apply my-4
+
+// Editorial serif applies to headings only — body remains Outfit (sans).
+// Letter-spacing intentionally moves away from tracking-tight: serif display
+// at these sizes needs open or zero kerning to breathe. See SPEC-008.
+.prose h1
+  @apply text-4xl font-bold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
+  color: var(--color-heading)
+
+.prose h2
+  @apply text-2xl font-bold mt-8 mb-3
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0.005em
+  color: var(--color-heading)
+
+.prose h3
+  @apply text-xl font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
+  color: var(--color-heading)
+
+.prose h4
+  @apply text-lg font-semibold mt-6 mb-2
+  font-family: var(--font-editorial), Charter, 'Iowan Old Style', Georgia, serif
+  letter-spacing: 0
+  color: var(--color-heading)
+
+.prose strong
+  @apply font-semibold
+
+.prose ul
+  @apply list-disc pl-6
+
+.prose ol
+  @apply list-decimal pl-6
+
+.prose > :first-child
+  margin-top: 1.25em !important
+  margin-bottom: 1.25em !important
+
+
+// ─── Callout (MDX) ────────────────────────────────────────────────────────────
+// Visual personality intentionally identical to the pre-token implementation:
+// tinted background + matching border + tinted text. The four variants are
+// switched via [data-callout-type] and resolve to the --callout-*-* tokens
+// in styles/global.sass so dark mode swaps automatically.
+.callout
+  &[data-callout-type="info"]
+    background: var(--callout-info-bg)
+    border-color: var(--callout-info-border)
+    color: var(--callout-info-text)
+
+  &[data-callout-type="tip"]
+    background: var(--callout-tip-bg)
+    border-color: var(--callout-tip-border)
+    color: var(--callout-tip-text)
+
+  &[data-callout-type="warning"]
+    background: var(--callout-warning-bg)
+    border-color: var(--callout-warning-border)
+    color: var(--callout-warning-text)
+
+  &[data-callout-type="danger"]
+    background: var(--callout-danger-bg)
+    border-color: var(--callout-danger-border)
+    color: var(--callout-danger-text)
+
+
+// ─── Multiline code line counter ──────────────────────────────────────────────
+pre.multiline code
+  counter-reset: sh-line-number
+
+  .sh__line::before
+    counter-increment: sh-line-number 1
+    content: counter(sh-line-number)
+    margin-right: 24px
+    text-align: right
+    color: var(--color-text-muted)
+
+
+// ─── Mermaid chart ────────────────────────────────────────────────────────────
+.mermaid-chart-container
+  width: 100%
+  min-height: 100px
+  display: flex
+  justify-content: center
+  align-items: center
+  margin: 1rem 0
+
+  svg
+    max-width: 100%
+    height: auto

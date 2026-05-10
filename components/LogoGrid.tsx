@@ -41,6 +41,7 @@ export default function LogoGrid({ logos }: Props): ReactElement {
             alt={logo.replace('.svg', '')}
             width={200}
             height={200}
+            sizes="(max-width: 640px) 14vw, (max-width: 1024px) 12vw, 128px"
           />
         </motion.div>
       ))}

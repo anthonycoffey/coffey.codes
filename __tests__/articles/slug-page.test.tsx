@@ -26,7 +26,24 @@ vi.mock('next/link', () => ({
 }));
 
 vi.mock('next/image', () => ({
-  default: () => null,
+  default: ({
+    alt,
+    ...rest
+  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
+    const { priority, ...imgProps } = rest as React.ImgHTMLAttributes<HTMLImageElement> & {
+      priority?: boolean;
+    };
+    // Surface priority as a data attribute the test can assert against;
+    // jsdom strips React-only props otherwise.
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        alt={alt ?? ''}
+        data-priority={priority ? 'true' : undefined}
+        {...imgProps}
+      />
+    );
+  },
 }));
 
 vi.mock('next/navigation', () => ({
@@ -115,5 +132,23 @@ describe('Article page JSON-LD publisher schema', () => {
 
     expect(blogPosting!.author['@type']).toBe('Person');
     expect(blogPosting!.author.name).toBe('Anthony Coffey');
+  });
+});
+
+describe('Article page CWV image hygiene', () => {
+  it('the avatar image (above the fold on every article) is marked priority and has a sizes hint', async () => {
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+
+    // The avatar is the only Image rendered by the article page itself
+    // (post body images are rendered inside CustomMDX which we mock).
+    const imgMatch = html.match(/<img[^>]*src="\/headshot\.png"[^>]*>/);
+    expect(imgMatch).not.toBeNull();
+    const tag = imgMatch![0];
+
+    expect(tag).toMatch(/data-priority="true"/);
+    expect(tag).toMatch(/sizes="/);
   });
 });

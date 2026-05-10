@@ -49,7 +49,17 @@ function CustomLink(props) {
 }
 
 function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  // Default sizes hint sized for the article max-width (max-w-4xl ~896px)
+  // so next/image picks a right-sized variant on mobile/tablet/desktop.
+  // Per-call override still wins since spread props come after.
+  return (
+    <Image
+      alt={props.alt}
+      sizes="(max-width: 768px) 100vw, 896px"
+      className="rounded-lg"
+      {...props}
+    />
+  );
 }
 
 function Code({ children, className, ...props }) {

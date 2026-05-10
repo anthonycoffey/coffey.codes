@@ -177,6 +177,8 @@ export default async function Blog({ params }) {
               height={330}
               src="/headshot.png"
               alt="Anthony Coffey"
+              priority
+              sizes="40px"
               className="w-10 h-10 rounded-full"
             />
             <div>

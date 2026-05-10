@@ -152,7 +152,7 @@ npm lint:fix        # ESLint auto-fix
 | ---------------------- | -------------------- | ----------------------------------------------------------------- |
 | Contact form backend   | Not implemented      | `ContactForm.tsx` exists, API route TBD (Resend/Formspree/custom) |
 | Social links in footer | Not added            | GitHub/LinkedIn links missing from `components/footer.tsx`        |
-| Testing                | No framework         | No tests currently; TDD approach to be adopted for new features   |
+| Testing                | Vitest + Playwright  | Unit/component via Vitest + Testing Library; e2e in `e2e/` via Playwright; TDD is the expected workflow |
 
 ## Version Control
 

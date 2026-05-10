@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import ScrollContainer from '@/components/ScrollContainer';
 
 const HOME_TITLE =
-  'Anthony Coffey — AI Consultant & Software Engineer, Austin TX';
+  'Anthony Coffey, AI Consultant and Software Engineer in Austin, TX';
 const HOME_DESCRIPTION =
   'Anthony Coffey is an AI consultant and software engineer in Austin, TX, building web apps, mobile apps, and practical AI solutions with creativity at the core.';
 

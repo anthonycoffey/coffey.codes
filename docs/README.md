@@ -15,6 +15,7 @@ This folder is the single source of truth for all project documentation, specifi
 | `documentation/guides/`     | Procedural how-to documentation                              | Deep technical analysis  |
 | `documentation/deep-dives/` | Narrow-focus technical deep dives and strategy docs          | Step-by-step guides      |
 | `documentation/repos/`      | Comprehensive repo/service technical reference               |                          |
+| `strategy/`                 | Frozen quarterly SEO audits and content-strategy snapshots   | Active in-progress work  |
 | `archive/`                  | General archive for deprecated non-spec documents            | Active documents         |
 
 ## Spec Lifecycle

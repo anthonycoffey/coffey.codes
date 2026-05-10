@@ -40,6 +40,7 @@ vi.mock('fs', () => ({
       if (filePath.endsWith('post-c.mdx')) return FIXTURE_C;
       return '';
     }),
+    statSync: vi.fn(() => ({ mtime: new Date('2024-01-01T00:00:00Z') })),
   },
 }));
 

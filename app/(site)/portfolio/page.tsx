@@ -190,6 +190,7 @@ const PortfolioSection: React.FC = () => {
                 height={1200}
                 src={project.mainImage}
                 alt={project.title}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -251,17 +252,19 @@ const PortfolioSection: React.FC = () => {
               {/* Left: image + details */}
               <div className="lg:col-span-3 space-y-6">
                 <RetroWindow title={selectedProject.title}>
-                  <Image
-                    width={1200}
-                    height={1200}
-                    src={
-                      activeImageIndex === 0
-                        ? selectedProject.mainImage
-                        : selectedProject.gallery[activeImageIndex - 1]
-                    }
-                    alt={selectedProject.title}
-                    className="w-full h-auto object-fit"
-                  />
+                  <div className="relative aspect-square w-full">
+                    <Image
+                      fill
+                      src={
+                        activeImageIndex === 0
+                          ? selectedProject.mainImage
+                          : selectedProject.gallery[activeImageIndex - 1]
+                      }
+                      alt={selectedProject.title}
+                      sizes="(max-width: 1024px) calc(100vw - 4rem), 60vw"
+                      className="object-contain"
+                    />
+                  </div>
                 </RetroWindow>
 
                 {selectedProject.gallery.length > 0 && (
@@ -275,6 +278,7 @@ const PortfolioSection: React.FC = () => {
                         height={300}
                         src={selectedProject.mainImage}
                         alt="Main"
+                        sizes="80px"
                         className="w-full h-16 object-cover"
                       />
                     </div>
@@ -289,6 +293,7 @@ const PortfolioSection: React.FC = () => {
                           height={300}
                           src={image}
                           alt={`Detail ${index + 1}`}
+                          sizes="80px"
                           className="w-full h-16 object-cover"
                         />
                       </div>

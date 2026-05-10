@@ -13,6 +13,15 @@ export default function FinalOverlay({ visible }: FinalOverlayProps) {
       <p className={styles.bodyLine}>
         <a href="/contact">&rarr;&nbsp;&nbsp;reach out</a>
       </p>
+      <p className={styles.bodyLine}>
+        <a
+          href="/Anthony%20Coffey%20-%20Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          &rarr;&nbsp;&nbsp;view the resume
+        </a>
+      </p>
     </div>
   );
 }

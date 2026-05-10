@@ -10,8 +10,8 @@ export default function AboutOverlay({ visible }: AboutOverlayProps) {
   return (
     <div className={`${styles.hudPanel} ${visible ? styles.visible : ''}`}>
       <p className={styles.leadLine}>
-        Musician.
-        <br /> Engineer.
+        Engineer.
+        <br /> Musician.
         <br /> Artist. Maker.
       </p>
       <p className={styles.bodyLine}>

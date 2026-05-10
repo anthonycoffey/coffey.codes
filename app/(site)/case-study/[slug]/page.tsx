@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { caseStudies } from '../../case-studies/case-studies';
-import { use } from 'react';
 import GoBack from '@/components/GoBack';
 import CaseStudyBrief from './CaseStudyBrief';
 import CaseStudyStory from './CaseStudyStory';
@@ -49,12 +48,12 @@ export async function generateMetadata({
   };
 }
 
-export default function CaseStudyPage({
+export default async function CaseStudyPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params);
+  const { slug } = await params;
   const study = caseStudies.find((s) => s.slug === slug);
 
   if (!study) {
@@ -70,7 +69,17 @@ export default function CaseStudyPage({
     image: `${baseUrl}/og?title=${encodeURIComponent(study.title)}`,
     url,
     author: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
-    publisher: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
+    publisher: {
+      '@type': 'Organization',
+      name: 'coffey.codes',
+      url: baseUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/publisher-logo.png`,
+        width: 601,
+        height: 601,
+      },
+    },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     keywords: study.tags.join(', '),
     articleSection: 'Case Study',

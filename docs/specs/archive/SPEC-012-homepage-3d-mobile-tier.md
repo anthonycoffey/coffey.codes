@@ -1,7 +1,7 @@
 ---
 id: SPEC-012
 title: 'Homepage 3D scene — mobile-tier rendering'
-status: draft
+status: complete
 created: 2026-05-04
 author: 'Anthony Coffey'
 reviewers: []

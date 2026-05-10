@@ -1,7 +1,7 @@
 ---
 id: SPEC-008
 title: 'Article & taxonomy page typography and theming overhaul'
-status: review-pending
+status: complete
 created: 2026-04-26
 author: anthonycoffey
 reviewers: [anthonycoffey]

@@ -1,7 +1,7 @@
 ---
 id: SPEC-009
 title: 'Test suite audit — push to 99% coverage with CI gate'
-status: ready
+status: complete
 created: 2026-04-27
 author: Anthony Coffey
 reviewers: []

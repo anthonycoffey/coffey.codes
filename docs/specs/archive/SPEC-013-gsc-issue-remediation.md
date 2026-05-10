@@ -1,7 +1,7 @@
 ---
 id: SPEC-013
 title: GSC Issue Remediation
-status: ready
+status: complete
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []

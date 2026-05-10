@@ -1,7 +1,7 @@
 ---
 id: SPEC-010
 title: 'Add Giscus comments to articles'
-status: review-pending
+status: complete
 created: 2026-04-29
 author: 'Anthony Coffey'
 reviewers: []

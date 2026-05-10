@@ -1,7 +1,7 @@
 ---
 id: SPEC-011
 title: 'Mobile web-vitals recovery for articles, case studies, and global chrome'
-status: in-progress
+status: complete
 created: 2026-05-04
 author: 'Anthony Coffey'
 reviewers: []

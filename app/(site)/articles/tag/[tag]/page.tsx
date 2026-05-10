@@ -27,8 +27,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params, searchParams }) {
   const { tag } = await params;
+  const resolvedSearchParams = await searchParams;
+  const isPaginated =
+    resolvedSearchParams?.page && Number(resolvedSearchParams.page) > 1;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
   const title = `${decodedTag} Articles`;
   const description = `Articles tagged ${decodedTag} — technical write-ups and deep dives by Anthony Coffey.`;
@@ -38,6 +41,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
+    robots: isPaginated ? { index: false, follow: true } : undefined,
     openGraph: { type: 'website', url, title, description },
     twitter: { card: 'summary_large_image', title, description },
   };

@@ -31,8 +31,11 @@ export async function generateStaticParams() {
   return params;
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params, searchParams }) {
   const { category } = await params;
+  const resolvedSearchParams = await searchParams;
+  const isPaginated =
+    resolvedSearchParams?.page && Number(resolvedSearchParams.page) > 1;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
   const title = `${decodedCategory} Articles`;
   const description = `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`;
@@ -42,6 +45,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url },
+    robots: isPaginated ? { index: false, follow: true } : undefined,
     openGraph: { type: 'website', url, title, description },
     twitter: { card: 'summary_large_image', title, description },
   };

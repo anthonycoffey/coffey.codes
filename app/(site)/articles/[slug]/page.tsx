@@ -9,6 +9,13 @@ import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';
 
+// Normalize a date-or-datetime string to an ISO 8601 datetime with timezone.
+// Google's Rich Results Test flags date-only values on schema.org
+// `datePublished` / `dateModified` as missing-timezone warnings.
+function toIsoDatetime(value: string): string {
+  return value.includes('T') ? value : `${value}T00:00:00.000Z`;
+}
+
 // Per-slug component overrides — keeps heavy 3D scene clients out of
 // the global MDX registry so non-3D articles don't ship dynamic-import
 // wrappers for three.js / @react-three/* code.
@@ -134,9 +141,12 @@ export default async function Blog({ params }) {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified:
-              post.metadata.updated || post.mtime || post.metadata.publishedAt,
+            datePublished: toIsoDatetime(post.metadata.publishedAt),
+            dateModified: toIsoDatetime(
+              post.metadata.updated ||
+                post.mtime ||
+                post.metadata.publishedAt,
+            ),
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`

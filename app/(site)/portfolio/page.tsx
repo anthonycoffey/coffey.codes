@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import {
+  ArrowDownTrayIcon,
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
   ArrowTopRightOnSquareIcon,
@@ -14,6 +15,7 @@ import {
 import RetroWindow from '@/components/ui/RetroWindow';
 import Button from '@/components/ui/Button';
 import PageHeader from '@/components/PageHeader';
+import Testimonials from '@/components/Testimonials';
 
 import Image from 'next/image';
 
@@ -428,6 +430,14 @@ const PortfolioSection: React.FC = () => {
         </div>
       )}
 
+      {/* Testimonials */}
+      <section className="mt-4 mb-12">
+        <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-4 text-c-heading">
+          What clients have said
+        </h2>
+        <Testimonials />
+      </section>
+
       {/* Bottom CTA */}
       <div className="bg-accent2 border-2 border-border p-8 rounded-2xl text-center mt-4">
         <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-3 text-c-heading">
@@ -450,6 +460,16 @@ const PortfolioSection: React.FC = () => {
           >
             <CalendarDaysIcon className="h-5 w-5" />
             Book Free Consultation
+          </Button>
+          <Button
+            as="a"
+            href="/Anthony%20Coffey%20-%20Resume.pdf"
+            variant="secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            Download Resume
           </Button>
         </div>
       </div>

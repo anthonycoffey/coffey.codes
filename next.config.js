@@ -21,20 +21,18 @@ const nextConfig = {
     return [
       {
         source: '/articles/console-log-nested-object-in-javascript',
-        destination:
-          '/articles/unveiling-nested-objects-enhanced-console-logging-node-js',
+        destination: '/articles',
         permanent: true,
       },
       {
         source: '/articles/gradient-background-for-post-thumbnails',
-        destination:
-          '/articles/using-css-gradients-for-dynamic-post-thumbnails',
+        destination: '/articles',
         permanent: true,
       },
       {
         source:
           '/articles/unveiling-nested-objects-enhanced-console-logging-node-js',
-        destination: '/articles/logging-deep-nested-objects-in-nodejs',
+        destination: '/articles',
         permanent: true,
       },
       {

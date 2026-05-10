@@ -14,14 +14,19 @@ Before starting any non-trivial task, read the relevant docs:
 ## Commands
 
 ```bash
-npm run dev        # Dev server on localhost:3000
-npm run build      # Production build
-npm run start      # Run production build locally
-npm run lint       # ESLint
-npm run lint:fix   # ESLint auto-fix
+npm run dev            # Dev server on localhost:3000
+npm run build          # Production build
+npm run start          # Run production build locally
+npm run lint           # ESLint
+npm run lint:fix       # ESLint auto-fix
+npm test               # Vitest unit + component tests (one-shot)
+npm run test:watch     # Vitest watch mode
+npm run test:coverage  # Vitest with coverage report
+npm run test:e2e       # Playwright e2e tests (requires dev server)
+npm run typecheck      # tsc --noEmit
 ```
 
-No test framework is configured yet. TDD is to be adopted for new features going forward.
+Vitest + Testing Library is configured for unit/component tests; Playwright lives in `e2e/` for end-to-end. TDD (RED → GREEN → REFACTOR) is the expected workflow for new features — see `docs/documentation/development-standards.md`.
 
 ## Architecture
 

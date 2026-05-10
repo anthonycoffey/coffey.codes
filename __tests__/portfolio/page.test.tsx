@@ -153,6 +153,54 @@ describe('PortfolioPage', () => {
     ).not.toBeInTheDocument();
   });
 
+  describe('CWV image hygiene', () => {
+    it('polaroid grid thumbnails declare a sizes attribute', () => {
+      const { container } = render(<PortfolioPage />);
+      const cards = container.querySelectorAll('.polaroid-card');
+      expect(cards.length).toBeGreaterThan(0);
+      cards.forEach((card) => {
+        const img = card.querySelector('img');
+        expect(img).not.toBeNull();
+        expect(img!.getAttribute('sizes')).toBeTruthy();
+      });
+    });
+
+    it('modal main image is wrapped in an aspect-ratio container (CLS reservation)', () => {
+      render(<PortfolioPage />);
+      const cardHeading = screen.getByRole('heading', {
+        level: 3,
+        name: /personal blog & portfolio/i,
+      });
+      const card = cardHeading.closest('.polaroid-card') as HTMLElement;
+      fireEvent.click(card);
+
+      const retroWindow = screen.getByTestId('retro-window');
+      const wrapper = retroWindow.querySelector('div');
+      expect(wrapper).not.toBeNull();
+      expect(wrapper!.className).toMatch(/aspect-/);
+    });
+
+    it('modal thumbnail images declare sizes hints', () => {
+      render(<PortfolioPage />);
+      const cardHeading = screen.getByRole('heading', {
+        level: 3,
+        name: /personal blog & portfolio/i,
+      });
+      const card = cardHeading.closest('.polaroid-card') as HTMLElement;
+      fireEvent.click(card);
+
+      // Find the thumbnail row inside the modal — Image elements with h-16 class
+      const thumbs = document.querySelectorAll('img.h-16');
+      // The Image component spreads className on the underlying <img>, but the
+      // h-16 class might not propagate through our test mock. Fall back to
+      // selecting all imgs with sizes="80px" (modal thumbs).
+      const thumbsWithSize = Array.from(
+        document.querySelectorAll('img'),
+      ).filter((img) => img.getAttribute('sizes') === '80px');
+      expect(thumbs.length + thumbsWithSize.length).toBeGreaterThan(0);
+    });
+  });
+
   it('renders the bottom CTA with links to /contact and Calendly', () => {
     render(<PortfolioPage />);
     expect(

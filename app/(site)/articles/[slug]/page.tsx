@@ -92,9 +92,15 @@ export default async function Blog({ params }) {
               url: baseUrl,
             },
             publisher: {
-              '@type': 'Person',
-              name: 'Anthony Coffey',
+              '@type': 'Organization',
+              name: 'coffey.codes',
               url: baseUrl,
+              logo: {
+                '@type': 'ImageObject',
+                url: `${baseUrl}/publisher-logo.png`,
+                width: 601,
+                height: 601,
+              },
             },
             mainEntityOfPage: {
               '@type': 'WebPage',

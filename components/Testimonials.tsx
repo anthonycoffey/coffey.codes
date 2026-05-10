@@ -177,7 +177,7 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonial slide */}
-        <div className="min-h-[300px] sm:min-h-[250px] flex items-center justify-center">
+        <div className="min-h-[500px] md:min-h-[380px] flex items-center justify-center">
           <AnimatePresence custom={direction} initial={false} mode="wait">
             <motion.div
               key={currentIndex}

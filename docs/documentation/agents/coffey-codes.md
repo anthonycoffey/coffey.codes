@@ -126,6 +126,18 @@ npm build
 npm start
 ```
 
+### Run tests
+
+```bash
+npm test               # Vitest unit + component tests
+npm run test:watch     # Vitest watch mode
+npm run test:coverage  # Vitest with coverage report
+npm run test:e2e       # Playwright e2e (requires dev server)
+npm run typecheck      # tsc --noEmit
+```
+
+Vitest + Testing Library + jsdom is configured for unit and component tests (220+ tests across 40 files). Playwright e2e lives in `e2e/` and exercises rendered pages against a live dev server. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
+
 ## Known Gotchas
 
 - **Async params in Next.js 15+** — `params` and `searchParams` must be awaited in page components. See the article `fixing-broken-routes-after-nextjs-16-upgrade.mdx` for full context.

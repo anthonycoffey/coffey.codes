@@ -17,25 +17,31 @@ import PageHeader from '@/components/PageHeader';
 
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: { absolute: 'Articles by Anthony Coffey' },
-  description:
-    'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based AI consultant and software engineer.',
-  alternates: { canonical: '/articles' },
-  openGraph: {
-    title: 'Articles by Anthony Coffey',
+export async function generateMetadata({ searchParams }): Promise<Metadata> {
+  const params = await searchParams;
+  const isPaginated = params.page && Number(params.page) > 1;
+
+  return {
+    title: { absolute: 'Articles by Anthony Coffey' },
     description:
-      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
-    url: '/articles',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Articles by Anthony Coffey',
-    description:
-      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
-  },
-};
+      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based AI consultant and software engineer.',
+    alternates: { canonical: '/articles' },
+    robots: isPaginated ? { index: false, follow: true } : undefined,
+    openGraph: {
+      title: 'Articles by Anthony Coffey',
+      description:
+        'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
+      url: '/articles',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Articles by Anthony Coffey',
+      description:
+        'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
+    },
+  };
+}
 
 export default async function ArticlesPage({ searchParams }) {
   const params = await searchParams;

@@ -50,3 +50,6 @@ npm-prettier.log
 dev.log
 coffey-codes-f49a0151becd.json
 coffey-codes-fdee3a679cf6.json
+
+# Claude Code runtime files
+.claude/scheduled_tasks.lock

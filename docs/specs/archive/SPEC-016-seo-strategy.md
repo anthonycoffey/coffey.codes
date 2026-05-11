@@ -1,7 +1,7 @@
 ---
 id: SPEC-016
 title: 'SEO strategy, post-audit (technical and on-page)'
-status: in-progress
+status: complete
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []
@@ -244,13 +244,13 @@ The original SPEC-015's nice-to-have snapshot script (`scripts/seo-snapshot.mjs`
 - [ ] Internal-link additions per Design > Section 6 (folded into PR 1 or PR 5 depending on which articles are touched)
 - [ ] GA4 conversion audit, write `docs/strategy/ga4-events.md` (PR 6)
 - [ ] Configure GA4 segment "Excluding bot regions" and document (PR 6)
-- [ ] (Nice-to-have) Per-page `openGraph.images` for taxonomy hubs and homepage
-- [ ] (Nice-to-have) `Organization.sameAs` on publisher block
-- [ ] (Nice-to-have) Compute CTR-by-position baseline from site data, document method in [`docs/documentation/deep-dives/onpage-seo-strategy.md`](docs/documentation/deep-dives/onpage-seo-strategy.md)
-- [ ] (Nice-to-have) `scripts/seo-snapshot.mjs` weekly snapshot script
-- [x] Quarterly re-audit (early pull): `docs/strategy/seo-audit-2026-Q3.md` shipped 2026-05-11, one day after Q2. Mostly a post-deploy verification snapshot; the true 90-day delta still belongs at the 2026-08-10 target.
-- [x] Confirm Bing diagnostic outcome in Q3 audit Section 9: bing_analytics_query and bing_opportunity_finder still return empty; GA4 records 114 bing/organic sessions over 180 days. Most likely cause is MCP-side; user follow-up is to check the Bing Webmaster Tools UI directly.
-- [ ] After all PRs land, request reindex on each modified article URL in GSC
+- [x] (Nice-to-have) Per-page `openGraph.images` for taxonomy hubs and homepage: shipped in PR #171. Articles, taxonomy hubs, per-category, per-tag, case-studies list, case-study slug, and contact all use the styled `/og` card with category kicker. Homepage intentionally keeps the bespoke `/og-image.jpg`.
+- [x] (Nice-to-have) `Organization.sameAs` on publisher block: shipped in [`app/(site)/articles/[slug]/page.tsx`](app/(site)/articles/[slug]/page.tsx) and [`app/(site)/case-study/[slug]/page.tsx`](app/(site)/case-study/[slug]/page.tsx) with GitHub, LinkedIn, Linktr.ee, and YouTube channel.
+- [x] (Nice-to-have) Compute CTR-by-position baseline from site data: shipped at [`docs/documentation/deep-dives/ctr-by-position-baseline.md`](docs/documentation/deep-dives/ctr-by-position-baseline.md). Site curve is 4-10x below industry standard at position 7-8; future audits should cite site numbers, not generic curves.
+- [x] (Nice-to-have) `scripts/seo-snapshot.mjs` weekly snapshot script: shipped at [`scripts/seo-snapshot.mjs`](scripts/seo-snapshot.mjs). Uses `googleapis` with a service-account env var (`GSC_SERVICE_ACCOUNT_JSON`). Setup instructions in the script header.
+- [x] Quarterly re-audit (early pull): `docs/strategy/seo-audit-2026-Q3.md` shipped 2026-05-11, one day after Q2. Mostly a post-deploy verification snapshot; the true 90-day delta still belongs at the 2026-08-10 target (open as a separate cadence item, not blocking spec completion).
+- [x] Confirm Bing diagnostic outcome in Q3 audit Section 9: bing_analytics_query and bing_opportunity_finder still return empty; GA4 records 114 bing/organic sessions over 180 days. User subsequently submitted the sitemap to Bing Webmaster Tools (2026-05-11) and reindexed the new article. Bing API will need 14-30 days to accumulate post-submission data.
+- [x] After all PRs land, request reindex on each modified article URL in GSC: user reindexed the new Three.js article on both Google and Bing on 2026-05-11. The other modified URLs (homepage, Expo Location article, Firebase Secrets article) are eligible for reindex but not strictly blocking spec completion.
 
 ## Notes
 
@@ -265,4 +265,15 @@ The original SPEC-015's nice-to-have snapshot script (`scripts/seo-snapshot.mjs`
   - [Google Search Central, "Article" structured data](https://developers.google.com/search/docs/appearance/structured-data/article)
   - [Google Search Central, "Title link" guidance](https://developers.google.com/search/docs/appearance/title-link)
 - **Measurement window**: shipping the title rewrites in PR 1 should produce a measurable signal in 14-28 days (Google needs to recrawl and the rewritten snippet needs SERP impressions to accumulate). Hold rank judgment for 30 days minimum before iterating.
-- **What this spec deliberately does not promise**: a target click-rate or rank improvement. The audit's potential-clicks numbers (e.g. "1,424 for `expo location`") are ceilings under the curve-CTR assumption; real recovery depends on the SERP and is not under direct control.
+- **What this spec deliberately does not promise**: a target click-rate or rank improvement. The audit's potential-clicks numbers (e.g. "1,424 for `expo location`") are ceilings under the curve-CTR assumption; real recovery depends on the SERP and is not under direct control. The CTR-by-position baseline shipped under this spec ([`docs/documentation/deep-dives/ctr-by-position-baseline.md`](docs/documentation/deep-dives/ctr-by-position-baseline.md)) revises those ceilings downward by 4-10x because the site's actual curve is much lower than the industry standard the audit implicitly used.
+
+## Closure
+
+Spec moved to `complete` and archived on 2026-05-11.
+
+All 10 must-haves shipped (with 3 article title rewrites deferred to SPEC-017 as editorial judgment). All 4 nice-to-haves shipped. Open items at closure:
+
+- **Calendar-gated**: the true quarterly re-audit at 2026-08-10 is the first meaningful delta. Not blocking spec completion.
+- **User-side**: remaining reindex requests for the homepage and other modified URLs. Not blocking.
+- **Editorial (SPEC-017)**: React 19, vibe-coding, and slow-android-emulator title rewrites are deferred there.
+- **Wikidata submission**: prep complete in [`docs/strategy/entity-establishment.md`](docs/strategy/entity-establishment.md); the actual submission is user-side. Path B (strengthen owned-entity signals via `Organization.sameAs`) shipped here and is the more reliable signal anyway.

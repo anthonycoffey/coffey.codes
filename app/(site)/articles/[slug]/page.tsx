@@ -175,6 +175,12 @@ export default async function Blog({ params }) {
                 width: 601,
                 height: 601,
               },
+              sameAs: [
+                'https://github.com/anthonycoffey',
+                'https://linkedin.com/in/coffeyanthony',
+                'https://linktr.ee/coffeycodes',
+                'https://www.youtube.com/@coffeycodes',
+              ],
             },
             mainEntityOfPage: {
               '@type': 'WebPage',

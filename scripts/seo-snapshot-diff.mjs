@@ -93,9 +93,26 @@ function header() {
 
 // ── Section: GSC ─────────────────────────────────────────────────────
 
+// SPEC-016-era snapshots stored GSC fields at the top level. SPEC-018
+// nests them under `gsc`. Fall back so diffs across the format change
+// still work.
+function gscView(snap) {
+  if (snap.gsc) return snap.gsc;
+  if (snap.totals || snap.topPages || snap.topQueries) {
+    return {
+      totals: snap.totals,
+      topPages: snap.topPages,
+      topQueries: snap.topQueries,
+      countries: snap.countries,
+      devices: snap.devices,
+    };
+  }
+  return null;
+}
+
 function diffGsc() {
-  const o = older.gsc;
-  const n = newer.gsc;
+  const o = gscView(older);
+  const n = gscView(newer);
   console.log(`── GSC ──────────────────────────────────────────────────────────────`);
   if (!o && !n) {
     console.log('  (not present in either snapshot)');

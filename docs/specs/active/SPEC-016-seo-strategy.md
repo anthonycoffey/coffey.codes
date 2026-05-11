@@ -248,8 +248,8 @@ The original SPEC-015's nice-to-have snapshot script (`scripts/seo-snapshot.mjs`
 - [ ] (Nice-to-have) `Organization.sameAs` on publisher block
 - [ ] (Nice-to-have) Compute CTR-by-position baseline from site data, document method in [`docs/documentation/deep-dives/onpage-seo-strategy.md`](docs/documentation/deep-dives/onpage-seo-strategy.md)
 - [ ] (Nice-to-have) `scripts/seo-snapshot.mjs` weekly snapshot script
-- [ ] Quarterly re-audit on 2026-08-10, write `docs/strategy/seo-audit-2026-Q3.md`
-- [ ] Confirm Bing diagnostic outcome in Q3 audit Section 9
+- [x] Quarterly re-audit (early pull): `docs/strategy/seo-audit-2026-Q3.md` shipped 2026-05-11, one day after Q2. Mostly a post-deploy verification snapshot; the true 90-day delta still belongs at the 2026-08-10 target.
+- [x] Confirm Bing diagnostic outcome in Q3 audit Section 9: bing_analytics_query and bing_opportunity_finder still return empty; GA4 records 114 bing/organic sessions over 180 days. Most likely cause is MCP-side; user follow-up is to check the Bing Webmaster Tools UI directly.
 - [ ] After all PRs land, request reindex on each modified article URL in GSC
 
 ## Notes

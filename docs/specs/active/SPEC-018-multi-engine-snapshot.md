@@ -1,7 +1,7 @@
 ---
 id: SPEC-018
 title: 'Wire Bing and GA4 into the SEO snapshot script'
-status: ready
+status: review-pending
 created: 2026-05-11
 author: Anthony Coffey
 reviewers: []
@@ -239,19 +239,19 @@ Implementation: pure JSON manipulation, no SDK dependencies. Should be ~80-120 l
 
 ## Tasks
 
-- [ ] Install `@google-analytics/data` (`npm install --save @google-analytics/data`)
-- [ ] In Google Cloud Console, enable the **Google Analytics Data API** for the same project that has the Search Console API.
-- [ ] In GA4 property `416080229` → Property Access Management, grant the service account Viewer access.
-- [ ] In Bing Webmaster Tools → Settings → API Access, generate an API key. Add to `.env` as `BING_WEBMASTER_API_KEY=<key>`.
-- [ ] Refactor `scripts/seo-snapshot.mjs` into three engine modules (`pullGsc`, `pullGa4`, `pullBing`) plus the orchestrator that does `Promise.allSettled` per must-have #2.
-- [ ] Implement `pullGa4` using `@google-analytics/data`'s `BetaAnalyticsDataClient`. Reports to capture: traffic sources, organic landing pages, user behavior, plus bot-region-excluded variants.
-- [ ] Implement `pullBing` using native `fetch` against `https://ssl.bing.com/webmaster/api.svc/json/GetRankAndTrafficStats` and `GetQueryStats`. Handle empty responses per must-have #4.
-- [ ] Extend `loadCredentials()` to handle GA4 (reuse GSC service account) and Bing (separate API key env var).
-- [ ] Update the script header comment with all three engines' setup steps.
-- [ ] Add `--engines` and `--dry-run` CLI flags (nice-to-have).
-- [ ] Test end-to-end against the live property; verify the JSON shape matches the Design section.
-- [ ] Write `scripts/seo-snapshot-diff.mjs` per the spec's diff-logic section.
-- [ ] Document the auth setup in the agent brief or a small `docs/documentation/guides/seo-snapshot-setup.md` so future contributors don't have to spelunk through the script header.
+- [x] Install `@google-analytics/data` (`npm install --save @google-analytics/data`)
+- [ ] In Google Cloud Console, enable the **Google Analytics Data API** for the same project that has the Search Console API. *(user-side cloud config)*
+- [ ] In GA4 property `416080229` → Property Access Management, grant the service account Viewer access. *(user-side cloud config)*
+- [ ] In Bing Webmaster Tools → Settings → API Access, generate an API key. Add to `.env` as `BING_WEBMASTER_API_KEY=<key>`. *(user-side cloud config)*
+- [x] Refactor `scripts/seo-snapshot.mjs` into three engine modules (`pullGsc`, `pullGa4`, `pullBing`) plus the orchestrator that does `Promise.allSettled` per must-have #2.
+- [x] Implement `pullGa4` using `@google-analytics/data`'s `BetaAnalyticsDataClient`. Reports to capture: traffic sources, organic landing pages, user behavior, plus bot-region-excluded variants.
+- [x] Implement `pullBing` using native `fetch` against `https://ssl.bing.com/webmaster/api.svc/json/GetRankAndTrafficStats` and `GetQueryStats`. Handle empty responses per must-have #4.
+- [x] Extend `loadCredentials()` to handle GA4 (reuse GSC service account) and Bing (separate API key env var).
+- [x] Update the script header comment with all three engines' setup steps.
+- [x] Add `--engines` and `--dry-run` CLI flags (nice-to-have).
+- [ ] Test end-to-end against the live property; verify the JSON shape matches the Design section. *(blocked on user-side cloud config above)*
+- [x] Write `scripts/seo-snapshot-diff.mjs` per the spec's diff-logic section.
+- [ ] Document the auth setup in the agent brief or a small `docs/documentation/guides/seo-snapshot-setup.md` so future contributors don't have to spelunk through the script header. *(the script header itself now covers it; standalone guide deferred)*
 
 ## Notes
 

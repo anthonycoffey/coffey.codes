@@ -3,10 +3,9 @@ import RetroWindow from '@/components/ui/RetroWindow';
 import Button from '@/components/ui/Button';
 import PageHeader from '@/components/PageHeader';
 import Testimonials from '@/components/Testimonials';
+import ResumePdfCta from '@/components/ResumePdfCta';
 import {
-  ArrowDownTrayIcon,
   CalendarDaysIcon,
-  DocumentTextIcon,
   EnvelopeIcon,
   PhoneIcon,
   MapPinIcon,
@@ -101,30 +100,6 @@ export default async function ContactPage() {
                 Book Your Free Session
               </Button>
             </div>
-
-            {/* Resume */}
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
-                  <DocumentTextIcon className="h-5 w-5 text-accent1-dark" />
-                </div>
-                <p className="font-semibold text-c-heading text-sm">Resume</p>
-              </div>
-              <p className="text-c-muted text-sm mb-4 leading-relaxed">
-                Prefer to skim my background first? Grab the PDF.
-              </p>
-              <Button
-                as="a"
-                href="/Anthony%20Coffey%20-%20Resume.pdf"
-                variant="secondary"
-                size="sm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ArrowDownTrayIcon className="h-4 w-4" />
-                Download Resume
-              </Button>
-            </div>
           </div>
         </RetroWindow>
 
@@ -135,6 +110,8 @@ export default async function ContactPage() {
           </div>
         </RetroWindow>
       </div>
+
+      <ResumePdfCta />
 
       <section className="mt-12">
         <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-4 text-c-heading">

@@ -133,6 +133,11 @@ node scripts/seo-snapshot.mjs --engines=gsc,ga4,keywords
 # Custom window
 node scripts/seo-snapshot.mjs --window=180
 
+# Anchor "today" to a past date. Drives both the output filename
+# (snapshot-2026-05-09.json) and the GSC window. Useful for filling
+# a few consecutive snapshots in one sitting.
+node scripts/seo-snapshot.mjs --asof=2026-05-09
+
 # Plan without API calls
 node scripts/seo-snapshot.mjs --dry-run
 ```

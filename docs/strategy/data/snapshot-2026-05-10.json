@@ -1,76 +1,76 @@
 {
   "window": {
-    "startDate": "2025-05-08",
-    "endDate": "2026-05-08",
+    "startDate": "2025-05-07",
+    "endDate": "2026-05-07",
     "days": 365
   },
-  "pulledAt": "2026-05-11T21:56:24.911Z",
+  "pulledAt": "2026-05-11T21:56:09.766Z",
   "siteUrl": "sc-domain:coffey.codes",
   "gsc": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-07",
+      "endDate": "2026-05-07",
       "days": 365
     },
     "totals": {
-      "clicks": 1152,
-      "impressions": 294996,
-      "ctr": 0.0039051376967823292
+      "clicks": 1149,
+      "impressions": 293590,
+      "ctr": 0.003913621036138833
     },
     "topPages": [
       {
         "keys": [
           "https://coffey.codes/articles/building-location-based-features-using-expo-location"
         ],
-        "clicks": 390,
-        "impressions": 151786,
-        "ctr": 0.002569406928175194,
-        "position": 6.753000935527651
+        "clicks": 388,
+        "impressions": 150793,
+        "ctr": 0.002573063736380336,
+        "position": 6.754783046958413
       },
       {
         "keys": [
           "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
         ],
         "clicks": 248,
-        "impressions": 9062,
-        "ctr": 0.027367027146325315,
-        "position": 8.481240344294857
+        "impressions": 9038,
+        "ctr": 0.02743969904846205,
+        "position": 8.468245186988272
       },
       {
         "keys": [
           "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
         ],
-        "clicks": 237,
-        "impressions": 71286,
-        "ctr": 0.0033246359734029124,
-        "position": 5.844429481244564
+        "clicks": 236,
+        "impressions": 71150,
+        "ctr": 0.0033169360505973296,
+        "position": 5.845158116654955
       },
       {
         "keys": [
           "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
         ],
         "clicks": 180,
-        "impressions": 43542,
-        "ctr": 0.00413393964448119,
-        "position": 7.4645859170456115
+        "impressions": 43486,
+        "ctr": 0.004139263211148415,
+        "position": 7.463206549234236
       },
       {
         "keys": [
           "https://coffey.codes/articles/react-19-features-and-design-patterns"
         ],
         "clicks": 52,
-        "impressions": 15329,
-        "ctr": 0.0033922630308565464,
-        "position": 8.6312871028769
+        "impressions": 15131,
+        "ctr": 0.0034366532284713504,
+        "position": 8.612451259004693
       },
       {
         "keys": [
           "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
         ],
         "clicks": 15,
-        "impressions": 465,
-        "ctr": 0.03225806451612903,
-        "position": 39.73548387096774
+        "impressions": 464,
+        "ctr": 0.032327586206896554,
+        "position": 39.797413793103445
       },
       {
         "keys": [
@@ -86,18 +86,18 @@
           "https://coffey.codes/"
         ],
         "clicks": 4,
-        "impressions": 310,
-        "ctr": 0.012903225806451613,
-        "position": 13.893548387096773
+        "impressions": 311,
+        "ctr": 0.012861736334405145,
+        "position": 13.855305466237942
       },
       {
         "keys": [
           "https://coffey.codes/contact"
         ],
         "clicks": 4,
-        "impressions": 221,
-        "ctr": 0.01809954751131222,
-        "position": 26.357466063348415
+        "impressions": 223,
+        "ctr": 0.017937219730941704,
+        "position": 26.30493273542601
       },
       {
         "keys": [
@@ -122,9 +122,9 @@
           "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
         ],
         "clicks": 1,
-        "impressions": 632,
-        "ctr": 0.0015822784810126582,
-        "position": 17.522151898734176
+        "impressions": 633,
+        "ctr": 0.001579778830963665,
+        "position": 17.50394944707741
       },
       {
         "keys": [
@@ -140,27 +140,36 @@
           "https://coffey.codes/articles"
         ],
         "clicks": 0,
-        "impressions": 96,
+        "impressions": 97,
         "ctr": 0,
-        "position": 8.395833333333332
+        "position": 8.391752577319588
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/avoiding-unnecessary-re-renders-in-react-apps"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 9
       },
       {
         "keys": [
           "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
         ],
         "clicks": 0,
-        "impressions": 264,
+        "impressions": 259,
         "ctr": 0,
-        "position": 24.393939393939394
+        "position": 24.72200772200772
       },
       {
         "keys": [
           "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
         ],
         "clicks": 0,
-        "impressions": 23,
+        "impressions": 27,
         "ctr": 0,
-        "position": 11.565217391304348
+        "position": 11.037037037037036
       },
       {
         "keys": [
@@ -212,9 +221,9 @@
           "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
         ],
         "clicks": 0,
-        "impressions": 720,
+        "impressions": 715,
         "ctr": 0,
-        "position": 6.022222222222222
+        "position": 6.027972027972028
       },
       {
         "keys": [
@@ -230,18 +239,9 @@
           "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
         ],
         "clicks": 0,
-        "impressions": 185,
+        "impressions": 183,
         "ctr": 0,
-        "position": 6.410810810810811
-      },
-      {
-        "keys": [
-          "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
-        ],
-        "clicks": 0,
-        "impressions": 42,
-        "ctr": 0,
-        "position": 6.5476190476190474
+        "position": 6.4316939890710385
       }
     ],
     "topQueries": [
@@ -250,27 +250,27 @@
           "flutter vibe coding"
         ],
         "clicks": 49,
-        "impressions": 1088,
-        "ctr": 0.04503676470588235,
-        "position": 8.475183823529413
+        "impressions": 1075,
+        "ctr": 0.045581395348837206,
+        "position": 8.377674418604652
       },
       {
         "keys": [
           "expo location"
         ],
         "clicks": 24,
-        "impressions": 9696,
-        "ctr": 0.0024752475247524753,
-        "position": 7.7275165016501655
+        "impressions": 9656,
+        "ctr": 0.0024855012427506215,
+        "position": 7.731048053024026
       },
       {
         "keys": [
           "vibe coding flutter"
         ],
         "clicks": 24,
-        "impressions": 649,
-        "ctr": 0.03697996918335902,
-        "position": 8.26964560862866
+        "impressions": 648,
+        "ctr": 0.037037037037037035,
+        "position": 8.26388888888889
       },
       {
         "keys": [
@@ -286,9 +286,9 @@
           "expo-location"
         ],
         "clicks": 10,
-        "impressions": 5298,
-        "ctr": 0.001887504718761797,
-        "position": 6.603435258588147
+        "impressions": 5285,
+        "ctr": 0.001892147587511826,
+        "position": 6.601135288552507
       },
       {
         "keys": [
@@ -358,9 +358,9 @@
           "expo geolocation"
         ],
         "clicks": 3,
-        "impressions": 495,
-        "ctr": 0.006060606060606061,
-        "position": 6.91919191919192
+        "impressions": 494,
+        "ctr": 0.006072874493927126,
+        "position": 6.923076923076923
       },
       {
         "keys": [
@@ -376,9 +376,9 @@
           "react native expo location"
         ],
         "clicks": 3,
-        "impressions": 230,
-        "ctr": 0.013043478260869565,
-        "position": 5.065217391304348
+        "impressions": 228,
+        "ctr": 0.013157894736842105,
+        "position": 5.06140350877193
       },
       {
         "keys": [
@@ -403,18 +403,18 @@
           "apphosting.yaml"
         ],
         "clicks": 2,
-        "impressions": 449,
-        "ctr": 0.004454342984409799,
-        "position": 8.454342984409799
+        "impressions": 448,
+        "ctr": 0.004464285714285714,
+        "position": 8.453125
       },
       {
         "keys": [
           "expo gps"
         ],
         "clicks": 2,
-        "impressions": 259,
-        "ctr": 0.007722007722007722,
-        "position": 7.594594594594595
+        "impressions": 258,
+        "ctr": 0.007751937984496124,
+        "position": 7.608527131782946
       },
       {
         "keys": [
@@ -475,9 +475,9 @@
           "react 19 best practices"
         ],
         "clicks": 2,
-        "impressions": 73,
-        "ctr": 0.0273972602739726,
-        "position": 9.58904109589041
+        "impressions": 71,
+        "ctr": 0.028169014084507043,
+        "position": 9.647887323943662
       },
       {
         "keys": [
@@ -502,9 +502,9 @@
           "android emulator very slow"
         ],
         "clicks": 1,
-        "impressions": 136,
-        "ctr": 0.007352941176470588,
-        "position": 6.757352941176471
+        "impressions": 135,
+        "ctr": 0.007407407407407408,
+        "position": 6.762962962962963
       },
       {
         "keys": [
@@ -547,9 +547,9 @@
           "expo location permissions"
         ],
         "clicks": 1,
-        "impressions": 210,
-        "ctr": 0.004761904761904762,
-        "position": 6.576190476190476
+        "impressions": 209,
+        "ctr": 0.004784688995215311,
+        "position": 6.574162679425838
       },
       {
         "keys": [
@@ -592,9 +592,9 @@
           "location expo"
         ],
         "clicks": 1,
-        "impressions": 167,
-        "ctr": 0.005988023952095809,
-        "position": 8.664670658682635
+        "impressions": 166,
+        "ctr": 0.006024096385542169,
+        "position": 8.650602409638555
       },
       {
         "keys": [
@@ -701,136 +701,136 @@
         "keys": [
           "usa"
         ],
-        "clicks": 184,
-        "impressions": 170752,
-        "ctr": 0.0010775862068965517,
-        "position": 6.8764875374812595
+        "clicks": 183,
+        "impressions": 169819,
+        "ctr": 0.0010776179343889671,
+        "position": 6.877887633303694
       },
       {
         "keys": [
           "ind"
         ],
         "clicks": 85,
-        "impressions": 11767,
-        "ctr": 0.007223591399677063,
-        "position": 7.097475992181525
+        "impressions": 11741,
+        "ctr": 0.007239587769355251,
+        "position": 7.095988416659569
       },
       {
         "keys": [
           "deu"
         ],
-        "clicks": 72,
-        "impressions": 4959,
-        "ctr": 0.014519056261343012,
-        "position": 6.617664851784634
+        "clicks": 71,
+        "impressions": 4946,
+        "ctr": 0.014355034371209057,
+        "position": 6.6164577436312175
       },
       {
         "keys": [
           "gbr"
         ],
         "clicks": 47,
-        "impressions": 11745,
-        "ctr": 0.004001702852277565,
-        "position": 5.820093656875266
+        "impressions": 11724,
+        "ctr": 0.004008870692596383,
+        "position": 5.817809621289662
       },
       {
         "keys": [
           "fra"
         ],
         "clicks": 43,
-        "impressions": 4078,
-        "ctr": 0.010544384502206964,
-        "position": 7.392839627268269
+        "impressions": 4060,
+        "ctr": 0.010591133004926109,
+        "position": 7.396305418719212
       },
       {
         "keys": [
           "can"
         ],
         "clicks": 35,
-        "impressions": 6816,
-        "ctr": 0.005134976525821597,
-        "position": 7.248092723004695
+        "impressions": 6793,
+        "ctr": 0.005152362726335934,
+        "position": 7.253201825408508
       },
       {
         "keys": [
           "esp"
         ],
         "clicks": 35,
-        "impressions": 3253,
-        "ctr": 0.010759299108515216,
-        "position": 7.243467568398401
+        "impressions": 3249,
+        "ctr": 0.01077254539858418,
+        "position": 7.243767313019391
       },
       {
         "keys": [
           "bel"
         ],
         "clicks": 30,
-        "impressions": 1050,
-        "ctr": 0.02857142857142857,
-        "position": 6.424761904761905
+        "impressions": 1048,
+        "ctr": 0.02862595419847328,
+        "position": 6.430343511450381
       },
       {
         "keys": [
           "ita"
         ],
         "clicks": 27,
-        "impressions": 2666,
-        "ctr": 0.010127531882970742,
-        "position": 7.85258814703676
+        "impressions": 2662,
+        "ctr": 0.0101427498121713,
+        "position": 7.858377160030052
       },
       {
         "keys": [
           "idn"
         ],
         "clicks": 26,
-        "impressions": 2997,
-        "ctr": 0.008675342008675343,
-        "position": 6.366366366366367
+        "impressions": 2984,
+        "ctr": 0.00871313672922252,
+        "position": 6.360254691689008
       },
       {
         "keys": [
           "nld"
         ],
         "clicks": 24,
-        "impressions": 2323,
-        "ctr": 0.010331467929401636,
-        "position": 6.727507533362032
+        "impressions": 2309,
+        "ctr": 0.01039411000433088,
+        "position": 6.733650931139021
       },
       {
         "keys": [
           "bra"
         ],
         "clicks": 22,
-        "impressions": 6786,
-        "ctr": 0.0032419687592101384,
-        "position": 7.051134689065724
+        "impressions": 6753,
+        "ctr": 0.003257811343106767,
+        "position": 7.03731674811195
       },
       {
         "keys": [
           "aus"
         ],
         "clicks": 21,
-        "impressions": 2795,
-        "ctr": 0.0075134168157423974,
-        "position": 7.179248658318426
+        "impressions": 2783,
+        "ctr": 0.007545813869924541,
+        "position": 7.1875673733381245
       },
       {
         "keys": [
           "swe"
         ],
         "clicks": 21,
-        "impressions": 1486,
-        "ctr": 0.014131897711978465,
-        "position": 6.710632570659489
+        "impressions": 1483,
+        "ctr": 0.014160485502360081,
+        "position": 6.712070128118678
       },
       {
         "keys": [
           "kor"
         ],
         "clicks": 19,
-        "impressions": 2280,
-        "ctr": 0.008333333333333333,
-        "position": 7.650438596491228
+        "impressions": 2273,
+        "ctr": 0.008358996920369555,
+        "position": 7.65068191816982
       }
     ],
     "devices": [
@@ -838,19 +838,19 @@
         "keys": [
           "DESKTOP"
         ],
-        "clicks": 913,
-        "impressions": 262889,
-        "ctr": 0.0034729486589397045,
-        "position": 7.191282252205303
+        "clicks": 910,
+        "impressions": 261510,
+        "ctr": 0.0034797904477840234,
+        "position": 7.1920461932622075
       },
       {
         "keys": [
           "MOBILE"
         ],
         "clicks": 233,
-        "impressions": 27709,
-        "ctr": 0.008408820238911544,
-        "position": 4.783608213937709
+        "impressions": 27682,
+        "ctr": 0.00841702189148183,
+        "position": 4.780326565999566
       },
       {
         "keys": [
@@ -865,8 +865,8 @@
   },
   "ga4": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-07",
+      "endDate": "2026-05-07",
       "days": 365
     },
     "propertyId": "416080229",
@@ -914,7 +914,7 @@
           ],
           "metricValues": [
             {
-              "value": "6086",
+              "value": "6084",
               "oneValue": "value"
             },
             {
@@ -940,7 +940,7 @@
           ],
           "metricValues": [
             {
-              "value": "1549",
+              "value": "1544",
               "oneValue": "value"
             },
             {
@@ -966,7 +966,7 @@
           ],
           "metricValues": [
             {
-              "value": "238",
+              "value": "240",
               "oneValue": "value"
             },
             {
@@ -1018,7 +1018,7 @@
           ],
           "metricValues": [
             {
-              "value": "109",
+              "value": "110",
               "oneValue": "value"
             },
             {
@@ -1327,11 +1327,11 @@
           ],
           "metricValues": [
             {
-              "value": "464",
+              "value": "461",
               "oneValue": "value"
             },
             {
-              "value": "0.39224137931034481",
+              "value": "0.39045553145336226",
               "oneValue": "value"
             },
             {
@@ -1339,11 +1339,11 @@
               "oneValue": "value"
             },
             {
-              "value": "0.60775862068965514",
+              "value": "0.6095444685466378",
               "oneValue": "value"
             },
             {
-              "value": "184.66402498706896",
+              "value": "185.37360236442515",
               "oneValue": "value"
             }
           ]
@@ -1387,11 +1387,11 @@
           ],
           "metricValues": [
             {
-              "value": "336",
+              "value": "335",
               "oneValue": "value"
             },
             {
-              "value": "0.98511904761904767",
+              "value": "0.9850746268656716",
               "oneValue": "value"
             },
             {
@@ -1399,11 +1399,11 @@
               "oneValue": "value"
             },
             {
-              "value": "0.01488095238095238",
+              "value": "0.014925373134328358",
               "oneValue": "value"
             },
             {
-              "value": "4.4089979077380947",
+              "value": "4.422159095522388",
               "oneValue": "value"
             }
           ]
@@ -1417,11 +1417,11 @@
           ],
           "metricValues": [
             {
-              "value": "243",
+              "value": "242",
               "oneValue": "value"
             },
             {
-              "value": "0.49382716049382713",
+              "value": "0.49586776859504134",
               "oneValue": "value"
             },
             {
@@ -1429,11 +1429,11 @@
               "oneValue": "value"
             },
             {
-              "value": "0.50617283950617287",
+              "value": "0.50413223140495866",
               "oneValue": "value"
             },
             {
-              "value": "187.56133695061729",
+              "value": "188.29133713636364",
               "oneValue": "value"
             }
           ]
@@ -1507,11 +1507,11 @@
           ],
           "metricValues": [
             {
-              "value": "47",
+              "value": "49",
               "oneValue": "value"
             },
             {
-              "value": "0.51063829787234039",
+              "value": "0.51020408163265307",
               "oneValue": "value"
             },
             {
@@ -1519,11 +1519,11 @@
               "oneValue": "value"
             },
             {
-              "value": "0.48936170212765956",
+              "value": "0.48979591836734693",
               "oneValue": "value"
             },
             {
-              "value": "146.35400244680849",
+              "value": "177.9064298367347",
               "oneValue": "value"
             }
           ]
@@ -1717,11 +1717,11 @@
           ],
           "metricValues": [
             {
-              "value": "5",
+              "value": "6",
               "oneValue": "value"
             },
             {
-              "value": "0.6",
+              "value": "0.5",
               "oneValue": "value"
             },
             {
@@ -1729,11 +1729,11 @@
               "oneValue": "value"
             },
             {
-              "value": "0.4",
+              "value": "0.5",
               "oneValue": "value"
             },
             {
-              "value": "363.8683004",
+              "value": "362.753571",
               "oneValue": "value"
             }
           ]
@@ -1801,15 +1801,15 @@
             ],
             "metricValues": [
               {
-                "value": "6815",
+                "value": "6812",
                 "oneValue": "value"
               },
               {
-                "value": "7813",
+                "value": "7805",
                 "oneValue": "value"
               },
               {
-                "value": "0.19339562268014848",
+                "value": "0.19359385009609226",
                 "oneValue": "value"
               }
             ]
@@ -1823,7 +1823,7 @@
             ],
             "metricValues": [
               {
-                "value": "500",
+                "value": "499",
                 "oneValue": "value"
               },
               {
@@ -1831,7 +1831,7 @@
                 "oneValue": "value"
               },
               {
-                "value": "0.448566610455312",
+                "value": "0.44688026981450252",
                 "oneValue": "value"
               }
             ]
@@ -1886,11 +1886,11 @@
             ],
             "metricValues": [
               {
-                "value": "4278",
+                "value": "4279",
                 "oneValue": "value"
               },
               {
-                "value": "4635",
+                "value": "4637",
                 "oneValue": "value"
               }
             ]
@@ -1904,11 +1904,11 @@
             ],
             "metricValues": [
               {
-                "value": "958",
+                "value": "957",
                 "oneValue": "value"
               },
               {
-                "value": "966",
+                "value": "965",
                 "oneValue": "value"
               }
             ]
@@ -1922,11 +1922,11 @@
             ],
             "metricValues": [
               {
-                "value": "744",
+                "value": "743",
                 "oneValue": "value"
               },
               {
-                "value": "745",
+                "value": "744",
                 "oneValue": "value"
               }
             ]
@@ -2012,11 +2012,11 @@
             ],
             "metricValues": [
               {
-                "value": "59",
+                "value": "60",
                 "oneValue": "value"
               },
               {
-                "value": "59",
+                "value": "60",
                 "oneValue": "value"
               }
             ]
@@ -2076,11 +2076,11 @@
             "dimensionValues": [],
             "metricValues": [
               {
-                "value": "62.70514363015004",
+                "value": "62.909885892674211",
                 "oneValue": "value"
               },
               {
-                "value": "0.21195522743510359",
+                "value": "0.21191185229303156",
                 "oneValue": "value"
               }
             ]
@@ -2128,7 +2128,7 @@
           ],
           "metricValues": [
             {
-              "value": "4567",
+              "value": "4569",
               "oneValue": "value"
             },
             {
@@ -2154,7 +2154,7 @@
           ],
           "metricValues": [
             {
-              "value": "1529",
+              "value": "1524",
               "oneValue": "value"
             },
             {
@@ -2180,7 +2180,7 @@
           ],
           "metricValues": [
             {
-              "value": "231",
+              "value": "233",
               "oneValue": "value"
             },
             {
@@ -2206,7 +2206,7 @@
           ],
           "metricValues": [
             {
-              "value": "109",
+              "value": "110",
               "oneValue": "value"
             },
             {
@@ -2530,11 +2530,11 @@
             ],
             "metricValues": [
               {
-                "value": "4278",
+                "value": "4279",
                 "oneValue": "value"
               },
               {
-                "value": "4635",
+                "value": "4637",
                 "oneValue": "value"
               }
             ]
@@ -2620,11 +2620,11 @@
             ],
             "metricValues": [
               {
-                "value": "59",
+                "value": "60",
                 "oneValue": "value"
               },
               {
-                "value": "59",
+                "value": "60",
                 "oneValue": "value"
               }
             ]
@@ -2707,8 +2707,8 @@
   },
   "bing": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-07",
+      "endDate": "2026-05-07",
       "days": 365
     },
     "siteUrl": "https://coffey.codes/",
@@ -2722,64 +2722,64 @@
     "_note": "empty response"
   },
   "totals": {
-    "clicks": 1152,
-    "impressions": 294996,
-    "ctr": 0.0039051376967823292
+    "clicks": 1149,
+    "impressions": 293590,
+    "ctr": 0.003913621036138833
   },
   "topPages": [
     {
       "keys": [
         "https://coffey.codes/articles/building-location-based-features-using-expo-location"
       ],
-      "clicks": 390,
-      "impressions": 151786,
-      "ctr": 0.002569406928175194,
-      "position": 6.753000935527651
+      "clicks": 388,
+      "impressions": 150793,
+      "ctr": 0.002573063736380336,
+      "position": 6.754783046958413
     },
     {
       "keys": [
         "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
       ],
       "clicks": 248,
-      "impressions": 9062,
-      "ctr": 0.027367027146325315,
-      "position": 8.481240344294857
+      "impressions": 9038,
+      "ctr": 0.02743969904846205,
+      "position": 8.468245186988272
     },
     {
       "keys": [
         "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
       ],
-      "clicks": 237,
-      "impressions": 71286,
-      "ctr": 0.0033246359734029124,
-      "position": 5.844429481244564
+      "clicks": 236,
+      "impressions": 71150,
+      "ctr": 0.0033169360505973296,
+      "position": 5.845158116654955
     },
     {
       "keys": [
         "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
       ],
       "clicks": 180,
-      "impressions": 43542,
-      "ctr": 0.00413393964448119,
-      "position": 7.4645859170456115
+      "impressions": 43486,
+      "ctr": 0.004139263211148415,
+      "position": 7.463206549234236
     },
     {
       "keys": [
         "https://coffey.codes/articles/react-19-features-and-design-patterns"
       ],
       "clicks": 52,
-      "impressions": 15329,
-      "ctr": 0.0033922630308565464,
-      "position": 8.6312871028769
+      "impressions": 15131,
+      "ctr": 0.0034366532284713504,
+      "position": 8.612451259004693
     },
     {
       "keys": [
         "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
       ],
       "clicks": 15,
-      "impressions": 465,
-      "ctr": 0.03225806451612903,
-      "position": 39.73548387096774
+      "impressions": 464,
+      "ctr": 0.032327586206896554,
+      "position": 39.797413793103445
     },
     {
       "keys": [
@@ -2795,18 +2795,18 @@
         "https://coffey.codes/"
       ],
       "clicks": 4,
-      "impressions": 310,
-      "ctr": 0.012903225806451613,
-      "position": 13.893548387096773
+      "impressions": 311,
+      "ctr": 0.012861736334405145,
+      "position": 13.855305466237942
     },
     {
       "keys": [
         "https://coffey.codes/contact"
       ],
       "clicks": 4,
-      "impressions": 221,
-      "ctr": 0.01809954751131222,
-      "position": 26.357466063348415
+      "impressions": 223,
+      "ctr": 0.017937219730941704,
+      "position": 26.30493273542601
     },
     {
       "keys": [
@@ -2831,9 +2831,9 @@
         "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
       ],
       "clicks": 1,
-      "impressions": 632,
-      "ctr": 0.0015822784810126582,
-      "position": 17.522151898734176
+      "impressions": 633,
+      "ctr": 0.001579778830963665,
+      "position": 17.50394944707741
     },
     {
       "keys": [
@@ -2849,27 +2849,36 @@
         "https://coffey.codes/articles"
       ],
       "clicks": 0,
-      "impressions": 96,
+      "impressions": 97,
       "ctr": 0,
-      "position": 8.395833333333332
+      "position": 8.391752577319588
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/avoiding-unnecessary-re-renders-in-react-apps"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 9
     },
     {
       "keys": [
         "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
       ],
       "clicks": 0,
-      "impressions": 264,
+      "impressions": 259,
       "ctr": 0,
-      "position": 24.393939393939394
+      "position": 24.72200772200772
     },
     {
       "keys": [
         "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
       ],
       "clicks": 0,
-      "impressions": 23,
+      "impressions": 27,
       "ctr": 0,
-      "position": 11.565217391304348
+      "position": 11.037037037037036
     },
     {
       "keys": [
@@ -2921,9 +2930,9 @@
         "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
       ],
       "clicks": 0,
-      "impressions": 720,
+      "impressions": 715,
       "ctr": 0,
-      "position": 6.022222222222222
+      "position": 6.027972027972028
     },
     {
       "keys": [
@@ -2939,18 +2948,9 @@
         "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
       ],
       "clicks": 0,
-      "impressions": 185,
+      "impressions": 183,
       "ctr": 0,
-      "position": 6.410810810810811
-    },
-    {
-      "keys": [
-        "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
-      ],
-      "clicks": 0,
-      "impressions": 42,
-      "ctr": 0,
-      "position": 6.5476190476190474
+      "position": 6.4316939890710385
     }
   ],
   "topQueries": [
@@ -2959,27 +2959,27 @@
         "flutter vibe coding"
       ],
       "clicks": 49,
-      "impressions": 1088,
-      "ctr": 0.04503676470588235,
-      "position": 8.475183823529413
+      "impressions": 1075,
+      "ctr": 0.045581395348837206,
+      "position": 8.377674418604652
     },
     {
       "keys": [
         "expo location"
       ],
       "clicks": 24,
-      "impressions": 9696,
-      "ctr": 0.0024752475247524753,
-      "position": 7.7275165016501655
+      "impressions": 9656,
+      "ctr": 0.0024855012427506215,
+      "position": 7.731048053024026
     },
     {
       "keys": [
         "vibe coding flutter"
       ],
       "clicks": 24,
-      "impressions": 649,
-      "ctr": 0.03697996918335902,
-      "position": 8.26964560862866
+      "impressions": 648,
+      "ctr": 0.037037037037037035,
+      "position": 8.26388888888889
     },
     {
       "keys": [
@@ -2995,9 +2995,9 @@
         "expo-location"
       ],
       "clicks": 10,
-      "impressions": 5298,
-      "ctr": 0.001887504718761797,
-      "position": 6.603435258588147
+      "impressions": 5285,
+      "ctr": 0.001892147587511826,
+      "position": 6.601135288552507
     },
     {
       "keys": [
@@ -3067,9 +3067,9 @@
         "expo geolocation"
       ],
       "clicks": 3,
-      "impressions": 495,
-      "ctr": 0.006060606060606061,
-      "position": 6.91919191919192
+      "impressions": 494,
+      "ctr": 0.006072874493927126,
+      "position": 6.923076923076923
     },
     {
       "keys": [
@@ -3085,9 +3085,9 @@
         "react native expo location"
       ],
       "clicks": 3,
-      "impressions": 230,
-      "ctr": 0.013043478260869565,
-      "position": 5.065217391304348
+      "impressions": 228,
+      "ctr": 0.013157894736842105,
+      "position": 5.06140350877193
     },
     {
       "keys": [
@@ -3112,18 +3112,18 @@
         "apphosting.yaml"
       ],
       "clicks": 2,
-      "impressions": 449,
-      "ctr": 0.004454342984409799,
-      "position": 8.454342984409799
+      "impressions": 448,
+      "ctr": 0.004464285714285714,
+      "position": 8.453125
     },
     {
       "keys": [
         "expo gps"
       ],
       "clicks": 2,
-      "impressions": 259,
-      "ctr": 0.007722007722007722,
-      "position": 7.594594594594595
+      "impressions": 258,
+      "ctr": 0.007751937984496124,
+      "position": 7.608527131782946
     },
     {
       "keys": [
@@ -3184,9 +3184,9 @@
         "react 19 best practices"
       ],
       "clicks": 2,
-      "impressions": 73,
-      "ctr": 0.0273972602739726,
-      "position": 9.58904109589041
+      "impressions": 71,
+      "ctr": 0.028169014084507043,
+      "position": 9.647887323943662
     },
     {
       "keys": [
@@ -3211,9 +3211,9 @@
         "android emulator very slow"
       ],
       "clicks": 1,
-      "impressions": 136,
-      "ctr": 0.007352941176470588,
-      "position": 6.757352941176471
+      "impressions": 135,
+      "ctr": 0.007407407407407408,
+      "position": 6.762962962962963
     },
     {
       "keys": [
@@ -3256,9 +3256,9 @@
         "expo location permissions"
       ],
       "clicks": 1,
-      "impressions": 210,
-      "ctr": 0.004761904761904762,
-      "position": 6.576190476190476
+      "impressions": 209,
+      "ctr": 0.004784688995215311,
+      "position": 6.574162679425838
     },
     {
       "keys": [
@@ -3301,9 +3301,9 @@
         "location expo"
       ],
       "clicks": 1,
-      "impressions": 167,
-      "ctr": 0.005988023952095809,
-      "position": 8.664670658682635
+      "impressions": 166,
+      "ctr": 0.006024096385542169,
+      "position": 8.650602409638555
     },
     {
       "keys": [
@@ -3410,136 +3410,136 @@
       "keys": [
         "usa"
       ],
-      "clicks": 184,
-      "impressions": 170752,
-      "ctr": 0.0010775862068965517,
-      "position": 6.8764875374812595
+      "clicks": 183,
+      "impressions": 169819,
+      "ctr": 0.0010776179343889671,
+      "position": 6.877887633303694
     },
     {
       "keys": [
         "ind"
       ],
       "clicks": 85,
-      "impressions": 11767,
-      "ctr": 0.007223591399677063,
-      "position": 7.097475992181525
+      "impressions": 11741,
+      "ctr": 0.007239587769355251,
+      "position": 7.095988416659569
     },
     {
       "keys": [
         "deu"
       ],
-      "clicks": 72,
-      "impressions": 4959,
-      "ctr": 0.014519056261343012,
-      "position": 6.617664851784634
+      "clicks": 71,
+      "impressions": 4946,
+      "ctr": 0.014355034371209057,
+      "position": 6.6164577436312175
     },
     {
       "keys": [
         "gbr"
       ],
       "clicks": 47,
-      "impressions": 11745,
-      "ctr": 0.004001702852277565,
-      "position": 5.820093656875266
+      "impressions": 11724,
+      "ctr": 0.004008870692596383,
+      "position": 5.817809621289662
     },
     {
       "keys": [
         "fra"
       ],
       "clicks": 43,
-      "impressions": 4078,
-      "ctr": 0.010544384502206964,
-      "position": 7.392839627268269
+      "impressions": 4060,
+      "ctr": 0.010591133004926109,
+      "position": 7.396305418719212
     },
     {
       "keys": [
         "can"
       ],
       "clicks": 35,
-      "impressions": 6816,
-      "ctr": 0.005134976525821597,
-      "position": 7.248092723004695
+      "impressions": 6793,
+      "ctr": 0.005152362726335934,
+      "position": 7.253201825408508
     },
     {
       "keys": [
         "esp"
       ],
       "clicks": 35,
-      "impressions": 3253,
-      "ctr": 0.010759299108515216,
-      "position": 7.243467568398401
+      "impressions": 3249,
+      "ctr": 0.01077254539858418,
+      "position": 7.243767313019391
     },
     {
       "keys": [
         "bel"
       ],
       "clicks": 30,
-      "impressions": 1050,
-      "ctr": 0.02857142857142857,
-      "position": 6.424761904761905
+      "impressions": 1048,
+      "ctr": 0.02862595419847328,
+      "position": 6.430343511450381
     },
     {
       "keys": [
         "ita"
       ],
       "clicks": 27,
-      "impressions": 2666,
-      "ctr": 0.010127531882970742,
-      "position": 7.85258814703676
+      "impressions": 2662,
+      "ctr": 0.0101427498121713,
+      "position": 7.858377160030052
     },
     {
       "keys": [
         "idn"
       ],
       "clicks": 26,
-      "impressions": 2997,
-      "ctr": 0.008675342008675343,
-      "position": 6.366366366366367
+      "impressions": 2984,
+      "ctr": 0.00871313672922252,
+      "position": 6.360254691689008
     },
     {
       "keys": [
         "nld"
       ],
       "clicks": 24,
-      "impressions": 2323,
-      "ctr": 0.010331467929401636,
-      "position": 6.727507533362032
+      "impressions": 2309,
+      "ctr": 0.01039411000433088,
+      "position": 6.733650931139021
     },
     {
       "keys": [
         "bra"
       ],
       "clicks": 22,
-      "impressions": 6786,
-      "ctr": 0.0032419687592101384,
-      "position": 7.051134689065724
+      "impressions": 6753,
+      "ctr": 0.003257811343106767,
+      "position": 7.03731674811195
     },
     {
       "keys": [
         "aus"
       ],
       "clicks": 21,
-      "impressions": 2795,
-      "ctr": 0.0075134168157423974,
-      "position": 7.179248658318426
+      "impressions": 2783,
+      "ctr": 0.007545813869924541,
+      "position": 7.1875673733381245
     },
     {
       "keys": [
         "swe"
       ],
       "clicks": 21,
-      "impressions": 1486,
-      "ctr": 0.014131897711978465,
-      "position": 6.710632570659489
+      "impressions": 1483,
+      "ctr": 0.014160485502360081,
+      "position": 6.712070128118678
     },
     {
       "keys": [
         "kor"
       ],
       "clicks": 19,
-      "impressions": 2280,
-      "ctr": 0.008333333333333333,
-      "position": 7.650438596491228
+      "impressions": 2273,
+      "ctr": 0.008358996920369555,
+      "position": 7.65068191816982
     }
   ],
   "devices": [
@@ -3547,19 +3547,19 @@
       "keys": [
         "DESKTOP"
       ],
-      "clicks": 913,
-      "impressions": 262889,
-      "ctr": 0.0034729486589397045,
-      "position": 7.191282252205303
+      "clicks": 910,
+      "impressions": 261510,
+      "ctr": 0.0034797904477840234,
+      "position": 7.1920461932622075
     },
     {
       "keys": [
         "MOBILE"
       ],
       "clicks": 233,
-      "impressions": 27709,
-      "ctr": 0.008408820238911544,
-      "position": 4.783608213937709
+      "impressions": 27682,
+      "ctr": 0.00841702189148183,
+      "position": 4.780326565999566
     },
     {
       "keys": [

@@ -38,7 +38,7 @@ export default async function ContactPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Left column: info boxes */}
         <div className="flex flex-col gap-4">
-          <RetroWindow title="phone.txt">
+          <RetroWindow title="phone.exe">
             <div className="p-5 flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <PhoneIcon className="h-5 w-5 text-accent1-dark" />
@@ -50,7 +50,7 @@ export default async function ContactPage() {
             </div>
           </RetroWindow>
 
-          <RetroWindow title="email.txt">
+          <RetroWindow title="email.exe">
             <div className="p-5 flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <EnvelopeIcon className="h-5 w-5 text-accent1-dark" />
@@ -62,7 +62,7 @@ export default async function ContactPage() {
             </div>
           </RetroWindow>
 
-          <RetroWindow title="location.txt">
+          <RetroWindow title="location.exe">
             <div className="p-5 flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <MapPinIcon className="h-5 w-5 text-accent1-dark" />
@@ -99,7 +99,7 @@ export default async function ContactPage() {
             </div>
           </RetroWindow>
 
-          <RetroWindow title="calendar.txt">
+          <RetroWindow title="calendar.exe">
             <div className="p-5">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">

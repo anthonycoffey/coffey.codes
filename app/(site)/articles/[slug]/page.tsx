@@ -57,6 +57,14 @@ export async function generateMetadata({ params }) {
 
   const youtubeId = post.metadata.youtubeId;
 
+  // Build the /og URL with category as a kicker when the article has one.
+  // The OG route accepts both `title` and `category` (optional).
+  const ogParams = new URLSearchParams({ title: postTitle });
+  if (post.metadata.category) {
+    ogParams.set('category', post.metadata.category);
+  }
+  const generatedOg = `${baseUrl}/og?${ogParams.toString()}`;
+
   // For video articles, the YouTube thumbnail beats the generated /og card
   // because social sharers expect a play-button preview. Falls back to the
   // dynamic OG route for non-video articles.
@@ -64,7 +72,7 @@ export async function generateMetadata({ params }) {
     ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
     : image
       ? image
-      : `${baseUrl}/og?title=${encodeURIComponent(postTitle)}`;
+      : generatedOg;
 
   return {
     title: postTitle,
@@ -150,7 +158,7 @@ export default async function Blog({ params }) {
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`
-              : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title)}`,
+              : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title)}${post.metadata.category ? `&category=${encodeURIComponent(post.metadata.category)}` : ''}`,
             url: `${baseUrl}/articles/${post.slug}`,
             author: {
               '@type': 'Person',

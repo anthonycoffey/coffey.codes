@@ -1,7 +1,7 @@
 ---
 id: SPEC-018
 title: 'Wire Bing and GA4 into the SEO snapshot script'
-status: draft
+status: ready
 created: 2026-05-11
 author: Anthony Coffey
 reviewers: []
@@ -32,13 +32,14 @@ A secondary motivation: the audits surfaced two unresolved questions that automa
 2. WHEN credentials for an engine are missing or invalid, the script SHALL skip that engine, emit a clear warning to stderr, and continue with the other engines (it does not fail-fast on one engine's auth gap).
 3. WHEN the script writes the output JSON, the top-level structure (window, pulledAt, siteUrl, totals) SHALL stay backwards-compatible with the existing single-engine snapshot consumers. Bing and GA4 data goes into new nested keys; existing GSC consumers continue reading `topPages`, `topQueries`, etc. as before.
 4. WHEN any of the three engines is configured but returns empty data (e.g. Bing's current state), the script SHALL record the empty state explicitly in the output (`"bing": { "topQueries": [], "topPages": [], "_note": "empty response" }`) rather than omit the key.
-5. WHEN GA4 data is captured, the script SHALL include both raw totals AND a bot-region-excluded subset, so future analysis can compare "with vs without contamination" without re-pulling.
+5. WHEN GA4 data is captured, the script SHALL include both raw totals AND a bot-region-excluded subset, so future analysis can compare "with vs without contamination" without re-pulling. The bot-region exclusion list is hard-coded as `['China', 'Singapore']` per the audit; if the list needs to change, it changes in code (small enough that env-var parameterization is over-engineering).
+6. WHEN GA4 data is captured, the date window SHALL be the same 365 days as GSC. Audit doc inconsistency (the Q2 audit used 180 days for GA4 sections) is acceptable because the snapshot's job is the data substrate, not the audit narrative.
+7. WHEN `scripts/seo-snapshot-diff.mjs` is invoked with two snapshot file paths, it SHALL print the delta in totals, top pages by clicks, top queries by impressions, and flag new entrants and fallers (>30% impression drop) for each engine.
 
 ### Nice to have
 
 - A `--engines` CLI flag (`--engines=gsc,bing` or `--engines=ga4`) to skip engines on demand without unsetting env vars.
 - A `--dry-run` flag that prints what would be pulled without actually calling the APIs (useful for debugging the window calculation).
-- A small accompanying script (`scripts/seo-snapshot-diff.mjs`) that takes two snapshot files and prints the delta. Future quarterly audits can lean on this.
 
 ### Non-goals (what this does NOT do)
 
@@ -138,7 +139,11 @@ for (const r of results) {
 
 ### GA4 bot-region exclusion
 
-The audit identified China + Singapore as bot-skewed regions. The script captures both raw and filtered views:
+The audit identified China + Singapore as bot-skewed regions. The script captures both raw and filtered views. The list is hard-coded; if it ever needs to change, the constant lives at the top of `pullGa4`:
+
+```js
+const BOT_REGIONS = ['China', 'Singapore'];
+```
 
 ```js
 // Raw: all sessions
@@ -151,7 +156,7 @@ const trafficSourcesExBotRegions = await ga4.runReport({
     notExpression: {
       filter: {
         fieldName: 'country',
-        inListFilter: { values: ['China', 'Singapore'] },
+        inListFilter: { values: BOT_REGIONS },
       },
     },
   },
@@ -162,11 +167,48 @@ Future analysis compares the two without a second API call.
 
 ### CLI flags
 
-Optional but lightweight:
+Optional but lightweight, only for `seo-snapshot.mjs`:
 
 - `--engines=gsc,bing,ga4` (default: all configured)
 - `--window=180` (default: 365)
 - `--dry-run` (default: false)
+
+### `seo-snapshot-diff.mjs` companion script
+
+A second script under `scripts/` that takes two snapshot file paths and prints the delta. No auth needed; reads JSON only.
+
+```
+node scripts/seo-snapshot-diff.mjs <older.json> <newer.json>
+```
+
+Output shape (one section per engine present in both files):
+
+```
+GSC delta (window: 365 days, older 2026-05-04 -> newer 2026-05-11)
+
+Totals
+  clicks       1,145 -> 1,152    (+7)
+  impressions  292,310 -> 294,996  (+2,686)
+  ctr          0.39% -> 0.39%    (flat)
+
+Top pages (clicks delta)
+  +5  /articles/building-location-based-features-using-expo-location
+  +2  /articles/vibe-coding-building-an-app-entirely-with-ai-prompts
+
+Top queries: new entrants
+  "react three fiber portfolio"   8 impressions, position 12.3
+
+Top queries: fallers (>30% impression drop)
+  (none)
+```
+
+Diff logic:
+- Match rows across snapshots by the row's `keys[0]` (page URL, query string, country, device).
+- "New entrants": rows present in newer, absent in older, with impressions >= 5.
+- "Fallers": rows where `newer.impressions / older.impressions < 0.7` AND `older.impressions >= 10` (the threshold filters out single-impression noise).
+- If an engine is missing from one of the two snapshots, that section is skipped with a one-line note.
+
+Implementation: pure JSON manipulation, no SDK dependencies. Should be ~80-120 lines.
 
 ## Edge cases
 
@@ -208,7 +250,7 @@ Optional but lightweight:
 - [ ] Update the script header comment with all three engines' setup steps.
 - [ ] Add `--engines` and `--dry-run` CLI flags (nice-to-have).
 - [ ] Test end-to-end against the live property; verify the JSON shape matches the Design section.
-- [ ] (Nice-to-have) Write `scripts/seo-snapshot-diff.mjs` that takes two snapshot file paths and prints the delta in totals, top pages, top queries.
+- [ ] Write `scripts/seo-snapshot-diff.mjs` per the spec's diff-logic section.
 - [ ] Document the auth setup in the agent brief or a small `docs/documentation/guides/seo-snapshot-setup.md` so future contributors don't have to spelunk through the script header.
 
 ## Notes
@@ -222,8 +264,8 @@ Optional but lightweight:
 - **Where Bing OAuth WOULD apply**: the Microsoft Graph API (which covers some Microsoft search products) does use OAuth. If a future spec wants to pull from there, that's a different auth setup; not in scope for this spec.
 - **Auth security**: the service account and Bing API key are both long-lived credentials. If either is leaked, rotate immediately via the respective admin UI. The `.env*` gitignore convention is the line of defense.
 
-## Open questions
+## Open questions resolved (2026-05-11)
 
-1. Does the user want GA4's bot-region exclusion list to also live as an env var (`BOT_REGIONS=China,Singapore`) so it can be tweaked without code changes? Currently hard-coded; nice-to-have.
-2. The current snapshot uses a 365-day window. Should the GA4 portion also use 365 days, or should it pull 180 days (matching the audit doc's GA4 sections)? Inconsistency is OK as long as the output records the window per engine.
-3. Whether to add the `seo-snapshot-diff.mjs` companion script in this spec or defer to a follow-up.
+1. **Bot-region list**: hard-coded `['China', 'Singapore']` in `pullGa4`. Git is sufficient version control for a two-item list.
+2. **GA4 window**: 365 days (matches GSC). Snapshot is the data substrate; the audit doc can window differently when it writes the narrative.
+3. **Diff script**: in scope for this spec. Spec'd in Design > `seo-snapshot-diff.mjs` companion section; added as must-have #7.

@@ -38,10 +38,16 @@ vi.mock('@/components/ui/Button', () => ({
 }));
 
 vi.mock('@heroicons/react/24/outline', () => ({
+  ArrowDownTrayIcon: () => null,
   CalendarDaysIcon: () => null,
+  DocumentTextIcon: () => null,
   EnvelopeIcon: () => null,
   PhoneIcon: () => null,
   MapPinIcon: () => null,
+}));
+
+vi.mock('@/components/Testimonials', () => ({
+  default: () => <div data-testid="testimonials" />,
 }));
 
 vi.mock('@heroicons/react/24/solid', () => ({

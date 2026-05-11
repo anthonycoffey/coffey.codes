@@ -41,6 +41,7 @@ vi.mock('@/components/ui/Button', () => ({
 }));
 
 vi.mock('@heroicons/react/24/solid', () => ({
+  ArrowDownTrayIcon: () => null,
   ChatBubbleOvalLeftIcon: () => null,
   CalendarDaysIcon: () => null,
   ArrowTopRightOnSquareIcon: () => null,
@@ -50,6 +51,10 @@ vi.mock('@heroicons/react/24/solid', () => ({
   ClockIcon: () => null,
   CodeBracketSquareIcon: () => null,
   XMarkIcon: () => null,
+}));
+
+vi.mock('@/components/Testimonials', () => ({
+  default: () => <div data-testid="testimonials" />,
 }));
 
 import PortfolioPage from '@/app/(site)/portfolio/page';

@@ -1,0 +1,3574 @@
+{
+  "window": {
+    "startDate": "2025-05-08",
+    "endDate": "2026-05-08",
+    "days": 365
+  },
+  "pulledAt": "2026-05-11T06:15:28.869Z",
+  "siteUrl": "sc-domain:coffey.codes",
+  "gsc": {
+    "window": {
+      "startDate": "2025-05-08",
+      "endDate": "2026-05-08",
+      "days": 365
+    },
+    "totals": {
+      "clicks": 1152,
+      "impressions": 294996,
+      "ctr": 0.0039051376967823292
+    },
+    "topPages": [
+      {
+        "keys": [
+          "https://coffey.codes/articles/building-location-based-features-using-expo-location"
+        ],
+        "clicks": 390,
+        "impressions": 151786,
+        "ctr": 0.002569406928175194,
+        "position": 6.753000935527651
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
+        ],
+        "clicks": 248,
+        "impressions": 9062,
+        "ctr": 0.027367027146325315,
+        "position": 8.481240344294857
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
+        ],
+        "clicks": 237,
+        "impressions": 71286,
+        "ctr": 0.0033246359734029124,
+        "position": 5.844429481244564
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
+        ],
+        "clicks": 180,
+        "impressions": 43542,
+        "ctr": 0.00413393964448119,
+        "position": 7.4645859170456115
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns"
+        ],
+        "clicks": 52,
+        "impressions": 15329,
+        "ctr": 0.0033922630308565464,
+        "position": 8.6312871028769
+      },
+      {
+        "keys": [
+          "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
+        ],
+        "clicks": 15,
+        "impressions": 465,
+        "ctr": 0.03225806451612903,
+        "position": 39.73548387096774
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/authorize-net-for-react-native-expo-sdk-49"
+        ],
+        "clicks": 15,
+        "impressions": 885,
+        "ctr": 0.01694915254237288,
+        "position": 11.483615819209039
+      },
+      {
+        "keys": [
+          "https://coffey.codes/"
+        ],
+        "clicks": 4,
+        "impressions": 310,
+        "ctr": 0.012903225806451613,
+        "position": 13.893548387096773
+      },
+      {
+        "keys": [
+          "https://coffey.codes/contact"
+        ],
+        "clicks": 4,
+        "impressions": 221,
+        "ctr": 0.01809954751131222,
+        "position": 26.357466063348415
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/setting-up-ci-cd-for-firebase-functions-using-github-actions"
+        ],
+        "clicks": 3,
+        "impressions": 594,
+        "ctr": 0.005050505050505051,
+        "position": 12.065656565656566
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/how-to-end-a-process-by-port-number"
+        ],
+        "clicks": 2,
+        "impressions": 706,
+        "ctr": 0.0028328611898017,
+        "position": 19.879603399433428
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
+        ],
+        "clicks": 1,
+        "impressions": 632,
+        "ctr": 0.0015822784810126582,
+        "position": 17.522151898734176
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/tag/unit%20testing?"
+        ],
+        "clicks": 1,
+        "impressions": 9,
+        "ctr": 0.1111111111111111,
+        "position": 6.333333333333333
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles"
+        ],
+        "clicks": 0,
+        "impressions": 96,
+        "ctr": 0,
+        "position": 8.395833333333332
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
+        ],
+        "clicks": 0,
+        "impressions": 264,
+        "ctr": 0,
+        "position": 24.393939393939394
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
+        ],
+        "clicks": 0,
+        "impressions": 23,
+        "ctr": 0,
+        "position": 11.565217391304348
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/categories"
+        ],
+        "clicks": 0,
+        "impressions": 4,
+        "ctr": 0,
+        "position": 5
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/category/development"
+        ],
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 10
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/category/web%20development"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 5
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/how-to-deploy-a-flask-rest-api-on-google-cloud-run"
+        ],
+        "clicks": 0,
+        "impressions": 13,
+        "ctr": 0,
+        "position": 6.153846153846154
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/preventing-unnecessary-re-renders-in-react-apps"
+        ],
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 36.333333333333336
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
+        ],
+        "clicks": 0,
+        "impressions": 720,
+        "ctr": 0,
+        "position": 6.022222222222222
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns#document-metadata"
+        ],
+        "clicks": 0,
+        "impressions": 17,
+        "ctr": 0,
+        "position": 4.764705882352941
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
+        ],
+        "clicks": 0,
+        "impressions": 185,
+        "ctr": 0,
+        "position": 6.410810810810811
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
+        ],
+        "clicks": 0,
+        "impressions": 42,
+        "ctr": 0,
+        "position": 6.5476190476190474
+      }
+    ],
+    "topQueries": [
+      {
+        "keys": [
+          "flutter vibe coding"
+        ],
+        "clicks": 49,
+        "impressions": 1088,
+        "ctr": 0.04503676470588235,
+        "position": 8.475183823529413
+      },
+      {
+        "keys": [
+          "expo location"
+        ],
+        "clicks": 24,
+        "impressions": 9696,
+        "ctr": 0.0024752475247524753,
+        "position": 7.7275165016501655
+      },
+      {
+        "keys": [
+          "vibe coding flutter"
+        ],
+        "clicks": 24,
+        "impressions": 649,
+        "ctr": 0.03697996918335902,
+        "position": 8.26964560862866
+      },
+      {
+        "keys": [
+          "vibe coding flutter app"
+        ],
+        "clicks": 15,
+        "impressions": 218,
+        "ctr": 0.06880733944954129,
+        "position": 7.389908256880734
+      },
+      {
+        "keys": [
+          "expo-location"
+        ],
+        "clicks": 10,
+        "impressions": 5298,
+        "ctr": 0.001887504718761797,
+        "position": 6.603435258588147
+      },
+      {
+        "keys": [
+          "vibe code flutter app"
+        ],
+        "clicks": 9,
+        "impressions": 157,
+        "ctr": 0.05732484076433121,
+        "position": 7.547770700636943
+      },
+      {
+        "keys": [
+          "expo geofencing"
+        ],
+        "clicks": 7,
+        "impressions": 216,
+        "ctr": 0.032407407407407406,
+        "position": 7.583333333333333
+      },
+      {
+        "keys": [
+          "firebase apphosting:secrets:grantaccess"
+        ],
+        "clicks": 7,
+        "impressions": 386,
+        "ctr": 0.018134715025906734,
+        "position": 6.160621761658031
+      },
+      {
+        "keys": [
+          "firebase apphosting:secrets:set"
+        ],
+        "clicks": 6,
+        "impressions": 192,
+        "ctr": 0.03125,
+        "position": 5.447916666666667
+      },
+      {
+        "keys": [
+          "vibe code flutter"
+        ],
+        "clicks": 6,
+        "impressions": 144,
+        "ctr": 0.041666666666666664,
+        "position": 8.208333333333332
+      },
+      {
+        "keys": [
+          "expo location accuracy"
+        ],
+        "clicks": 5,
+        "impressions": 132,
+        "ctr": 0.03787878787878788,
+        "position": 5.613636363636363
+      },
+      {
+        "keys": [
+          "flutter vibe code"
+        ],
+        "clicks": 4,
+        "impressions": 53,
+        "ctr": 0.07547169811320754,
+        "position": 7.471698113207547
+      },
+      {
+        "keys": [
+          "expo geolocation"
+        ],
+        "clicks": 3,
+        "impressions": 495,
+        "ctr": 0.006060606060606061,
+        "position": 6.91919191919192
+      },
+      {
+        "keys": [
+          "expo location example"
+        ],
+        "clicks": 3,
+        "impressions": 47,
+        "ctr": 0.06382978723404255,
+        "position": 8.51063829787234
+      },
+      {
+        "keys": [
+          "react native expo location"
+        ],
+        "clicks": 3,
+        "impressions": 230,
+        "ctr": 0.013043478260869565,
+        "position": 5.065217391304348
+      },
+      {
+        "keys": [
+          "requestforegroundpermissionsasync"
+        ],
+        "clicks": 3,
+        "impressions": 224,
+        "ctr": 0.013392857142857142,
+        "position": 7.825892857142857
+      },
+      {
+        "keys": [
+          "android emulator slow"
+        ],
+        "clicks": 2,
+        "impressions": 387,
+        "ctr": 0.00516795865633075,
+        "position": 7.390180878552972
+      },
+      {
+        "keys": [
+          "apphosting.yaml"
+        ],
+        "clicks": 2,
+        "impressions": 449,
+        "ctr": 0.004454342984409799,
+        "position": 8.454342984409799
+      },
+      {
+        "keys": [
+          "expo gps"
+        ],
+        "clicks": 2,
+        "impressions": 259,
+        "ctr": 0.007722007722007722,
+        "position": 7.594594594594595
+      },
+      {
+        "keys": [
+          "expo location api"
+        ],
+        "clicks": 2,
+        "impressions": 237,
+        "ctr": 0.008438818565400843,
+        "position": 5.0042194092827
+      },
+      {
+        "keys": [
+          "expo location permission"
+        ],
+        "clicks": 2,
+        "impressions": 56,
+        "ctr": 0.03571428571428571,
+        "position": 8.660714285714285
+      },
+      {
+        "keys": [
+          "expo location tracking"
+        ],
+        "clicks": 2,
+        "impressions": 33,
+        "ctr": 0.06060606060606061,
+        "position": 6.363636363636363
+      },
+      {
+        "keys": [
+          "firebase app hosting secrets"
+        ],
+        "clicks": 2,
+        "impressions": 204,
+        "ctr": 0.00980392156862745,
+        "position": 6.519607843137255
+      },
+      {
+        "keys": [
+          "flutter vibe coding platform"
+        ],
+        "clicks": 2,
+        "impressions": 31,
+        "ctr": 0.06451612903225806,
+        "position": 8.032258064516128
+      },
+      {
+        "keys": [
+          "location.watchpositionasync"
+        ],
+        "clicks": 2,
+        "impressions": 63,
+        "ctr": 0.031746031746031744,
+        "position": 6.666666666666667
+      },
+      {
+        "keys": [
+          "react 19 best practices"
+        ],
+        "clicks": 2,
+        "impressions": 73,
+        "ctr": 0.0273972602739726,
+        "position": 9.58904109589041
+      },
+      {
+        "keys": [
+          "vibe coding for flutter"
+        ],
+        "clicks": 2,
+        "impressions": 57,
+        "ctr": 0.03508771929824561,
+        "position": 8.491228070175438
+      },
+      {
+        "keys": [
+          "why android emulator is slow"
+        ],
+        "clicks": 2,
+        "impressions": 84,
+        "ctr": 0.023809523809523808,
+        "position": 4.666666666666666
+      },
+      {
+        "keys": [
+          "android emulator very slow"
+        ],
+        "clicks": 1,
+        "impressions": 136,
+        "ctr": 0.007352941176470588,
+        "position": 6.757352941176471
+      },
+      {
+        "keys": [
+          "apphosting.yaml firebase"
+        ],
+        "clicks": 1,
+        "impressions": 88,
+        "ctr": 0.011363636363636364,
+        "position": 8.420454545454547
+      },
+      {
+        "keys": [
+          "expo background location tracking"
+        ],
+        "clicks": 1,
+        "impressions": 105,
+        "ctr": 0.009523809523809525,
+        "position": 7.6761904761904765
+      },
+      {
+        "keys": [
+          "expo location documentation"
+        ],
+        "clicks": 1,
+        "impressions": 304,
+        "ctr": 0.003289473684210526,
+        "position": 5.384868421052632
+      },
+      {
+        "keys": [
+          "expo location geofencing"
+        ],
+        "clicks": 1,
+        "impressions": 61,
+        "ctr": 0.01639344262295082,
+        "position": 4.557377049180328
+      },
+      {
+        "keys": [
+          "expo location permissions"
+        ],
+        "clicks": 1,
+        "impressions": 210,
+        "ctr": 0.004761904761904762,
+        "position": 6.576190476190476
+      },
+      {
+        "keys": [
+          "expo location react native"
+        ],
+        "clicks": 1,
+        "impressions": 223,
+        "ctr": 0.004484304932735426,
+        "position": 5.20627802690583
+      },
+      {
+        "keys": [
+          "expo location services"
+        ],
+        "clicks": 1,
+        "impressions": 78,
+        "ctr": 0.01282051282051282,
+        "position": 4.589743589743589
+      },
+      {
+        "keys": [
+          "expo-location documentation"
+        ],
+        "clicks": 1,
+        "impressions": 339,
+        "ctr": 0.0029498525073746312,
+        "position": 4.775811209439528
+      },
+      {
+        "keys": [
+          "firebase app hosting environment variables"
+        ],
+        "clicks": 1,
+        "impressions": 211,
+        "ctr": 0.004739336492890996,
+        "position": 9.189573459715639
+      },
+      {
+        "keys": [
+          "location expo"
+        ],
+        "clicks": 1,
+        "impressions": 167,
+        "ctr": 0.005988023952095809,
+        "position": 8.664670658682635
+      },
+      {
+        "keys": [
+          "location.getcurrentpositionasync"
+        ],
+        "clicks": 1,
+        "impressions": 15,
+        "ctr": 0.06666666666666667,
+        "position": 9.133333333333333
+      },
+      {
+        "keys": [
+          "next_public_firebase_api_key"
+        ],
+        "clicks": 1,
+        "impressions": 345,
+        "ctr": 0.002898550724637681,
+        "position": 9.30144927536232
+      },
+      {
+        "keys": [
+          "react 19 design patterns and best practices"
+        ],
+        "clicks": 1,
+        "impressions": 13,
+        "ctr": 0.07692307692307693,
+        "position": 4.3076923076923075
+      },
+      {
+        "keys": [
+          "react 19 partial hydration"
+        ],
+        "clicks": 1,
+        "impressions": 82,
+        "ctr": 0.012195121951219513,
+        "position": 7.426829268292683
+      },
+      {
+        "keys": [
+          "vibe coding with flutter"
+        ],
+        "clicks": 1,
+        "impressions": 84,
+        "ctr": 0.011904761904761904,
+        "position": 7.928571428571429
+      },
+      {
+        "keys": [
+          "why is android emulator so slow"
+        ],
+        "clicks": 1,
+        "impressions": 112,
+        "ctr": 0.008928571428571428,
+        "position": 4.714285714285714
+      },
+      {
+        "keys": [
+          "\"$.location.coords\" audit logs geofence"
+        ],
+        "clicks": 0,
+        "impressions": 10,
+        "ctr": 0,
+        "position": 8.2
+      },
+      {
+        "keys": [
+          "\"$.location.coords\" geofence"
+        ],
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 8
+      },
+      {
+        "keys": [
+          "\"$.location.coords\" jsonpath example"
+        ],
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 10
+      },
+      {
+        "keys": [
+          "\"a react element from an older version of react was rendered\""
+        ],
+        "clicks": 0,
+        "impressions": 12,
+        "ctr": 0,
+        "position": 10.083333333333334
+      },
+      {
+        "keys": [
+          "\"adb emu geo fix\""
+        ],
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 4
+      }
+    ],
+    "countries": [
+      {
+        "keys": [
+          "usa"
+        ],
+        "clicks": 184,
+        "impressions": 170752,
+        "ctr": 0.0010775862068965517,
+        "position": 6.8764875374812595
+      },
+      {
+        "keys": [
+          "ind"
+        ],
+        "clicks": 85,
+        "impressions": 11767,
+        "ctr": 0.007223591399677063,
+        "position": 7.097475992181525
+      },
+      {
+        "keys": [
+          "deu"
+        ],
+        "clicks": 72,
+        "impressions": 4959,
+        "ctr": 0.014519056261343012,
+        "position": 6.617664851784634
+      },
+      {
+        "keys": [
+          "gbr"
+        ],
+        "clicks": 47,
+        "impressions": 11745,
+        "ctr": 0.004001702852277565,
+        "position": 5.820093656875266
+      },
+      {
+        "keys": [
+          "fra"
+        ],
+        "clicks": 43,
+        "impressions": 4078,
+        "ctr": 0.010544384502206964,
+        "position": 7.392839627268269
+      },
+      {
+        "keys": [
+          "can"
+        ],
+        "clicks": 35,
+        "impressions": 6816,
+        "ctr": 0.005134976525821597,
+        "position": 7.248092723004695
+      },
+      {
+        "keys": [
+          "esp"
+        ],
+        "clicks": 35,
+        "impressions": 3253,
+        "ctr": 0.010759299108515216,
+        "position": 7.243467568398401
+      },
+      {
+        "keys": [
+          "bel"
+        ],
+        "clicks": 30,
+        "impressions": 1050,
+        "ctr": 0.02857142857142857,
+        "position": 6.424761904761905
+      },
+      {
+        "keys": [
+          "ita"
+        ],
+        "clicks": 27,
+        "impressions": 2666,
+        "ctr": 0.010127531882970742,
+        "position": 7.85258814703676
+      },
+      {
+        "keys": [
+          "idn"
+        ],
+        "clicks": 26,
+        "impressions": 2997,
+        "ctr": 0.008675342008675343,
+        "position": 6.366366366366367
+      },
+      {
+        "keys": [
+          "nld"
+        ],
+        "clicks": 24,
+        "impressions": 2323,
+        "ctr": 0.010331467929401636,
+        "position": 6.727507533362032
+      },
+      {
+        "keys": [
+          "bra"
+        ],
+        "clicks": 22,
+        "impressions": 6786,
+        "ctr": 0.0032419687592101384,
+        "position": 7.051134689065724
+      },
+      {
+        "keys": [
+          "aus"
+        ],
+        "clicks": 21,
+        "impressions": 2795,
+        "ctr": 0.0075134168157423974,
+        "position": 7.179248658318426
+      },
+      {
+        "keys": [
+          "swe"
+        ],
+        "clicks": 21,
+        "impressions": 1486,
+        "ctr": 0.014131897711978465,
+        "position": 6.710632570659489
+      },
+      {
+        "keys": [
+          "kor"
+        ],
+        "clicks": 19,
+        "impressions": 2280,
+        "ctr": 0.008333333333333333,
+        "position": 7.650438596491228
+      }
+    ],
+    "devices": [
+      {
+        "keys": [
+          "DESKTOP"
+        ],
+        "clicks": 913,
+        "impressions": 262889,
+        "ctr": 0.0034729486589397045,
+        "position": 7.191282252205303
+      },
+      {
+        "keys": [
+          "MOBILE"
+        ],
+        "clicks": 233,
+        "impressions": 27709,
+        "ctr": 0.008408820238911544,
+        "position": 4.783608213937709
+      },
+      {
+        "keys": [
+          "TABLET"
+        ],
+        "clicks": 6,
+        "impressions": 4398,
+        "ctr": 0.001364256480218281,
+        "position": 6.655070486584811
+      }
+    ]
+  },
+  "ga4": {
+    "window": {
+      "startDate": "2025-05-08",
+      "endDate": "2026-05-08",
+      "days": 365
+    },
+    "propertyId": "416080229",
+    "botRegionsExcluded": [
+      "China",
+      "Singapore"
+    ],
+    "trafficSources": {
+      "dimensionHeaders": [
+        {
+          "name": "sessionDefaultChannelGroup"
+        },
+        {
+          "name": "sessionSource"
+        },
+        {
+          "name": "sessionMedium"
+        }
+      ],
+      "metricHeaders": [
+        {
+          "name": "sessions",
+          "type": "TYPE_INTEGER"
+        },
+        {
+          "name": "conversions",
+          "type": "TYPE_FLOAT"
+        }
+      ],
+      "rows": [
+        {
+          "dimensionValues": [
+            {
+              "value": "Direct",
+              "oneValue": "value"
+            },
+            {
+              "value": "(direct)",
+              "oneValue": "value"
+            },
+            {
+              "value": "(none)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "6086",
+              "oneValue": "value"
+            },
+            {
+              "value": "62",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "google",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "1549",
+              "oneValue": "value"
+            },
+            {
+              "value": "7",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "bing",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "238",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Unassigned",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "111",
+              "oneValue": "value"
+            },
+            {
+              "value": "5",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "duckduckgo",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "109",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "chatgpt.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "62",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Social",
+              "oneValue": "value"
+            },
+            {
+              "value": "m.facebook.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "31",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "github.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "27",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Social",
+              "oneValue": "value"
+            },
+            {
+              "value": "facebook.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "25",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "vercel.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "24",
+              "oneValue": "value"
+            },
+            {
+              "value": "3",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "in.search.yahoo.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "12",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "gemini.google.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "12",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "perplexity.ai",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "11",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Unassigned",
+              "oneValue": "value"
+            },
+            {
+              "value": "chatgpt.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "11",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "yahoo",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "10",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        }
+      ]
+    },
+    "organicLandingPages": {
+      "dimensionHeaders": [
+        {
+          "name": "landingPagePlusQueryString"
+        }
+      ],
+      "metricHeaders": [
+        {
+          "name": "sessions",
+          "type": "TYPE_INTEGER"
+        },
+        {
+          "name": "bounceRate",
+          "type": "TYPE_FLOAT"
+        },
+        {
+          "name": "conversions",
+          "type": "TYPE_FLOAT"
+        },
+        {
+          "name": "engagementRate",
+          "type": "TYPE_FLOAT"
+        },
+        {
+          "name": "averageSessionDuration",
+          "type": "TYPE_SECONDS"
+        }
+      ],
+      "rows": [
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/building-location-based-features-using-expo-location",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "464",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.39224137931034481",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.60775862068965514",
+              "oneValue": "value"
+            },
+            {
+              "value": "184.66402498706896",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/vibe-coding-building-an-app-entirely-with-ai-prompts",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "422",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.36966824644549762",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.63033175355450233",
+              "oneValue": "value"
+            },
+            {
+              "value": "127.52180770853082",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "336",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.98511904761904767",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.01488095238095238",
+              "oneValue": "value"
+            },
+            {
+              "value": "4.4089979077380947",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/slow-android-emulator-flutter-dev",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "243",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.49382716049382713",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.50617283950617287",
+              "oneValue": "value"
+            },
+            {
+              "value": "187.56133695061729",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/managing-secrets-firebase-apphosting-yaml-nextjs",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "221",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.36199095022624433",
+              "oneValue": "value"
+            },
+            {
+              "value": "2",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.63800904977375561",
+              "oneValue": "value"
+            },
+            {
+              "value": "237.69706467420812",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/react-19-features-and-design-patterns",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "76",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.53947368421052633",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.46052631578947367",
+              "oneValue": "value"
+            },
+            {
+              "value": "159.01837968421052",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/how-to-see-when-a-file-was-deleted-or-changed-with-git-log",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "47",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.51063829787234039",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.48936170212765956",
+              "oneValue": "value"
+            },
+            {
+              "value": "146.35400244680849",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "28",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.21428571428571427",
+              "oneValue": "value"
+            },
+            {
+              "value": "4",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.7857142857142857",
+              "oneValue": "value"
+            },
+            {
+              "value": "228.43832785714287",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/preventing-unnecessary-re-renders-in-react-apps",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "25",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.52",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.48",
+              "oneValue": "value"
+            },
+            {
+              "value": "175.66383539999998",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/authorize-net-for-react-native-expo-sdk-49",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "18",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.5",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.5",
+              "oneValue": "value"
+            },
+            {
+              "value": "64.892102888888886",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/setting-up-ci-cd-for-firebase-functions-using-github-actions",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "17",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.29411764705882354",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.70588235294117652",
+              "oneValue": "value"
+            },
+            {
+              "value": "64.067072058823541",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/building-interactive-3d-experiences-with-react-three-fiber",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "9",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.22222222222222221",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.77777777777777779",
+              "oneValue": "value"
+            },
+            {
+              "value": "139.87847633333334",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/contact",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "7",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.14285714285714285",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.8571428571428571",
+              "oneValue": "value"
+            },
+            {
+              "value": "270.49053214285715",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/how-to-end-a-process-by-port-number",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "5",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.6",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.4",
+              "oneValue": "value"
+            },
+            {
+              "value": "363.8683004",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "/articles/micro-frontends-architecture-benefits-challenges-best-practices",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "4",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.75",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            },
+            {
+              "value": "0.25",
+              "oneValue": "value"
+            },
+            {
+              "value": "37.08032775",
+              "oneValue": "value"
+            }
+          ]
+        }
+      ]
+    },
+    "userBehavior": {
+      "devices": {
+        "dimensionHeaders": [
+          {
+            "name": "deviceCategory"
+          }
+        ],
+        "metricHeaders": [
+          {
+            "name": "activeUsers",
+            "type": "TYPE_INTEGER"
+          },
+          {
+            "name": "sessions",
+            "type": "TYPE_INTEGER"
+          },
+          {
+            "name": "engagementRate",
+            "type": "TYPE_FLOAT"
+          }
+        ],
+        "rows": [
+          {
+            "dimensionValues": [
+              {
+                "value": "desktop",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "6815",
+                "oneValue": "value"
+              },
+              {
+                "value": "7813",
+                "oneValue": "value"
+              },
+              {
+                "value": "0.19339562268014848",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "mobile",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "500",
+                "oneValue": "value"
+              },
+              {
+                "value": "593",
+                "oneValue": "value"
+              },
+              {
+                "value": "0.448566610455312",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "tablet",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "7",
+                "oneValue": "value"
+              },
+              {
+                "value": "9",
+                "oneValue": "value"
+              },
+              {
+                "value": "0.44444444444444442",
+                "oneValue": "value"
+              }
+            ]
+          }
+        ]
+      },
+      "countries": {
+        "dimensionHeaders": [
+          {
+            "name": "country"
+          }
+        ],
+        "metricHeaders": [
+          {
+            "name": "activeUsers",
+            "type": "TYPE_INTEGER"
+          },
+          {
+            "name": "sessions",
+            "type": "TYPE_INTEGER"
+          }
+        ],
+        "rows": [
+          {
+            "dimensionValues": [
+              {
+                "value": "United States",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "4278",
+                "oneValue": "value"
+              },
+              {
+                "value": "4635",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "China",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "958",
+                "oneValue": "value"
+              },
+              {
+                "value": "966",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Singapore",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "744",
+                "oneValue": "value"
+              },
+              {
+                "value": "745",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "India",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "165",
+                "oneValue": "value"
+              },
+              {
+                "value": "257",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Germany",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "150",
+                "oneValue": "value"
+              },
+              {
+                "value": "184",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "France",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "72",
+                "oneValue": "value"
+              },
+              {
+                "value": "100",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "United Kingdom",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "68",
+                "oneValue": "value"
+              },
+              {
+                "value": "93",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "(not set)",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "59",
+                "oneValue": "value"
+              },
+              {
+                "value": "59",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Canada",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "56",
+                "oneValue": "value"
+              },
+              {
+                "value": "74",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Netherlands",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "50",
+                "oneValue": "value"
+              },
+              {
+                "value": "61",
+                "oneValue": "value"
+              }
+            ]
+          }
+        ]
+      },
+      "engagement": {
+        "dimensionHeaders": [],
+        "metricHeaders": [
+          {
+            "name": "averageSessionDuration",
+            "type": "TYPE_SECONDS"
+          },
+          {
+            "name": "engagementRate",
+            "type": "TYPE_FLOAT"
+          }
+        ],
+        "rows": [
+          {
+            "dimensionValues": [],
+            "metricValues": [
+              {
+                "value": "62.70514363015004",
+                "oneValue": "value"
+              },
+              {
+                "value": "0.21195522743510359",
+                "oneValue": "value"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "trafficSourcesExBotRegions": {
+      "dimensionHeaders": [
+        {
+          "name": "sessionDefaultChannelGroup"
+        },
+        {
+          "name": "sessionSource"
+        },
+        {
+          "name": "sessionMedium"
+        }
+      ],
+      "metricHeaders": [
+        {
+          "name": "sessions",
+          "type": "TYPE_INTEGER"
+        },
+        {
+          "name": "conversions",
+          "type": "TYPE_FLOAT"
+        }
+      ],
+      "rows": [
+        {
+          "dimensionValues": [
+            {
+              "value": "Direct",
+              "oneValue": "value"
+            },
+            {
+              "value": "(direct)",
+              "oneValue": "value"
+            },
+            {
+              "value": "(none)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "4567",
+              "oneValue": "value"
+            },
+            {
+              "value": "60",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "google",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "1529",
+              "oneValue": "value"
+            },
+            {
+              "value": "6",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "bing",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "231",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "duckduckgo",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "109",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "chatgpt.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "62",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Unassigned",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "56",
+              "oneValue": "value"
+            },
+            {
+              "value": "5",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Social",
+              "oneValue": "value"
+            },
+            {
+              "value": "m.facebook.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "31",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "github.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "27",
+              "oneValue": "value"
+            },
+            {
+              "value": "1",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Social",
+              "oneValue": "value"
+            },
+            {
+              "value": "facebook.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "25",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "vercel.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "24",
+              "oneValue": "value"
+            },
+            {
+              "value": "3",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "in.search.yahoo.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "12",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "gemini.google.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "12",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Referral",
+              "oneValue": "value"
+            },
+            {
+              "value": "perplexity.ai",
+              "oneValue": "value"
+            },
+            {
+              "value": "referral",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "11",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Organic Search",
+              "oneValue": "value"
+            },
+            {
+              "value": "yahoo",
+              "oneValue": "value"
+            },
+            {
+              "value": "organic",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "10",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
+              "value": "Unassigned",
+              "oneValue": "value"
+            },
+            {
+              "value": "chatgpt.com",
+              "oneValue": "value"
+            },
+            {
+              "value": "(not set)",
+              "oneValue": "value"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "10",
+              "oneValue": "value"
+            },
+            {
+              "value": "0",
+              "oneValue": "value"
+            }
+          ]
+        }
+      ]
+    },
+    "userBehaviorExBotRegions": {
+      "countries": {
+        "dimensionHeaders": [
+          {
+            "name": "country"
+          }
+        ],
+        "metricHeaders": [
+          {
+            "name": "activeUsers",
+            "type": "TYPE_INTEGER"
+          },
+          {
+            "name": "sessions",
+            "type": "TYPE_INTEGER"
+          }
+        ],
+        "rows": [
+          {
+            "dimensionValues": [
+              {
+                "value": "United States",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "4278",
+                "oneValue": "value"
+              },
+              {
+                "value": "4635",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "India",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "165",
+                "oneValue": "value"
+              },
+              {
+                "value": "257",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Germany",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "150",
+                "oneValue": "value"
+              },
+              {
+                "value": "184",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "France",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "72",
+                "oneValue": "value"
+              },
+              {
+                "value": "100",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "United Kingdom",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "68",
+                "oneValue": "value"
+              },
+              {
+                "value": "93",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "(not set)",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "59",
+                "oneValue": "value"
+              },
+              {
+                "value": "59",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Canada",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "56",
+                "oneValue": "value"
+              },
+              {
+                "value": "74",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Netherlands",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "50",
+                "oneValue": "value"
+              },
+              {
+                "value": "61",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Brazil",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "48",
+                "oneValue": "value"
+              },
+              {
+                "value": "68",
+                "oneValue": "value"
+              }
+            ]
+          },
+          {
+            "dimensionValues": [
+              {
+                "value": "Indonesia",
+                "oneValue": "value"
+              }
+            ],
+            "metricValues": [
+              {
+                "value": "45",
+                "oneValue": "value"
+              },
+              {
+                "value": "59",
+                "oneValue": "value"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "bing": {
+    "window": {
+      "startDate": "2025-05-08",
+      "endDate": "2026-05-08",
+      "days": 365
+    },
+    "siteUrl": "https://coffey.codes/",
+    "totals": {
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0
+    },
+    "trafficStats": [],
+    "topQueries": [],
+    "_note": "empty response"
+  },
+  "totals": {
+    "clicks": 1152,
+    "impressions": 294996,
+    "ctr": 0.0039051376967823292
+  },
+  "topPages": [
+    {
+      "keys": [
+        "https://coffey.codes/articles/building-location-based-features-using-expo-location"
+      ],
+      "clicks": 390,
+      "impressions": 151786,
+      "ctr": 0.002569406928175194,
+      "position": 6.753000935527651
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
+      ],
+      "clicks": 248,
+      "impressions": 9062,
+      "ctr": 0.027367027146325315,
+      "position": 8.481240344294857
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
+      ],
+      "clicks": 237,
+      "impressions": 71286,
+      "ctr": 0.0033246359734029124,
+      "position": 5.844429481244564
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
+      ],
+      "clicks": 180,
+      "impressions": 43542,
+      "ctr": 0.00413393964448119,
+      "position": 7.4645859170456115
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns"
+      ],
+      "clicks": 52,
+      "impressions": 15329,
+      "ctr": 0.0033922630308565464,
+      "position": 8.6312871028769
+    },
+    {
+      "keys": [
+        "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
+      ],
+      "clicks": 15,
+      "impressions": 465,
+      "ctr": 0.03225806451612903,
+      "position": 39.73548387096774
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/authorize-net-for-react-native-expo-sdk-49"
+      ],
+      "clicks": 15,
+      "impressions": 885,
+      "ctr": 0.01694915254237288,
+      "position": 11.483615819209039
+    },
+    {
+      "keys": [
+        "https://coffey.codes/"
+      ],
+      "clicks": 4,
+      "impressions": 310,
+      "ctr": 0.012903225806451613,
+      "position": 13.893548387096773
+    },
+    {
+      "keys": [
+        "https://coffey.codes/contact"
+      ],
+      "clicks": 4,
+      "impressions": 221,
+      "ctr": 0.01809954751131222,
+      "position": 26.357466063348415
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/setting-up-ci-cd-for-firebase-functions-using-github-actions"
+      ],
+      "clicks": 3,
+      "impressions": 594,
+      "ctr": 0.005050505050505051,
+      "position": 12.065656565656566
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/how-to-end-a-process-by-port-number"
+      ],
+      "clicks": 2,
+      "impressions": 706,
+      "ctr": 0.0028328611898017,
+      "position": 19.879603399433428
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
+      ],
+      "clicks": 1,
+      "impressions": 632,
+      "ctr": 0.0015822784810126582,
+      "position": 17.522151898734176
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/tag/unit%20testing?"
+      ],
+      "clicks": 1,
+      "impressions": 9,
+      "ctr": 0.1111111111111111,
+      "position": 6.333333333333333
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles"
+      ],
+      "clicks": 0,
+      "impressions": 96,
+      "ctr": 0,
+      "position": 8.395833333333332
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
+      ],
+      "clicks": 0,
+      "impressions": 264,
+      "ctr": 0,
+      "position": 24.393939393939394
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
+      ],
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0,
+      "position": 11.565217391304348
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/categories"
+      ],
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/category/development"
+      ],
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/category/web%20development"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/how-to-deploy-a-flask-rest-api-on-google-cloud-run"
+      ],
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0,
+      "position": 6.153846153846154
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/preventing-unnecessary-re-renders-in-react-apps"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 36.333333333333336
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
+      ],
+      "clicks": 0,
+      "impressions": 720,
+      "ctr": 0,
+      "position": 6.022222222222222
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns#document-metadata"
+      ],
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0,
+      "position": 4.764705882352941
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
+      ],
+      "clicks": 0,
+      "impressions": 185,
+      "ctr": 0,
+      "position": 6.410810810810811
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
+      ],
+      "clicks": 0,
+      "impressions": 42,
+      "ctr": 0,
+      "position": 6.5476190476190474
+    }
+  ],
+  "topQueries": [
+    {
+      "keys": [
+        "flutter vibe coding"
+      ],
+      "clicks": 49,
+      "impressions": 1088,
+      "ctr": 0.04503676470588235,
+      "position": 8.475183823529413
+    },
+    {
+      "keys": [
+        "expo location"
+      ],
+      "clicks": 24,
+      "impressions": 9696,
+      "ctr": 0.0024752475247524753,
+      "position": 7.7275165016501655
+    },
+    {
+      "keys": [
+        "vibe coding flutter"
+      ],
+      "clicks": 24,
+      "impressions": 649,
+      "ctr": 0.03697996918335902,
+      "position": 8.26964560862866
+    },
+    {
+      "keys": [
+        "vibe coding flutter app"
+      ],
+      "clicks": 15,
+      "impressions": 218,
+      "ctr": 0.06880733944954129,
+      "position": 7.389908256880734
+    },
+    {
+      "keys": [
+        "expo-location"
+      ],
+      "clicks": 10,
+      "impressions": 5298,
+      "ctr": 0.001887504718761797,
+      "position": 6.603435258588147
+    },
+    {
+      "keys": [
+        "vibe code flutter app"
+      ],
+      "clicks": 9,
+      "impressions": 157,
+      "ctr": 0.05732484076433121,
+      "position": 7.547770700636943
+    },
+    {
+      "keys": [
+        "expo geofencing"
+      ],
+      "clicks": 7,
+      "impressions": 216,
+      "ctr": 0.032407407407407406,
+      "position": 7.583333333333333
+    },
+    {
+      "keys": [
+        "firebase apphosting:secrets:grantaccess"
+      ],
+      "clicks": 7,
+      "impressions": 386,
+      "ctr": 0.018134715025906734,
+      "position": 6.160621761658031
+    },
+    {
+      "keys": [
+        "firebase apphosting:secrets:set"
+      ],
+      "clicks": 6,
+      "impressions": 192,
+      "ctr": 0.03125,
+      "position": 5.447916666666667
+    },
+    {
+      "keys": [
+        "vibe code flutter"
+      ],
+      "clicks": 6,
+      "impressions": 144,
+      "ctr": 0.041666666666666664,
+      "position": 8.208333333333332
+    },
+    {
+      "keys": [
+        "expo location accuracy"
+      ],
+      "clicks": 5,
+      "impressions": 132,
+      "ctr": 0.03787878787878788,
+      "position": 5.613636363636363
+    },
+    {
+      "keys": [
+        "flutter vibe code"
+      ],
+      "clicks": 4,
+      "impressions": 53,
+      "ctr": 0.07547169811320754,
+      "position": 7.471698113207547
+    },
+    {
+      "keys": [
+        "expo geolocation"
+      ],
+      "clicks": 3,
+      "impressions": 495,
+      "ctr": 0.006060606060606061,
+      "position": 6.91919191919192
+    },
+    {
+      "keys": [
+        "expo location example"
+      ],
+      "clicks": 3,
+      "impressions": 47,
+      "ctr": 0.06382978723404255,
+      "position": 8.51063829787234
+    },
+    {
+      "keys": [
+        "react native expo location"
+      ],
+      "clicks": 3,
+      "impressions": 230,
+      "ctr": 0.013043478260869565,
+      "position": 5.065217391304348
+    },
+    {
+      "keys": [
+        "requestforegroundpermissionsasync"
+      ],
+      "clicks": 3,
+      "impressions": 224,
+      "ctr": 0.013392857142857142,
+      "position": 7.825892857142857
+    },
+    {
+      "keys": [
+        "android emulator slow"
+      ],
+      "clicks": 2,
+      "impressions": 387,
+      "ctr": 0.00516795865633075,
+      "position": 7.390180878552972
+    },
+    {
+      "keys": [
+        "apphosting.yaml"
+      ],
+      "clicks": 2,
+      "impressions": 449,
+      "ctr": 0.004454342984409799,
+      "position": 8.454342984409799
+    },
+    {
+      "keys": [
+        "expo gps"
+      ],
+      "clicks": 2,
+      "impressions": 259,
+      "ctr": 0.007722007722007722,
+      "position": 7.594594594594595
+    },
+    {
+      "keys": [
+        "expo location api"
+      ],
+      "clicks": 2,
+      "impressions": 237,
+      "ctr": 0.008438818565400843,
+      "position": 5.0042194092827
+    },
+    {
+      "keys": [
+        "expo location permission"
+      ],
+      "clicks": 2,
+      "impressions": 56,
+      "ctr": 0.03571428571428571,
+      "position": 8.660714285714285
+    },
+    {
+      "keys": [
+        "expo location tracking"
+      ],
+      "clicks": 2,
+      "impressions": 33,
+      "ctr": 0.06060606060606061,
+      "position": 6.363636363636363
+    },
+    {
+      "keys": [
+        "firebase app hosting secrets"
+      ],
+      "clicks": 2,
+      "impressions": 204,
+      "ctr": 0.00980392156862745,
+      "position": 6.519607843137255
+    },
+    {
+      "keys": [
+        "flutter vibe coding platform"
+      ],
+      "clicks": 2,
+      "impressions": 31,
+      "ctr": 0.06451612903225806,
+      "position": 8.032258064516128
+    },
+    {
+      "keys": [
+        "location.watchpositionasync"
+      ],
+      "clicks": 2,
+      "impressions": 63,
+      "ctr": 0.031746031746031744,
+      "position": 6.666666666666667
+    },
+    {
+      "keys": [
+        "react 19 best practices"
+      ],
+      "clicks": 2,
+      "impressions": 73,
+      "ctr": 0.0273972602739726,
+      "position": 9.58904109589041
+    },
+    {
+      "keys": [
+        "vibe coding for flutter"
+      ],
+      "clicks": 2,
+      "impressions": 57,
+      "ctr": 0.03508771929824561,
+      "position": 8.491228070175438
+    },
+    {
+      "keys": [
+        "why android emulator is slow"
+      ],
+      "clicks": 2,
+      "impressions": 84,
+      "ctr": 0.023809523809523808,
+      "position": 4.666666666666666
+    },
+    {
+      "keys": [
+        "android emulator very slow"
+      ],
+      "clicks": 1,
+      "impressions": 136,
+      "ctr": 0.007352941176470588,
+      "position": 6.757352941176471
+    },
+    {
+      "keys": [
+        "apphosting.yaml firebase"
+      ],
+      "clicks": 1,
+      "impressions": 88,
+      "ctr": 0.011363636363636364,
+      "position": 8.420454545454547
+    },
+    {
+      "keys": [
+        "expo background location tracking"
+      ],
+      "clicks": 1,
+      "impressions": 105,
+      "ctr": 0.009523809523809525,
+      "position": 7.6761904761904765
+    },
+    {
+      "keys": [
+        "expo location documentation"
+      ],
+      "clicks": 1,
+      "impressions": 304,
+      "ctr": 0.003289473684210526,
+      "position": 5.384868421052632
+    },
+    {
+      "keys": [
+        "expo location geofencing"
+      ],
+      "clicks": 1,
+      "impressions": 61,
+      "ctr": 0.01639344262295082,
+      "position": 4.557377049180328
+    },
+    {
+      "keys": [
+        "expo location permissions"
+      ],
+      "clicks": 1,
+      "impressions": 210,
+      "ctr": 0.004761904761904762,
+      "position": 6.576190476190476
+    },
+    {
+      "keys": [
+        "expo location react native"
+      ],
+      "clicks": 1,
+      "impressions": 223,
+      "ctr": 0.004484304932735426,
+      "position": 5.20627802690583
+    },
+    {
+      "keys": [
+        "expo location services"
+      ],
+      "clicks": 1,
+      "impressions": 78,
+      "ctr": 0.01282051282051282,
+      "position": 4.589743589743589
+    },
+    {
+      "keys": [
+        "expo-location documentation"
+      ],
+      "clicks": 1,
+      "impressions": 339,
+      "ctr": 0.0029498525073746312,
+      "position": 4.775811209439528
+    },
+    {
+      "keys": [
+        "firebase app hosting environment variables"
+      ],
+      "clicks": 1,
+      "impressions": 211,
+      "ctr": 0.004739336492890996,
+      "position": 9.189573459715639
+    },
+    {
+      "keys": [
+        "location expo"
+      ],
+      "clicks": 1,
+      "impressions": 167,
+      "ctr": 0.005988023952095809,
+      "position": 8.664670658682635
+    },
+    {
+      "keys": [
+        "location.getcurrentpositionasync"
+      ],
+      "clicks": 1,
+      "impressions": 15,
+      "ctr": 0.06666666666666667,
+      "position": 9.133333333333333
+    },
+    {
+      "keys": [
+        "next_public_firebase_api_key"
+      ],
+      "clicks": 1,
+      "impressions": 345,
+      "ctr": 0.002898550724637681,
+      "position": 9.30144927536232
+    },
+    {
+      "keys": [
+        "react 19 design patterns and best practices"
+      ],
+      "clicks": 1,
+      "impressions": 13,
+      "ctr": 0.07692307692307693,
+      "position": 4.3076923076923075
+    },
+    {
+      "keys": [
+        "react 19 partial hydration"
+      ],
+      "clicks": 1,
+      "impressions": 82,
+      "ctr": 0.012195121951219513,
+      "position": 7.426829268292683
+    },
+    {
+      "keys": [
+        "vibe coding with flutter"
+      ],
+      "clicks": 1,
+      "impressions": 84,
+      "ctr": 0.011904761904761904,
+      "position": 7.928571428571429
+    },
+    {
+      "keys": [
+        "why is android emulator so slow"
+      ],
+      "clicks": 1,
+      "impressions": 112,
+      "ctr": 0.008928571428571428,
+      "position": 4.714285714285714
+    },
+    {
+      "keys": [
+        "\"$.location.coords\" audit logs geofence"
+      ],
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0,
+      "position": 8.2
+    },
+    {
+      "keys": [
+        "\"$.location.coords\" geofence"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "keys": [
+        "\"$.location.coords\" jsonpath example"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "keys": [
+        "\"a react element from an older version of react was rendered\""
+      ],
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0,
+      "position": 10.083333333333334
+    },
+    {
+      "keys": [
+        "\"adb emu geo fix\""
+      ],
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 4
+    }
+  ],
+  "countries": [
+    {
+      "keys": [
+        "usa"
+      ],
+      "clicks": 184,
+      "impressions": 170752,
+      "ctr": 0.0010775862068965517,
+      "position": 6.8764875374812595
+    },
+    {
+      "keys": [
+        "ind"
+      ],
+      "clicks": 85,
+      "impressions": 11767,
+      "ctr": 0.007223591399677063,
+      "position": 7.097475992181525
+    },
+    {
+      "keys": [
+        "deu"
+      ],
+      "clicks": 72,
+      "impressions": 4959,
+      "ctr": 0.014519056261343012,
+      "position": 6.617664851784634
+    },
+    {
+      "keys": [
+        "gbr"
+      ],
+      "clicks": 47,
+      "impressions": 11745,
+      "ctr": 0.004001702852277565,
+      "position": 5.820093656875266
+    },
+    {
+      "keys": [
+        "fra"
+      ],
+      "clicks": 43,
+      "impressions": 4078,
+      "ctr": 0.010544384502206964,
+      "position": 7.392839627268269
+    },
+    {
+      "keys": [
+        "can"
+      ],
+      "clicks": 35,
+      "impressions": 6816,
+      "ctr": 0.005134976525821597,
+      "position": 7.248092723004695
+    },
+    {
+      "keys": [
+        "esp"
+      ],
+      "clicks": 35,
+      "impressions": 3253,
+      "ctr": 0.010759299108515216,
+      "position": 7.243467568398401
+    },
+    {
+      "keys": [
+        "bel"
+      ],
+      "clicks": 30,
+      "impressions": 1050,
+      "ctr": 0.02857142857142857,
+      "position": 6.424761904761905
+    },
+    {
+      "keys": [
+        "ita"
+      ],
+      "clicks": 27,
+      "impressions": 2666,
+      "ctr": 0.010127531882970742,
+      "position": 7.85258814703676
+    },
+    {
+      "keys": [
+        "idn"
+      ],
+      "clicks": 26,
+      "impressions": 2997,
+      "ctr": 0.008675342008675343,
+      "position": 6.366366366366367
+    },
+    {
+      "keys": [
+        "nld"
+      ],
+      "clicks": 24,
+      "impressions": 2323,
+      "ctr": 0.010331467929401636,
+      "position": 6.727507533362032
+    },
+    {
+      "keys": [
+        "bra"
+      ],
+      "clicks": 22,
+      "impressions": 6786,
+      "ctr": 0.0032419687592101384,
+      "position": 7.051134689065724
+    },
+    {
+      "keys": [
+        "aus"
+      ],
+      "clicks": 21,
+      "impressions": 2795,
+      "ctr": 0.0075134168157423974,
+      "position": 7.179248658318426
+    },
+    {
+      "keys": [
+        "swe"
+      ],
+      "clicks": 21,
+      "impressions": 1486,
+      "ctr": 0.014131897711978465,
+      "position": 6.710632570659489
+    },
+    {
+      "keys": [
+        "kor"
+      ],
+      "clicks": 19,
+      "impressions": 2280,
+      "ctr": 0.008333333333333333,
+      "position": 7.650438596491228
+    }
+  ],
+  "devices": [
+    {
+      "keys": [
+        "DESKTOP"
+      ],
+      "clicks": 913,
+      "impressions": 262889,
+      "ctr": 0.0034729486589397045,
+      "position": 7.191282252205303
+    },
+    {
+      "keys": [
+        "MOBILE"
+      ],
+      "clicks": 233,
+      "impressions": 27709,
+      "ctr": 0.008408820238911544,
+      "position": 4.783608213937709
+    },
+    {
+      "keys": [
+        "TABLET"
+      ],
+      "clicks": 6,
+      "impressions": 4398,
+      "ctr": 0.001364256480218281,
+      "position": 6.655070486584811
+    }
+  ]
+}

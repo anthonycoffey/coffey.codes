@@ -7,7 +7,8 @@ category: Web Development
 youtubeId: H0wzqgMeGpU
 ---
 
-One day it hit me: nobody was reading the copy on my homepage. The old site had a marketing-style hero with a tagline, a CTA, a bio paragraph, the usual. None of it was doing work. So I redid the homepage as a Three.js scroll experience. The site is the portfolio now, not the words about the portfolio.
+One day it hit me: nobody was reading the copy on my homepage. My old site was the traditional vertical brochure for a tech professional, a bio paragraph, some tech-bro lingo that no one cares about, the usual. None of it was getting me leads. So I redid the homepage as a 3D scene that is controlled by the user's scroll wheel. This is something I've wanted to do for a long time, and have even dabbled with three.js but never landing on anything I really liked. 
+The site is the portfolio now, not the words about the portfolio. No one cares about the words, they care about the work. The 3D scene is the work, and the copy that is shown now is more human. The homepage is a single scroll experience, and the rest of the site is where the information lives. The homepage is the hook, the portfolio and contact pages are the close.
 
 The video walks through the build:
 
@@ -36,7 +37,7 @@ The canvas component is mounted with `dynamic(..., { ssr: false })` because WebG
 
 ## Why it works better
 
-The old homepage was a vertical brochure that was instantly forgetable. Information density was high; engagement was low.
+The old homepage felt like a digital brochure—functional, perhaps, but entirely forgetable. Information density was high; engagement was low.
 
 The redesign moves each concern to the page that actually needs it. The bio belongs on the pages where someone is deciding whether to reach out, not where someone is deciding whether to stay. Testimonials moved to [/portfolio](/portfolio) and [/contact](/contact). Work samples moved to [/portfolio](/portfolio). The homepage stopped competing for attention with itself.
 

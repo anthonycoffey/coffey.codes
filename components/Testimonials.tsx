@@ -115,7 +115,7 @@ const Testimonials = () => {
   return (
     <section
       data-theme="dark"
-      className="bg-surface border border-border pt-4 rounded-xl shadow-retro relative overflow-hidden"
+      className="bg-surface border border-border py-4 rounded-xl shadow-retro relative overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >

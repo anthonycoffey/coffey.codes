@@ -104,6 +104,18 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      {
+        source: '/articles/unit-testing-in-python-with-pytest',
+        destination: '/articles',
+        permanent: true,
+      },
+      // Orphan category route after the four SE deprecations above; the
+      // `Software Engineering` pillar no longer has any published articles.
+      {
+        source: '/articles/category/software%20engineering',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

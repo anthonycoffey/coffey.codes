@@ -61,10 +61,13 @@ The four Bucket B articles each need an explicit refresh-or-redirect decision be
 | `embracing-clean-code-principles` | Redirect to `/articles` (308) | 2026-05-11 | Pervasive voice violations ("in the realm of", "few names resonate as profoundly", "beacon for developers", "elevate their craft", "coding journey"). Topic is Uncle Bob's book; the canonical source is the book itself. Generic before/after rename examples, nothing Anthony shipped. Zero traffic. Deleted MDX; redirect in `next.config.js`. |
 | `javascript-design-patterns` | Redirect to `/articles` (308) | 2026-05-11 | Generic Module/Singleton/Factory/Observer rundown from 2023. Marketing tricolon in summary ("efficient, scalable and maintainable"). Sample code uses dated string literals. Topic is SERP-saturated; canonical pattern catalogs (refactoring.guru, MDN, JS design patterns book) dominate. No Anthony-specific implementation work. Deleted MDX; redirect in `next.config.js`. |
 | `tips-for-troubleshooting-and-debugging-code` | Redirect to `/articles` (308) | 2026-05-11 | 25-line article of generic platitudes ("Pay attention", "Take breaks"). No code examples, no Anthony-specific work, no distinctive angle. Topic is SERP-saturated by Stack Overflow and every developer blog. Zero traffic in audit window. Deleted MDX; redirect in `next.config.js`. |
-| `unit-testing-in-python-with-pytest` | _pending_ |  |  |
+| `unit-testing-in-python-with-pytest` | Redirect to `/articles` (308) | 2026-05-11 | Generic Pytest tutorial covering install, fixtures, parametrize, mocks. The Pytest official docs are comprehensive; every Python blog has covered this. No Anthony-specific work. Zero traffic. Deleted MDX; redirect in `next.config.js`. |
 
-Default action if no refresh angle surfaces by 2026-08-10: 308 redirect to `/articles`, MDX renamed to `.archived.mdx` to keep history in git.
+All four decisions landed before the 2026-08-10 review. The MDX files were deleted outright (git history preserves them); 308 redirects in [`next.config.js`](../../next.config.js) keep any backlinks resolving. With all four articles deprecated, the `Software Engineering` pillar no longer has any published articles and the `/articles/category/software%20engineering` route gets a sibling redirect to `/articles`.
+
+The pillar may be revived in the future if Anthony writes work-evidence pieces that fit the category. Until then, the canonical pillar set is four: Web Development, Mobile Development, Cloud & DevOps, Tools & Productivity.
 
 ## Change log
 
-- 2026-05-11. Initial bucketing per SPEC-017 must-have #7. Bucket A and B mirror SPEC-017 Design > Disposition matrix. All four Software Engineering pillar articles defaulted to Bucket B with `_pending_` decisions; final decision recorded inline at refresh / redirect time.
+- 2026-05-11. Initial bucketing per SPEC-017 must-have #7. Bucket A and B mirror SPEC-017 Design > Disposition matrix.
+- 2026-05-11. All four Software Engineering pillar articles deprecated via 308 redirect to `/articles`. MDX files deleted; orphan category route also redirected. Decisions recorded inline in the table above.

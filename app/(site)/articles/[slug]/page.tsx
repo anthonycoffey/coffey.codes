@@ -188,7 +188,9 @@ export default async function Blog({ params }) {
                 name: post.metadata.title,
                 description: post.metadata.summary,
                 thumbnailUrl: `https://img.youtube.com/vi/${post.metadata.youtubeId}/maxresdefault.jpg`,
-                uploadDate: post.metadata.updated || post.metadata.publishedAt,
+                uploadDate: toIsoDatetime(
+                  post.metadata.updated || post.metadata.publishedAt,
+                ),
                 embedUrl: `https://www.youtube.com/embed/${post.metadata.youtubeId}`,
                 contentUrl: `https://www.youtube.com/watch?v=${post.metadata.youtubeId}`,
               },

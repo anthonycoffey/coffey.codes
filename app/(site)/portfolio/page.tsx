@@ -433,7 +433,7 @@ const PortfolioSection: React.FC = () => {
       {/* Testimonials */}
       <section className="mt-4 mb-12">
         <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-4 text-c-heading">
-          What clients have said
+          What other clients have said
         </h2>
         <Testimonials />
       </section>

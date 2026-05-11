@@ -163,6 +163,61 @@ describe('Article page JSON-LD datetime hygiene', () => {
   });
 });
 
+describe('Article page video schema (when frontmatter has youtubeId)', () => {
+  const VIDEO_POST = {
+    slug: 'video-article',
+    metadata: {
+      title: 'A Video Article',
+      publishedAt: '2026-05-10',
+      summary: 'An article that embeds a video',
+      tags: ['video'],
+      category: 'engineering',
+      youtubeId: 'TEST_VIDEO_ID',
+    },
+    content: 'body',
+  };
+
+  it('emits a nested VideoObject inside BlogPosting when youtubeId is set', async () => {
+    vi.mocked(
+      getAllBlogPosts as unknown as () => (typeof VIDEO_POST)[],
+    ).mockReturnValue([VIDEO_POST]);
+
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'video-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const blogPosting = findJsonLdByType(html, 'BlogPosting');
+
+    expect(blogPosting!.video).toBeDefined();
+    expect(blogPosting!.video['@type']).toBe('VideoObject');
+    expect(blogPosting!.video.name).toBe('A Video Article');
+    expect(blogPosting!.video.thumbnailUrl).toMatch(
+      /^https:\/\/img\.youtube\.com\/vi\/TEST_VIDEO_ID\//,
+    );
+    expect(blogPosting!.video.embedUrl).toBe(
+      'https://www.youtube.com/embed/TEST_VIDEO_ID',
+    );
+    expect(blogPosting!.video.contentUrl).toBe(
+      'https://www.youtube.com/watch?v=TEST_VIDEO_ID',
+    );
+    expect(blogPosting!.video.uploadDate).toBeDefined();
+  });
+
+  it('does NOT emit a video field when youtubeId is absent', async () => {
+    vi.mocked(
+      getAllBlogPosts as unknown as () => (typeof SAMPLE_POST)[],
+    ).mockReturnValue([SAMPLE_POST]);
+
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const blogPosting = findJsonLdByType(html, 'BlogPosting');
+
+    expect(blogPosting!.video).toBeUndefined();
+  });
+});
+
 describe('Article page CWV image hygiene', () => {
   it('the avatar image (above the fold on every article) is marked priority and has a sizes hint', async () => {
     const element = await Blog({

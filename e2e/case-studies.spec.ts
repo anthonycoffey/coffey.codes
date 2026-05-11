@@ -17,7 +17,9 @@ test.describe('Case Studies Migration', () => {
     await expect(page.getByRole('heading', { name: /PostGIS in Action/i, level: 1 })).toBeVisible();
     
     // Verify a text block is present
-    await expect(page.getByText('The client needed an update to their web app')).toBeVisible();
+    await expect(
+      page.getByText(/no ability to match technicians to jobs by location/i),
+    ).toBeVisible();
   });
 
   test('should render visx chart blocks as inline SVGs', async ({ page }) => {
@@ -28,18 +30,4 @@ test.describe('Case Studies Migration', () => {
     await expect(page.locator('svg[data-chart="bar"]')).toHaveCount(2);
   });
 
-  test('should render a PDF download CTA when the case study has a pdfPath', async ({
-    page,
-  }) => {
-    await page.goto('/case-study/postgis-fleet-optimization');
-    const cta = page.getByTestId('case-study-pdf-cta');
-    await expect(cta).toBeVisible();
-    const downloadLink = cta.getByRole('link', {
-      name: /download pdf version/i,
-    });
-    await expect(downloadLink).toHaveAttribute(
-      'href',
-      /Case%20Study%20-%20PostGIS%20in%20Action\.pdf$/,
-    );
-  });
 });

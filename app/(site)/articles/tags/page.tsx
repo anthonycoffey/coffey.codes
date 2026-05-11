@@ -2,15 +2,32 @@ import { getAllTags } from '@/app/(site)/articles/utils';
 import Link from 'next/link';
 import { TagIcon } from '@heroicons/react/20/solid';
 import PageHeader from '@/components/PageHeader';
+import { baseUrl } from '@/app/sitemap';
 
 import type { Metadata } from 'next';
 
 export function generateMetadata(): Metadata {
+  const description =
+    'Browse articles by tag, React, Next.js, AWS, AI/ML, Git, and other technologies covered by Anthony Coffey.';
+  const ogImage = `${baseUrl}/og?title=${encodeURIComponent('All Tags')}&category=${encodeURIComponent('Articles')}`;
+
   return {
     title: 'Articles Tags',
-    description:
-      'Browse articles by tag — React, Next.js, AWS, AI/ML, Git, and other technologies covered by Anthony Coffey.',
+    description,
     alternates: { canonical: '/articles/tags' },
+    openGraph: {
+      type: 'website',
+      url: '/articles/tags',
+      title: 'Articles Tags',
+      description,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Articles Tags',
+      description,
+      images: [ogImage],
+    },
   };
 }
 

@@ -200,7 +200,12 @@ describe('Article page video schema (when frontmatter has youtubeId)', () => {
     expect(blogPosting!.video.contentUrl).toBe(
       'https://www.youtube.com/watch?v=TEST_VIDEO_ID',
     );
-    expect(blogPosting!.video.uploadDate).toBeDefined();
+    // Google's Rich Results Test flags date-only uploadDate as a
+    // "missing timezone" warning. Same fix as datePublished /
+    // dateModified: ISO 8601 datetime with timezone.
+    const ISO_DATETIME_WITH_TZ =
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
+    expect(blogPosting!.video.uploadDate).toMatch(ISO_DATETIME_WITH_TZ);
   });
 
   it('does NOT emit a video field when youtubeId is absent', async () => {

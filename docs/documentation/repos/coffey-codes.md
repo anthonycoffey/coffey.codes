@@ -1,8 +1,8 @@
 # coffey.codes — Technical Reference
 
 **Repo:** https://github.com/anthonycoffey/coffey.codes  
-**Deployment:** Vercel (auto-deploys from `main`)  
-**Last updated:** 2026-04-13
+**Deployment:** Vercel (auto-deploys from `main`, gated by GitHub Actions + Playwright e2e)
+**Last updated:** 2026-05-11
 
 ---
 
@@ -136,23 +136,59 @@ Custom components available in blog posts are registered in `components/mdx.tsx`
 ## Build & Deployment
 
 ```bash
-npm install         # Install dependencies (requires Node >= 22)
-npm dev             # Dev server at http://localhost:3000
-npm build           # Production build
-npm start           # Run production build locally
-npm lint            # ESLint
-npm lint:fix        # ESLint auto-fix
+npm install         # Install dependencies (requires Node >= 24)
+npm run dev         # Dev server at http://localhost:3000
+npm run build       # Production build
+npm run start       # Run production build locally
+npm run lint        # ESLint
+npm run typecheck   # tsc --noEmit
+npm test            # Vitest unit + component tests
+npm run test:e2e    # Playwright (requires dev server or preview URL)
 ```
 
-**Deployment:** Push to `main` → Vercel auto-deploys.
+**CI gate (see [system-overview](../guides/system-overview.md) for the full handshake):**
+
+1. GitHub Actions: ESLint, Vitest + coverage, TypeScript typecheck (parallel).
+2. Vercel Preview builds the branch.
+3. Playwright runs against the preview URL via the `x-vercel-protection-bypass` header.
+4. All four checks must be green before Vercel will promote the deployment to production.
+
+**Deployment:** Push to `main` → Vercel auto-deploys once required checks pass.
+
+### Comments
+
+Article comments are powered by Giscus on top of GitHub Discussions in `anthonycoffey/coffey.codes` (category: **General**). [components/Comments.tsx](components/Comments.tsx) mounts on every article page, keyed by `pathname`. Theme follows `next-themes`. Moderation happens in the GitHub Discussions UI.
+
+## Structured data (SEO)
+
+JSON-LD is emitted across the site to give Google's Knowledge Graph and other crawlers a coherent entity picture. See [On-Page SEO Strategy](../deep-dives/onpage-seo-strategy.md) for the full schema breakdown.
+
+- **`app/layout.tsx`**: site-wide `Person` (with `sameAs` to GitHub, LinkedIn, Linktr.ee) and `Organization` (publisher block, also `sameAs`).
+- **`app/articles/[slug]/page.tsx`**: `BlogPosting` with `author`, `publisher`, `dateModified`; `BreadcrumbList` for crawl context.
+- **`app/case-study/[slug]/page.tsx`**: same pattern as articles.
+- **`/articles?page=N` (page > 1)**: `noindex` to suppress pagination duplication in SERPs.
+
+## SEO data pipeline
+
+`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single dated JSON snapshot in `docs/strategy/data/`. `scripts/seo-snapshot-diff.mjs` compares two snapshots.
+
+Snapshots are committed to git because GSC's data window is only 16 months and historical data is otherwise lost. Each snapshot is roughly 80-120 KB.
+
+Four follow-on tools (SPEC-020) consume the snapshot + Google Ads API to produce editorial reports:
+
+- `scripts/keyword-audit-articles.mjs` — flags articles ranking on long-tails where Ads suggests a higher-volume term they could target
+- `scripts/keyword-discover-topics.mjs` — ranked editorial backlog of fresh keyword ideas (filters out topics already covered by existing slugs)
+- `scripts/keyword-validate-lps.mjs` — verdict (`WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS`) per `app/lp/*/page.tsx`
+- `scripts/keyword-probe-url.mjs` — one-shot competitor URL probe; stdout-only
+
+All four reuse `scripts/lib/google-ads.mjs` (shared service-account JWT auth, direct REST against `googleads.googleapis.com/v17/`, no `google-ads-api` dep). Full setup in [SEO snapshot setup](../guides/seo-snapshot-setup.md).
 
 ## Known Issues / Pending Work
 
-| Item                   | Status               | Notes                                                             |
-| ---------------------- | -------------------- | ----------------------------------------------------------------- |
-| Contact form backend   | Not implemented      | `ContactForm.tsx` exists, API route TBD (Resend/Formspree/custom) |
-| Social links in footer | Not added            | GitHub/LinkedIn links missing from `components/footer.tsx`        |
-| Testing                | Vitest + Playwright  | Unit/component via Vitest + Testing Library; e2e in `e2e/` via Playwright; TDD is the expected workflow |
+| Item                | Status               | Notes                                                             |
+| ------------------- | -------------------- | ----------------------------------------------------------------- |
+| Bing data backfill  | Not possible         | Bing Webmaster Tools recording started 2026-05-10; ~90 days needed before meaningful comparison |
+| Content strategy doc | In progress (SPEC-017) | Editorial follow-up to the Q2/Q3 SEO audits                     |
 
 ## Version Control
 

@@ -17,7 +17,8 @@
     "test:coverage:ui": "vitest run --coverage --coverage.reporter=html",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "seo-snapshot": "node scripts/seo-snapshot.mjs"
   },
   "engines": {
     "node": ">=24.0.0"

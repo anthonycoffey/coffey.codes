@@ -65,7 +65,7 @@ const REPO_ROOT = path.resolve(path.dirname(__filename), '..');
 
 // Auto-load .env.local (Next.js convention) if present. Node 22 ships
 // process.loadEnvFile; the project requires Node >= 22, so it's safe.
-const envFile = path.join(REPO_ROOT, '.env.local');
+const envFile = path.join(REPO_ROOT, '.env');
 if (existsSync(envFile) && typeof process.loadEnvFile === 'function') {
   process.loadEnvFile(envFile);
 }

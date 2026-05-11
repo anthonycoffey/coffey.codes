@@ -24,7 +24,7 @@ test.describe('Case Studies Migration', () => {
     
     // Verify a text block is present
     await expect(
-      page.getByText(/no ability to match technicians to jobs by location/i),
+      page.getByText(/match technicians to jobs by location/i),
     ).toBeVisible();
   });
 

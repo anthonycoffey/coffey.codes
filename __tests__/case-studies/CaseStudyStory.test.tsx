@@ -89,4 +89,32 @@ describe('CaseStudyStory', () => {
     const { container } = render(<CaseStudyStory study={{ ...mockStudy, story: undefined }} />);
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('renders inline backticked spans inside text blocks as <code>', () => {
+    const study: CaseStudyData = {
+      ...mockStudy,
+      story: [
+        {
+          type: 'text',
+          content:
+            'See `scripts/seo-snapshot.mjs` for the puller and check `WELL_TARGETED` verdicts.',
+        },
+      ],
+    };
+    const { container } = render(<CaseStudyStory study={study} />);
+    const codeEls = container.querySelectorAll('code');
+    expect(codeEls.length).toBe(2);
+    expect(codeEls[0]).toHaveTextContent('scripts/seo-snapshot.mjs');
+    expect(codeEls[1]).toHaveTextContent('WELL_TARGETED');
+  });
+
+  it('passes through plain text without backticks unchanged', () => {
+    const study: CaseStudyData = {
+      ...mockStudy,
+      story: [{ type: 'text', content: 'No backticks here.' }],
+    };
+    const { container } = render(<CaseStudyStory study={study} />);
+    expect(container.querySelectorAll('code').length).toBe(0);
+    expect(container.textContent).toContain('No backticks here.');
+  });
 });

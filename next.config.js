@@ -94,6 +94,11 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      {
+        source: '/articles/javascript-design-patterns',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

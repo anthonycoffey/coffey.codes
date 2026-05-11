@@ -59,7 +59,7 @@ The four Bucket B articles each need an explicit refresh-or-redirect decision be
 | Slug | Decision | Date | Reasoning |
 | --- | --- | --- | --- |
 | `embracing-clean-code-principles` | _pending_ |  |  |
-| `javascript-design-patterns` | _pending_ |  |  |
+| `javascript-design-patterns` | Redirect to `/articles` (308) | 2026-05-11 | Generic Module/Singleton/Factory/Observer rundown from 2023. Marketing tricolon in summary ("efficient, scalable and maintainable"). Sample code uses dated string literals. Topic is SERP-saturated; canonical pattern catalogs (refactoring.guru, MDN, JS design patterns book) dominate. No Anthony-specific implementation work. Deleted MDX; redirect in `next.config.js`. |
 | `tips-for-troubleshooting-and-debugging-code` | Redirect to `/articles` (308) | 2026-05-11 | 25-line article of generic platitudes ("Pay attention", "Take breaks"). No code examples, no Anthony-specific work, no distinctive angle. Topic is SERP-saturated by Stack Overflow and every developer blog. Zero traffic in audit window. Deleted MDX; redirect in `next.config.js`. |
 | `unit-testing-in-python-with-pytest` | _pending_ |  |  |
 

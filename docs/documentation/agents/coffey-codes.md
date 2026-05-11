@@ -143,7 +143,7 @@ npm run typecheck      # tsc --noEmit
 
 ### Pull and compare SEO snapshots
 
-`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls GSC, GA4, Bing, and Google Ads keyword data in one shot, writing a dated JSON file to `docs/strategy/data/`. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
+`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls GSC, GA4, Bing, and Google Ads keyword data in one shot, writing both a dated JSON file and a Markdown summary to `docs/strategy/data/`. The JSON is the source of truth for the diff script; the `.md` companion (`scripts/lib/snapshot-markdown.mjs`) is the AI/RAG-friendly view. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
 
 ```bash
 node scripts/seo-snapshot.mjs                       # all configured engines, 365d
@@ -200,4 +200,4 @@ Production promotion is blocked until every required check is green (see [system
 - [Development Standards](../development-standards.md)
 - [On-Page SEO Strategy](../deep-dives/onpage-seo-strategy.md) — page-level metadata and structured data
 - [CTR-by-position baseline](../deep-dives/ctr-by-position-baseline.md) — site-specific SEO performance curve
-- [SEO snapshot setup](../guides/seo-snapshot-setup.md) — how to wire and run the three-engine snapshot script
+- [SEO snapshot setup](../guides/seo-snapshot-setup.md) — how to wire and run the four-engine snapshot script (and its Markdown companion)

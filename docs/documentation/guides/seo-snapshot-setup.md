@@ -137,9 +137,14 @@ node scripts/seo-snapshot.mjs --window=180
 node scripts/seo-snapshot.mjs --dry-run
 ```
 
-Output goes to `docs/strategy/data/snapshot-<YYYY-MM-DD>.json`. The script prints a one-line summary per engine on completion.
+Output goes to `docs/strategy/data/`. Two files per run, same date stem:
 
-When the `keywords` engine is enabled, the snapshot also gets a top-level `keywords` key (with `historicalMetrics` + `ideas`) and each `gsc.topQueries` row is enriched in place with `volumeBucket`, `competition`, `competitionIndex`, and `cpcRangeMicros`. Rows the Ads side has no data for gain `_keywordsMatch: false`.
+- `snapshot-<YYYY-MM-DD>.json` — full structured data; source of truth for the diff script and any tooling
+- `snapshot-<YYYY-MM-DD>.md` — condensed Markdown summary with frontmatter, headline numbers, and per-engine sections. Renders cleanly in any markdown viewer and is the form AI tools should ingest (RAG, search indexers, etc.) since the JSON is too large and structurally noisy for that purpose
+
+The script prints a one-line summary per engine on completion. The markdown renderer lives at `scripts/lib/snapshot-markdown.mjs` and runs automatically after the JSON write succeeds.
+
+When the `keywords` engine is enabled, the JSON snapshot also gets a top-level `keywords` key (with `historicalMetrics` + `ideas`) and each `gsc.topQueries` row is enriched in place with `volumeBucket`, `competition`, `competitionIndex`, and `cpcRangeMicros`. Rows the Ads side has no data for gain `_keywordsMatch: false`. The Markdown summary picks the same enrichment up automatically.
 
 ## Keyword research tools (SPEC-020)
 
@@ -206,9 +211,9 @@ GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` varian
 
 ## Related
 
-- [SPEC-018 (archived)](../../specs/archive/SPEC-018-multi-engine-snapshot.md) — multi-engine snapshot
-- [SPEC-019](../../specs/active/SPEC-019-keyword-volume-in-snapshot.md) — adds Google Ads keyword volume context to the snapshot
-- [SPEC-020](../../specs/active/SPEC-020-keyword-research-tools.md) — the four keyword research scripts described above
+- [SPEC-018 (archived)](../../specs/archive/SPEC-018-multi-engine-snapshot.md) — multi-engine snapshot foundation
+- [SPEC-019 (archived)](../../specs/archive/SPEC-019-keyword-volume-in-snapshot.md) — Google Ads keyword volume context in the snapshot
+- [SPEC-020 (archived)](../../specs/archive/SPEC-020-keyword-research-tools.md) — the four keyword research scripts described above
 - [On-page SEO strategy](../deep-dives/onpage-seo-strategy.md) — what the audits measure
 - [CTR-by-position baseline](../deep-dives/ctr-by-position-baseline.md) — site-specific CTR curve
 - [Quarterly audit folder](../../strategy/) — finished narrative reports

@@ -170,7 +170,7 @@ JSON-LD is emitted across the site to give Google's Knowledge Graph and other cr
 
 ## SEO data pipeline
 
-`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single dated JSON snapshot in `docs/strategy/data/`. `scripts/seo-snapshot-diff.mjs` compares two snapshots.
+`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single dated JSON snapshot in `docs/strategy/data/`, with a frontmatter-tagged Markdown summary (`scripts/lib/snapshot-markdown.mjs`) written alongside the JSON for AI/RAG consumption. `scripts/seo-snapshot-diff.mjs` compares two snapshots and renders a colored, box-bordered terminal report.
 
 Snapshots are committed to git because GSC's data window is only 16 months and historical data is otherwise lost. Each snapshot is roughly 80-120 KB.
 
@@ -181,7 +181,7 @@ Four follow-on tools (SPEC-020) consume the snapshot + Google Ads API to produce
 - `scripts/keyword-validate-lps.mjs` — verdict (`WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS`) per `app/lp/*/page.tsx`
 - `scripts/keyword-probe-url.mjs` — one-shot competitor URL probe; stdout-only
 
-All four reuse `scripts/lib/google-ads.mjs` (shared service-account JWT auth, direct REST against `googleads.googleapis.com/v17/`, no `google-ads-api` dep). Full setup in [SEO snapshot setup](../guides/seo-snapshot-setup.md).
+All four reuse `scripts/lib/google-ads.mjs` (shared service-account JWT auth, direct REST against `googleads.googleapis.com/v21/`, no `google-ads-api` dep). Customer-ID dashes are stripped automatically. Full setup in [SEO snapshot setup](../guides/seo-snapshot-setup.md).
 
 ## Known Issues / Pending Work
 

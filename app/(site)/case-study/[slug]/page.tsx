@@ -4,7 +4,6 @@ import { caseStudies } from '../../case-studies/case-studies';
 import GoBack from '@/components/GoBack';
 import CaseStudyBrief from './CaseStudyBrief';
 import CaseStudyStory from './CaseStudyStory';
-import CaseStudyPdfCta from '@/components/CaseStudyPdfCta';
 import { baseUrl } from '@/app/sitemap';
 
 export async function generateStaticParams() {
@@ -152,10 +151,6 @@ export default async function CaseStudyPage({
             <CaseStudyStory study={study} />
           )}
         </article>
-
-        {study.pdfPath && (
-          <CaseStudyPdfCta pdfPath={study.pdfPath} title={study.title} />
-        )}
 
         <div className="mt-12 flex justify-between items-center pt-8 border-t border-border">
           <GoBack />

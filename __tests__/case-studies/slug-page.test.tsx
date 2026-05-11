@@ -7,9 +7,6 @@ vi.mock('@/components/Breadcrumbs', () => ({
 vi.mock('@/components/GoBack', () => ({
   default: () => null,
 }));
-vi.mock('@/components/CaseStudyPdfCta', () => ({
-  default: () => null,
-}));
 vi.mock('@/app/(site)/case-study/[slug]/CaseStudyBrief', () => ({
   default: () => null,
 }));

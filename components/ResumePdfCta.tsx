@@ -7,9 +7,8 @@ import {
 const RESUME_HREF = '/Anthony%20Coffey%20-%20Resume.pdf';
 
 /**
- * Resume download CTA modeled on CaseStudyPdfCta. Same visual language
- * (gradient stripe, stacked-document hover affordance, editorial
- * headline, pill button) so the two PDF surfaces feel like one family.
+ * Resume download CTA. Gradient stripe, stacked-document hover
+ * affordance, editorial headline, pill button.
  *
  * GA4's enhanced-measurement file_download event fires automatically
  * on click (keyed as a soft lead per docs/strategy/ga4-events.md).

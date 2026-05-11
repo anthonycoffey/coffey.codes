@@ -22,7 +22,7 @@ Audit signals cited below trace to [`seo-audit-2026-Q2.md`](./seo-audit-2026-Q2.
 | --- | --- |
 | Type | Refresh (Bucket A) |
 | Target ship | 2026-09-30 |
-| Status | planned |
+| Status | drafted ([brief](./briefs/2026-Q3-slot-1-vibe-coding-refresh.md)) |
 | Pillar | Mobile Development |
 | Target queries | `flutter vibe coding`, `vibe coding flutter app`, `vibe code flutter app` (audit Section 4, 6-7% CTR cluster) |
 | What this demonstrates | A real Flutter project shipped end-to-end on AI-driven workflows; the body documents which decisions held up and which broke after ~12 months of distance from the original draft. |

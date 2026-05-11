@@ -56,6 +56,20 @@ export function GET(request: Request) {
             }}
           />
 
+          {/* Dark overlay so white text reads clearly on top of the
+              colorful SVG. Logomark stays visible through it. */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: 1200,
+              height: 630,
+              display: 'flex',
+              background: 'rgba(0,0,0,0.55)',
+            }}
+          />
+
           {/* Title block — pinned to the upper portion so it doesn't
               collide with the logomark in the SVG's bottom-left. */}
           <div

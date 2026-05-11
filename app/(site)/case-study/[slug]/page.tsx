@@ -79,6 +79,12 @@ export default async function CaseStudyPage({
         width: 601,
         height: 601,
       },
+      sameAs: [
+        'https://github.com/anthonycoffey',
+        'https://linkedin.com/in/coffeyanthony',
+        'https://linktr.ee/coffeycodes',
+        'https://www.youtube.com/@coffeycodes',
+      ],
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     keywords: study.tags.join(', '),

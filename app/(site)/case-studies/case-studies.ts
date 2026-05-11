@@ -211,13 +211,12 @@ export const caseStudies: CaseStudyData[] = [
       },
       {
         type: 'chart',
-        title: 'Pipeline scope: before vs after',
+        title: 'What the pipeline produces today (built from zero)',
         unit: '',
         data: [
-          { label: 'Engines integrated (before)', value: 1 },
-          { label: 'Engines integrated (after)', value: 4 },
-          { label: 'Auto-generated reports (before)', value: 0 },
-          { label: 'Auto-generated reports (after)', value: 6 },
+          { label: 'Engines', value: 4 },
+          { label: 'Scripts', value: 8 },
+          { label: 'Reports', value: 6 },
         ],
       },
       {

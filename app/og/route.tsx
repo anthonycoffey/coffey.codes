@@ -13,6 +13,9 @@ const MAX_AUTHOR_LENGTH = 40;
 export function GET(request: Request) {
   try {
     const url = new URL(request.url);
+    const origin = url.origin;
+    const bgUrl = `${origin}/og-meta-base.svg`;
+
     const rawTitle = url.searchParams.get('title') || DEFAULT_TITLE;
     const title = rawTitle.slice(0, MAX_TITLE_LENGTH);
     const category = url.searchParams
@@ -21,8 +24,9 @@ export function GET(request: Request) {
     const rawAuthor = url.searchParams.get('author') || DEFAULT_AUTHOR;
     const author = rawAuthor.slice(0, MAX_AUTHOR_LENGTH);
 
-    // Long titles shrink so they still fit 3 lines comfortably.
-    const titleFontSize = title.length > 80 ? 56 : title.length > 50 ? 68 : 80;
+    // Long titles shrink so they still fit comfortably in the upper half
+    // (we keep the bottom-left clear for the logomark inside the SVG).
+    const titleFontSize = title.length > 80 ? 52 : title.length > 50 ? 64 : 76;
 
     return new ImageResponse(
       (
@@ -30,47 +34,36 @@ export function GET(request: Request) {
           style={{
             width: '100%',
             height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '64px 80px',
-            background:
-              'linear-gradient(135deg, #0F172A 0%, #1E3A8A 28%, #1D4ED8 52%, #BD93F9 78%, #F97316 100%)',
             position: 'relative',
+            display: 'flex',
             fontFamily: 'sans-serif',
             color: 'white',
           }}
         >
-          {/* Soft highlight in the upper-left for depth */}
-          <div
+          {/* Brand background (SVG with logomark in the bottom-left). */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bgUrl}
+            alt=""
+            width={1200}
+            height={630}
             style={{
               position: 'absolute',
               top: 0,
               left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              background:
-                'radial-gradient(ellipse 60% 50% at 0% 0%, rgba(255,255,255,0.18), transparent 60%)',
+              width: 1200,
+              height: 630,
             }}
           />
 
-          {/* Top: brand mark */}
+          {/* Title block — pinned to the upper portion so it doesn't
+              collide with the logomark in the SVG's bottom-left. */}
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: 32,
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            coffey.codes
-          </div>
-
-          {/* Middle: optional category kicker + title */}
-          <div
-            style={{
+              position: 'absolute',
+              top: 64,
+              left: 80,
+              right: 80,
               display: 'flex',
               flexDirection: 'column',
               gap: 24,
@@ -82,7 +75,7 @@ export function GET(request: Request) {
                   display: 'flex',
                   fontSize: 22,
                   fontWeight: 600,
-                  color: 'rgba(255,255,255,0.85)',
+                  color: 'rgba(255,255,255,0.9)',
                   letterSpacing: '0.28em',
                   textTransform: 'uppercase',
                 }}
@@ -97,28 +90,33 @@ export function GET(request: Request) {
                 fontWeight: 700,
                 letterSpacing: '-0.03em',
                 lineHeight: 1.05,
+                textShadow: '0 2px 12px rgba(0,0,0,0.35)',
               }}
             >
               {title}
             </div>
           </div>
 
-          {/* Bottom: author with accent dot */}
+          {/* Author — bottom-right so the logomark keeps the bottom-left. */}
           <div
             style={{
+              position: 'absolute',
+              bottom: 64,
+              right: 80,
               display: 'flex',
               alignItems: 'center',
-              gap: 14,
-              fontSize: 24,
+              gap: 12,
+              fontSize: 22,
               color: 'rgba(255,255,255,0.9)',
+              textShadow: '0 2px 8px rgba(0,0,0,0.35)',
             }}
           >
             <div
               style={{
                 display: 'flex',
-                width: 10,
-                height: 10,
-                borderRadius: 5,
+                width: 8,
+                height: 8,
+                borderRadius: 4,
                 background: '#F97316',
               }}
             />

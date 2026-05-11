@@ -56,6 +56,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
   TagIcon: () => null,
   FolderIcon: () => null,
   MagnifyingGlassIcon: () => null,
+  ChartBarIcon: () => null,
   CpuChipIcon: () => null,
 }));
 

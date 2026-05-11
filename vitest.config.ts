@@ -15,6 +15,9 @@ export default defineConfig({
       '**/e2e/**',
       '**/*.e2e.{ts,tsx}',
       '**/*.playwright.{ts,tsx}',
+      // Claude Code keeps disposable worktrees here; they hold stale code
+      // copies that confuse the runner. Exclude them globally.
+      '**/.claude/**',
     ],
     coverage: {
       provider: 'v8',

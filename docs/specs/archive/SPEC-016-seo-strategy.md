@@ -41,7 +41,7 @@ The two specs are intentionally separate. SEO strategy can ship in a few PRs ove
 1. WHEN a top-5 article (`building-location-based-features-using-expo-location`, `vibe-coding-building-an-app-entirely-with-ai-prompts`, `slow-android-emulator-flutter-dev`, `managing-secrets-firebase-apphosting-yaml-nextjs`, `react-19-features-and-design-patterns`) is rendered, its `<title>` and `<meta name="description">` SHALL be reviewed against the article's striking-distance and low-hanging-fruit queries from SPEC-015 and rewritten where the current values miss the dominant intent.
 2. WHEN an article page is rendered, the emitted `BlogPosting.dateModified` SHALL be derived from the MDX file's `mtime` (or an explicit `updated:` frontmatter field if present), not equal to `datePublished` by default.
 3. WHEN an article uses long-form headings that map to SERP intent (e.g. function names like `requestForegroundPermissionsAsync`), the rendered HTML SHALL emit a stable, kebab-case `id` on the heading element so the URL-with-anchor is a valid deep-link target.
-4. WHEN [`app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx`](app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx) is rendered, its frontmatter `category` SHALL read `Mobile Development` (currently `Development`), and the orphan `/articles/category/development` route SHALL 404 or redirect to `/articles/category/mobile%20development`.
+4. WHEN [`app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx`](<app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx>) is rendered, its frontmatter `category` SHALL read `Mobile Development` (currently `Development`), and the orphan `/articles/category/development` route SHALL 404 or redirect to `/articles/category/mobile%20development`.
 5. WHEN the homepage `/` is rendered, its `<title>` and `<meta description>` SHALL include the canonical author entity ("Anthony Coffey") in a form that competes for the branded query "anthony coffey".
 6. WHEN an article ranks in striking distance (positions 8-15) for a query that maps to a sibling article's topic, the spec author SHALL add an internal link from the striking-distance page section to the canonical article, scoped to the queries identified in audit Section 5.
 7. WHEN a GA4 report is run for SEO purposes, "conversion" SHALL have a documented definition (which event, where it fires, what user action it represents). The audit found 5 conversions in 180 days but never verified the underlying event.
@@ -54,7 +54,6 @@ The two specs are intentionally separate. SEO strategy can ship in a few PRs ove
 - Per-page `openGraph.images` for taxonomy hubs (`/articles/categories`, `/articles/tags`, individual category and tag pages) and the homepage. Currently fall back to the dynamic `/og?title=...` route or the root OG. SPEC-013 nice-to-have, restated here with current data showing it's still worth doing.
 - `Organization.sameAs` on the publisher block in `BlogPosting` JSON-LD (sister to the existing `Person.sameAs` on the layout-level Person schema).
 - A CTR-by-position baseline computed from this site's own GSC data (not a generic curve), to make "below curve" claims defensible. The audit cited "5-7% at position 7" implicitly; future audits should cite the site's own observed CTR per position bucket.
-- Wikidata or Knowledge Graph entry for "Anthony Coffey" linked via `Person.sameAs`. Useful for the branded-query rank discussed in must-have #5.
 - A small dashboard or scheduled snapshot (`scripts/seo-snapshot.mjs` from SPEC-015 nice-to-have) that captures clicks, impressions, top pages, and top queries weekly into `docs/strategy/data/`.
 
 ### Non-goals (what this does NOT do)
@@ -70,7 +69,7 @@ The two specs are intentionally separate. SEO strategy can ship in a few PRs ove
 
 ### 1. Title and meta-description rewrites (must-have #1)
 
-For each top-5 article, capture the current `<title>` and `<meta description>` from the rendered HTML and the rewrite target. The frontmatter `summary` field feeds the description; the rendered title is `${frontmatter.title} | Anthony Coffey` per [`app/(site)/articles/[slug]/page.tsx`](app/(site)/articles/[slug]/page.tsx).
+For each top-5 article, capture the current `<title>` and `<meta description>` from the rendered HTML and the rewrite target. The frontmatter `summary` field feeds the description; the rendered title is `${frontmatter.title} | Anthony Coffey` per [`app/(site)/articles/[slug]/page.tsx`](<app/(site)/articles/[slug]/page.tsx>).
 
 **Building Location-Based Features Using Expo Location**
 
@@ -104,7 +103,7 @@ For each rewrite: ship in a single PR titled `seo: rewrite top-5 article titles 
 
 Current state per audit Section 12: all three audited article schemas have `dateModified === datePublished`. Three of the top four articles are declining. Fresh `dateModified` is a real signal Google uses to decide crawl frequency and rank-stability for time-sensitive topics.
 
-Approach: in [`app/(site)/articles/[slug]/page.tsx`](app/(site)/articles/[slug]/page.tsx), populate `BlogPosting.dateModified` from one of these in priority order:
+Approach: in [`app/(site)/articles/[slug]/page.tsx`](<app/(site)/articles/[slug]/page.tsx>), populate `BlogPosting.dateModified` from one of these in priority order:
 
 1. An explicit `updated:` field in the MDX frontmatter (when the author wants to assert a meaningful update, not a typo fix).
 2. The MDX file's `mtime` from `fs.stat()` at build time.
@@ -122,14 +121,14 @@ Caveat from audit reading: React 19's anchor URLs already rank but get zero clic
 
 ### 4. Category fix on `slow-android-emulator-flutter-dev` (must-have #4)
 
-Single-line change in [`app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx`](app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx) frontmatter:
+Single-line change in [`app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx`](<app/(site)/articles/posts/slow-android-emulator-flutter-dev.mdx>) frontmatter:
 
 ```diff
 - category: 'Development'
 + category: 'Mobile Development'
 ```
 
-The orphan `/articles/category/development` route is generated by [`app/(site)/articles/category/[category]/page.tsx`](app/(site)/articles/category/[category]/page.tsx) reading from `getAllCategories()` in [`app/(site)/articles/utils.ts`](app/(site)/articles/utils.ts). Once the frontmatter is corrected, the category disappears from `getAllCategories()` and the route returns 404.
+The orphan `/articles/category/development` route is generated by [`app/(site)/articles/category/[category]/page.tsx`](<app/(site)/articles/category/[category]/page.tsx>) reading from `getAllCategories()` in [`app/(site)/articles/utils.ts`](<app/(site)/articles/utils.ts>). Once the frontmatter is corrected, the category disappears from `getAllCategories()` and the route returns 404.
 
 Belt and braces: add a redirect in `next.config.js` from `/articles/category/development` to `/articles/category/mobile%20development` so any backlinks to the orphan still resolve.
 
@@ -147,11 +146,11 @@ Two diagnoses are plausible: the SERP for "anthony coffey" is dominated by other
 
 For the striking-distance queries listed in audit Section 5, add explicit internal links from the receiving article (where the query actually ranks) to the canonical sibling article when the topic warrants. Specific candidates:
 
-| Query (page) | Anchor in receiving article | Link target |
-| --- | --- | --- |
-| `react 19 best practices` (react-19-features-and-design-patterns) | "more on patterns" | [/articles/javascript-design-patterns](app/(site)/articles/posts/javascript-design-patterns.mdx) |
-| `expo background location` (building-location-based...) | new section paragraph | none yet (article doesn't cover it well; SPEC-017 may write a companion piece) |
-| `firebase app hosting environment variables` (managing-secrets-firebase...) | existing section | [/articles/setting-up-ci-cd-for-firebase-functions-using-github-actions](app/(site)/articles/posts/setting-up-ci-cd-for-firebase-functions-using-github-actions.mdx) where applicable |
+| Query (page)                                                                | Anchor in receiving article | Link target                                                                                                                                                                             |
+| --------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `react 19 best practices` (react-19-features-and-design-patterns)           | "more on patterns"          | [/articles/javascript-design-patterns](<app/(site)/articles/posts/javascript-design-patterns.mdx>)                                                                                      |
+| `expo background location` (building-location-based...)                     | new section paragraph       | none yet (article doesn't cover it well; SPEC-017 may write a companion piece)                                                                                                          |
+| `firebase app hosting environment variables` (managing-secrets-firebase...) | existing section            | [/articles/setting-up-ci-cd-for-firebase-functions-using-github-actions](<app/(site)/articles/posts/setting-up-ci-cd-for-firebase-functions-using-github-actions.mdx>) where applicable |
 
 Defer the rest to SPEC-017's editorial passes.
 
@@ -233,7 +232,7 @@ The original SPEC-015's nice-to-have snapshot script (`scripts/seo-snapshot.mjs`
 - [x] Capture current `<title>` and `<meta description>` for each top-5 article (via SPEC-015 audit data)
 - [x] Draft rewrite targets, citing audit Section 5 and Section 6 numbers
 - [x] Frontmatter rewrites for top-5 articles (partial: Expo Location title + summary, Firebase Secrets summary; React 19 / vibe-coding / slow-android-emulator deferred to editorial review)
-- [x] Add `dateModified` derivation in [`app/(site)/articles/[slug]/page.tsx`](app/(site)/articles/[slug]/page.tsx) (priority: frontmatter `updated:`, then file mtime, then publishedAt)
+- [x] Add `dateModified` derivation in [`app/(site)/articles/[slug]/page.tsx`](<app/(site)/articles/[slug]/page.tsx>) (priority: frontmatter `updated:`, then file mtime, then publishedAt)
 - [ ] Document `updated:` frontmatter convention in [`docs/documentation/agents/coffey-codes.md`](docs/documentation/agents/coffey-codes.md) so SPEC-017's refresh policy can rely on it
 - [x] Verify or add `rehype-slug` to MDX pipeline (already implemented via custom `createHeading` in [`components/mdx.tsx`](components/mdx.tsx); no change needed)
 - [ ] Spot-check rendered IDs on the Expo Location and React 19 articles
@@ -245,7 +244,7 @@ The original SPEC-015's nice-to-have snapshot script (`scripts/seo-snapshot.mjs`
 - [ ] GA4 conversion audit, write `docs/strategy/ga4-events.md` (PR 6)
 - [ ] Configure GA4 segment "Excluding bot regions" and document (PR 6)
 - [x] (Nice-to-have) Per-page `openGraph.images` for taxonomy hubs and homepage: shipped in PR #171. Articles, taxonomy hubs, per-category, per-tag, case-studies list, case-study slug, and contact all use the styled `/og` card with category kicker. Homepage intentionally keeps the bespoke `/og-image.jpg`.
-- [x] (Nice-to-have) `Organization.sameAs` on publisher block: shipped in [`app/(site)/articles/[slug]/page.tsx`](app/(site)/articles/[slug]/page.tsx) and [`app/(site)/case-study/[slug]/page.tsx`](app/(site)/case-study/[slug]/page.tsx) with GitHub, LinkedIn, Linktr.ee, and YouTube channel.
+- [x] (Nice-to-have) `Organization.sameAs` on publisher block: shipped in [`app/(site)/articles/[slug]/page.tsx`](<app/(site)/articles/[slug]/page.tsx>) and [`app/(site)/case-study/[slug]/page.tsx`](<app/(site)/case-study/[slug]/page.tsx>) with GitHub, LinkedIn, Linktr.ee, and YouTube channel.
 - [x] (Nice-to-have) Compute CTR-by-position baseline from site data: shipped at [`docs/documentation/deep-dives/ctr-by-position-baseline.md`](docs/documentation/deep-dives/ctr-by-position-baseline.md). Site curve is 4-10x below industry standard at position 7-8; future audits should cite site numbers, not generic curves.
 - [x] (Nice-to-have) `scripts/seo-snapshot.mjs` weekly snapshot script: shipped at [`scripts/seo-snapshot.mjs`](scripts/seo-snapshot.mjs). Uses `googleapis` with a service-account env var (`GSC_SERVICE_ACCOUNT_JSON`). Setup instructions in the script header.
 - [x] Quarterly re-audit (early pull): `docs/strategy/seo-audit-2026-Q3.md` shipped 2026-05-11, one day after Q2. Mostly a post-deploy verification snapshot; the true 90-day delta still belongs at the 2026-08-10 target (open as a separate cadence item, not blocking spec completion).
@@ -276,4 +275,3 @@ All 10 must-haves shipped (with 3 article title rewrites deferred to SPEC-017 as
 - **Calendar-gated**: the true quarterly re-audit at 2026-08-10 is the first meaningful delta. Not blocking spec completion.
 - **User-side**: remaining reindex requests for the homepage and other modified URLs. Not blocking.
 - **Editorial (SPEC-017)**: React 19, vibe-coding, and slow-android-emulator title rewrites are deferred there.
-- **Wikidata submission**: prep complete in [`docs/strategy/entity-establishment.md`](docs/strategy/entity-establishment.md); the actual submission is user-side. Path B (strengthen owned-entity signals via `Organization.sameAs`) shipped here and is the more reliable signal anyway.

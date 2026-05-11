@@ -1,5 +1,6 @@
 import { CaseStudyData } from '../../case-studies/case-studies';
 import CaseStudyChartBlock from './CaseStudyChartBlock';
+import CaseStudyLineChartBlock from './CaseStudyLineChartBlock';
 
 export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
   if (!study.story) return null;
@@ -44,6 +45,15 @@ export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
                 data={block.data}
                 unit={block.unit}
                 lowerIsBetter={block.lowerIsBetter}
+              />
+            );
+          case 'lineChart':
+            return (
+              <CaseStudyLineChartBlock
+                key={idx}
+                title={block.title}
+                series={block.series}
+                unit={block.unit}
               />
             );
           case 'quote':

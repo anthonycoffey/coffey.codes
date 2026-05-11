@@ -1,7 +1,7 @@
 ---
 id: SPEC-017
 title: 'Content strategy, post-audit (editorial direction and authority)'
-status: draft
+status: in-progress
 created: 2026-05-10
 author: Anthony Coffey
 reviewers: []
@@ -11,6 +11,10 @@ affected_repos: [coffey.codes]
 ## Reviewer Notes
 
 <!-- Leave empty until code review. When requesting changes, reviewer adds feedback here: -->
+
+## Status
+
+**2026-05-11**: Bookkeeping (one-shot) shipped. The three required docs ([`content-disposition.md`](../../strategy/content-disposition.md), [`editorial-calendar.md`](../../strategy/editorial-calendar.md), [`voice-and-style.md`](../../documentation/guides/voice-and-style.md)) plus the nice-to-have [`content-brief-template.md`](../../templates/content-brief-template.md) are in place. The remaining tasks are long-running editorial commitments tied to the 2026-Q3 and 2026-Q4 calendar slots; the spec stays `in-progress` until the Q3 review (target 2026-08-10) is written.
 
 ---
 
@@ -206,10 +210,10 @@ When a Bucket B article is deprecated by `noindex` (rare, only for articles with
 
 ### Bookkeeping (one-shot)
 
-- [ ] Create [`docs/strategy/content-disposition.md`](docs/strategy/content-disposition.md) with all 26 articles bucketed (A / B / C)
-- [ ] Create [`docs/strategy/editorial-calendar.md`](docs/strategy/editorial-calendar.md) with Q3 and Q4 2026 slots
-- [ ] Create [`docs/documentation/guides/voice-and-style.md`](docs/documentation/guides/voice-and-style.md)
-- [ ] (Nice-to-have) Create [`docs/templates/content-brief-template.md`](docs/templates/content-brief-template.md)
+- [x] Create [`docs/strategy/content-disposition.md`](../../strategy/content-disposition.md) with all 26 articles bucketed (A / B / C)
+- [x] Create [`docs/strategy/editorial-calendar.md`](../../strategy/editorial-calendar.md) with Q3 and Q4 2026 slots
+- [x] Create [`docs/documentation/guides/voice-and-style.md`](../../documentation/guides/voice-and-style.md)
+- [x] (Nice-to-have) Create [`docs/templates/content-brief-template.md`](../../templates/content-brief-template.md)
 
 ### Q3 2026 (target ship dates per acceptance criterion #5)
 

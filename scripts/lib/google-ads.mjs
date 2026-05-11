@@ -43,7 +43,7 @@ for (const name of ['.env', '.env.local']) {
   }
 }
 
-const API_VERSION = 'v17';
+const API_VERSION = 'v21';
 const API_BASE = `https://googleads.googleapis.com/${API_VERSION}`;
 const ADS_SCOPE = 'https://www.googleapis.com/auth/adwords';
 
@@ -106,11 +106,15 @@ export async function getAdsAuth() {
   if (!tokenResp.token) {
     throw new Error('Google Ads auth: failed to mint an access token');
   }
+  // Customer IDs come in either '123-456-7890' or '1234567890' shape
+  // from the Ads UI. Normalize to digits-only so the API accepts them
+  // without forcing users to re-edit .env.
+  const stripDashes = (s) => String(s ?? '').replace(/\D/g, '');
   cachedAuth = {
     accessToken: tokenResp.token,
     expiresAt: Date.now() + 50 * 60_000, // service-account tokens last 1h; refresh 10m early
-    customerId: process.env.GOOGLE_ADS_CUSTOMER_ID,
-    loginCustomerId: process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID,
+    customerId: stripDashes(process.env.GOOGLE_ADS_CUSTOMER_ID),
+    loginCustomerId: stripDashes(process.env.GOOGLE_ADS_LOGIN_CUSTOMER_ID),
     devToken: process.env.GOOGLE_ADS_DEVELOPER_TOKEN,
   };
   return cachedAuth;

@@ -621,12 +621,26 @@ async function main() {
     snapshot.devices = snapshot.gsc.devices;
   }
 
+  // Guard against writing an empty snapshot on top of a previously-good
+  // committed one. If every engine failed (or only `keywords` was
+  // selected and it failed), the snapshot object holds nothing but the
+  // window/pulledAt scaffolding; writing that overwrites real data.
+  const enginesWithData = ['gsc', 'ga4', 'bing', 'keywords'].filter(
+    (k) => snapshot[k],
+  );
+  if (enginesWithData.length === 0) {
+    console.error(
+      '[snapshot] no engines returned data; not overwriting any existing snapshot file',
+    );
+    process.exit(1);
+  }
+
   const outDir = path.resolve(REPO_ROOT, OUTPUT_DIR);
   await fs.mkdir(outDir, { recursive: true });
   const outFile = path.join(outDir, `snapshot-${ymd(now)}.json`);
   await fs.writeFile(outFile, JSON.stringify(snapshot, null, 2) + '\n');
 
-  console.log(`Wrote ${outFile}`);
+  console.log(`Wrote ${outFile}  (engines: ${enginesWithData.join(', ')})`);
   if (snapshot.gsc) {
     console.log(
       `GSC window: ${startDate} to ${endDate}  Clicks: ${snapshot.gsc.totals.clicks}  Impressions: ${snapshot.gsc.totals.impressions}  CTR: ${(snapshot.gsc.totals.ctr * 100).toFixed(2)}%`,

@@ -82,20 +82,27 @@ BING_WEBMASTER_API_KEY=<paste-the-key-here>
 
 ### 4. Google Ads Keyword Planner (SPEC-019)
 
-Reuses the GSC service account; one extra UI step in Google Ads, one developer token, two customer IDs.
+Reuses the GSC service account. One extra UI step in Google Ads, one developer token, two customer IDs.
 
 1. In the [Google Ads UI](https://ads.google.com/) → **Tools** (top-right wrench icon) → **Access and security** → **Add** user → paste the service account email (same one used for GSC and GA4). Permissions: Standard or Read-only.
-2. **Tools → API Center** → click **Apply for token** if you don't have one. The basic-access tier is free; auto-approved within minutes for most accounts. Copy the developer token string.
-3. Find the 10-digit customer ID at the top right of the Ads UI (format: `123-456-7890`; strip the dashes when adding to `.env`).
-4. For direct-access accounts (no manager / MCC), `GOOGLE_ADS_LOGIN_CUSTOMER_ID` is the same value as `GOOGLE_ADS_CUSTOMER_ID`. For accounts under an MCC, set `LOGIN_CUSTOMER_ID` to the MCC's 10-digit ID.
+2. **Tools → API Center** → click **Apply for token** if you don't have one. The basic-access tier is free; auto-approved within minutes for most accounts.
+   - Developer tokens are usually issued through a Google Ads Manager (MCC) account. If API Center isn't showing for your standalone account, create a free MCC at https://ads.google.com/home/tools/manager-accounts/, link your existing account to it, then access API Center from the manager.
+   - Copy the developer token string.
+3. Find the 10-digit customer ID(s) at the top right of the Ads UI. Each account shows its own ID as `123-456-7890`. The scripts strip the dashes automatically, so paste either form into `.env`.
+4. The two customer IDs serve different roles:
+   - `GOOGLE_ADS_CUSTOMER_ID` = the account you want to query data ABOUT (the **child** account that runs ads, even if no campaigns are active — for coffey.codes this is the `coffey.codes` Ads account).
+   - `GOOGLE_ADS_LOGIN_CUSTOMER_ID` = the account that issued the developer token. If the token came from an MCC, this is the **MCC's** 10-digit ID. If the token was issued directly on a standalone account, this is the same value as `GOOGLE_ADS_CUSTOMER_ID`.
+   - **The service account email must also be added as a user inside whichever account is `LOGIN_CUSTOMER_ID`.** If `LOGIN_CUSTOMER_ID` is the MCC, add the service account at the MCC level, not just the child.
 
 Add to `.env`:
 
 ```bash
 GOOGLE_ADS_DEVELOPER_TOKEN=<your-token>
-GOOGLE_ADS_CUSTOMER_ID=<10-digits-no-dashes>
-GOOGLE_ADS_LOGIN_CUSTOMER_ID=<10-digits-no-dashes>
+GOOGLE_ADS_CUSTOMER_ID=<10-digits-with-or-without-dashes>
+GOOGLE_ADS_LOGIN_CUSTOMER_ID=<10-digits-with-or-without-dashes>
 ```
+
+> **Account must be enabled before the API will serve data.** New Google Ads accounts sit in a pending / unfinished state until billing is set up (country + payment method on file). The API responds with `CUSTOMER_NOT_ENABLED` until that's done, even for read-only Keyword Planner calls. You will NOT be charged for using Keyword Planner; the card just has to be on file. Fix: **Tools → Billing → Summary** in the Ads UI, complete the setup form.
 
 > **Volume bucket vs precise integer:** accounts without spend history get bucketed volumes (`100-1K`, `1K-10K`, `10K-100K`, `100K+`). Competition (`LOW/MEDIUM/HIGH`) and competition index (0-100) are always precise. Spend history unlocks integer volumes; not a blocker for any of the tooling described below.
 
@@ -189,10 +196,13 @@ GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` varian
 | Bing returns `Invalid api key` | Wrong key or key was rotated | Regenerate in the Bing UI |
 | Bing returns empty but key is valid | Property was added recently; no data accumulated yet | Wait ~90 days |
 | `GSC_SERVICE_ACCOUNT_KEY_PATH points to a file that does not exist` | Relative path didn't resolve | Use an absolute path |
-| Google Ads `PERMISSION_DENIED` | Service account not added as a user inside Google Ads | Re-do step 4.1 |
+| Google Ads `PERMISSION_DENIED` | Service account not added as a user inside Google Ads, OR added to the child account but `LOGIN_CUSTOMER_ID` points at an MCC the service account isn't on | Re-do step 4.1; add the service account at whichever level `LOGIN_CUSTOMER_ID` points to |
 | Google Ads `DEVELOPER_TOKEN_NOT_APPROVED` | Token is in pending state | Apply for the basic-access tier in the Ads UI's API Center |
-| Google Ads `INVALID_CUSTOMER_ID` | Customer ID has dashes, or wrong account | Strip dashes; recheck the ID at the top right of the Ads UI |
+| Google Ads `INVALID_CUSTOMER_ID` | Customer ID is wrong account | The scripts now strip dashes automatically; if you still see this, recheck the ID at the top right of the Ads UI |
+| Google Ads `CUSTOMER_NOT_ENABLED` | Ads account hasn't completed billing setup | Set billing country and add a payment method in Ads UI → Tools → Billing → Summary (no charge for Keyword Planner use) |
+| Google Ads HTTP 404 with HTML error page | API version in the script is sunset | Bump `API_VERSION` constant in `scripts/lib/google-ads.mjs`. Google deprecates versions ~3 months after release; the script uses v21 as of 2026-05-11 |
 | Keyword research scripts return zero ideas | URL probe: target URL is not indexed by Google. Other scripts: seed terms are too generic/specific | Adjust the seed or pick a different URL |
+| `[snapshot] no engines returned data; not overwriting any existing snapshot file` | Every engine failed; protective guard fired | Investigate the specific engine errors; existing snapshot file is unchanged |
 
 ## Related
 

@@ -230,3 +230,17 @@ Matches the existing pattern in `scripts/seo-snapshot.mjs`.
 1. Does `google-ads-api` support service-account JWT auth out of the box, or does it need a custom auth subclass? (Verify in the implementation step; fall back to REST if not.)
 2. Should `keywords.ideas` (the suggestions array, separate from enriched `gsc.topQueries`) be capped at top N by volume, or unfiltered? Lean toward top 100 by volume bucket descending; the SPEC-020 tools will re-filter for their own purposes anyway.
 3. Should we record raw API responses to `docs/strategy/data/raw/` for debugging, or is the cleaned JSON enough? Lean toward "cleaned only" for now; add raw debug logging behind a `--debug` flag if needed.
+
+## Live-test attempt (2026-05-11)
+
+First end-to-end attempt with real credentials surfaced three issues that are now fixed in code:
+
+1. **HTTP 404 / HTML response.** The initial `API_VERSION = 'v17'` was sunset; current is `v21`. Google deprecates Ads API versions roughly every 3 months. Bumped the constant.
+2. **`INVALID_CUSTOMER_ID`.** The Ads UI displays customer IDs as `123-456-7890`; users were expected to strip the dashes when adding to `.env`. Now the script strips non-digit characters automatically on read so either form works.
+3. **Snapshot overwrite on failure.** When `--engines=keywords` was the only engine and it failed, the orchestrator still wrote a scaffold-only snapshot file, clobbering the previously-committed three-engine snapshot. Now the orchestrator counts engines-with-data and exits nonzero without writing if zero. The committed snapshot is preserved.
+
+After fixes, the call gets through auth + endpoint + ID validation and hits an Ads-side state issue: `CUSTOMER_NOT_ENABLED`. The Google Ads account has not completed billing setup (no payment method on file), so the API refuses to serve any data, including read-only Keyword Planner. This is a one-time UI action by the account owner (Tools → Billing → Summary; no actual charge incurred from Keyword Planner use). Documented in the setup guide's troubleshooting table.
+
+There is also one user-side env-var correction outstanding: the developer token was generated inside a Google Ads Manager (MCC) account, but `.env` currently has `GOOGLE_ADS_LOGIN_CUSTOMER_ID` set to the same value as `GOOGLE_ADS_CUSTOMER_ID` (the child account). For MCC-issued tokens the `LOGIN_CUSTOMER_ID` should be the MCC's 10-digit ID instead. Setup guide updated to call this out.
+
+**Code state:** ready. Once the Ads child account is billing-enabled AND `LOGIN_CUSTOMER_ID` in `.env` is corrected to the MCC's ID, the keywords engine should run without further changes. The Q4 audit will be the first to consume the data.

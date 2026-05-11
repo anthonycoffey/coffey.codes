@@ -125,7 +125,7 @@ Three plausible causes, in order of likelihood:
 
 Either way, the Q2 audit's Bing section interpretation ("no comparison possible") stands. Re-test at the next quarterly.
 
-### Postscript (2026-05-11, SPEC-018)
+### Postscript (2026-05-11, SPEC-018): diagnosis resolved
 
 The SPEC-018 snapshot script bypasses the MCP and calls the Bing Webmaster Tools REST API directly (`GetRankAndTrafficStats`, `GetQueryStats`) with a fresh API key generated through the Webmaster Tools UI. Result in `docs/strategy/data/snapshot-2026-05-11.json`:
 
@@ -133,12 +133,15 @@ The SPEC-018 snapshot script bypasses the MCP and calls the Bing Webmaster Tools
 "bing": { "totals": { "clicks": 0, "impressions": 0, "ctr": 0 }, "topQueries": [], "_note": "empty response" }
 ```
 
-The direct API returns the same empty result the MCP does. This eliminates cause #1 (MCP-side bug) from the list above. The remaining causes are now ordered:
+The direct API returns the same empty result the MCP does. Initially this was read as evidence of an API key scope problem or a deeper Bing-side data gap.
 
-1. **Bing Webmaster API permission scope**: the UI-generated API key may not return performance data even though the account is verified. Cross-check the [Bing Webmaster Tools UI](https://www.bing.com/webmasters/) Search Performance report directly; if the UI shows clicks/impressions, file a support ticket about API key scope. If the UI is also empty, move to #2.
-2. **Bing Webmaster Tools genuinely has no recorded data** for the property despite GA4 seeing 114 Bing sessions in 180 days. This would be a Bing-side data-pipeline gap, not anything actionable from the codebase.
+**Actual cause (confirmed by the user 2026-05-11):** the site was only added to Bing Webmaster Tools on 2026-05-10. Webmaster Tools backfills nothing; data accumulates from the verification date forward. The Q2 + Q3 audits were querying a property that had been verified for less than 24 hours, which is why every Bing endpoint returned empty regardless of MCP vs. direct-API access path.
 
-Next quarterly audit (target 2026-08-10): re-run the snapshot, diff against this baseline using `scripts/seo-snapshot-diff.mjs`, see if `bing.totals.impressions` has moved off zero.
+This also explains the apparent contradiction with GA4's 114 Bing organic sessions over 180 days: GA4 was attributing real Bing referrer traffic the whole time; Bing Webmaster Tools just wasn't recording any of it because the property wasn't registered there yet.
+
+**Status:** Bing diagnostic loop closed. No code or config fix needed.
+
+**Next quarterly audit (target 2026-08-10):** re-run the snapshot. By that point Bing Webmaster Tools should have ~90 days of recorded performance data. `scripts/seo-snapshot-diff.mjs` against this baseline will show the full delta from zero to whatever's accumulated. This will also be the first real test of `scripts/seo-snapshot.mjs`'s Bing path against non-empty data.
 
 ## 9.5 GA4 cross-reference (180 days, post-config-change)
 

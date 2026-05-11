@@ -8,6 +8,11 @@ export type ChartDataPoint = {
   value: number;
 };
 
+export type LineChartSeries = {
+  name: string;
+  data: ChartDataPoint[];
+};
+
 export type StoryBlock =
   | { type: 'text'; heading?: string; content: string }
   | {
@@ -16,6 +21,12 @@ export type StoryBlock =
       data: ChartDataPoint[];
       unit?: string;
       lowerIsBetter?: boolean;
+    }
+  | {
+      type: 'lineChart';
+      title: string;
+      series: LineChartSeries[];
+      unit?: string;
     }
   | { type: 'quote'; text: string; author?: string }
   | { type: 'stats'; stats: { label: string; value: string }[] };

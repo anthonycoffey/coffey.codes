@@ -125,6 +125,21 @@ Three plausible causes, in order of likelihood:
 
 Either way, the Q2 audit's Bing section interpretation ("no comparison possible") stands. Re-test at the next quarterly.
 
+### Postscript (2026-05-11, SPEC-018)
+
+The SPEC-018 snapshot script bypasses the MCP and calls the Bing Webmaster Tools REST API directly (`GetRankAndTrafficStats`, `GetQueryStats`) with a fresh API key generated through the Webmaster Tools UI. Result in `docs/strategy/data/snapshot-2026-05-11.json`:
+
+```json
+"bing": { "totals": { "clicks": 0, "impressions": 0, "ctr": 0 }, "topQueries": [], "_note": "empty response" }
+```
+
+The direct API returns the same empty result the MCP does. This eliminates cause #1 (MCP-side bug) from the list above. The remaining causes are now ordered:
+
+1. **Bing Webmaster API permission scope**: the UI-generated API key may not return performance data even though the account is verified. Cross-check the [Bing Webmaster Tools UI](https://www.bing.com/webmasters/) Search Performance report directly; if the UI shows clicks/impressions, file a support ticket about API key scope. If the UI is also empty, move to #2.
+2. **Bing Webmaster Tools genuinely has no recorded data** for the property despite GA4 seeing 114 Bing sessions in 180 days. This would be a Bing-side data-pipeline gap, not anything actionable from the codebase.
+
+Next quarterly audit (target 2026-08-10): re-run the snapshot, diff against this baseline using `scripts/seo-snapshot-diff.mjs`, see if `bing.totals.impressions` has moved off zero.
+
 ## 9.5 GA4 cross-reference (180 days, post-config-change)
 
 Compared against the Q2 pull. The GA4 walk-through on 2026-05-10 changed three things: `form_start` toggled OFF as a key event, `form_submit` GTM tag created and toggled ON as a key event, Google EU Consent Policy attestation affirmed.

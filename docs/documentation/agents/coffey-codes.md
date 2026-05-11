@@ -136,6 +136,25 @@ npm run test:e2e       # Playwright e2e (requires dev server)
 npm run typecheck      # tsc --noEmit
 ```
 
+### Pull and compare SEO snapshots
+
+`scripts/seo-snapshot.mjs` (SPEC-018) pulls GSC, GA4, and Bing in one shot, writing a dated JSON file to `docs/strategy/data/`. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
+
+```bash
+node scripts/seo-snapshot.mjs                  # all configured engines, 365d
+node scripts/seo-snapshot.mjs --engines=gsc    # one engine only
+node scripts/seo-snapshot.mjs --dry-run        # print plan, skip API calls
+node scripts/seo-snapshot-diff.mjs older.json newer.json
+```
+
+Setup (env vars in `.env` or `.env.local`):
+
+- `GSC_SERVICE_ACCOUNT_KEY_PATH` or `GSC_SERVICE_ACCOUNT_JSON` (Google service account; same account used for GA4)
+- `GA4_PROPERTY_ID` (currently `416080229`; Data API enabled in Cloud, service account granted Viewer in GA4 Property Access)
+- `BING_WEBMASTER_API_KEY` (generated in Bing Webmaster Tools → Settings → API Access)
+
+Each engine skips gracefully if its env vars are missing. Full script header doc is in `scripts/seo-snapshot.mjs`.
+
 Vitest + Testing Library + jsdom is configured for unit and component tests (220+ tests across 40 files). Playwright e2e lives in `e2e/` and exercises rendered pages against a live dev server. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
 
 ## Known Gotchas

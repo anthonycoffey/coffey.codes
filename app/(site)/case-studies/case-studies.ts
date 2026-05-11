@@ -75,7 +75,7 @@ export const caseStudies: CaseStudyData[] = [
       {
         type: 'stats',
         stats: [
-          { label: 'Column Type', value: 'GEOGRAPHY(POINT, 4326)' },
+          { label: 'Data Type', value: 'GEOGRAPHY' },
           { label: 'Spatial Index', value: 'GIST' },
           { label: 'Radius Filter', value: 'ST_DWithin' },
           { label: 'Ranking', value: 'ST_Distance' },

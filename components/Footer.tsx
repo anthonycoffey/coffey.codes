@@ -9,6 +9,7 @@ import {
   EnvelopeIcon,
   RssIcon,
   ArrowUpCircleIcon,
+  ArrowDownTrayIcon,
   CodeBracketIcon,
   ChatBubbleOvalLeftIcon,
   CalendarDaysIcon,
@@ -154,6 +155,15 @@ export default function Footer() {
                 <CalendarDaysIcon className="h-4 w-4" />
                 Schedule a Call
               </Link>
+              <a
+                href="/Anthony%20Coffey%20-%20Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-border text-c-text text-sm font-semibold hover:bg-surface-hover transition-colors no-underline"
+              >
+                <ArrowDownTrayIcon className="h-4 w-4" />
+                Download Resume
+              </a>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 ---
 service: coffey.codes
 repo: https://github.com/anthonycoffey/coffey.codes
-updated: 2026-04-13
+updated: 2026-05-11
 ---
 
 # Agent Brief: coffey.codes
@@ -38,17 +38,22 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 ## Key Dependencies
 
 - `next-mdx-remote` — MDX rendering for blog posts
-- `@react-three/fiber` + `@react-three/drei` — 3D scenes (FishbowlScene, ThreeScene)
+- `@react-three/fiber` + `@react-three/drei` — 3D homepage scene (`components/canvas/WorldCanvas.tsx`)
+- `gsap` (ScrollTrigger) — scroll-driven homepage timeline
 - `next-themes` — dark/light mode from system preference
 - `motion` — animations
-- Node.js >= 22.0.0 required (due to `camera-controls` via `@react-three/drei`)
+- `formik` + `yup` — contact form
+- `@giscus/react` — article comments backed by GitHub Discussions
+- Node.js >= 24.0.0 required (enforced in `package.json` engines)
 
 ## Entry Points
 
-- `app/layout.tsx` — Root layout; includes Nav, Footer, GTM (GTM-KJC6Q389), next-themes provider
-- `app/page.tsx` — Homepage
-- `app/articles/[slug]/page.tsx` — Individual blog post rendering
+- `app/layout.tsx` — Root layout; includes Nav, Footer, GTM (GTM-KJC6Q389), next-themes provider, site-wide Person + Organization JSON-LD
+- `app/page.tsx` — Homepage (thin; mounts `<ScrollContainer>` + `<WorldCanvas>` + `<HUDOverlay>`)
+- `app/articles/[slug]/page.tsx` — Individual blog post rendering; emits BlogPosting + BreadcrumbList JSON-LD
 - `app/api/search/route.ts` — Article search API
+- `components/canvas/WorldCanvas.tsx` — Scroll-driven 3D homepage scene (Three.js + R3F)
+- `components/Comments.tsx` — Giscus widget on every article
 - `components/mdx.tsx` — MDX component registry (custom components available in blog posts)
 
 ## Key File Locations
@@ -155,17 +160,29 @@ Setup (env vars in `.env` or `.env.local`):
 
 Each engine skips gracefully if its env vars are missing. Full script header doc is in `scripts/seo-snapshot.mjs`.
 
-Vitest + Testing Library + jsdom is configured for unit and component tests (220+ tests across 40 files). Playwright e2e lives in `e2e/` and exercises rendered pages against a live dev server. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
+Vitest + Testing Library + jsdom is configured for unit and component tests. Playwright e2e lives in `e2e/` and exercises rendered pages against a live Vercel preview. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
+
+## CI gate
+
+Production promotion is blocked until every required check is green (see [system-overview](../guides/system-overview.md) for the full handshake):
+
+1. GitHub Actions: ESLint, Vitest with coverage, `tsc --noEmit` typecheck (parallel jobs).
+2. Vercel builds the Preview Deployment.
+3. Playwright runs against the preview URL (uses the Vercel protection bypass header).
+4. All four checks must pass before main is promotable.
 
 ## Known Gotchas
 
 - **Async params in Next.js 15+** — `params` and `searchParams` must be awaited in page components. See the article `fixing-broken-routes-after-nextjs-16-upgrade.mdx` for full context.
 - **Client vs Server Components** — Components with `'use client';` cannot export `metadata`. Use a wrapping `layout.tsx` (Server Component) to handle metadata for Client Component pages (e.g., `app/portfolio/layout.tsx`).
-- **Contact form backend is TBD** — `components/ContactForm.tsx` exists but the API route/service handling submissions has not yet been implemented.
-- **Node.js >= 24 required** — `camera-controls` (dependency of `@react-three/drei`) requires Node 22+. This is enforced in `package.json` engines field and `.nvmrc`.
+- **Contact form goes to a Google Cloud Function** — `components/ContactForm.tsx` posts to `/functions/sendContactFormEmail`, which is a Next.js rewrite to a `us-central1` Cloud Function. No CORS surface; the public URL is hidden behind the rewrite.
+- **Node.js >= 24 required** — enforced in `package.json` engines field. Older versions will fail `npm install`.
 
 ## Related Docs
 
+- [System Overview](../guides/system-overview.md) — end-to-end picture: content pipeline, CI/CD, all surfaces
 - [Repo Technical Reference](../repos/coffey-codes.md)
 - [Development Standards](../development-standards.md)
-- [On-Page SEO Strategy](../deep-dives/onpage-seo-strategy.md)
+- [On-Page SEO Strategy](../deep-dives/onpage-seo-strategy.md) — page-level metadata and structured data
+- [CTR-by-position baseline](../deep-dives/ctr-by-position-baseline.md) — site-specific SEO performance curve
+- [SEO snapshot setup](../guides/seo-snapshot-setup.md) — how to wire and run the three-engine snapshot script

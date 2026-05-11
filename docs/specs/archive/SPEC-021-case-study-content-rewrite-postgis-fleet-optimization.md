@@ -1,12 +1,15 @@
 ---
-id: SPEC-019
+id: SPEC-021
 title: 'Case Study Content Rewrite: PostGIS Fleet Optimization'
-status: ready
+status: complete
 created: 2026-05-14
+completed: 2026-05-15
 author: Anthony Coffey
 reviewers: []
 affected_repos: [coffey.codes]
 ---
+
+> **Numbering note (2026-05-15):** This spec was originally drafted as SPEC-019 on a parallel branch (`claude/mystifying-newton-a49759`, merged via PR #179). At the same time, an in-flight SPEC-019 covering the Google Ads keyword-volume snapshot extension (created 2026-05-11, merged via PR #178) had already claimed the ID. Renumbered to SPEC-021 during the 2026-05-15 spec audit; the keyword-volume spec, being older, kept SPEC-019. All references to "SPEC-019" inside this file (commit messages, etc.) historically refer to the PR #179 work and remain accurate as written.
 
 ## Reviewer Notes
 

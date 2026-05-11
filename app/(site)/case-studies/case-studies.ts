@@ -26,7 +26,6 @@ export interface CaseStudyData {
   description: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   tags: string[];
-  pdfPath?: string;
   layout: CaseStudyLayout;
 
   // Style A: Brief / Classic
@@ -48,59 +47,56 @@ export const caseStudies: CaseStudyData[] = [
       'Integrated PostGIS extension for PostgreSQL to optimize technician dispatch by leveraging pre-existing location data for efficient, scalable geospatial queries.',
     icon: CpuChipIcon,
     tags: ['PostgreSQL', 'PostGIS', 'Geospatial', 'Fleet Management', 'Optimization'],
-    pdfPath: '/case-studies/Case%20Study%20-%20PostGIS%20in%20Action.pdf',
     layout: 'styleB',
     story: [
       {
         type: 'text',
         heading: 'The Challenge',
         content:
-          'The client needed an update to their web app that would allow technicians to tag their locations, enabling dispatchers to assign jobs more efficiently. The existing system relied on matching technicians and leads by broad location names like Phoenix, Austin, or Houston, which resulted in suboptimal routing and wasted time.',
+          "The client's dispatch system had no ability to match technicians to jobs by location. Assignment logic was manual or proximity-blind. Technician latitude and longitude were already being stored on every record, but nothing in the application could query against them — no distance calculations, no spatial indexing, no nearest-neighbor lookups.",
       },
       {
         type: 'text',
         heading: 'The Solution',
         content:
-          'I identified an opportunity to enhance the client’s location-based operations by implementing the PostGIS geospatial extension for PostgreSQL. Although the application was already storing user latitude and longitude data, it wasn’t being effectively utilized.\n\nMy approach maintained backward compatibility while unlocking powerful geospatial capabilities from existing data. By installing the PostGIS extension, I enabled the client to store and manage location data as a GEOGRAPHY data type, allowing for geospatial queries such as distance calculations and location-based filtering. I indexed the new location column in all relevant tables to ensure that the geospatial queries would be performant and scalable.',
+          'Designed and implemented a PostGIS spatial layer from scratch. Selected the GEOGRAPHY data type over GEOMETRY to handle earth-curvature math natively without managing projections. Added GIST indexes on technician and job location columns. Nearest-technician lookups — previously impossible — now resolve in a single indexed spatial query at the database layer, with no application-side coordination.',
       },
       {
         type: 'stats',
         stats: [
-          { label: 'Avg Dispatch Time', value: '80% Faster' },
-          { label: 'Query Performance', value: '9x Improvement' },
-        ],
-      },
-      {
-        type: 'text',
-        heading: 'Data Migration & Backward Compatibility',
-        content:
-          'To maintain backward compatibility, I migrated the existing lat/long values into the location column as a geometry point. I also updated the Sequelize model for the User table to process the incoming lat/long values and store them as geometry points, eliminating the need to update API endpoints that save these values to the database. Since the client already had lat/long data for their fleet, I was able to meet their original request without requiring users to be manually tagged with location.',
-      },
-      {
-        type: 'chart',
-        title: 'Query Latency (Lower is Better)',
-        unit: 'ms',
-        lowerIsBetter: true,
-        data: [
-          { label: 'Legacy Name Match', value: 400 },
-          { label: 'PostGIS Spatial Query', value: 45 },
+          { label: 'Data Type', value: 'GEOGRAPHY' },
+          { label: 'Spatial Index', value: 'GIST' },
+          { label: 'Projection Mgmt', value: 'None' },
+          { label: 'Nearest-Tech Query', value: '1 SQL' },
         ],
       },
       {
         type: 'chart',
-        title: 'Dispatch Time (Minutes)',
-        unit: 'm',
-        lowerIsBetter: true,
+        title: 'Capability before PostGIS (self-audit, 0–5)',
         data: [
-          { label: 'Before PostGIS', value: 15 },
-          { label: 'After PostGIS', value: 3 },
+          { label: 'Spatial queries', value: 0 },
+          { label: 'Nearest-tech', value: 0 },
+          { label: 'Earth-curve math', value: 0 },
+          { label: 'Index support', value: 0 },
+          { label: 'Geocoded jobs', value: 1 },
+        ],
+      },
+      {
+        type: 'chart',
+        title: 'Capability after PostGIS (self-audit, 0–5)',
+        data: [
+          { label: 'Spatial queries', value: 5 },
+          { label: 'Nearest-tech', value: 5 },
+          { label: 'Earth-curve math', value: 5 },
+          { label: 'Index support', value: 5 },
+          { label: 'Geocoded jobs', value: 5 },
         ],
       },
       {
         type: 'text',
         heading: 'The Impact',
         content:
-          "The PostGIS integration and indexing solution significantly transformed the client's ability to manage their fleet and respond to location-based needs. The client can now query technician locations, calculate distances between leads and available technicians, and optimize dispatching—all with high efficiency thanks to indexed geospatial data.\n\nMy backward compatibility strategy ensured that the API and existing client systems continued functioning without modifications, minimizing potential disruptions and maintaining a seamless user experience. This solution not only delivered the requested functionality but also created opportunities for growth in the client's location-based services.",
+          'Delivered a capability the system never had. Dispatch can now query available technicians by proximity to any geocoded job site in real time. Routing decisions that were previously guessed at by name or assigned by hand now resolve at the database, in milliseconds, with earth-curvature math handled by PostGIS rather than the application layer.',
       },
     ],
   },

@@ -14,17 +14,19 @@ import {
 import Link from 'next/link';
 import SearchBox from '@/components/SearchBox';
 import PageHeader from '@/components/PageHeader';
+import { baseUrl } from '@/app/sitemap';
 
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ searchParams }): Promise<Metadata> {
   const params = await searchParams;
   const isPaginated = params.page && Number(params.page) > 1;
+  const ogImage = `${baseUrl}/og?title=${encodeURIComponent('Articles')}&category=${encodeURIComponent('Anthony Coffey')}`;
 
   return {
     title: { absolute: 'Articles by Anthony Coffey' },
     description:
-      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey — Austin-based AI consultant and software engineer.',
+      'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey, Austin-based AI consultant and software engineer.',
     alternates: { canonical: '/articles' },
     robots: isPaginated ? { index: false, follow: true } : undefined,
     openGraph: {
@@ -33,12 +35,14 @@ export async function generateMetadata({ searchParams }): Promise<Metadata> {
         'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
       url: '/articles',
       type: 'website',
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: 'summary_large_image',
       title: 'Articles by Anthony Coffey',
       description:
         'Articles on software engineering, AI/ML, cloud architecture, and web development by Anthony Coffey.',
+      images: [ogImage],
     },
   };
 }

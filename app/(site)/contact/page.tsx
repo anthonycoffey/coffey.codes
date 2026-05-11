@@ -13,12 +13,29 @@ import {
 import { EnvelopeOpenIcon } from '@heroicons/react/24/solid';
 
 import type { Metadata } from 'next';
+import { baseUrl } from '@/app/sitemap';
+
+const CONTACT_DESCRIPTION =
+  'Get in touch with Anthony Coffey, an AI consultant and software engineer in Austin, TX, for web, mobile, or AI/ML work. Book a free 30-minute consultation.';
+const CONTACT_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent('Contact')}&category=${encodeURIComponent('Anthony Coffey')}`;
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description:
-    'Get in touch with Anthony Coffey, an AI consultant and software engineer in Austin, TX, for web, mobile, or AI/ML work. Book a free 30-minute consultation.',
+  description: CONTACT_DESCRIPTION,
   alternates: { canonical: '/contact' },
+  openGraph: {
+    type: 'website',
+    url: '/contact',
+    title: 'Contact Anthony Coffey',
+    description: CONTACT_DESCRIPTION,
+    images: [{ url: CONTACT_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Anthony Coffey',
+    description: CONTACT_DESCRIPTION,
+    images: [CONTACT_OG_IMAGE],
+  },
 };
 
 export default async function ContactPage() {

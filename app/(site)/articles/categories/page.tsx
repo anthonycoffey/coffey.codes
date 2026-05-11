@@ -2,15 +2,32 @@ import { getAllCategories } from '@/app/(site)/articles/utils';
 import Link from 'next/link';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import PageHeader from '@/components/PageHeader';
+import { baseUrl } from '@/app/sitemap';
 
 import type { Metadata } from 'next';
 
 export function generateMetadata(): Metadata {
+  const description =
+    'Browse articles by category, software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.';
+  const ogImage = `${baseUrl}/og?title=${encodeURIComponent('All Categories')}&category=${encodeURIComponent('Articles')}`;
+
   return {
     title: 'Articles Categories',
-    description:
-      'Browse articles by category — software engineering, AI/ML, cloud computing, and web development from Anthony Coffey.',
+    description,
     alternates: { canonical: '/articles/categories' },
+    openGraph: {
+      type: 'website',
+      url: '/articles/categories',
+      title: 'Articles Categories',
+      description,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Articles Categories',
+      description,
+      images: [ogImage],
+    },
   };
 }
 

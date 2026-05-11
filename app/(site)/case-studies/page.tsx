@@ -5,26 +5,30 @@ import {
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import { caseStudies } from './case-studies';
+import { baseUrl } from '@/app/sitemap';
 
 import type { Metadata } from 'next';
 
+const CASE_STUDIES_DESCRIPTION =
+  'Software engineering case studies by Anthony Coffey, geospatial tech, fleet optimization, and real-world problem solving.';
+const CASE_STUDIES_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent('Case Studies')}&category=${encodeURIComponent('Anthony Coffey')}`;
+
 export const metadata: Metadata = {
   title: 'Case Studies',
-  description:
-    'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+  description: CASE_STUDIES_DESCRIPTION,
   alternates: { canonical: '/case-studies' },
   openGraph: {
     type: 'website',
     url: '/case-studies',
     title: 'Case Studies by Anthony Coffey',
-    description:
-      'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+    description: CASE_STUDIES_DESCRIPTION,
+    images: [{ url: CASE_STUDIES_OG_IMAGE }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Case Studies by Anthony Coffey',
-    description:
-      'Software engineering case studies by Anthony Coffey — geospatial tech, fleet optimization, and real-world problem solving.',
+    description: CASE_STUDIES_DESCRIPTION,
+    images: [CASE_STUDIES_OG_IMAGE],
   },
 };
 

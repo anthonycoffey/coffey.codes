@@ -15,6 +15,7 @@ import {
 } from '@heroicons/react/20/solid';
 import SearchBox from '@/components/SearchBox';
 import PageHeader from '@/components/PageHeader';
+import { baseUrl } from '@/app/sitemap';
 
 export const dynamicParams = true;
 
@@ -38,16 +39,28 @@ export async function generateMetadata({ params, searchParams }) {
     resolvedSearchParams?.page && Number(resolvedSearchParams.page) > 1;
   const decodedCategory = capitalizeWords(decodeURIComponent(category));
   const title = `${decodedCategory} Articles`;
-  const description = `Articles categorized under ${decodedCategory} — software engineering insights and deep dives by Anthony Coffey.`;
+  const description = `Articles categorized under ${decodedCategory}, software engineering insights and deep dives by Anthony Coffey.`;
   const url = `/articles/category/${encodeURIComponent(category)}`;
+  const ogImage = `${baseUrl}/og?title=${encodeURIComponent(decodedCategory)}&category=${encodeURIComponent('Category')}`;
 
   return {
     title,
     description,
     alternates: { canonical: url },
     robots: isPaginated ? { index: false, follow: true } : undefined,
-    openGraph: { type: 'website', url, title, description },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: {
+      type: 'website',
+      url,
+      title,
+      description,
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

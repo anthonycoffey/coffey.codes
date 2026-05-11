@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!study) return { title: 'Case Study Not Found' };
 
   const url = `${baseUrl}/case-study/${study.slug}`;
-  const ogImage = `${baseUrl}/og?title=${encodeURIComponent(study.title)}`;
+  const ogImage = `${baseUrl}/og?title=${encodeURIComponent(study.title)}&category=${encodeURIComponent('Case Study')}`;
 
   return {
     title: study.title,
@@ -66,7 +66,7 @@ export default async function CaseStudyPage({
     '@type': 'Article',
     headline: study.title,
     description: study.description,
-    image: `${baseUrl}/og?title=${encodeURIComponent(study.title)}`,
+    image: `${baseUrl}/og?title=${encodeURIComponent(study.title)}&category=${encodeURIComponent('Case Study')}`,
     url,
     author: { '@type': 'Person', name: 'Anthony Coffey', url: baseUrl },
     publisher: {

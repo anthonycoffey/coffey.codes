@@ -1,6 +1,21 @@
+import { Fragment } from 'react';
 import { CaseStudyData } from '../../case-studies/case-studies';
 import CaseStudyChartBlock from './CaseStudyChartBlock';
 import CaseStudyLineChartBlock from './CaseStudyLineChartBlock';
+
+// Lightweight inline-code parser. Splits on backtick-delimited spans
+// and renders each span as <code>; everything else stays as plain
+// text. Kept narrow on purpose: no other markdown syntax (bold,
+// links, etc.) is parsed; those would warrant a real renderer.
+function renderInlineCode(text: string) {
+  const parts = text.split(/(`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
+      return <code key={i}>{part.slice(1, -1)}</code>;
+    }
+    return <Fragment key={i}>{part}</Fragment>;
+  });
+}
 
 export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
   if (!study.story) return null;
@@ -13,7 +28,9 @@ export default function CaseStudyStory({ study }: { study: CaseStudyData }) {
             return (
               <div key={idx}>
                 {block.heading && <h2>{block.heading}</h2>}
-                <p className="whitespace-pre-wrap">{block.content}</p>
+                <p className="whitespace-pre-wrap">
+                  {renderInlineCode(block.content)}
+                </p>
               </div>
             );
           case 'stats':

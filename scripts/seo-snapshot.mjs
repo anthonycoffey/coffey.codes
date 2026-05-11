@@ -59,6 +59,11 @@
  * Optional CLI flags:
  *   --engines=gsc,bing,ga4,keywords   Default: all configured engines
  *   --window=180                       Default: 365 (days)
+ *   --asof=YYYY-MM-DD                  Anchor "today" to a past date.
+ *                                      Drives both the output filename and
+ *                                      the GSC window. Useful for filling
+ *                                      a few consecutive snapshots in a
+ *                                      single sitting.
  *   --dry-run                          Print what would be pulled; don't call APIs
  *
  * Optional env vars (also read from .env.local / .env):
@@ -111,7 +116,7 @@ const BING_SITE_URL = SITE_URL.startsWith('sc-domain:')
 // ── CLI args ─────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const out = { engines: null, window: null, dryRun: false };
+  const out = { engines: null, window: null, dryRun: false, asof: null };
   for (const arg of argv) {
     if (arg.startsWith('--engines=')) {
       out.engines = arg
@@ -123,6 +128,21 @@ function parseArgs(argv) {
       out.window = Number(arg.slice('--window='.length));
     } else if (arg === '--dry-run') {
       out.dryRun = true;
+    } else if (arg.startsWith('--asof=')) {
+      // Anchor the snapshot's "today" to a fixed date (YYYY-MM-DD).
+      // Drives both the output filename and the GSC window. Useful for
+      // backfilling a few consecutive snapshots from one machine, or for
+      // reproducing a past pull. The date is interpreted as UTC midnight.
+      const value = arg.slice('--asof='.length);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        throw new Error(
+          `--asof must be in YYYY-MM-DD form, got: ${value}`,
+        );
+      }
+      out.asof = new Date(`${value}T00:00:00.000Z`);
+      if (Number.isNaN(out.asof.getTime())) {
+        throw new Error(`--asof is not a valid date: ${value}`);
+      }
     }
   }
   return out;
@@ -501,7 +521,10 @@ function enrichGscWithKeywords(gsc, keywords) {
 // ── Orchestrator ─────────────────────────────────────────────────────
 
 async function main() {
-  const now = new Date();
+  // `--asof` lets the caller anchor "today" to a past date, which drives
+  // both the snapshot filename and the GSC window. Without it the script
+  // uses the system clock.
+  const now = args.asof ?? new Date();
   // GSC has a ~3-day lag for `final` data; back off the end date.
   const endDate = ymd(new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000));
   const startDate = ymd(

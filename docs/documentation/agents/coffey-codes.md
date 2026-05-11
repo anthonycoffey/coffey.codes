@@ -152,6 +152,7 @@ npm run typecheck      # tsc --noEmit
 node scripts/seo-snapshot.mjs                       # all configured engines, 365d
 node scripts/seo-snapshot.mjs --engines=gsc         # one engine only
 node scripts/seo-snapshot.mjs --engines=gsc,keywords  # enrich GSC with Ads
+node scripts/seo-snapshot.mjs --asof=2026-05-09     # anchor "today" to a past date
 node scripts/seo-snapshot.mjs --dry-run             # print plan, skip API calls
 node scripts/seo-snapshot-diff.mjs older.json newer.json
 ```

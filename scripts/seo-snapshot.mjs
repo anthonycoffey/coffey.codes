@@ -76,6 +76,7 @@ import {
   generateKeywordIdeas,
   generateHistoricalMetrics,
 } from './lib/google-ads.mjs';
+import { renderSnapshotMarkdown } from './lib/snapshot-markdown.mjs';
 import { promises as fs } from 'fs';
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
@@ -640,7 +641,12 @@ async function main() {
   const outFile = path.join(outDir, `snapshot-${ymd(now)}.json`);
   await fs.writeFile(outFile, JSON.stringify(snapshot, null, 2) + '\n');
 
+  // Companion Markdown summary — same data, condensed, RAG-ingestible.
+  const mdFile = path.join(outDir, `snapshot-${ymd(now)}.md`);
+  await fs.writeFile(mdFile, renderSnapshotMarkdown(snapshot));
+
   console.log(`Wrote ${outFile}  (engines: ${enginesWithData.join(', ')})`);
+  console.log(`Wrote ${mdFile}`);
   if (snapshot.gsc) {
     console.log(
       `GSC window: ${startDate} to ${endDate}  Clicks: ${snapshot.gsc.totals.clicks}  Impressions: ${snapshot.gsc.totals.impressions}  CTR: ${(snapshot.gsc.totals.ctr * 100).toFixed(2)}%`,

@@ -7,9 +7,15 @@
  * weekly or quarterly (cron, GitHub Actions, or manually).
  *
  * Auth: uses a Google Cloud service account with read access to the
- * GSC property. Service account JSON is read from the env var
- * GSC_SERVICE_ACCOUNT_JSON (the full JSON contents, not a path) so the
- * script can run in CI without filesystem secrets. Set up:
+ * GSC property. Two ways to provide the credentials:
+ *
+ *   A) GSC_SERVICE_ACCOUNT_KEY_PATH: filesystem path to the service
+ *      account JSON key file (recommended for local use).
+ *   B) GSC_SERVICE_ACCOUNT_JSON: the entire JSON contents as a string
+ *      (recommended for CI where filesystem secrets aren't safe).
+ *
+ * The script reads .env.local automatically (if present) so you can
+ * keep credentials out of your shell history. Set up:
  *
  *   1. In Google Cloud Console, create a service account.
  *   2. Enable the Search Console API for the project.
@@ -17,13 +23,15 @@
  *   4. In Search Console, add the service account's email as a User
  *      (Restricted permission is enough) on the sc-domain:coffey.codes
  *      property.
- *   5. Set GSC_SERVICE_ACCOUNT_JSON locally:
- *        export GSC_SERVICE_ACCOUNT_JSON="$(cat path/to/key.json)"
+ *   5. Add ONE of these to .env.local at the repo root:
+ *        GSC_SERVICE_ACCOUNT_KEY_PATH=C:/path/to/key.json
+ *        # or:
+ *        GSC_SERVICE_ACCOUNT_JSON={"type":"service_account",...}
  *
  * Usage:
  *   node scripts/seo-snapshot.mjs
  *
- * Optional env vars:
+ * Optional env vars (also read from .env.local):
  *   GSC_SITE_URL     default: sc-domain:coffey.codes
  *   SNAPSHOT_WINDOW  default: 365 (days)
  *   OUTPUT_DIR       default: docs/strategy/data
@@ -47,8 +55,20 @@
 
 import { google } from 'googleapis';
 import { promises as fs } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// Resolve repo root early so .env.local lookup works regardless of cwd.
+const __filename = fileURLToPath(import.meta.url);
+const REPO_ROOT = path.resolve(path.dirname(__filename), '..');
+
+// Auto-load .env.local (Next.js convention) if present. Node 22 ships
+// process.loadEnvFile; the project requires Node >= 22, so it's safe.
+const envFile = path.join(REPO_ROOT, '.env.local');
+if (existsSync(envFile) && typeof process.loadEnvFile === 'function') {
+  process.loadEnvFile(envFile);
+}
 
 const SITE_URL = process.env.GSC_SITE_URL ?? 'sc-domain:coffey.codes';
 const WINDOW_DAYS = Number(process.env.SNAPSHOT_WINDOW ?? 365);
@@ -60,19 +80,42 @@ function ymd(d) {
 }
 
 function loadCredentials() {
-  const raw = process.env.GSC_SERVICE_ACCOUNT_JSON;
-  if (!raw) {
-    throw new Error(
-      'GSC_SERVICE_ACCOUNT_JSON env var is required. See script header for setup.',
-    );
+  const keyPath = process.env.GSC_SERVICE_ACCOUNT_KEY_PATH;
+  const inlineJson = process.env.GSC_SERVICE_ACCOUNT_JSON;
+
+  if (keyPath) {
+    const resolved = path.isAbsolute(keyPath)
+      ? keyPath
+      : path.resolve(REPO_ROOT, keyPath);
+    if (!existsSync(resolved)) {
+      throw new Error(
+        `GSC_SERVICE_ACCOUNT_KEY_PATH points to a file that does not exist: ${resolved}`,
+      );
+    }
+    try {
+      return JSON.parse(readFileSync(resolved, 'utf-8'));
+    } catch (err) {
+      throw new Error(
+        `Failed to parse service account JSON at ${resolved}: ${err.message}`,
+      );
+    }
   }
-  try {
-    return JSON.parse(raw);
-  } catch (err) {
-    throw new Error(
-      `GSC_SERVICE_ACCOUNT_JSON is not valid JSON: ${err.message}`,
-    );
+
+  if (inlineJson) {
+    try {
+      return JSON.parse(inlineJson);
+    } catch (err) {
+      throw new Error(
+        `GSC_SERVICE_ACCOUNT_JSON is not valid JSON: ${err.message}`,
+      );
+    }
   }
+
+  throw new Error(
+    'No service account credentials found. Set GSC_SERVICE_ACCOUNT_KEY_PATH ' +
+      '(filesystem path) or GSC_SERVICE_ACCOUNT_JSON (inline JSON) in ' +
+      '.env.local or as a shell env var. See script header for setup.',
+  );
 }
 
 async function getAuthedClient() {
@@ -157,9 +200,7 @@ async function main() {
   const client = await getAuthedClient();
   const snapshot = await pull(client, startDate, endDate);
 
-  const __filename = fileURLToPath(import.meta.url);
-  const repoRoot = path.resolve(path.dirname(__filename), '..');
-  const outDir = path.resolve(repoRoot, OUTPUT_DIR);
+  const outDir = path.resolve(REPO_ROOT, OUTPUT_DIR);
   await fs.mkdir(outDir, { recursive: true });
 
   const outFile = path.join(outDir, `snapshot-${ymd(now)}.json`);

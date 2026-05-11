@@ -99,6 +99,11 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      {
+        source: '/articles/embracing-clean-code-principles',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

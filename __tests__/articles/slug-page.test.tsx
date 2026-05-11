@@ -135,6 +135,33 @@ describe('Article page JSON-LD publisher schema', () => {
   });
 });
 
+describe('Article page JSON-LD datetime hygiene', () => {
+  // Schema.org permits date-only values on datePublished / dateModified,
+  // but Google's Rich Results Test downgrades date-only to a
+  // "missing timezone" warning. Always emit a full ISO 8601 datetime.
+  const ISO_DATETIME_WITH_TZ =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
+
+  it('datePublished is an ISO 8601 datetime with timezone, even when frontmatter is date-only', async () => {
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const blogPosting = findJsonLdByType(html, 'BlogPosting');
+
+    expect(blogPosting!.datePublished).toMatch(ISO_DATETIME_WITH_TZ);
+  });
+
+  it('dateModified is an ISO 8601 datetime with timezone', async () => {
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const blogPosting = findJsonLdByType(html, 'BlogPosting');
+
+    expect(blogPosting!.dateModified).toMatch(ISO_DATETIME_WITH_TZ);
+  });
+});
 
 describe('Article page video schema (when frontmatter has youtubeId)', () => {
   const VIDEO_POST = {
@@ -157,22 +184,9 @@ describe('Article page video schema (when frontmatter has youtubeId)', () => {
 
     const element = await Blog({
       params: Promise.resolve({ slug: 'video-article' }),
-
-describe('Article page JSON-LD datetime hygiene', () => {
-  // Schema.org permits date-only values on datePublished / dateModified,
-  // but Google's Rich Results Test downgrades date-only to a
-  // "missing timezone" warning. Always emit a full ISO 8601 datetime.
-  const ISO_DATETIME_WITH_TZ =
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
-
-  it('datePublished is an ISO 8601 datetime with timezone, even when frontmatter is date-only', async () => {
-    const element = await Blog({
-      params: Promise.resolve({ slug: 'test-article' }),
-
     });
     const html = renderToStaticMarkup(element);
     const blogPosting = findJsonLdByType(html, 'BlogPosting');
-
 
     expect(blogPosting!.video).toBeDefined();
     expect(blogPosting!.video['@type']).toBe('VideoObject');
@@ -194,23 +208,13 @@ describe('Article page JSON-LD datetime hygiene', () => {
       getAllBlogPosts as unknown as () => (typeof SAMPLE_POST)[],
     ).mockReturnValue([SAMPLE_POST]);
 
-
-    expect(blogPosting!.datePublished).toMatch(ISO_DATETIME_WITH_TZ);
-  });
-
-  it('dateModified is an ISO 8601 datetime with timezone', async () => {
-
     const element = await Blog({
       params: Promise.resolve({ slug: 'test-article' }),
     });
     const html = renderToStaticMarkup(element);
     const blogPosting = findJsonLdByType(html, 'BlogPosting');
 
-
     expect(blogPosting!.video).toBeUndefined();
-
-    expect(blogPosting!.dateModified).toMatch(ISO_DATETIME_WITH_TZ);
-
   });
 });
 

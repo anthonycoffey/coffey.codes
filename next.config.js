@@ -88,6 +88,34 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      // SPEC-017 Bucket B deprecations (Software Engineering pillar)
+      {
+        source: '/articles/tips-for-troubleshooting-and-debugging-code',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
+        source: '/articles/javascript-design-patterns',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
+        source: '/articles/embracing-clean-code-principles',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
+        source: '/articles/unit-testing-in-python-with-pytest',
+        destination: '/articles',
+        permanent: true,
+      },
+      // Orphan category route after the four SE deprecations above; the
+      // `Software Engineering` pillar no longer has any published articles.
+      {
+        source: '/articles/category/software%20engineering',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

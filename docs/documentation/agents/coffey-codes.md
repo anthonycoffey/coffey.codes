@@ -92,11 +92,14 @@ Returns filtered blog post metadata matching the query. Used by `components/Sear
 title: 'Article Title'
 summary: 'Short description for SEO and previews'
 publishedAt: 'YYYY-MM-DD'
+updated: 'YYYY-MM-DD' # optional, asserts a meaningful update
 tags: ['tag1', 'tag2']
 category: 'category-name'
 image: '/path/to/og-image.jpg' # optional
 ---
 ```
+
+`updated:` is the editorial signal for a substantive refresh and feeds `BlogPosting.dateModified` directly. When absent, [`app/(site)/articles/[slug]/page.tsx`](../../../app/(site)/articles/[slug]/page.tsx) falls back to the file's `mtime`, then to `publishedAt`. Set `updated:` for real refreshes; skip it for typo or formatting fixes so noise doesn't pollute the freshness signal.
 
 ## Environment Variables
 

@@ -1,7 +1,7 @@
 ---
 id: SPEC-019
 title: 'Case Study Content Rewrite: PostGIS Fleet Optimization'
-status: ready
+status: complete
 created: 2026-05-14
 author: Anthony Coffey
 reviewers: []
@@ -91,9 +91,9 @@ Before: all dimensions near 0. After: all dimensions at 4–5.
 - [x] Replace both chart blocks with capability-score (0–5) before/after data
 - [x] Remove the PDF download CTA: drop `pdfPath` field + interface member, delete `components/CaseStudyPdfCta.tsx`, delete `public/case-studies/` (and PDF asset), drop the related vi.mock and e2e assertion
 - [x] Update the e2e Challenge-text assertion to match the new copy
-- [ ] Verify `/case-study/postgis-fleet-optimization` renders correctly in dev
-- [ ] Spot-check mobile layout — no truncation issues on stats/charts
-- [ ] Move spec to `docs/specs/archive/` when merged
+- [x] Verify `/case-study/postgis-fleet-optimization` renders correctly in dev
+- [x] Spot-check mobile layout — no truncation issues on stats/charts
+- [x] Move spec to `docs/specs/archive/` when merged
 
 ## Out of scope
 

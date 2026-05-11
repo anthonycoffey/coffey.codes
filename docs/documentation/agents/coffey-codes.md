@@ -143,22 +143,37 @@ npm run typecheck      # tsc --noEmit
 
 ### Pull and compare SEO snapshots
 
-`scripts/seo-snapshot.mjs` (SPEC-018) pulls GSC, GA4, and Bing in one shot, writing a dated JSON file to `docs/strategy/data/`. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
+`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls GSC, GA4, Bing, and Google Ads keyword data in one shot, writing a dated JSON file to `docs/strategy/data/`. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
 
 ```bash
-node scripts/seo-snapshot.mjs                  # all configured engines, 365d
-node scripts/seo-snapshot.mjs --engines=gsc    # one engine only
-node scripts/seo-snapshot.mjs --dry-run        # print plan, skip API calls
+node scripts/seo-snapshot.mjs                       # all configured engines, 365d
+node scripts/seo-snapshot.mjs --engines=gsc         # one engine only
+node scripts/seo-snapshot.mjs --engines=gsc,keywords  # enrich GSC with Ads
+node scripts/seo-snapshot.mjs --dry-run             # print plan, skip API calls
 node scripts/seo-snapshot-diff.mjs older.json newer.json
 ```
 
 Setup (env vars in `.env` or `.env.local`):
 
-- `GSC_SERVICE_ACCOUNT_KEY_PATH` or `GSC_SERVICE_ACCOUNT_JSON` (Google service account; same account used for GA4)
+- `GSC_SERVICE_ACCOUNT_KEY_PATH` or `GSC_SERVICE_ACCOUNT_JSON` (Google service account; reused for GA4 and Google Ads)
 - `GA4_PROPERTY_ID` (currently `416080229`; Data API enabled in Cloud, service account granted Viewer in GA4 Property Access)
 - `BING_WEBMASTER_API_KEY` (generated in Bing Webmaster Tools → Settings → API Access)
+- `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID` (developer token from Ads UI; the service account must be added as a user inside the Ads account)
 
-Each engine skips gracefully if its env vars are missing. Full script header doc is in `scripts/seo-snapshot.mjs`.
+Each engine skips gracefully if its env vars are missing. Full setup walk-through is in [docs/documentation/guides/seo-snapshot-setup.md](../guides/seo-snapshot-setup.md).
+
+### Run keyword research tools (SPEC-020)
+
+Four scripts consume the snapshot + Google Ads API to answer concrete editorial questions:
+
+```bash
+node scripts/keyword-audit-articles.mjs                    # OPPORTUNITY flags per article
+node scripts/keyword-discover-topics.mjs                   # ranked editorial backlog
+node scripts/keyword-validate-lps.mjs                      # WELL_TARGETED / OVER_AMBITIOUS verdict per LP
+node scripts/keyword-probe-url.mjs https://competitor.com  # stdout-only competitor probe
+```
+
+Reports land in `docs/strategy/data/` as dated markdown; reruns on the same day overwrite (history lives in git).
 
 Vitest + Testing Library + jsdom is configured for unit and component tests. Playwright e2e lives in `e2e/` and exercises rendered pages against a live Vercel preview. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
 

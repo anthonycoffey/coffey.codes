@@ -1,7 +1,7 @@
 ---
 id: SPEC-020
 title: 'Keyword research tools (article auditor, topic discovery, LP validator, competitor probe)'
-status: draft
+status: review-pending
 created: 2026-05-11
 author: Anthony Coffey
 reviewers: []
@@ -202,17 +202,17 @@ Tool #4 doesn't need GSC at all (URL probe is pure Ads side).
 
 ## Tasks
 
-- [ ] Verify SPEC-019 has shipped (or co-develop the shared `scripts/lib/google-ads.mjs` module).
-- [ ] Implement `scripts/lib/google-ads.mjs` if SPEC-019 didn't already.
-- [ ] Implement `scripts/keyword-audit-articles.mjs`. Run against the live account. Commit the first report.
-- [ ] Implement `scripts/keyword-discover-topics.mjs`. Run. Commit.
-- [ ] Implement `scripts/keyword-validate-lps.mjs`. Run. Commit.
-- [ ] Implement `scripts/keyword-probe-url.mjs`. Run against one known competitor URL as a smoke test; do NOT commit the output (one-shot tool).
-- [ ] Update `docs/documentation/guides/seo-snapshot-setup.md` with a "Keyword research tools" section.
-- [ ] Add a row to `docs/documentation/repos/coffey-codes.md` SEO data pipeline section pointing at the four tools.
-- [ ] Optionally extend the agent brief's "Pull and compare SEO snapshots" task with a parallel "Run keyword research tools" task.
-- [ ] Lint check, syntax check.
-- [ ] Commit and PR.
+- [x] Co-developed SPEC-019 + SPEC-020 in the same session; shared `scripts/lib/google-ads.mjs` lives in SPEC-019's first commit.
+- [x] Implement `scripts/lib/google-ads.mjs`.
+- [x] Implement `scripts/keyword-audit-articles.mjs`.
+- [x] Implement `scripts/keyword-discover-topics.mjs`.
+- [x] Implement `scripts/keyword-validate-lps.mjs`.
+- [x] Implement `scripts/keyword-probe-url.mjs`.
+- [x] Update `docs/documentation/guides/seo-snapshot-setup.md` with a "Keyword research tools" section.
+- [x] Add a section to `docs/documentation/repos/coffey-codes.md` SEO data pipeline pointing at the four tools.
+- [x] Extended the agent brief with a "Run keyword research tools" subsection.
+- [x] Lint check, syntax check.
+- [ ] First end-to-end run against the live Google Ads account and commit the first reports. *(blocked on the same user-side cloud config as SPEC-019)*
 
 ## Notes
 

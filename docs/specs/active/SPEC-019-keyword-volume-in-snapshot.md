@@ -1,7 +1,7 @@
 ---
 id: SPEC-019
 title: 'Add Google Ads keyword volume context to the SEO snapshot'
-status: draft
+status: review-pending
 created: 2026-05-11
 author: Anthony Coffey
 reviewers: []
@@ -202,18 +202,18 @@ Matches the existing pattern in `scripts/seo-snapshot.mjs`.
 
 ## Tasks
 
-- [ ] In the Google Ads UI, generate a developer token at Tools → API Center. Confirm basic access (free tier) is sufficient.
-- [ ] Confirm the service account email is listed as a user on the Google Ads account (already done 2026-05-11).
-- [ ] Note the 10-digit customer ID (and login-customer-id if applicable; same value for direct-access accounts).
-- [ ] Add to `.env`: `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID`.
-- [ ] Install `google-ads-api` and try the JWT-via-service-account auth path. If it fails, drop the dep and write direct REST calls against v17.
-- [ ] Implement `pullKeywords` in `scripts/seo-snapshot.mjs` per the Design section.
-- [ ] Add `keywords` to the orchestrator's `planned` array with the standard skip-on-missing pattern.
-- [ ] Implement the left-join enrichment of `snapshot.gsc.topQueries` after both engines complete.
-- [ ] Update the script header docs with the three new env vars and the developer-token URL.
-- [ ] Update `docs/documentation/guides/seo-snapshot-setup.md` with a Google Ads setup section.
-- [ ] Run end-to-end against the live account; commit the resulting snapshot.
-- [ ] Run `scripts/seo-snapshot-diff.mjs` against the previous (SPEC-018-only) snapshot and the new (SPEC-019) snapshot to confirm the diff script handles the new fields without breaking.
+- [ ] In the Google Ads UI, generate a developer token at Tools → API Center. Confirm basic access (free tier) is sufficient. *(user-side cloud config)*
+- [x] Confirm the service account email is listed as a user on the Google Ads account.
+- [ ] Note the 10-digit customer ID (and login-customer-id if applicable; same value for direct-access accounts). *(user-side cloud config)*
+- [ ] Add to `.env`: `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID`. *(user-side)*
+- [x] ~~Install `google-ads-api`~~ — decided against the dep. Direct REST against `googleads.googleapis.com/v17/` is simpler, removes a transitive-dep surface, and bypasses the gRPC client's service-account-auth limitations.
+- [x] Implement `pullKeywords` in `scripts/seo-snapshot.mjs` per the Design section.
+- [x] Add `keywords` to the orchestrator's `planned` array with the standard skip-on-missing pattern.
+- [x] Implement the left-join enrichment of `snapshot.gsc.topQueries` after both engines complete.
+- [x] Update the script header docs with the three new env vars and the developer-token URL.
+- [x] Update `docs/documentation/guides/seo-snapshot-setup.md` with a Google Ads setup section.
+- [ ] Run end-to-end against the live account; commit the resulting snapshot. *(blocked on user-side cloud config above)*
+- [ ] Run `scripts/seo-snapshot-diff.mjs` against the previous (SPEC-018-only) snapshot and the new (SPEC-019) snapshot to confirm the diff script handles the new fields without breaking. *(blocked on above)*
 
 ## Notes
 

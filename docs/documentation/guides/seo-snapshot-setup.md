@@ -80,6 +80,25 @@ BING_WEBMASTER_API_KEY=<paste-the-key-here>
 
 > **Heads up:** Bing Webmaster Tools does not backfill. If the property was added recently, every endpoint will return empty until enough days have accumulated post-verification. This is expected, not a bug. The Q3 SEO audit covers a real instance of this.
 
+### 4. Google Ads Keyword Planner (SPEC-019)
+
+Reuses the GSC service account; one extra UI step in Google Ads, one developer token, two customer IDs.
+
+1. In the [Google Ads UI](https://ads.google.com/) → **Tools** (top-right wrench icon) → **Access and security** → **Add** user → paste the service account email (same one used for GSC and GA4). Permissions: Standard or Read-only.
+2. **Tools → API Center** → click **Apply for token** if you don't have one. The basic-access tier is free; auto-approved within minutes for most accounts. Copy the developer token string.
+3. Find the 10-digit customer ID at the top right of the Ads UI (format: `123-456-7890`; strip the dashes when adding to `.env`).
+4. For direct-access accounts (no manager / MCC), `GOOGLE_ADS_LOGIN_CUSTOMER_ID` is the same value as `GOOGLE_ADS_CUSTOMER_ID`. For accounts under an MCC, set `LOGIN_CUSTOMER_ID` to the MCC's 10-digit ID.
+
+Add to `.env`:
+
+```bash
+GOOGLE_ADS_DEVELOPER_TOKEN=<your-token>
+GOOGLE_ADS_CUSTOMER_ID=<10-digits-no-dashes>
+GOOGLE_ADS_LOGIN_CUSTOMER_ID=<10-digits-no-dashes>
+```
+
+> **Volume bucket vs precise integer:** accounts without spend history get bucketed volumes (`100-1K`, `1K-10K`, `10K-100K`, `100K+`). Competition (`LOW/MEDIUM/HIGH`) and competition index (0-100) are always precise. Spend history unlocks integer volumes; not a blocker for any of the tooling described below.
+
 ## Verifying the wiring
 
 ```powershell
@@ -89,7 +108,7 @@ node scripts/seo-snapshot.mjs --dry-run
 Should print:
 
 ```
-[dry-run] Would pull from gsc, ga4, bing for window <start> to <end>
+[dry-run] Would pull from gsc, ga4, bing, keywords for window <start> to <end>
 ```
 
 Or list which engines were skipped and why. If a step is wrong, the error message will name the env var or service that's missing.
@@ -102,7 +121,7 @@ node scripts/seo-snapshot.mjs
 
 # Subset
 node scripts/seo-snapshot.mjs --engines=gsc
-node scripts/seo-snapshot.mjs --engines=gsc,ga4
+node scripts/seo-snapshot.mjs --engines=gsc,ga4,keywords
 
 # Custom window
 node scripts/seo-snapshot.mjs --window=180
@@ -112,6 +131,33 @@ node scripts/seo-snapshot.mjs --dry-run
 ```
 
 Output goes to `docs/strategy/data/snapshot-<YYYY-MM-DD>.json`. The script prints a one-line summary per engine on completion.
+
+When the `keywords` engine is enabled, the snapshot also gets a top-level `keywords` key (with `historicalMetrics` + `ideas`) and each `gsc.topQueries` row is enriched in place with `volumeBucket`, `competition`, `competitionIndex`, and `cpcRangeMicros`. Rows the Ads side has no data for gain `_keywordsMatch: false`.
+
+## Keyword research tools (SPEC-020)
+
+Four scripts that consume the snapshot + Google Ads API to answer concrete editorial questions. All four require the same `GOOGLE_ADS_*` env vars as the snapshot's `keywords` engine.
+
+```powershell
+# Audit existing articles: which ones could target higher-volume keywords?
+node scripts/keyword-audit-articles.mjs
+# -> docs/strategy/data/keyword-audit-articles-<YYYY-MM-DD>.md
+
+# Discover new topic ideas seeded from categories + top GSC queries
+node scripts/keyword-discover-topics.mjs
+# -> docs/strategy/data/keyword-topics-<YYYY-MM-DD>.md
+
+# Validate /lp/* pages: are they targeting realistic-volume keywords?
+node scripts/keyword-validate-lps.mjs
+# -> docs/strategy/data/keyword-lp-validation-<YYYY-MM-DD>.md
+
+# One-shot probe of a competitor URL (stdout only, no file output)
+node scripts/keyword-probe-url.mjs https://competitor.com/their-post
+```
+
+The article auditor and topic discovery read the latest snapshot in `docs/strategy/data/` for GSC context. If no recent snapshot exists they fall back gracefully but the output is less useful — rerun `seo-snapshot.mjs` first when in doubt.
+
+The reports use the bucket order `<100 < 100-1K < 1K-10K < 10K-100K < 100K+` and the competition trio `LOW / MEDIUM / HIGH` for everything. Output is markdown, committed to git like snapshot files. Reruns on the same day overwrite (date in filename, not timestamp).
 
 ## Diffing snapshots
 
@@ -143,10 +189,16 @@ GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` varian
 | Bing returns `Invalid api key` | Wrong key or key was rotated | Regenerate in the Bing UI |
 | Bing returns empty but key is valid | Property was added recently; no data accumulated yet | Wait ~90 days |
 | `GSC_SERVICE_ACCOUNT_KEY_PATH points to a file that does not exist` | Relative path didn't resolve | Use an absolute path |
+| Google Ads `PERMISSION_DENIED` | Service account not added as a user inside Google Ads | Re-do step 4.1 |
+| Google Ads `DEVELOPER_TOKEN_NOT_APPROVED` | Token is in pending state | Apply for the basic-access tier in the Ads UI's API Center |
+| Google Ads `INVALID_CUSTOMER_ID` | Customer ID has dashes, or wrong account | Strip dashes; recheck the ID at the top right of the Ads UI |
+| Keyword research scripts return zero ideas | URL probe: target URL is not indexed by Google. Other scripts: seed terms are too generic/specific | Adjust the seed or pick a different URL |
 
 ## Related
 
-- [SPEC-018 spec](../../specs/active/SPEC-018-multi-engine-snapshot.md) (or archive if completed)
+- [SPEC-018 (archived)](../../specs/archive/SPEC-018-multi-engine-snapshot.md) — multi-engine snapshot
+- [SPEC-019](../../specs/active/SPEC-019-keyword-volume-in-snapshot.md) — adds Google Ads keyword volume context to the snapshot
+- [SPEC-020](../../specs/active/SPEC-020-keyword-research-tools.md) — the four keyword research scripts described above
 - [On-page SEO strategy](../deep-dives/onpage-seo-strategy.md) — what the audits measure
 - [CTR-by-position baseline](../deep-dives/ctr-by-position-baseline.md) — site-specific CTR curve
 - [Quarterly audit folder](../../strategy/) — finished narrative reports

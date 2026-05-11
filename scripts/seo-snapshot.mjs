@@ -39,14 +39,27 @@
  *    - Set in .env:
  *        BING_WEBMASTER_API_KEY=<key>
  *
+ * 4) Google Ads Keyword Planner (SPEC-019)
+ *    - Reuses the same Google service account as GSC + GA4. Add the
+ *      service account email as a user in the Google Ads account at
+ *      Tools → Access → User Access.
+ *    - In Google Ads UI: Tools → API Center → generate a developer
+ *      token. The basic-access (free) tier is sufficient.
+ *    - Find your 10-digit customer ID at the top right of the Ads UI.
+ *      For direct-access accounts, login-customer-id is the same value.
+ *    - Set in .env:
+ *        GOOGLE_ADS_DEVELOPER_TOKEN=<token>
+ *        GOOGLE_ADS_CUSTOMER_ID=<10-digits-no-dashes>
+ *        GOOGLE_ADS_LOGIN_CUSTOMER_ID=<10-digits-no-dashes>
+ *
  * ── Usage ────────────────────────────────────────────────────────────
  *
  *   node scripts/seo-snapshot.mjs
  *
  * Optional CLI flags:
- *   --engines=gsc,bing,ga4    Default: all configured engines
- *   --window=180              Default: 365 (days)
- *   --dry-run                 Print what would be pulled; don't call APIs
+ *   --engines=gsc,bing,ga4,keywords   Default: all configured engines
+ *   --window=180                       Default: 365 (days)
+ *   --dry-run                          Print what would be pulled; don't call APIs
  *
  * Optional env vars (also read from .env.local / .env):
  *   GSC_SITE_URL              Default: sc-domain:coffey.codes
@@ -58,6 +71,11 @@
 
 import { google } from 'googleapis';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import {
+  getAdsAuth,
+  generateKeywordIdeas,
+  generateHistoricalMetrics,
+} from './lib/google-ads.mjs';
 import { promises as fs } from 'fs';
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
@@ -412,6 +430,73 @@ async function pullBing({ startDate, endDate }) {
   };
 }
 
+// ── Keywords puller ──────────────────────────────────────────────────
+
+async function pullKeywords({ gscTopQueries }) {
+  // Seed = top 25 GSC queries + the article categories. Two API calls:
+  //   1) generateKeywordIdeas       — suggestions adjacent to the seed
+  //   2) generateHistoricalMetrics  — volume + competition for the
+  //      site's actual queries (so the enrichment join has data)
+  const querySeeds = (gscTopQueries ?? [])
+    .map((r) => r.keys?.[0])
+    .filter((q) => typeof q === 'string' && q.trim().length > 0)
+    .slice(0, 25);
+
+  // Article categories live in frontmatter; we hard-code them here
+  // rather than read the MDX files at snapshot time. If the category
+  // list changes meaningfully, update this constant.
+  const CATEGORY_SEEDS = [
+    'Web Development',
+    'Mobile Development',
+    'Cloud & DevOps',
+    'Software Engineering',
+    'Tools & Productivity',
+  ];
+
+  const seeds = [...new Set([...querySeeds, ...CATEGORY_SEEDS])];
+
+  const [ideas, historicalMetrics] = await Promise.all([
+    generateKeywordIdeas({ keywords: seeds.slice(0, 20), pageSize: 100 }),
+    querySeeds.length > 0
+      ? generateHistoricalMetrics(querySeeds)
+      : Promise.resolve([]),
+  ]);
+
+  return {
+    geo: 'US',
+    language: 'en',
+    seedCount: seeds.length,
+    historicalMetrics,
+    ideas,
+  };
+}
+
+// Left-join: decorate each GSC topQueries row with the matching
+// Ads historical metrics, in place. Non-matching rows gain
+// `_keywordsMatch: false` so consumers can see what was joined.
+function enrichGscWithKeywords(gsc, keywords) {
+  if (!gsc?.topQueries || !keywords?.historicalMetrics) return;
+  const lookup = new Map();
+  for (const row of keywords.historicalMetrics) {
+    if (row.keyword) {
+      lookup.set(row.keyword.toLowerCase(), row);
+    }
+  }
+  for (const row of gsc.topQueries) {
+    const q = row.keys?.[0]?.toLowerCase();
+    const match = q ? lookup.get(q) : null;
+    if (match) {
+      row.volumeBucket = match.volumeBucket;
+      row.volumeAvgMonthly = match.volumeAvgMonthly;
+      row.competition = match.competition;
+      row.competitionIndex = match.competitionIndex;
+      row.cpcRangeMicros = [match.cpcLowMicros, match.cpcHighMicros];
+    } else {
+      row._keywordsMatch = false;
+    }
+  }
+}
+
 // ── Orchestrator ─────────────────────────────────────────────────────
 
 async function main() {
@@ -462,16 +547,32 @@ async function main() {
       );
     }
   }
+  // keywords runs LAST and AFTER gsc, so it can read the resolved
+  // GSC topQueries as its seed input. We register it as a marker
+  // and run it post-allSettled below.
+  let keywordsPlanned = false;
+  if (shouldRun('keywords')) {
+    const adsAuth = await getAdsAuth().catch(() => null);
+    if (adsAuth) {
+      keywordsPlanned = true;
+    } else {
+      console.warn(
+        '[snapshot] keywords: skipped (Google Ads env vars not configured)',
+      );
+    }
+  }
 
-  if (planned.length === 0) {
+  if (planned.length === 0 && !keywordsPlanned) {
     throw new Error(
-      'No engines configured. Set at least one of GSC_SERVICE_ACCOUNT_*, GA4_PROPERTY_ID, or BING_WEBMASTER_API_KEY.',
+      'No engines configured. Set at least one of GSC_SERVICE_ACCOUNT_*, GA4_PROPERTY_ID, BING_WEBMASTER_API_KEY, or GOOGLE_ADS_*.',
     );
   }
 
   if (args.dryRun) {
+    const dryList = planned.map(([n]) => n);
+    if (keywordsPlanned) dryList.push('keywords');
     console.log(
-      `[dry-run] Would pull from ${planned.map(([n]) => n).join(', ')} for window ${startDate} to ${endDate}`,
+      `[dry-run] Would pull from ${dryList.join(', ')} for window ${startDate} to ${endDate}`,
     );
     return;
   }
@@ -493,6 +594,19 @@ async function main() {
     } else {
       console.error(
         `[snapshot] engine pull failed: ${r.reason?.message ?? r.reason}`,
+      );
+    }
+  }
+
+  // Keywords runs after the others so it can seed from gsc.topQueries.
+  if (keywordsPlanned) {
+    try {
+      const gscTopQueries = snapshot.gsc?.topQueries ?? [];
+      snapshot.keywords = await pullKeywords({ gscTopQueries });
+      enrichGscWithKeywords(snapshot.gsc, snapshot.keywords);
+    } catch (err) {
+      console.error(
+        `[snapshot] keywords: pull failed — ${err?.message ?? err}`,
       );
     }
   }
@@ -528,6 +642,14 @@ async function main() {
   if (snapshot.bing) {
     console.log(
       `Bing clicks: ${snapshot.bing.totals.clicks}  Impressions: ${snapshot.bing.totals.impressions}${snapshot.bing._note ? '  (' + snapshot.bing._note + ')' : ''}`,
+    );
+  }
+  if (snapshot.keywords) {
+    const matched = (snapshot.gsc?.topQueries ?? []).filter(
+      (r) => !r._keywordsMatch,
+    ).length;
+    console.log(
+      `Keywords: ${snapshot.keywords.historicalMetrics.length} historical metrics, ${snapshot.keywords.ideas.length} ideas; ${matched} GSC queries enriched`,
     );
   }
 }

@@ -1,8 +1,9 @@
 ---
 id: SPEC-020
 title: 'Keyword research tools (article auditor, topic discovery, LP validator, competitor probe)'
-status: review-pending
+status: complete
 created: 2026-05-11
+completed: 2026-05-15
 author: Anthony Coffey
 reviewers: []
 affected_repos: [coffey.codes]

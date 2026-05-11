@@ -1,8 +1,9 @@
 ---
 id: SPEC-019
 title: 'Add Google Ads keyword volume context to the SEO snapshot'
-status: review-pending
+status: complete
 created: 2026-05-11
+completed: 2026-05-15
 author: Anthony Coffey
 reviewers: []
 affected_repos: [coffey.codes]

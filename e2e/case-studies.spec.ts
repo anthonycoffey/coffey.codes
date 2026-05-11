@@ -5,8 +5,11 @@ test.describe('Case Studies Migration', () => {
     // Go to case studies listing
     await page.goto('/case-studies');
 
-    // Find the PostGIS case study and click "Read Case Study"
-    const readMoreButton = page.getByRole('link', { name: /Read Case Study/i });
+    // The listing now has multiple case studies; pick the PostGIS one
+    // specifically by href since every card uses the same link label.
+    const readMoreButton = page.locator(
+      'a[href="/case-study/postgis-fleet-optimization"]',
+    );
     await expect(readMoreButton).toBeVisible();
     await readMoreButton.click();
 

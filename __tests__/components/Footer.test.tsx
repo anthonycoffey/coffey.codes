@@ -32,6 +32,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
   EnvelopeIcon: () => null,
   RssIcon: () => null,
   ArrowUpCircleIcon: () => null,
+  ArrowDownTrayIcon: () => null,
   CodeBracketIcon: () => null,
   ChatBubbleOvalLeftIcon: () => null,
   CalendarDaysIcon: () => null,

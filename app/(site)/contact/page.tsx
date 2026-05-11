@@ -130,7 +130,7 @@ export default async function ContactPage() {
         </div>
 
         {/* Right column: contact form */}
-        <RetroWindow title="send-message.txt">
+        <RetroWindow title="send_message.exe">
           <div className="p-6">
             <ContactForm />
           </div>
@@ -139,7 +139,7 @@ export default async function ContactPage() {
 
       <section className="mt-12">
         <h2 className="font-outfit text-2xl md:text-3xl font-bold mb-4 text-c-heading">
-          What clients have said
+          What other clients have said
         </h2>
         <Testimonials />
       </section>

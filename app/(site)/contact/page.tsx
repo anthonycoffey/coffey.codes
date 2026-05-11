@@ -36,10 +36,11 @@ export default async function ContactPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-        {/* Left column: info boxes */}
-        <div className="flex flex-col gap-4">
-          <RetroWindow title="phone.exe">
-            <div className="p-5 flex items-center gap-4">
+        {/* Left column: everything in one window */}
+        <RetroWindow title="contact_info.exe">
+          <div className="p-5 flex flex-col gap-5">
+            {/* Phone */}
+            <div className="flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <PhoneIcon className="h-5 w-5 text-accent1-dark" />
               </div>
@@ -48,10 +49,9 @@ export default async function ContactPage() {
                 <p className="text-c-text">(737) 932-4565</p>
               </div>
             </div>
-          </RetroWindow>
 
-          <RetroWindow title="email.exe">
-            <div className="p-5 flex items-center gap-4">
+            {/* Email */}
+            <div className="flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <EnvelopeIcon className="h-5 w-5 text-accent1-dark" />
               </div>
@@ -60,10 +60,9 @@ export default async function ContactPage() {
                 <p className="text-c-text">anthony@coffey.codes</p>
               </div>
             </div>
-          </RetroWindow>
 
-          <RetroWindow title="location.exe">
-            <div className="p-5 flex items-center gap-4">
+            {/* Location */}
+            <div className="flex items-center gap-4">
               <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                 <MapPinIcon className="h-5 w-5 text-accent1-dark" />
               </div>
@@ -72,35 +71,11 @@ export default async function ContactPage() {
                 <p className="text-c-text">Austin, Texas</p>
               </div>
             </div>
-          </RetroWindow>
 
-          <RetroWindow title="resume.pdf">
-            <div className="p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
-                  <DocumentTextIcon className="h-5 w-5 text-accent1-dark" />
-                </div>
-                <p className="font-semibold text-c-heading text-sm">Resume</p>
-              </div>
-              <p className="text-c-muted text-sm mb-4 leading-relaxed">
-                Prefer to skim my background first? Grab the PDF.
-              </p>
-              <Button
-                as="a"
-                href="/Anthony%20Coffey%20-%20Resume.pdf"
-                variant="secondary"
-                size="sm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ArrowDownTrayIcon className="h-4 w-4" />
-                Download Resume
-              </Button>
-            </div>
-          </RetroWindow>
+            <hr className="border-border" />
 
-          <RetroWindow title="calendar.exe">
-            <div className="p-5">
+            {/* Schedule */}
+            <div>
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
                   <CalendarDaysIcon className="h-5 w-5 text-accent1-dark" />
@@ -126,8 +101,32 @@ export default async function ContactPage() {
                 Book Your Free Session
               </Button>
             </div>
-          </RetroWindow>
-        </div>
+
+            {/* Resume */}
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-3 bg-bg-alt rounded-full border border-border flex-shrink-0">
+                  <DocumentTextIcon className="h-5 w-5 text-accent1-dark" />
+                </div>
+                <p className="font-semibold text-c-heading text-sm">Resume</p>
+              </div>
+              <p className="text-c-muted text-sm mb-4 leading-relaxed">
+                Prefer to skim my background first? Grab the PDF.
+              </p>
+              <Button
+                as="a"
+                href="/Anthony%20Coffey%20-%20Resume.pdf"
+                variant="secondary"
+                size="sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ArrowDownTrayIcon className="h-4 w-4" />
+                Download Resume
+              </Button>
+            </div>
+          </div>
+        </RetroWindow>
 
         {/* Right column: contact form */}
         <RetroWindow title="send_message.exe">

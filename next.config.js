@@ -88,6 +88,12 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      // SPEC-017 Bucket B deprecations (Software Engineering pillar)
+      {
+        source: '/articles/tips-for-troubleshooting-and-debugging-code',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

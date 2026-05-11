@@ -60,7 +60,7 @@ The four Bucket B articles each need an explicit refresh-or-redirect decision be
 | --- | --- | --- | --- |
 | `embracing-clean-code-principles` | _pending_ |  |  |
 | `javascript-design-patterns` | _pending_ |  |  |
-| `tips-for-troubleshooting-and-debugging-code` | _pending_ |  |  |
+| `tips-for-troubleshooting-and-debugging-code` | Redirect to `/articles` (308) | 2026-05-11 | 25-line article of generic platitudes ("Pay attention", "Take breaks"). No code examples, no Anthony-specific work, no distinctive angle. Topic is SERP-saturated by Stack Overflow and every developer blog. Zero traffic in audit window. Deleted MDX; redirect in `next.config.js`. |
 | `unit-testing-in-python-with-pytest` | _pending_ |  |  |
 
 Default action if no refresh angle surfaces by 2026-08-10: 308 redirect to `/articles`, MDX renamed to `.archived.mdx` to keep history in git.

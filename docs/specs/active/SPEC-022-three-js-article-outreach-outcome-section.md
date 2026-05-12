@@ -1,7 +1,7 @@
 ---
 id: SPEC-022
 title: 'Three.js portfolio article: add anonymized outreach outcome section'
-status: draft
+status: review-pending
 created: 2026-05-12
 author: Anthony Coffey
 reviewers: []

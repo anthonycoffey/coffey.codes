@@ -21,7 +21,7 @@ Look at the SERPs from a hidden vantage. Your repo is the vantage. The SERPs are
 
 Once parity against coffey.codes is proven, Phases B (extract to own repo) and C (publish to GitHub Packages) follow under their own SPECs.
 
-## Install (during Phase A)
+## Install (from source, during Phase A)
 
 ```bash
 cd tooling/periscope
@@ -30,6 +30,43 @@ npm run build
 ```
 
 The CLI is available at `tooling/periscope/dist/cli.js`. The coffey.codes root `package.json` has `seo:*` npm scripts that delegate to it.
+
+## Install (from GitHub Packages)
+
+The package publishes to [GitHub Packages](https://github.com/anthonycoffey/coffey.codes/pkgs/npm/periscope) under the `@anthonycoffey` scope. Visibility is **private**, so consumers need a Personal Access Token with `read:packages` scope.
+
+### One-time setup in a consuming project
+
+1. Create a PAT at https://github.com/settings/tokens with the `read:packages` scope. Copy the token.
+2. Add an `.npmrc` to the consuming project root (and to `.gitignore` — never commit the token):
+
+   ```ini
+   @anthonycoffey:registry=https://npm.pkg.github.com
+   //npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}
+   ```
+
+3. Set the env var: `export GITHUB_PACKAGES_TOKEN=<your-pat>` (or use a `.env` file your shell loads).
+
+### Install
+
+```bash
+npm install @anthonycoffey/periscope
+```
+
+### Verify
+
+```bash
+npx periscope --help
+```
+
+## Publishing new versions
+
+Two ways, both via the [periscope-publish workflow](../../.github/workflows/periscope-publish.yml):
+
+1. **Manual (during Phase A iteration).** GitHub UI: Actions → "Publish @anthonycoffey/periscope" → Run workflow → pick the branch.
+2. **Tag-based (releases).** Bump version in `tooling/periscope/package.json`, commit, then `git tag periscope-v0.1.0 && git push origin periscope-v0.1.0`. Workflow runs, publishes, summary in the Actions run.
+
+The workflow uses `GITHUB_TOKEN` (auto-granted `packages:write` via `permissions:` in the workflow). No PATs needed for publishing.
 
 ## Config
 

@@ -18,6 +18,10 @@ export default defineConfig({
       // Claude Code keeps disposable worktrees here; they hold stale code
       // copies that confuse the runner. Exclude them globally.
       '**/.claude/**',
+      // The @anthonycoffey/periscope package lives at tooling/periscope/
+      // and has its own vitest config, node_modules, and dep set. Excluding
+      // it from the root run keeps the two worlds independent.
+      'tooling/**',
     ],
     coverage: {
       provider: 'v8',

@@ -1,0 +1,61 @@
+{
+  "name": "@anthonycoffey/periscope",
+  "version": "0.0.0-dev",
+  "description": "SEO data tooling: pull GSC/GA4/Bing/Ads snapshots, diff them, run keyword research. A unified CLI over a set of project-configurable engines.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "Anthony Coffey <coffey.j.anthony@gmail.com>",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "periscope": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./engines/*": {
+      "types": "./dist/engines/*.d.ts",
+      "import": "./dist/engines/*.js"
+    },
+    "./lib/*": {
+      "types": "./dist/lib/*.d.ts",
+      "import": "./dist/lib/*.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@google-analytics/data": "^5.2.2",
+    "commander": "^12.1.0",
+    "googleapis": "^171.4.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.5",
+    "typescript": "5.3.3",
+    "vitest": "^4.1.4"
+  }
+}

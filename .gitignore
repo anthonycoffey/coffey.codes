@@ -45,6 +45,8 @@ next-env.d.ts
 # Sentry Config File
 .env.sentry-build-plugin
 
+
+.claude/worktrees/*
 .claude/settings.local.json
 npm-prettier.log
 dev.log
@@ -53,3 +55,7 @@ coffey-codes-fdee3a679cf6.json
 
 # Claude Code runtime files
 .claude/scheduled_tasks.lock
+
+
+tmp/
+.npmrc

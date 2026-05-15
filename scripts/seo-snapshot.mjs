@@ -623,15 +623,23 @@ async function main() {
   }
 
   // Keywords runs after the others so it can seed from gsc.topQueries.
+  // Failure here is non-fatal: the snapshot still writes with the other
+  // engines' data. The most common failure right now is
+  // CUSTOMER_NOT_ENABLED (Google Ads account without billing), which we
+  // surface as a one-line "skipped" message rather than a stack-style
+  // multi-line dump.
   if (keywordsPlanned) {
     try {
       const gscTopQueries = snapshot.gsc?.topQueries ?? [];
       snapshot.keywords = await pullKeywords({ gscTopQueries });
       enrichGscWithKeywords(snapshot.gsc, snapshot.keywords);
     } catch (err) {
-      console.error(
-        `[snapshot] keywords: pull failed — ${err?.message ?? err}`,
-      );
+      const code = err?.code ?? null;
+      const reason =
+        code === 'CUSTOMER_NOT_ENABLED'
+          ? 'Google Ads CUSTOMER_NOT_ENABLED (billing not enabled on the Ads account; see docs/documentation/guides/seo-snapshot-setup.md)'
+          : (err?.message ?? String(err));
+      console.warn(`[snapshot] keywords: skipped (${reason})`);
     }
   }
 

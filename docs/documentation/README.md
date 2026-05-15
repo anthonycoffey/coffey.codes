@@ -15,6 +15,7 @@ AI agent briefs — provide context to Claude and other AI tools about this repo
 Procedural how-to documentation for recurring tasks.
 
 - [marketing/](guides/marketing/) — Marketing strategy and execution guides
+- [youtube-thumbnail-generator.md](guides/youtube-thumbnail-generator.md) — Local CLI workflow for generating YouTube thumbnails from `/og/youtube`
 
 ### Deep Dives
 

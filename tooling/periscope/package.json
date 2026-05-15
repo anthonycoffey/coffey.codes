@@ -1,6 +1,6 @@
 {
   "name": "@anthonycoffey/periscope",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "SEO data tooling: pull GSC/GA4/Bing/Ads snapshots, diff them, run keyword research. A unified CLI over a set of project-configurable engines.",
   "type": "module",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "node": ">=22.0.0"
   },
   "bin": {
-    "periscope": "./dist/cli.js"
+    "periscope": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

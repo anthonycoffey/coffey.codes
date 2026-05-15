@@ -129,6 +129,50 @@ function adsHeaders(auth) {
   };
 }
 
+// Pull the first concrete error code out of a Google Ads error body so
+// callers can log a tidy one-liner instead of dumping the entire JSON
+// blob. Falls back to status text if the response isn't shaped like an
+// Ads error.
+function parseAdsError(text) {
+  try {
+    const body = JSON.parse(text);
+    const failure = body?.error?.details?.[0];
+    const inner = failure?.errors?.[0];
+    if (inner) {
+      const codeContainer = inner.errorCode ?? {};
+      // errorCode is an object with exactly one key like
+      //   { authorizationError: 'CUSTOMER_NOT_ENABLED' }
+      // or { requestError: 'BAD_RESOURCE_ID' }
+      const [codeKey] = Object.keys(codeContainer);
+      const codeValue = codeKey ? codeContainer[codeKey] : null;
+      const code = codeValue ?? codeKey ?? null;
+      const message = inner.message ?? body?.error?.message ?? null;
+      return { code, message };
+    }
+    if (body?.error?.message) {
+      return { code: null, message: body.error.message };
+    }
+  } catch {
+    // Not JSON; fall through to the raw-text path.
+  }
+  return { code: null, message: null };
+}
+
+class GoogleAdsError extends Error {
+  constructor({ endpoint, status, statusText, code, message }) {
+    const codeFragment = code ? ` (${code})` : '';
+    const detail = message ? `: ${message}` : '';
+    super(
+      `Google Ads ${endpoint} failed: HTTP ${status}${codeFragment}${detail}`,
+    );
+    this.name = 'GoogleAdsError';
+    this.endpoint = endpoint;
+    this.status = status;
+    this.statusText = statusText;
+    this.code = code;
+  }
+}
+
 async function adsPost(endpoint, body) {
   const auth = await getAdsAuth();
   if (!auth) {
@@ -142,12 +186,19 @@ async function adsPost(endpoint, body) {
   });
   if (!resp.ok) {
     const text = await resp.text().catch(() => '');
-    throw new Error(
-      `Google Ads ${endpoint} failed: HTTP ${resp.status} ${resp.statusText} — ${text.slice(0, 400)}`,
-    );
+    const { code, message } = parseAdsError(text);
+    throw new GoogleAdsError({
+      endpoint,
+      status: resp.status,
+      statusText: resp.statusText,
+      code,
+      message: message ?? text.slice(0, 200),
+    });
   }
   return await resp.json();
 }
+
+export { GoogleAdsError };
 
 // ── Normalization ────────────────────────────────────────────────────
 

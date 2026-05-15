@@ -63,8 +63,23 @@ jobs:
           echo "dist/ contents:"
           ls -la dist/
 
+      - name: Determine npm dist-tag
+        id: disttag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          # Prerelease versions (containing a hyphen) get the channel name
+          # as their dist-tag so they never become `latest`. Stable versions
+          # get `latest`.
+          if [[ "$VERSION" == *-* ]]; then
+            CHANNEL=$(echo "$VERSION" | sed -E 's/^[0-9]+\.[0-9]+\.[0-9]+-([a-z]+).*$/\1/')
+            echo "tag=$CHANNEL" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Publishing $VERSION with dist-tag ${CHANNEL:-latest}"
+
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: npm publish --tag ${{ steps.disttag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

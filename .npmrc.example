@@ -1,0 +1,15 @@
+# Template for the gitignored .npmrc.
+# Copy this file to .npmrc, then either:
+#   (a) set GITHUB_PACKAGES_TOKEN in your shell env (recommended), OR
+#   (b) replace ${GITHUB_PACKAGES_TOKEN} with a literal ghp_... token
+#
+# The token only needs the `read:packages` scope. Create at:
+#   https://github.com/settings/tokens
+#
+# Why this file exists: @anthonycoffey/periscope (SEO tooling) lives on
+# GitHub Packages, not npm.com. Both lines below are required:
+#   - the scope mapping directs `@anthonycoffey/*` lookups at GH Packages
+#   - the authToken line provides the read credential
+
+@anthonycoffey:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}

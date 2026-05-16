@@ -26,7 +26,41 @@ npm run test:e2e       # Playwright e2e tests (requires dev server)
 npm run typecheck      # tsc --noEmit
 ```
 
+SEO tooling (via `@anthonycoffey/periscope` from GitHub Packages, see Setup below):
+
+```bash
+npm run seo:snapshot         # Pull multi-engine snapshot
+npm run seo:diff             # Diff two snapshot JSONs
+npm run seo:audit-articles   # Flag article keyword fit
+npm run seo:discover-topics  # Editorial backlog from Ads + GSC
+npm run seo:validate-lps     # Validate LP keyword targets
+npm run seo:probe -- <url>   # One-shot competitor URL probe
+```
+
 Vitest + Testing Library is configured for unit/component tests; Playwright lives in `e2e/` for end-to-end. TDD (RED → GREEN → REFACTOR) is the expected workflow for new features — see `docs/documentation/development-standards.md`.
+
+## Periscope (SEO tooling) setup
+
+The `seo:*` scripts call `@anthonycoffey/periscope`, a private package on GitHub Packages. One-time setup per machine:
+
+1. Generate a PAT at https://github.com/settings/tokens with **only** the `read:packages` scope. Copy the `ghp_...` value.
+2. Set the env var so npm can read it:
+   - PowerShell (persistent): `setx GITHUB_PACKAGES_TOKEN "ghp_yourTokenHere"` (open a new terminal after)
+   - Or inline for a single session: `$env:GITHUB_PACKAGES_TOKEN = "ghp_yourTokenHere"`
+3. Copy the template to a gitignored `.npmrc`:
+   ```bash
+   cp .npmrc.example .npmrc
+   ```
+4. Install the package:
+   ```bash
+   npm install @anthonycoffey/periscope --save-dev
+   ```
+5. Verify:
+   ```bash
+   npx periscope --help
+   ```
+
+Periscope is currently in Phase A (scaffolding only) — the commands respond but exit with "not yet implemented" until SPEC-023 commits 2-9 land and a new version is published.
 
 ## Architecture
 

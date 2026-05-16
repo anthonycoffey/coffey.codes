@@ -18,7 +18,14 @@
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "analyze": "cross-env ANALYZE=true next build",
-    "thumbnail:youtube": "node scripts/youtube-thumbnail.mjs"
+    "thumbnail:youtube": "node scripts/youtube-thumbnail.mjs",
+    "seo": "periscope",
+    "seo:snapshot": "periscope snapshot",
+    "seo:diff": "periscope diff",
+    "seo:audit-articles": "periscope audit articles",
+    "seo:discover-topics": "periscope discover topics",
+    "seo:validate-lps": "periscope validate lps",
+    "seo:probe": "periscope probe"
   },
   "engines": {
     "node": ">=24.0.0"

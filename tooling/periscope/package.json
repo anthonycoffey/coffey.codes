@@ -1,16 +1,28 @@
 {
   "name": "@anthonycoffey/periscope",
-  "version": "0.0.0-dev",
+  "version": "0.1.0-alpha.2",
   "description": "SEO data tooling: pull GSC/GA4/Bing/Ads snapshots, diff them, run keyword research. A unified CLI over a set of project-configurable engines.",
-  "private": true,
   "type": "module",
   "license": "MIT",
   "author": "Anthony Coffey <coffey.j.anthony@gmail.com>",
+  "homepage": "https://github.com/anthonycoffey/coffey.codes/tree/main/tooling/periscope",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonycoffey/coffey.codes.git",
+    "directory": "tooling/periscope"
+  },
+  "bugs": {
+    "url": "https://github.com/anthonycoffey/coffey.codes/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "engines": {
     "node": ">=22.0.0"
   },
   "bin": {
-    "periscope": "./dist/cli.js"
+    "periscope": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

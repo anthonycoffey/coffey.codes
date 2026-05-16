@@ -1,0 +1,95 @@
+name: Publish @anthonycoffey/periscope
+
+on:
+  # Trigger via tag push: `git tag periscope-v0.1.0 && git push origin periscope-v0.1.0`
+  push:
+    tags:
+      - 'periscope-v*'
+  # Manual trigger from the Actions UI; picks up whatever version is in
+  # tooling/periscope/package.json on the selected branch. Use this for
+  # alpha/beta publishes during Phase A while we iterate fast.
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or tag to publish from'
+        required: true
+        default: 'feature/periscope-tool-suite'
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tooling/periscope
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@anthonycoffey'
+          cache: 'npm'
+          cache-dependency-path: tooling/periscope/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify dist exists
+        run: |
+          test -f dist/cli.js || (echo "dist/cli.js missing after build" && exit 1)
+          test -f dist/index.js || (echo "dist/index.js missing after build" && exit 1)
+          test -f dist/cli.d.ts || (echo "dist/cli.d.ts missing after build" && exit 1)
+          echo "dist/ contents:"
+          ls -la dist/
+
+      - name: Determine npm dist-tag
+        id: disttag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          # Prerelease versions (containing a hyphen) get the channel name
+          # as their dist-tag so they never become `latest`. Stable versions
+          # get `latest`.
+          if [[ "$VERSION" == *-* ]]; then
+            CHANNEL=$(echo "$VERSION" | sed -E 's/^[0-9]+\.[0-9]+\.[0-9]+-([a-z]+).*$/\1/')
+            echo "tag=$CHANNEL" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Publishing $VERSION with dist-tag ${CHANNEL:-latest}"
+
+      - name: Publish to GitHub Packages
+        run: npm publish --tag ${{ steps.disttag.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "### Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Package: \`@anthonycoffey/periscope\`" >> $GITHUB_STEP_SUMMARY
+          VERSION=$(node -p "require('./package.json').version")
+          echo "- Version: \`$VERSION\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Registry: \`https://npm.pkg.github.com\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View at: https://github.com/anthonycoffey/coffey.codes/pkgs/npm/periscope" >> $GITHUB_STEP_SUMMARY

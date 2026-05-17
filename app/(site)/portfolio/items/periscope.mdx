@@ -25,19 +25,33 @@ Periscope calls the Google Ads API solely to retrieve **keyword ideas and histor
 
 ### `generateKeywordIdeas`
 
+Seed-based keyword expansion. Accepts a list of seed keywords, a seed URL, or both, and returns the keyword universe Ads suggests is adjacent to the seed.
+
 ```http
 POST /v21/customers/{customerId}:generateKeywordIdeas
-```
+Authorization: Bearer <service-account-access-token>
+developer-token: <google-ads-developer-token>
+Content-Type: application/json
 
-Seed-based keyword expansion. Accepts a list of seed keywords, a seed URL, or both, and returns the keyword universe Ads suggests is adjacent to the seed.
+# Body (one of):
+#   { "keywordSeed": { "keywords": [...] } }
+#   { "urlSeed": { "url": "https://..." } }
+#   { "keywordAndUrlSeed": { "keywords": [...], "url": "..." } }
+```
 
 ### `generateKeywordHistoricalMetrics`
 
+Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
+
 ```http
 POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics
-```
+Authorization: Bearer <service-account-access-token>
+developer-token: <google-ads-developer-token>
+Content-Type: application/json
 
-Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
+# Body:
+#   { "keywords": ["term one", "term two", ...] }
+```
 
 <Callout type="info">
 **Read-only by design.** No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.

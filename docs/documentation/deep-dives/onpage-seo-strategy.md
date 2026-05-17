@@ -117,7 +117,7 @@ Two tools, both safe to run repeatedly:
 - **Google Rich Results Test**: https://search.google.com/test/rich-results
 - **schema.org validator**: https://validator.schema.org/
 
-The SEO snapshot script (`scripts/seo-snapshot.mjs`) also invokes `mcp__search-console__schema_validate` for top-clicked pages as part of the quarterly audit (see SPEC-015 plan).
+The `periscope snapshot` command (in [@anthonycoffey/periscope](https://github.com/anthonycoffey/periscope), originally part of SPEC-015) also invokes `mcp__search-console__schema_validate` for top-clicked pages as part of the quarterly audit.
 
 ## Related docs
 

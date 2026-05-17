@@ -203,6 +203,59 @@ npm lint            # ESLint
 npm lint:fix        # ESLint auto-fix
 ```
 
+---
+
+## 🔭 Periscope — SEO Management
+
+All SEO data work runs through **[`@anthonycoffey/periscope`](https://github.com/anthonycoffey/periscope)**, a TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner under a single command surface. Originally incubated in this repo at `tooling/periscope/` (driven by SPEC-018, 019, 020, 023), extracted to its own home in 2026-05.
+
+### Commands
+
+| Command | What it does |
+| --- | --- |
+| `npm run seo:snapshot` | Pull all four engines into a dated JSON + Markdown pair in `docs/strategy/data/` |
+| `npm run seo:diff -- <ref>` | Diff snapshots with natural refs (`yesterday`, `7d`, `"last month"`, `YYYY-MM-DD`) or `.json` paths. `newer` defaults to latest. |
+| `npm run seo:audit-articles` | Flag articles ranking on long-tails where Ads suggests a higher-volume term |
+| `npm run seo:discover-topics` | Ranked editorial backlog of fresh keyword ideas (drops topics already covered) |
+| `npm run seo:validate-lps` | Verdict per `app/lp/*` page: `WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS` |
+| `npm run seo:probe -- <url>` | One-shot competitor URL probe — top 30 keyword ideas to stdout |
+| `npm run seo:doctor` | Diagnose engine credentials and access (currently Google Ads) |
+
+Common flags pass through after `--`, e.g. `npm run seo:snapshot -- --engines=gsc --window=180 --asof=2026-05-09`.
+
+A few diff examples:
+
+```bash
+npm run seo:diff -- yesterday                # latest vs yesterday
+npm run seo:diff -- 7d                       # latest vs 7 days ago
+npm run seo:diff -- "last month"             # latest vs ~30 days ago
+npm run seo:diff -- 2026-05-10               # latest vs explicit date
+npm run seo:diff -- 2026-05-10 2026-05-17    # both explicit
+```
+
+### Configuration
+
+Project-specific values live in `periscope.config.mjs` at the repo root (siteUrl, GA4 property, article and LP dirs, categories, bot regions). Engine credentials come from `.env` / `.env.local`.
+
+### One-time setup
+
+1. Generate a GitHub PAT with **only** `read:packages` scope at https://github.com/settings/tokens.
+2. Set the env var: `setx GITHUB_PACKAGES_TOKEN "ghp_yourTokenHere"` (open a new terminal after).
+3. `.npmrc` is already committed (with env-var interpolation, no secrets). `npm install` will resolve `@anthonycoffey/periscope` from GitHub Packages.
+4. Verify: `npx periscope --version` and `npx periscope --help`.
+
+Engine setup (Google service account, Bing API key, Google Ads dev token) is documented in [docs/documentation/guides/seo-snapshot-setup.md](./docs/documentation/guides/seo-snapshot-setup.md). When something auth-related goes sideways, `npm run seo:doctor` pinpoints the exact misconfiguration.
+
+### Updating
+
+```bash
+npm update @anthonycoffey/periscope
+```
+
+Plain `npm update` works because periscope follows semver from 1.0.0.
+
+---
+
 ## 👨‍💻 Author
 
 **Anthony Coffey**

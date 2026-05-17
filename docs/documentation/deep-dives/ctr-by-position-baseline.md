@@ -115,7 +115,7 @@ mcp__search-console__analytics_query
 
 Then bucket rows by `round(position)` and sum `clicks` / `impressions` per bucket.
 
-The `scripts/seo-snapshot.mjs` script (also from SPEC-016) writes the raw CSV to `docs/strategy/data/` so this analysis can be re-done from a frozen snapshot rather than a live pull.
+The `periscope snapshot` command (originally SPEC-016, now part of [@anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)) writes the raw CSV to `docs/strategy/data/` so this analysis can be re-done from a frozen snapshot rather than a live pull.
 
 ## Limitations
 

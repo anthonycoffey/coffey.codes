@@ -3,9 +3,10 @@ id: SPEC-022
 title: 'Ahrefs as a fifth snapshot engine (link graph + organic position data)'
 status: draft
 created: 2026-05-14
+updated: 2026-05-17
 author: Anthony Coffey
 reviewers: []
-affected_repos: [coffey.codes]
+affected_repos: [anthonycoffey/periscope, coffey.codes]
 ---
 
 ## Reviewer Notes
@@ -14,7 +15,13 @@ affected_repos: [coffey.codes]
 
 ---
 
-# Feature: Ahrefs engine in `seo-snapshot.mjs`
+# Feature: Ahrefs engine in periscope
+
+## Implementation location
+
+This spec was originally written when periscope (`@anthonycoffey/periscope`) lived inside this repo at `tooling/periscope/`. Periscope has since been extracted to its own repo: **[github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)**. All engine, lib, and command implementation work happens there. Paths like `src/engines/ads.ts` below refer to the periscope repo, not coffey.codes.
+
+The downstream docs updates — [seo-snapshot-setup.md](../../documentation/guides/seo-snapshot-setup.md), [seo-tooling-inventory.md](../../documentation/guides/seo-tooling-inventory.md), and the [coffey-codes agent brief](../../documentation/agents/coffey-codes.md) — stay in coffey.codes.
 
 ## Problem
 
@@ -31,12 +38,12 @@ Ahrefs has all of this. The Ahrefs MCP is available, but it requires the $129/mo
 
 ### Must have
 
-1. WHEN `scripts/seo-snapshot.mjs` runs with the `ahrefs` engine enabled, it SHALL pull a defined set of fields from Ahrefs and write them to the snapshot JSON under a top-level `ahrefs` key.
+1. WHEN `src/commands/snapshot.ts` runs with the `ahrefs` engine enabled, it SHALL pull a defined set of fields from Ahrefs and write them to the snapshot JSON under a top-level `ahrefs` key.
 2. WHEN the `AHREFS_API_KEY` env var is missing, the engine SHALL skip with a one-line stderr warning, matching the existing engine-skip pattern (no half-broken state).
 3. The Ahrefs engine SHALL be included in the default engine set when its env var is present, and SHALL be selectable via `--engines=ahrefs` for targeted runs.
-4. The snapshot's Markdown companion (`scripts/lib/snapshot-markdown.mjs`) SHALL render an "Ahrefs" section containing headline numbers: domain rating, total referring domains, new/lost refdomains in the window, top 10 organic keywords by traffic, top 10 backlinks by URL rating of source page.
-5. WHEN `scripts/seo-snapshot-diff.mjs` compares two snapshots that both contain Ahrefs data, it SHALL surface: domain rating delta, refdomain delta (new/lost since older snapshot), and any keyword whose position changed by more than 5 ranks.
-6. All Ahrefs API calls SHALL go through a shared client in `scripts/lib/ahrefs.mjs` that handles auth, rate limiting, and response normalization, mirroring the structure of `scripts/lib/google-ads.mjs`.
+4. The snapshot's Markdown companion (`src/lib/markdown.ts`) SHALL render an "Ahrefs" section containing headline numbers: domain rating, total referring domains, new/lost refdomains in the window, top 10 organic keywords by traffic, top 10 backlinks by URL rating of source page.
+5. WHEN `src/commands/diff.ts` compares two snapshots that both contain Ahrefs data, it SHALL surface: domain rating delta, refdomain delta (new/lost since older snapshot), and any keyword whose position changed by more than 5 ranks.
+6. All Ahrefs API calls SHALL go through a shared client in `src/engines/ahrefs.ts` that handles auth, rate limiting, and response normalization, mirroring the structure of `src/engines/ads.ts`.
 7. The Ahrefs engine SHALL respect the existing `--window=<days>` flag for time-bounded queries (refdomains gained/lost, keyword position history).
 
 ### Nice to have
@@ -57,7 +64,7 @@ Ahrefs has all of this. The Ahrefs MCP is available, but it requires the $129/mo
 
 ### Shared library
 
-`scripts/lib/ahrefs.mjs` exports:
+`src/engines/ahrefs.ts` exports:
 
 ```js
 export async function getAhrefsClient()                // returns a configured client from AHREFS_API_KEY
@@ -71,11 +78,11 @@ export async function getAnchors(target, limit)        // for nice-to-have #2
 export async function getLostBacklinks(target, window) // for nice-to-have #3
 ```
 
-Same patterns as `scripts/lib/google-ads.mjs`: thin wrapper over the HTTP API, retry with exponential backoff on 429s, raise on any other non-2xx, normalize the response shape.
+Same patterns as `src/engines/ads.ts`: thin wrapper over the HTTP API, retry with exponential backoff on 429s, raise on any other non-2xx, normalize the response shape.
 
 ### Snapshot integration
 
-`scripts/seo-snapshot.mjs` gains a `pullAhrefs(target, window)` function next to the existing `pullGsc`, `pullGa4`, `pullBing`, `pullKeywords`. The dispatch table in `main()` adds `ahrefs` as a known engine. Order in the JSON output is alphabetical (`ahrefs` first), so existing consumers reading `gsc`/`ga4`/`bing`/`keywords` are unaffected.
+`src/commands/snapshot.ts` gains a `pullAhrefs(target, window)` function next to the existing `pullGsc`, `pullGa4`, `pullBing`, `pullKeywords`. The dispatch table in `main()` adds `ahrefs` as a known engine. Order in the JSON output is alphabetical (`ahrefs` first), so existing consumers reading `gsc`/`ga4`/`bing`/`keywords` are unaffected.
 
 Snapshot shape adds:
 
@@ -97,7 +104,7 @@ Snapshot shape adds:
 
 ### Markdown renderer
 
-`scripts/lib/snapshot-markdown.mjs` gains an `ahrefsSection(data)` function. Output:
+`src/lib/markdown.ts` gains an `ahrefsSection(data)` function. Output:
 
 ```markdown
 ## Ahrefs
@@ -119,7 +126,7 @@ Snapshot shape adds:
 
 ### Diff integration
 
-`scripts/seo-snapshot-diff.mjs` gains an `ahrefsDiff(older, newer)` block alongside the existing per-engine diff blocks. Surfaces:
+`src/commands/diff.ts` gains an `ahrefsDiff(older, newer)` block alongside the existing per-engine diff blocks. Surfaces:
 
 - DR delta with arrow
 - Refdomain net change, plus the actual new and lost domain lists
@@ -143,13 +150,13 @@ Pulls data for the property the snapshot is targeting (currently `coffey.codes`,
 - [ ] **Ahrefs plan is downgraded mid-cycle.** API returns an "insufficient plan" 403; engine logs the exact error and skips, matching the existing skip pattern.
 - [ ] **Snapshot has Ahrefs data but the prior snapshot does not.** Diff script reports "Ahrefs baseline established" rather than crashing on a missing comparison.
 - [ ] **Credit usage spikes.** The `_meta.creditsUsed` field lets us track per-snapshot cost. If a run consumes >100 credits, log a warning so we notice before the monthly cap.
-- [ ] **API version sunsets.** Ahrefs has historically been more stable than Google's APIs here, but if v3 sunsets, the version constant in `scripts/lib/ahrefs.mjs` is the only thing to change. Document this in the troubleshooting table.
+- [ ] **API version sunsets.** Ahrefs has historically been more stable than Google's APIs here, but if v3 sunsets, the version constant in `src/engines/ahrefs.ts` is the only thing to change. Document this in the troubleshooting table.
 
 ## Acceptance criteria
 
-1. A run of `node scripts/seo-snapshot.mjs --engines=ahrefs` against a real Ahrefs account produces a snapshot JSON with the documented `ahrefs` block populated and the Markdown companion's "Ahrefs" section rendered.
-2. A full run (`node scripts/seo-snapshot.mjs` with all engines enabled) includes Ahrefs alongside the other four engines without affecting their output structure.
-3. `node scripts/seo-snapshot-diff.mjs <older> <newer>` between two snapshots containing Ahrefs data prints the new Ahrefs diff block.
+1. A run of `periscope snapshot --engines=ahrefs` against a real Ahrefs account produces a snapshot JSON with the documented `ahrefs` block populated and the Markdown companion's "Ahrefs" section rendered.
+2. A full run (`periscope snapshot` with all engines enabled) includes Ahrefs alongside the other four engines without affecting their output structure.
+3. `periscope diff <older> <newer>` between two snapshots containing Ahrefs data prints the new Ahrefs diff block.
 4. With `AHREFS_API_KEY` unset, the engine skips with the expected one-line stderr warning and the rest of the snapshot completes.
 5. [seo-snapshot-setup.md](../../documentation/guides/seo-snapshot-setup.md) is updated with: env var documentation, the one-time setup subsection, an entry in the troubleshooting table, and a note in the "engines and auth model" table.
 6. [seo-tooling-inventory.md](../../documentation/guides/seo-tooling-inventory.md) is updated to list Ahrefs as a fifth engine and to remove the "intentionally not here" bullet about Ahrefs.
@@ -166,10 +173,10 @@ Pulls data for the property the snapshot is targeting (currently `coffey.codes`,
 
 ## Tasks
 
-- [ ] Implement `scripts/lib/ahrefs.mjs` with the documented exports.
-- [ ] Implement `pullAhrefs` in `scripts/seo-snapshot.mjs` and wire it into the engine dispatch table.
-- [ ] Update `scripts/lib/snapshot-markdown.mjs` with the `ahrefsSection` renderer.
-- [ ] Update `scripts/seo-snapshot-diff.mjs` with the `ahrefsDiff` renderer.
+- [ ] Implement `src/engines/ahrefs.ts` with the documented exports.
+- [ ] Implement `pullAhrefs` in `src/commands/snapshot.ts` and wire it into the engine dispatch table.
+- [ ] Update `src/lib/markdown.ts` with the `ahrefsSection` renderer.
+- [ ] Update `src/commands/diff.ts` with the `ahrefsDiff` renderer.
 - [ ] Update `docs/documentation/guides/seo-snapshot-setup.md` (engines table, one-time setup, troubleshooting, env vars).
 - [ ] Update `docs/documentation/guides/seo-tooling-inventory.md` (add Ahrefs to engines, remove the "not here yet" bullet).
 - [ ] Update `docs/documentation/agents/coffey-codes.md` if it lists engines explicitly.

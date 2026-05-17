@@ -30,7 +30,7 @@ SEO tooling (via `@anthonycoffey/periscope` from GitHub Packages, see Setup belo
 
 ```bash
 npm run seo:snapshot         # Pull multi-engine snapshot
-npm run seo:diff             # Diff two snapshot JSONs
+npm run seo:diff -- yesterday # Diff snapshots; accepts NL refs (yesterday/7d/"last month"/YYYY-MM-DD) or .json paths
 npm run seo:audit-articles   # Flag article keyword fit
 npm run seo:discover-topics  # Editorial backlog from Ads + GSC
 npm run seo:validate-lps     # Validate LP keyword targets

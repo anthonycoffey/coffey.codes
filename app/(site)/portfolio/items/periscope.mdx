@@ -1,0 +1,116 @@
+---
+title: Periscope — SEO Data Tooling
+summary: A TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single local snapshot for editorial and landing-page decisions.
+publishedAt: 2026-05-17
+updated: 2026-05-17
+tags: [TypeScript, CLI, Google Ads API, GSC, GA4, Bing Webmaster Tools, SEO, npm]
+mainImage: /portfolio/periscope/hero.png
+link: https://github.com/anthonycoffey/coffey.codes/tree/main#-periscope--seo-management
+repo: https://github.com/anthonycoffey/periscope
+client: Personal / Internal Tool
+year: 2026
+featured: true
+category: Open Source / SEO Tooling
+---
+
+## What it is
+
+**Periscope** is an internal command-line tool I built for SEO research across my own websites and a small number of client sites. It unifies data from Google Search Console, Google Analytics 4, Bing Webmaster Tools, and the **Google Ads API (Keyword Planner)** into a single local snapshot, so I can make editorial and landing-page decisions from one source.
+
+The project is distributed as a **private npm package** on GitHub Packages (`@anthonycoffey/periscope`). It is not a SaaS product, has no end users beyond the developer, and does not resell, share, or expose Google data to third parties.
+
+## How Periscope uses the Google Ads API
+
+Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only:
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `generateKeywordIdeas` | `POST /v21/customers/{customerId}:generateKeywordIdeas` | Seed-based keyword expansion (keywords, URL, or both) |
+| `generateKeywordHistoricalMetrics` | `POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics` | Average monthly volume, competition, and CPC bid range for a keyword set |
+
+Periscope does **not** call any other Google Ads API service. It does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+
+## CLI commands that consume the Ads API
+
+| Command | Use of Ads API |
+| --- | --- |
+| `periscope snapshot` | Pulls Keyword Planner volume + competition for the configured keyword set |
+| `periscope discover topics` | Seeds Keyword Planner with category names + top GSC queries to surface gaps |
+| `periscope audit articles` | Compares MDX article keywords against Keyword Planner metrics |
+| `periscope validate lps` | Validates `/lp/*` landing pages against Keyword Planner demand |
+| `periscope probe <url>` | One-shot URL-seeded keyword ideas for a competitor URL |
+| `periscope doctor ads` | Diagnostic that verifies credentials and API reachability |
+
+## Authentication
+
+Periscope authenticates to the Google Ads API using a Google Cloud **service account** with a developer token. Credentials are read from environment variables on the developer's local machine:
+
+- `GOOGLE_ADS_DEVELOPER_TOKEN`
+- `GOOGLE_ADS_LOGIN_CUSTOMER_ID` (Manager account)
+- `GOOGLE_ADS_CUSTOMER_ID`
+- `GSC_SERVICE_ACCOUNT_KEY_PATH` or `GSC_SERVICE_ACCOUNT_JSON` (reused for GSC, GA4, and Ads)
+
+**No OAuth user consent flow is involved.** No end-user credentials are collected, stored, or proxied.
+
+## Data handling
+
+- **Scope:** Read-only access to Keyword Planner data for the developer's own Manager-account-linked accounts.
+- **Storage:** Responses are written to a local `outputDir` on the developer's machine as JSON and Markdown snapshots. Nothing is uploaded to any third-party service.
+- **Sharing:** Data is not shared with, sold to, or exposed to any third party. There are no end users.
+- **Retention:** Snapshots are retained locally at the developer's discretion and can be deleted at any time.
+- **Compliance:** Use complies with the Google Ads API Terms of Service, including the Required Minimum Functionality requirements for tools that surface Keyword Planner data.
+
+## Call volume
+
+Call volume is **low** — on the order of dozens to low hundreds of requests per day, invoked manually from the CLI during editorial reviews. There is no automated continuous polling.
+
+## Architecture
+
+| Layer | Tech | Notes |
+| --- | --- | --- |
+| Language | TypeScript (strict) | Compiled to ESM via `tsup`; typed snapshot JSON contracts |
+| CLI parser | `commander` | Nested subcommands, `--help` per command with examples |
+| Engine modules | `src/engines/{gsc,ga4,bing,ads}.ts` | One file per upstream API |
+| Lib | `src/lib/*.ts` | Auth, bucket math, markdown renderer, zod config loader, ANSI colors, snapshot store, NL date resolver |
+| Tests | `vitest` | 56 unit tests covering bucket math, config schema, frontmatter parser, color helpers, diagnostics, snapshot ref resolution |
+| Distribution | GitHub Packages | Private npm package `@anthonycoffey/periscope`, published via tag-triggered workflow |
+
+The engine code is project-agnostic: each engine takes its config explicitly (`siteUrl`, `propertyId`, `apiKey`, `botRegions`) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That means the same package serves any number of consumer projects, each with its own config.
+
+## Command surface
+
+```bash
+# Pull a multi-engine snapshot
+periscope snapshot
+periscope snapshot --engines=gsc,ga4 --window=180 --asof=2026-05-09
+
+# Diff two snapshots with natural-language refs (new in 1.1)
+periscope diff yesterday                      # latest vs yesterday
+periscope diff 7d                             # latest vs 7 days ago
+periscope diff "last month"                   # latest vs ~30 days ago
+periscope diff 2026-05-10 2026-05-17          # explicit both sides
+
+# Keyword research (all use the Ads Keyword Planner)
+periscope discover topics
+periscope audit articles
+periscope validate lps
+periscope probe <url>
+
+# Diagnostic
+periscope doctor ads
+```
+
+## What's next
+
+- **Ahrefs engine** as a fifth data source ([SPEC-022](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/active/SPEC-022-ahrefs-snapshot-engine.md))
+- A `periscope-lite` open-source build for community contributions
+- Additional `doctor` modules for GSC and GA4 access checks
+
+## Project history
+
+Periscope incubated inside the `coffey.codes` monorepo at `tooling/periscope/` (driven by [SPEC-018](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-018-multi-engine-snapshot.md), [SPEC-019](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-019-keyword-volume-in-snapshot.md), [SPEC-020](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-020-keyword-research-tools.md), and [SPEC-023](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-023-periscope-tool-suite.md)). It was extracted to its own repo in May 2026 and published as `@anthonycoffey/periscope@1.0.0`. The current release is `1.1.0`, which adds natural-language refs to the `diff` command.
+
+## Contact
+
+- Developer contact: `ads-api@coffey.codes`
+- Source: [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) (private GitHub Packages scope: `@anthonycoffey`)

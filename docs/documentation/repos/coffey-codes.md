@@ -170,18 +170,22 @@ JSON-LD is emitted across the site to give Google's Knowledge Graph and other cr
 
 ## SEO data pipeline
 
-`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single dated JSON snapshot in `docs/strategy/data/`, with a frontmatter-tagged Markdown summary (`scripts/lib/snapshot-markdown.mjs`) written alongside the JSON for AI/RAG consumption. `scripts/seo-snapshot-diff.mjs` compares two snapshots and renders a colored, box-bordered terminal report.
+All SEO data work runs through **[@anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)**, a TypeScript package on GitHub Packages. coffey.codes consumes it as a devDependency; project-specific paths and ids come from `periscope.config.mjs` at the repo root. The package source originally lived here at `tooling/periscope/` (driven by SPEC-018, SPEC-019, SPEC-020, SPEC-023); it was extracted to its own repo in 2026-05.
 
-Snapshots are committed to git because GSC's data window is only 16 months and historical data is otherwise lost. Each snapshot is roughly 80-120 KB.
+Six commands cover the workflow:
 
-Four follow-on tools (SPEC-020) consume the snapshot + Google Ads API to produce editorial reports:
+- `periscope snapshot` — pull GSC, GA4, Bing, and Google Ads Keyword Planner into a paired dated JSON + Markdown file in `outputDir` (default `docs/strategy/data/`). The Markdown companion is frontmatter-tagged for AI/RAG consumption.
+- `periscope diff <older> <newer>` — compare two snapshots; colored, box-bordered terminal output.
+- `periscope audit articles` — flag articles ranking on long-tails where Ads suggests a higher-volume term they could target.
+- `periscope discover topics` — ranked editorial backlog of fresh keyword ideas (filters out topics already covered by existing article slugs).
+- `periscope validate lps` — verdict (`WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS`) per `app/lp/*/page.tsx`.
+- `periscope probe <url>` — one-shot competitor URL probe; stdout-only.
 
-- `scripts/keyword-audit-articles.mjs` — flags articles ranking on long-tails where Ads suggests a higher-volume term they could target
-- `scripts/keyword-discover-topics.mjs` — ranked editorial backlog of fresh keyword ideas (filters out topics already covered by existing slugs)
-- `scripts/keyword-validate-lps.mjs` — verdict (`WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS`) per `app/lp/*/page.tsx`
-- `scripts/keyword-probe-url.mjs` — one-shot competitor URL probe; stdout-only
+Plus a diagnostic:
 
-All four reuse `scripts/lib/google-ads.mjs` (shared service-account JWT auth, direct REST against `googleads.googleapis.com/v21/`, no `google-ads-api` dep). Customer-ID dashes are stripped automatically. Full setup in [SEO snapshot setup](../guides/seo-snapshot-setup.md).
+- `periscope doctor [engine]` — engine credential + access checks (currently the Ads engine; calls `listAccessibleCustomers` and reports which customer IDs the service account can see). Used to debug 401/403 from the Ads API without leaking the developer token.
+
+All commands invoked via the root `npm run seo:*` scripts. Snapshots are committed to git because GSC's data window is only 16 months and historical data is otherwise lost. Each snapshot is roughly 80-120 KB. Full setup in [SEO snapshot setup](../guides/seo-snapshot-setup.md).
 
 ## Known Issues / Pending Work
 

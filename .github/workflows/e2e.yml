@@ -30,13 +30,16 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@anthonycoffey'
 
       - name: Install dependencies
+        # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
+        # the GitHub Packages registry. The workflow's per-run GITHUB_TOKEN
+        # (granted packages: read in the top-level permissions block)
+        # satisfies that reference. Same name everywhere: local shell,
+        # Vercel env, and these workflows.
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

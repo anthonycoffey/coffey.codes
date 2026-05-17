@@ -187,7 +187,7 @@ Date in filename, not timestamp. Reruns on the same day overwrite; history lives
 | SPEC-019 | Google Ads Keyword Planner as the fourth engine | Archived |
 | SPEC-020 | The four keyword research scripts | Archived |
 | SPEC-022 | Ahrefs as a fifth snapshot engine | Active (proposed) |
-| SPEC-023 | Extract everything into the `@anthonycoffey/periscope` package | Active |
+| SPEC-023 | Extract everything into the `@anthonycoffey/periscope` package | Archived (shipped 1.0.0) |
 
 ## What is intentionally not here
 

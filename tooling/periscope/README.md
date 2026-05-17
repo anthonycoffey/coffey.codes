@@ -18,11 +18,17 @@ Look at the SERPs from a hidden vantage. Your repo is the vantage. The SERPs are
 
 ## Status
 
-Phase A is complete. The package ships every capability the legacy `scripts/seo-*.mjs` + `scripts/keyword-*.mjs` files provided, plus a config layer, types, tests, and the `doctor` diagnostic command. Driven by [SPEC-023](../../docs/specs/active/SPEC-023-periscope-tool-suite.md).
+**1.0.0 — stable.** Phase A is complete. The package ships every capability the legacy `scripts/seo-*.mjs` + `scripts/keyword-*.mjs` files provided, plus a config layer, types, tests, and the `doctor` diagnostic command. Originally driven by [SPEC-023](../../docs/specs/archive/SPEC-023-periscope-tool-suite.md).
 
-Phases B (extract to own repo) and C (further publish workflow polish) are future work tracked under their own specs.
+From 1.0.0 forward, the CLI surface, config schema, and exported library functions follow [semver](https://semver.org/):
 
-## Install (from source, during Phase A)
+- **patch** (`1.0.x`) — bug fixes, doc updates, internal refactors
+- **minor** (`1.x.0`) — new commands, new config fields, new engines (additive)
+- **major** (`2.0.0`) — breaking changes to CLI flags, config schema, snapshot JSON shape, or the lib surface
+
+Consumers can pin with `^1.0.0` and rely on `npm update` for non-breaking changes. Phase B (extract to own repo) is the next milestone, tracked separately.
+
+## Install (from source, for periscope development)
 
 ```bash
 cd tooling/periscope

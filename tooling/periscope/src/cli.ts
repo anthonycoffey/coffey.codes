@@ -7,15 +7,20 @@
  */
 
 import { Command } from 'commander';
+
+import { runAuditArticles } from './commands/audit-articles.js';
 import { runDiff } from './commands/diff.js';
+import { runDiscoverTopics } from './commands/discover-topics.js';
+import { runProbe } from './commands/probe.js';
 import { runSnapshot } from './commands/snapshot.js';
+import { runValidateLps } from './commands/validate-lps.js';
 
 const program = new Command();
 
 program
   .name('periscope')
   .description('SEO data tooling: pull snapshots, diff them, run keyword research.')
-  .version('0.0.0-dev');
+  .version('0.1.0');
 
 // ---------------------------------------------------------------------------
 // snapshot
@@ -26,7 +31,10 @@ program
   .description('Pull a multi-engine SEO snapshot and write JSON + Markdown to outputDir.')
   .option('--engines <list>', 'Comma-separated engine list (gsc,ga4,bing,keywords)')
   .option('--window <days>', 'Window in days', '365')
-  .option('--asof <date>', 'Anchor "today" to a YYYY-MM-DD; drives output filename and engine windows')
+  .option(
+    '--asof <date>',
+    'Anchor "today" to a YYYY-MM-DD; drives output filename and engine windows',
+  )
   .option('--dry-run', 'Plan without making API calls')
   .option('--config <path>', 'Override periscope.config path')
   .addHelpText(
@@ -50,6 +58,7 @@ Examples:
       window: opts.window,
       asof: opts.asof,
       dryRun: opts.dryRun,
+      configPath: opts.config,
     });
   });
 
@@ -88,8 +97,8 @@ Examples:
   $ periscope audit articles
 `,
   )
-  .action(async () => {
-    notImplemented('audit articles');
+  .action(async (opts: { config?: string }) => {
+    await runAuditArticles({ configPath: opts.config });
   });
 
 // ---------------------------------------------------------------------------
@@ -109,8 +118,8 @@ Examples:
   $ periscope discover topics
 `,
   )
-  .action(async () => {
-    notImplemented('discover topics');
+  .action(async (opts: { config?: string }) => {
+    await runDiscoverTopics({ configPath: opts.config });
   });
 
 // ---------------------------------------------------------------------------
@@ -130,8 +139,8 @@ Examples:
   $ periscope validate lps
 `,
   )
-  .action(async () => {
-    notImplemented('validate lps');
+  .action(async (opts: { config?: string }) => {
+    await runValidateLps({ configPath: opts.config });
   });
 
 // ---------------------------------------------------------------------------
@@ -149,8 +158,8 @@ Examples:
   $ periscope probe https://competitor.com/their-post
 `,
   )
-  .action(async () => {
-    notImplemented('probe');
+  .action(async (url: string) => {
+    await runProbe({ url });
   });
 
 // ---------------------------------------------------------------------------
@@ -162,10 +171,3 @@ program.parseAsync(process.argv).catch((err: unknown) => {
   process.stderr.write(`[periscope] ${msg}\n`);
   process.exit(1);
 });
-
-function notImplemented(name: string): never {
-  process.stderr.write(
-    `[periscope] '${name}' is scaffolded but not yet implemented. See SPEC-023.\n`,
-  );
-  process.exit(2);
-}

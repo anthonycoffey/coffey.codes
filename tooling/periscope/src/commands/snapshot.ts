@@ -1,33 +1,41 @@
 /**
  * `periscope snapshot` command.
  *
- * Orchestrates GSC, GA4, and Bing engine pulls, composes them into a
- * single SnapshotEnvelope, and writes the JSON + Markdown pair to
- * outputDir/snapshot-<date>.{json,md}.
+ * Orchestrates GSC, GA4, Bing, and Keywords (Google Ads) engine pulls,
+ * composes them into a single SnapshotEnvelope, and writes JSON + Markdown
+ * to outputDir/snapshot-<date>.{json,md}.
  *
- * The keywords engine (Google Ads Planner enrichment) is wired through
- * but no-ops in this version -- it lands with the rest of the keyword
- * research tooling. When that ships, this orchestrator gets the
- * gsc.topQueries → keywords enrichment step plugged back in.
- *
- * Configuration comes from env vars at this stage (commit 5 introduces
- * a real periscope.config.ts loader that this command will prefer).
+ * Configuration is loaded from periscope.config.{ts,mjs,js,json} via
+ * src/lib/config.ts, with env vars as a fallback for siteUrl,
+ * ga4PropertyId, and outputDir.
  */
 
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-import { loadGoogleCredentials } from '../lib/auth.js';
+import {
+  generateHistoricalMetrics,
+  generateKeywordIdeas,
+  GoogleAdsError,
+  type HistoricalMetricResult,
+  type KeywordIdeaResult,
+} from '../engines/ads.js';
+import { pullBing } from '../engines/bing.js';
+import { pullGa4 } from '../engines/ga4.js';
+import { pullGsc } from '../engines/gsc.js';
+import { getAdsAuth, loadGoogleCredentials } from '../lib/auth.js';
+import { loadConfig } from '../lib/config.js';
 import { renderSnapshotMarkdown } from '../lib/markdown.js';
 import {
   writeSnapshotJson,
   writeSnapshotMarkdown,
 } from '../lib/snapshot-store.js';
-import { pullBing } from '../engines/bing.js';
-import { pullGa4 } from '../engines/ga4.js';
-import { pullGsc } from '../engines/gsc.js';
 import type {
   EngineName,
+  GscEngineData,
+  GscTopQueryRow,
+  KeywordMetricRow,
+  KeywordsEngineData,
   SnapshotEnvelope,
 } from '../types/snapshot.js';
 
@@ -36,17 +44,11 @@ export interface SnapshotCommandOptions {
   window?: string;
   asof?: string;
   dryRun?: boolean;
-  /** Project root override. Defaults to process.cwd(). */
+  configPath?: string;
   repoRoot?: string;
 }
 
-/** Engines this command currently knows how to run. */
 const SUPPORTED_ENGINES = new Set<EngineName>(['gsc', 'ga4', 'bing', 'keywords']);
-
-/** Default bot-region exclusion list per SPEC-018. */
-const DEFAULT_BOT_REGIONS = ['China', 'Singapore'];
-
-/** GSC has a ~3-day lag for `final` data; back off the end date by this many days. */
 const GSC_LAG_DAYS = 3;
 
 function ymd(d: Date): string {
@@ -85,7 +87,6 @@ function shouldRun(engine: EngineName, selected: EngineName[] | null): boolean {
   return selected === null || selected.includes(engine);
 }
 
-/** Auto-load .env then .env.local. Node 22+ ships process.loadEnvFile. */
 function loadDotenv(repoRoot: string): void {
   if (typeof process.loadEnvFile !== 'function') return;
   for (const name of ['.env', '.env.local']) {
@@ -94,18 +95,102 @@ function loadDotenv(repoRoot: string): void {
       try {
         process.loadEnvFile(f);
       } catch {
-        // Tolerate malformed env files -- engine-level checks will surface
-        // missing values with their own clear errors.
+        // Tolerate malformed env files.
       }
     }
   }
 }
+
+// ── Keywords engine: ideas + historical, plus GSC enrichment ───────────
+
+interface PullKeywordsArgs {
+  gscTopQueries: GscTopQueryRow[];
+  categories: string[];
+  language: string;
+  geo: string;
+  repoRoot: string;
+}
+
+async function pullKeywords({
+  gscTopQueries,
+  categories,
+  language,
+  geo,
+  repoRoot,
+}: PullKeywordsArgs): Promise<KeywordsEngineData> {
+  const querySeeds = (gscTopQueries ?? [])
+    .map((r) => r.keys?.[0])
+    .filter((q): q is string => typeof q === 'string' && q.trim().length > 0)
+    .slice(0, 25);
+
+  const seeds = [...new Set([...querySeeds, ...categories])];
+
+  const [ideas, historicalMetrics] = await Promise.all([
+    generateKeywordIdeas({
+      keywords: seeds.slice(0, 20),
+      pageSize: 100,
+      language,
+      geo,
+      repoRoot,
+    }),
+    querySeeds.length > 0
+      ? generateHistoricalMetrics(querySeeds, repoRoot)
+      : Promise.resolve<HistoricalMetricResult[]>([]),
+  ]);
+
+  return {
+    geo: 'US',
+    language: 'en',
+    seedCount: seeds.length,
+    historicalMetrics: historicalMetrics as KeywordMetricRow[],
+    ideas: ideas as unknown as KeywordsEngineData['ideas'],
+  };
+}
+
+/**
+ * Left-join: decorate each GSC topQueries row with the matching Ads
+ * historical metrics, in place. Non-matching rows gain
+ * `_keywordsMatch: false` so consumers can see what was joined.
+ */
+function enrichGscWithKeywords(
+  gsc: GscEngineData | undefined,
+  keywords: KeywordsEngineData | undefined,
+): void {
+  if (!gsc?.topQueries || !keywords?.historicalMetrics) return;
+  const lookup = new Map<string, KeywordIdeaResult | HistoricalMetricResult>();
+  for (const row of keywords.historicalMetrics) {
+    if (row.keyword) {
+      lookup.set(row.keyword.toLowerCase(), row as unknown as HistoricalMetricResult);
+    }
+  }
+  for (const row of gsc.topQueries) {
+    const q = row.keys?.[0]?.toLowerCase();
+    const match = q ? lookup.get(q) : null;
+    if (match) {
+      row.volumeBucket = match.volumeBucket ?? undefined;
+      row.volumeAvgMonthly = match.volumeAvgMonthly;
+      row.competition = match.competition;
+      row.competitionIndex = match.competitionIndex;
+      row.cpcRangeMicros = [match.cpcLowMicros, match.cpcHighMicros];
+    } else {
+      row._keywordsMatch = false;
+    }
+  }
+}
+
+// ── Orchestrator ───────────────────────────────────────────────────────
 
 export async function runSnapshot(
   options: SnapshotCommandOptions,
 ): Promise<void> {
   const repoRoot = options.repoRoot ?? process.cwd();
   loadDotenv(repoRoot);
+
+  const { config } = await loadConfig({
+    repoRoot,
+    configPath: options.configPath,
+    envFallback: true,
+  });
 
   const selected = parseEngines(options.engines);
   const windowDays = Number(
@@ -123,16 +208,10 @@ export async function runSnapshot(
     new Date(now.getTime() - (windowDays + GSC_LAG_DAYS) * 24 * 60 * 60 * 1000),
   );
 
-  const siteUrl = process.env.GSC_SITE_URL;
-  if (!siteUrl) {
-    throw new Error(
-      'GSC_SITE_URL is required. Set it in .env (e.g. GSC_SITE_URL=sc-domain:example.com).',
-    );
-  }
-  const outputDir = path.resolve(
-    repoRoot,
-    process.env.OUTPUT_DIR ?? path.join('docs', 'strategy', 'data'),
-  );
+  const siteUrl = config.siteUrl;
+  const outputDir = path.resolve(repoRoot, config.outputDir);
+  const ga4PropertyId = config.ga4PropertyId ?? process.env.GA4_PROPERTY_ID;
+  const bingApiKey = process.env.BING_WEBMASTER_API_KEY;
 
   // Bing requires the full URL form, not sc-domain:
   const bingSiteUrl = siteUrl.startsWith('sc-domain:')
@@ -140,8 +219,6 @@ export async function runSnapshot(
     : siteUrl;
 
   const googleCreds = loadGoogleCredentials(repoRoot);
-  const ga4PropertyId = process.env.GA4_PROPERTY_ID;
-  const bingApiKey = process.env.BING_WEBMASTER_API_KEY;
 
   // ── Plan ──────────────────────────────────────────────────────────────
   type EnginePlan = { name: EngineName; run: () => Promise<unknown> };
@@ -178,7 +255,7 @@ export async function runSnapshot(
             endDate,
             windowDays,
             credentials: googleCreds,
-            botRegions: DEFAULT_BOT_REGIONS,
+            botRegions: config.ga4.botRegions,
           }),
       });
     } else if (!googleCreds) {
@@ -186,7 +263,9 @@ export async function runSnapshot(
         '[snapshot] ga4: skipped (no Google service account credentials configured)\n',
       );
     } else {
-      process.stderr.write('[snapshot] ga4: skipped (GA4_PROPERTY_ID not set)\n');
+      process.stderr.write(
+        '[snapshot] ga4: skipped (ga4PropertyId not set in config or GA4_PROPERTY_ID env)\n',
+      );
     }
   }
 
@@ -210,29 +289,36 @@ export async function runSnapshot(
     }
   }
 
-  // Keywords engine lands in a follow-up commit. Surface a clear "not yet
-  // available" message instead of silently skipping so users running the
-  // pre-port script don't mistake parity for completeness.
-  if (shouldRun('keywords', selected) && selected?.includes('keywords')) {
-    process.stderr.write(
-      '[snapshot] keywords: skipped (Google Ads engine not yet ported; see SPEC-023)\n',
-    );
+  // keywords runs LAST and AFTER gsc, so it can read the resolved
+  // GSC topQueries as its seed input.
+  let keywordsPlanned = false;
+  if (shouldRun('keywords', selected)) {
+    const adsAuth = await getAdsAuth(repoRoot).catch(() => null);
+    if (adsAuth) {
+      keywordsPlanned = true;
+    } else {
+      process.stderr.write(
+        '[snapshot] keywords: skipped (Google Ads env vars not configured)\n',
+      );
+    }
   }
 
-  if (planned.length === 0) {
+  if (planned.length === 0 && !keywordsPlanned) {
     throw new Error(
-      'No engines configured. Set at least one of GSC_SERVICE_ACCOUNT_*, GA4_PROPERTY_ID, BING_WEBMASTER_API_KEY.',
+      'No engines configured. Set at least one of GSC_SERVICE_ACCOUNT_*, ga4PropertyId, BING_WEBMASTER_API_KEY, or GOOGLE_ADS_*.',
     );
   }
 
   if (options.dryRun) {
+    const dryList = planned.map((p) => p.name);
+    if (keywordsPlanned) dryList.push('keywords');
     process.stdout.write(
-      `[dry-run] Would pull from ${planned.map((p) => p.name).join(', ')} for window ${startDate} to ${endDate}\n`,
+      `[dry-run] Would pull from ${dryList.join(', ')} for window ${startDate} to ${endDate}\n`,
     );
     return;
   }
 
-  // ── Pull ──────────────────────────────────────────────────────────────
+  // ── Pull (non-keywords engines run in parallel) ───────────────────────
   const results = await Promise.allSettled(
     planned.map(async (p) => ({ name: p.name, data: await p.run() })),
   );
@@ -242,19 +328,44 @@ export async function runSnapshot(
     pulledAt: new Date().toISOString(),
     siteUrl,
   };
+  const snapshotIndexed = snapshot as unknown as Record<string, unknown>;
 
   for (const r of results) {
     if (r.status === 'fulfilled') {
       const { name, data } = r.value;
-      // The types narrowing on a discriminated union of engine outputs
-      // would be heavy here; the wire shape is fully described in the
-      // SnapshotEnvelope so a single indexed assignment is fine.
-      (snapshot as unknown as Record<string, unknown>)[name] = data;
+      snapshotIndexed[name] = data;
     } else {
       const reason = r.reason as Error | undefined;
       process.stderr.write(
         `[snapshot] engine pull failed: ${reason?.message ?? r.reason}\n`,
       );
+    }
+  }
+
+  // Keywords runs after the others so it can seed from gsc.topQueries.
+  // Failure here is non-fatal: the snapshot still writes with the other
+  // engines' data. The most common failure is CUSTOMER_NOT_ENABLED
+  // (Google Ads account without billing).
+  if (keywordsPlanned) {
+    try {
+      const gscTopQueries = snapshot.gsc?.topQueries ?? [];
+      const keywordsData = await pullKeywords({
+        gscTopQueries,
+        categories: config.categories,
+        language: config.ads.languageCode,
+        geo: config.ads.geoTargets[0] ?? 'geoTargetConstants/2840',
+        repoRoot,
+      });
+      snapshot.keywords = keywordsData;
+      enrichGscWithKeywords(snapshot.gsc, keywordsData);
+    } catch (err) {
+      const code = err instanceof GoogleAdsError ? err.code : null;
+      const message = err instanceof Error ? err.message : String(err);
+      const reason =
+        code === 'CUSTOMER_NOT_ENABLED'
+          ? 'Google Ads CUSTOMER_NOT_ENABLED (billing not enabled on the Ads account; see docs/documentation/guides/seo-snapshot-setup.md)'
+          : message;
+      process.stderr.write(`[snapshot] keywords: skipped (${reason})\n`);
     }
   }
 
@@ -269,9 +380,7 @@ export async function runSnapshot(
     snapshot.devices = snapshot.gsc.devices;
   }
 
-  // Empty-result guard: if every engine failed, don't overwrite any
-  // existing snapshot file with the bare envelope.
-  const snapshotIndexed = snapshot as unknown as Record<string, unknown>;
+  // Empty-result guard.
   const enginesWithData = (['gsc', 'ga4', 'bing', 'keywords'] as EngineName[]).filter(
     (k) => snapshotIndexed[k],
   );
@@ -309,6 +418,14 @@ export async function runSnapshot(
     const note = snapshot.bing._note ? `  (${snapshot.bing._note})` : '';
     process.stdout.write(
       `Bing clicks: ${snapshot.bing.totals.clicks}  Impressions: ${snapshot.bing.totals.impressions}${note}\n`,
+    );
+  }
+  if (snapshot.keywords) {
+    const matchedCount = (snapshot.gsc?.topQueries ?? []).filter(
+      (r) => r._keywordsMatch !== false,
+    ).length;
+    process.stdout.write(
+      `Keywords: ${snapshot.keywords.historicalMetrics.length} historical metrics, ${snapshot.keywords.ideas.length} ideas; ${matchedCount} GSC queries enriched\n`,
     );
   }
 }

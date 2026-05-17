@@ -11,6 +11,7 @@ import { Command } from 'commander';
 import { runAuditArticles } from './commands/audit-articles.js';
 import { runDiff } from './commands/diff.js';
 import { runDiscoverTopics } from './commands/discover-topics.js';
+import { runDoctor } from './commands/doctor.js';
 import { runProbe } from './commands/probe.js';
 import { runSnapshot } from './commands/snapshot.js';
 import { runValidateLps } from './commands/validate-lps.js';
@@ -160,6 +161,25 @@ Examples:
   )
   .action(async (url: string) => {
     await runProbe({ url });
+  });
+
+// ---------------------------------------------------------------------------
+// doctor
+// ---------------------------------------------------------------------------
+
+program
+  .command('doctor [engine]')
+  .description('Diagnose engine credentials and access. Currently: ads (alias: keywords).')
+  .addHelpText(
+    'after',
+    `
+Examples:
+  $ periscope doctor              # run all available checks
+  $ periscope doctor ads          # check Google Ads access specifically
+`,
+  )
+  .action(async (engine: string | undefined) => {
+    await runDoctor({ engine });
   });
 
 // ---------------------------------------------------------------------------

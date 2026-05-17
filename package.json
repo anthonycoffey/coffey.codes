@@ -25,7 +25,8 @@
     "seo:audit-articles": "periscope audit articles",
     "seo:discover-topics": "periscope discover topics",
     "seo:validate-lps": "periscope validate lps",
-    "seo:probe": "periscope probe"
+    "seo:probe": "periscope probe",
+    "seo:doctor": "periscope doctor"
   },
   "engines": {
     "node": ">=24.0.0"

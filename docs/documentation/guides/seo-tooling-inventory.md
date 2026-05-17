@@ -15,8 +15,9 @@ All SEO work runs through `@anthonycoffey/periscope`, a TypeScript package on Gi
 | Data collection | Pulls from four engines into dated JSON + Markdown snapshots | `periscope snapshot` (cmd: `src/commands/snapshot.ts`) |
 | Diffing | Reports deltas between any two snapshots | `periscope diff` (cmd: `src/commands/diff.ts`) |
 | Keyword research | Four targeted commands that consume snapshots + Google Ads API | `periscope audit/discover/validate/probe` |
+| Diagnostics | Credential and access checks per engine | `periscope doctor [engine]` (cmd: `src/commands/doctor.ts`, modules: `src/diagnostics/*.ts`) |
 | Engines | One module per upstream API | `src/engines/{gsc,ga4,bing,ads}.ts` |
-| Shared library | Auth, bucket math, markdown render, config loader, frontmatter parser, ANSI colors, snapshot store | `src/lib/*.ts` |
+| Shared library | Auth, bucket math, markdown render, config loader, frontmatter parser, ANSI colors, snapshot store, diagnostics types | `src/lib/*.ts` |
 | Config | Project-specific paths + ids | `periscope.config.mjs` at the consumer repo root |
 | Output | Snapshots, diffs, and reports | `docs/strategy/data/` (committed to git) |
 
@@ -90,6 +91,23 @@ One-shot competitor URL probe. Single positional arg, top 30 keyword ideas to st
 ```bash
 npm run seo:probe -- https://competitor.com/their-post
 ```
+
+## Diagnostics
+
+### `periscope doctor [engine]`
+
+Runs credential + access checks against the engines periscope talks to. Currently the **Ads** engine is the only one with a diagnostic module (others land as needs surface).
+
+```bash
+npm run seo:doctor              # all available checks (currently just ads)
+npm run seo:doctor -- ads       # just the Ads check
+```
+
+The Ads diagnostic walks the same auth path the `keywords` engine uses (service-account JWT mint), calls Google Ads' `listAccessibleCustomers` (the cheapest probe — does not need `login-customer-id`), and compares the returned customer IDs to `GOOGLE_ADS_CUSTOMER_ID` + `GOOGLE_ADS_LOGIN_CUSTOMER_ID`. Names the gap when one of them is not in the accessible list.
+
+Never prints the developer token, access token, or service-account private key. Prints `client_email` and customer IDs (not secret). Exits 0 on success, 1 on failure, 2 on unknown engine.
+
+Diagnostic modules live in `src/diagnostics/`; each exports a `diagnose<Engine>()` returning a `DiagnosticReport` (`src/lib/diagnostics.ts`). Add a new engine by writing the diagnostic module and registering it in `AVAILABLE_DIAGNOSTICS` in `src/commands/doctor.ts`.
 
 ## Engines
 

@@ -35,6 +35,7 @@ npm run seo:audit-articles   # Flag article keyword fit
 npm run seo:discover-topics  # Editorial backlog from Ads + GSC
 npm run seo:validate-lps     # Validate LP keyword targets
 npm run seo:probe -- <url>   # One-shot competitor URL probe
+npm run seo:doctor           # Diagnose engine credentials and access
 ```
 
 Vitest + Testing Library is configured for unit/component tests; Playwright lives in `e2e/` for end-to-end. TDD (RED → GREEN → REFACTOR) is the expected workflow for new features — see `docs/documentation/development-standards.md`.

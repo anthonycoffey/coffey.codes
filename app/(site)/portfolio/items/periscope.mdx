@@ -79,6 +79,54 @@ Call volume is **low** — on the order of dozens to low hundreds of requests pe
 
 ## Architecture
 
+```mermaid
+flowchart LR
+    Dev([Developer<br/>local machine])
+
+    subgraph Periscope["Periscope CLI"]
+        direction TB
+        Cmds["snapshot · discover · audit validate · probe · doctor"]
+        Engines["Engine modules<br/>(GSC · GA4 · Bing · Ads)"]
+        Cmds --> Engines
+    end
+
+    subgraph Google["Google APIs (read-only)"]
+        GSC["Search Console API"]
+        GA4["GA4 Data API"]
+        ADS["Google Ads API v21<br/>KeywordPlanIdeaService,\ngenerateKeywordIdeas,\ngenerateKeywordHistoricalMetrics"]
+    end
+
+    BING["Bing Webmaster Tools API"]
+    Snap[("Local snapshots<br/>JSON + Markdown<br/>in outputDir/")]
+
+    Dev -->|invokes| Periscope
+    Engines -->|HTTPS GET/POST| GSC
+    Engines -->|HTTPS GET/POST| GA4
+    Engines -->|HTTPS POST<br/>service-account auth| ADS
+    Engines -->|HTTPS GET/POST| BING
+    Periscope -->|writes| Snap
+
+    %% --- Original Classes (Slightly enhanced stroke-width consistency) --- %%
+    classDef ads fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#000
+    classDef sink fill:#e0e7ff,stroke:#3730a3,stroke-width:2px,color:#000
+
+    %% --- New Custom Styling Classes --- %%
+    classDef actor fill:#334155,stroke:#0f172a,stroke-width:2px,color:#fff
+    classDef internal fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#000
+    classDef externalApi fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#000
+
+    %% --- Apply Classes --- %%
+    class ADS ads
+    class Snap sink
+    class Dev actor
+    class Cmds,Engines internal
+    class GSC,GA4,BING externalApi
+
+    %% --- Subgraph Styling --- %%
+    style Periscope fill:#f8fafc,stroke:#94a3b8,stroke-width:2px,color:#1e293b
+    style Google fill:#fff5f5,stroke:#ea4335,stroke-width:2px,color:#b91c1c
+```
+
 ### Language and build
 
 TypeScript in strict mode. Compiled to ESM via tsup with typed snapshot JSON contracts. Targets Node 22+; the published artifact is the `dist/` directory plus the README.
@@ -149,4 +197,5 @@ periscope doctor ads
 
 ## Source
 
-[github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) — private GitHub Packages scope: `@anthonycoffey`.
+- [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)
+  - private GitHub Packages scope: `@anthonycoffey`

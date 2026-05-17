@@ -214,7 +214,7 @@ All SEO data work runs through **[`@anthonycoffey/periscope`](https://github.com
 | Command | What it does |
 | --- | --- |
 | `npm run seo:snapshot` | Pull all four engines into a dated JSON + Markdown pair in `docs/strategy/data/` |
-| `npm run seo:diff` | Diff two snapshots; per-engine deltas, movers, fallers (TTY-colored) |
+| `npm run seo:diff -- <ref>` | Diff snapshots with natural refs (`yesterday`, `7d`, `"last month"`, `YYYY-MM-DD`) or `.json` paths. `newer` defaults to latest. |
 | `npm run seo:audit-articles` | Flag articles ranking on long-tails where Ads suggests a higher-volume term |
 | `npm run seo:discover-topics` | Ranked editorial backlog of fresh keyword ideas (drops topics already covered) |
 | `npm run seo:validate-lps` | Verdict per `app/lp/*` page: `WELL_TARGETED` / `UNDER_INVESTED` / `OVER_AMBITIOUS` |
@@ -222,6 +222,16 @@ All SEO data work runs through **[`@anthonycoffey/periscope`](https://github.com
 | `npm run seo:doctor` | Diagnose engine credentials and access (currently Google Ads) |
 
 Common flags pass through after `--`, e.g. `npm run seo:snapshot -- --engines=gsc --window=180 --asof=2026-05-09`.
+
+A few diff examples:
+
+```bash
+npm run seo:diff -- yesterday                # latest vs yesterday
+npm run seo:diff -- 7d                       # latest vs 7 days ago
+npm run seo:diff -- "last month"             # latest vs ~30 days ago
+npm run seo:diff -- 2026-05-10               # latest vs explicit date
+npm run seo:diff -- 2026-05-10 2026-05-17    # both explicit
+```
 
 ### Configuration
 

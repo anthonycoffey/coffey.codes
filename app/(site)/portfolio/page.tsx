@@ -12,6 +12,7 @@ import {
   CodeBracketSquareIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import RetroWindow from '@/components/ui/RetroWindow';
 import Button from '@/components/ui/Button';
 import PageHeader from '@/components/PageHeader';
@@ -33,10 +34,47 @@ interface Project {
   results: string[];
   year: string;
   featured: boolean;
+  /**
+   * When set, the card is a Next.js Link to /portfolio/<slug> instead of
+   * a modal-opener. Projects with their own MDX item file should set this.
+   * Modal-based projects continue to work as before for back-compat.
+   */
+  slug?: string;
 }
 
 const PortfolioSection: React.FC = () => {
   const portfolioProjects: Project[] = [
+    {
+      id: 0,
+      title: 'Periscope — SEO Data Tooling',
+      description:
+        'TypeScript CLI that unifies GSC, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a single local snapshot.',
+      tags: [
+        'TypeScript',
+        'CLI',
+        'Google Ads API',
+        'GSC',
+        'GA4',
+        'Bing Webmaster',
+      ],
+      mainImage: '/portfolio/periscope/hero.png',
+      gallery: [],
+      link: 'https://github.com/anthonycoffey/periscope',
+      client: 'Personal / Internal Tool',
+      challenge:
+        'Pulling SEO data from four different APIs into a coherent editorial workflow without committing to any single vendor dashboard.',
+      solution:
+        'A typed, config-driven TypeScript CLI distributed as a private npm package. One snapshot file per pull, paired JSON + Markdown.',
+      results: [
+        'Single CLI surface across four upstream APIs',
+        'Diff command with natural-language refs (yesterday, 7d, last month)',
+        'Diagnostic command for credentials and access checks',
+        '56 unit tests',
+      ],
+      year: '2026',
+      featured: true,
+      slug: 'periscope',
+    },
     {
       id: 1,
       title: 'Personal Blog & Portfolio',
@@ -175,55 +213,81 @@ const PortfolioSection: React.FC = () => {
 
       {/* Polaroid grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-        {displayedProjects.map((project, i) => (
-          <div
-            key={project.id}
-            className="polaroid-card vhs-card cursor-pointer"
-            style={
-              {
-                '--card-tilt': `${tiltAngles[i % tiltAngles.length]}deg`,
-              } as React.CSSProperties
-            }
-            onClick={() => openProject(project)}
-          >
-            <div className="h-56 overflow-hidden">
-              <Image
-                width={1200}
-                height={1200}
-                src={project.mainImage}
-                alt={project.title}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="pt-3 px-1">
-              <h3 className="font-outfit text-lg font-bold text-c-heading mb-1">
-                {project.title}
-              </h3>
-              <p className="text-c-muted text-sm mb-3">{project.description}</p>
-              <div className="flex flex-wrap gap-1 mb-3">
-                {project.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-accent2 text-c-heading text-xs font-semibold px-2 py-0.5 rounded-full"
-                  >
-                    {tag}
+        {displayedProjects.map((project, i) => {
+          const cardStyle = {
+            '--card-tilt': `${tiltAngles[i % tiltAngles.length]}deg`,
+          } as React.CSSProperties;
+
+          const cardInner = (
+            <>
+              <div className="h-56 overflow-hidden">
+                <Image
+                  width={1200}
+                  height={1200}
+                  src={project.mainImage}
+                  alt={project.title}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="pt-3 px-1">
+                <h3 className="font-outfit text-lg font-bold text-c-heading mb-1">
+                  {project.title}
+                </h3>
+                <p className="text-c-muted text-sm mb-3">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {project.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-accent2 text-c-heading text-xs font-semibold px-2 py-0.5 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex justify-between text-xs text-c-muted">
+                  <span className="flex items-center gap-1">
+                    <UserIcon className="h-3 w-3" />
+                    {project.client}
                   </span>
-                ))}
+                  <span className="flex items-center gap-1">
+                    <ClockIcon className="h-3 w-3" />
+                    {project.year}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between text-xs text-c-muted">
-                <span className="flex items-center gap-1">
-                  <UserIcon className="h-3 w-3" />
-                  {project.client}
-                </span>
-                <span className="flex items-center gap-1">
-                  <ClockIcon className="h-3 w-3" />
-                  {project.year}
-                </span>
-              </div>
+            </>
+          );
+
+          // Projects with a `slug` navigate to a dedicated page. Others
+          // still open the modal -- the older portfolio entries haven't
+          // been migrated to MDX yet.
+          if (project.slug) {
+            return (
+              <Link
+                key={project.id}
+                href={`/portfolio/${project.slug}`}
+                className="polaroid-card vhs-card cursor-pointer block"
+                style={cardStyle}
+              >
+                {cardInner}
+              </Link>
+            );
+          }
+
+          return (
+            <div
+              key={project.id}
+              className="polaroid-card vhs-card cursor-pointer"
+              style={cardStyle}
+              onClick={() => openProject(project)}
+            >
+              {cardInner}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Modal */}

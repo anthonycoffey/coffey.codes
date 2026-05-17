@@ -184,9 +184,18 @@ The reports use the bucket order `<100 < 100-1K < 1K-10K < 10K-100K < 100K+` and
 
 ## Diffing snapshots
 
+Periscope's `diff` command accepts natural-language refs (`yesterday`, `7d`, `"last month"`, `YYYY-MM-DD`) on either side, plus `.json` paths for the legacy form. The `newer` arg is optional and defaults to the latest snapshot in `outputDir`.
+
 ```powershell
-npm run seo:diff -- <older.json> <newer.json>
+npm run seo:diff -- yesterday                       # latest vs yesterday
+npm run seo:diff -- 7d                              # latest vs 7 days ago
+npm run seo:diff -- "last month"                    # latest vs ~30 days ago
+npm run seo:diff -- 2026-05-10                      # latest vs explicit date
+npm run seo:diff -- 2026-05-10 2026-05-17           # both explicit
+npm run seo:diff -- <older.json> <newer.json>       # legacy path form
 ```
+
+If the requested date has no exact snapshot, periscope falls back to the nearest available snapshot whose date is ≤ the target and prints a `note:` line explaining the substitution. A summary panel at the end lists every snapshot available in `outputDir` so you can see what dates exist without `ls`-ing the directory.
 
 Prints per-engine totals delta, top-page click delta, new entrants (queries with >=5 impressions absent from older), and fallers (>30% impression drop). When stdout is a TTY, output is colored and box-bordered; piped output strips back to plain text.
 

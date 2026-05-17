@@ -49,14 +49,16 @@ Two files per run, same date stem:
 
 ### `periscope diff`
 
-Diffs two snapshot JSONs. Surfaces:
+Diffs two snapshots. Accepts natural-language refs (`yesterday`, `7d`, `"last month"`, `YYYY-MM-DD`) or `.json` paths on either side; `newer` defaults to the latest snapshot in `outputDir`. Falls back to nearest snapshot ≤ target when an exact date isn't present, with a `note:` line surfacing the substitution. Closes with a summary panel showing what got resolved, every snapshot date available in `outputDir`, and example commands.
+
+Surfaces per engine:
 
 - Per-engine totals delta
 - Top-page click delta
 - New entrants (queries with >=5 impressions absent from older snapshot)
 - Fallers (>30% impression drop)
 
-TTY-colored when stdout is a terminal, plain text when piped. Reuses `src/lib/colors.ts` for the ANSI helpers shared with `probe`.
+TTY-colored when stdout is a terminal, plain text when piped. Reuses `src/lib/colors.ts` for the ANSI helpers shared with `probe`. NLP ref resolution lives in `src/lib/snapshot-refs.ts` (introduced in periscope 1.1.0).
 
 ## Keyword research
 

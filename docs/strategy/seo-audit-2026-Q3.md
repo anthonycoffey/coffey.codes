@@ -141,7 +141,7 @@ This also explains the apparent contradiction with GA4's 114 Bing organic sessio
 
 **Status:** Bing diagnostic loop closed. No code or config fix needed.
 
-**Next quarterly audit (target 2026-08-10):** re-run the snapshot. By that point Bing Webmaster Tools should have ~90 days of recorded performance data. `scripts/seo-snapshot-diff.mjs` against this baseline will show the full delta from zero to whatever's accumulated. This will also be the first real test of `scripts/seo-snapshot.mjs`'s Bing path against non-empty data.
+**Next quarterly audit (target 2026-08-10):** re-run `periscope snapshot`. By that point Bing Webmaster Tools should have ~90 days of recorded performance data. `periscope diff` against this baseline will show the full delta from zero to whatever's accumulated. This will also be the first real test of periscope's Bing engine against non-empty data.
 
 ## 9.5 GA4 cross-reference (180 days, post-config-change)
 

@@ -229,20 +229,10 @@ export default async function PortfolioItemPage({ params }: PageParams) {
 
         <hr className="my-6 border-border" />
 
-        {/* MDX body */}
-        <article
-          className={[
-            'prose prose-lg xl:prose-xl max-w-none dark:prose-invert',
-            // Tables: wrap cell content instead of forcing horizontal scroll.
-            // table-auto + break-words keeps narrow viewports readable while
-            // letting wide tables expand on desktop.
-            'prose-table:table-auto prose-table:w-full',
-            'prose-th:break-words prose-td:break-words prose-th:align-top prose-td:align-top',
-            // Inline code in cells shouldn't force the column wide enough to
-            // contain the entire token on one line.
-            'prose-code:break-words',
-          ].join(' ')}
-        >
+        {/* MDX body. Table rendering (wrap-aware, no horizontal scroll)
+         * is handled at the component level in components/mdx.tsx so it
+         * applies uniformly to articles and any future MDX page. */}
+        <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert">
           <CustomMDX source={item.content} />
         </article>
 

@@ -31,6 +31,62 @@ function Table({ data }) {
   );
 }
 
+// ── GFM-pipe-table rendering overrides ────────────────────────────────
+// These wrap markdown pipe-syntax tables (rendered as HTML <table>) in
+// a non-prose container with `table-layout: fixed`, so wide content
+// wraps within cells instead of overflowing the page width. The
+// PascalCase `Table` component above (data-prop form) is unaffected.
+function MdxTable({ children }) {
+  return (
+    <div className="not-prose my-6 w-full">
+      <table
+        className="w-full border-collapse text-sm"
+        style={{ tableLayout: 'fixed' }}
+      >
+        {children}
+      </table>
+    </div>
+  );
+}
+
+function MdxThead({ children }) {
+  return (
+    <thead className="border-b-2 border-border bg-bg-alt/40">{children}</thead>
+  );
+}
+
+function MdxTbody({ children }) {
+  return <tbody>{children}</tbody>;
+}
+
+function MdxTr({ children }) {
+  return (
+    <tr className="border-b border-border last:border-b-0">{children}</tr>
+  );
+}
+
+function MdxTh({ children }) {
+  return (
+    <th
+      className="px-3 py-2 text-left font-semibold align-top text-c-heading"
+      style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+    >
+      {children}
+    </th>
+  );
+}
+
+function MdxTd({ children }) {
+  return (
+    <td
+      className="px-3 py-2 align-top text-c-text"
+      style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+    >
+      {children}
+    </td>
+  );
+}
+
 function CustomLink(props) {
   const href = props.href;
 
@@ -143,6 +199,16 @@ const components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
+  // Pipe-syntax tables (via remark-gfm) render as standard HTML elements;
+  // these overrides keep them readable on narrow viewports by forcing
+  // word-wrap inside cells instead of horizontal scroll.
+  table: MdxTable,
+  thead: MdxThead,
+  tbody: MdxTbody,
+  tr: MdxTr,
+  th: MdxTh,
+  td: MdxTd,
+  // PascalCase JSX form (used by some articles): unchanged.
   Table,
   Counter,
   Callout,

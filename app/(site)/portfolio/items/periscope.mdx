@@ -68,14 +68,14 @@ Call volume is **low** — on the order of dozens to low hundreds of requests pe
 
 | Layer | Tech | Notes |
 | --- | --- | --- |
-| Language | TypeScript (strict) | Compiled to ESM via `tsup`; typed snapshot JSON contracts |
-| CLI parser | `commander` | Nested subcommands, `--help` per command with examples |
+| Language | TypeScript (strict) | Compiled to ESM via tsup; typed snapshot JSON contracts |
+| CLI parser | commander | Nested subcommands, per-command `--help` with examples |
 | Engine modules | `src/engines/{gsc,ga4,bing,ads}.ts` | One file per upstream API |
-| Lib | `src/lib/*.ts` | Auth, bucket math, markdown renderer, zod config loader, ANSI colors, snapshot store, NL date resolver |
-| Tests | `vitest` | 56 unit tests covering bucket math, config schema, frontmatter parser, color helpers, diagnostics, snapshot ref resolution |
+| Lib | `src/lib/*.ts` | Auth, bucket math, markdown renderer, config loader (zod), ANSI colors, snapshot store, NL date resolver |
+| Tests | vitest | 56 unit tests across bucket math, config schema, frontmatter parser, color helpers, diagnostics, and snapshot ref resolution |
 | Distribution | GitHub Packages | Private npm package `@anthonycoffey/periscope`, published via tag-triggered workflow |
 
-The engine code is project-agnostic: each engine takes its config explicitly (`siteUrl`, `propertyId`, `apiKey`, `botRegions`) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That means the same package serves any number of consumer projects, each with its own config.
+The engine code is project-agnostic: each engine takes its config explicitly (site URL, property id, API key, bot regions) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That means the same package serves any number of consumer projects, each with its own config.
 
 ## Command surface
 
@@ -102,13 +102,13 @@ periscope doctor ads
 
 ## What's next
 
-- **Ahrefs engine** as a fifth data source ([SPEC-022](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/active/SPEC-022-ahrefs-snapshot-engine.md))
-- A `periscope-lite` open-source build for community contributions
+- An Ahrefs engine as a fifth data source ([SPEC-022](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/active/SPEC-022-ahrefs-snapshot-engine.md))
+- A periscope-lite open-source build for community contributions
 - Additional `doctor` modules for GSC and GA4 access checks
 
 ## Project history
 
-Periscope incubated inside the `coffey.codes` monorepo at `tooling/periscope/` (driven by [SPEC-018](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-018-multi-engine-snapshot.md), [SPEC-019](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-019-keyword-volume-in-snapshot.md), [SPEC-020](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-020-keyword-research-tools.md), and [SPEC-023](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-023-periscope-tool-suite.md)). It was extracted to its own repo in May 2026 and published as `@anthonycoffey/periscope@1.0.0`. The current release is `1.1.0`, which adds natural-language refs to the `diff` command.
+Periscope incubated inside the coffey.codes monorepo at `tooling/periscope/` (driven by [SPEC-018](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-018-multi-engine-snapshot.md), [SPEC-019](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-019-keyword-volume-in-snapshot.md), [SPEC-020](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-020-keyword-research-tools.md), and [SPEC-023](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-023-periscope-tool-suite.md)). It was extracted to its own repo in May 2026 and published as `@anthonycoffey/periscope` 1.0.0. The current release is 1.1.0, which adds natural-language refs to the `diff` command.
 
 ## Contact
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { highlight } from 'sugar-high';
 import React from 'react';
 import Counter from '@/components/Counter';
@@ -147,10 +148,20 @@ const components = {
   Callout,
 };
 
+// MDX pipeline options. `remark-gfm` enables GitHub-Flavored Markdown:
+// pipe tables, strikethrough, task lists, footnotes, and bare-URL autolinks.
+// Without it, `| col | col |` and similar render as raw text.
+const mdxOptions = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+  },
+};
+
 export async function CustomMDX(props) {
   return (
     <MDXRemote
       {...props}
+      options={mdxOptions}
       components={{ ...components, ...(props.components || {}) }}
     />
   );

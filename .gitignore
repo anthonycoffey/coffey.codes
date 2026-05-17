@@ -58,4 +58,7 @@ coffey-codes-fdee3a679cf6.json
 
 
 tmp/
-.npmrc
+
+# .npmrc is committed (with env-var interpolation, no secrets) so Vercel
+# and other CI surfaces can resolve @anthonycoffey/* from GitHub Packages.
+# See .npmrc for setup notes.

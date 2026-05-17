@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
   statuses: write
+  # @anthonycoffey/periscope ships from GitHub Packages; the workflow's
+  # GITHUB_TOKEN (with packages: read) authenticates the npm install.
+  packages: read
 
 jobs:
   lint:
@@ -22,9 +25,13 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@anthonycoffey'
 
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run ESLint
         run: npm run lint
@@ -40,9 +47,13 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@anthonycoffey'
 
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests with coverage
         run: npm run test:coverage
@@ -66,9 +77,13 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@anthonycoffey'
 
       - name: Install dependencies
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run typecheck
         run: npm run typecheck

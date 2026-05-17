@@ -1,12 +1,12 @@
 ---
 service: coffey.codes
-updated: 2026-05-15
-description: At-a-glance inventory of the SEO tool suite. coffey.codes consumes @anthonycoffey/periscope; the package source lives in this repo at tooling/periscope/.
+updated: 2026-05-17
+description: At-a-glance inventory of the SEO tool suite. coffey.codes consumes @anthonycoffey/periscope; the package source lives at https://github.com/anthonycoffey/periscope.
 ---
 
 # SEO tooling inventory
 
-All SEO work runs through `@anthonycoffey/periscope`, a TypeScript package on GitHub Packages. The package source lives in this repo at [`tooling/periscope/`](../../../tooling/periscope/); coffey.codes consumes it as a devDependency. Outputs land in `periscope.config.outputDir` (default `docs/strategy/data/`). For setup and run instructions see [seo-snapshot-setup.md](./seo-snapshot-setup.md).
+All SEO work runs through `@anthonycoffey/periscope`, a TypeScript package on GitHub Packages. Source lives at [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) (extracted from this repo 2026-05; see [SPEC-023](../../specs/archive/SPEC-023-periscope-tool-suite.md) for the extraction story). coffey.codes consumes it as a devDependency. Outputs land in `periscope.config.outputDir` (default `docs/strategy/data/`). For setup and run instructions see [seo-snapshot-setup.md](./seo-snapshot-setup.md).
 
 ## At a glance
 
@@ -199,7 +199,7 @@ Date in filename, not timestamp. Reruns on the same day overwrite; history lives
 ## Related docs
 
 - [seo-snapshot-setup.md](./seo-snapshot-setup.md) — setup, env vars, run commands, troubleshooting
-- [tooling/periscope/README.md](../../../tooling/periscope/README.md) — package-internal docs (config, install from GH Packages, publishing)
+- [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) — package source repo and internal docs (config, install from GH Packages, publishing)
 - [onpage-seo-strategy.md](../deep-dives/onpage-seo-strategy.md) — what the audits measure
 - [ctr-by-position-baseline.md](../deep-dives/ctr-by-position-baseline.md) — site-specific CTR curve
 - [docs/strategy/](../../strategy/) — quarterly narrative reports built from these snapshots

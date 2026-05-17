@@ -38,7 +38,6 @@
     "vitest.config.ts",
     "vitest.setup.ts",
     "playwright.config.ts",
-    "e2e",
-    "tooling"
+    "e2e"
   ]
 }

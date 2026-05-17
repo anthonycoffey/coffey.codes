@@ -8,7 +8,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
-import GoBack from '@/components/GoBack';
 import { CustomMDX } from '@/components/mdx';
 import { baseUrl } from '@/app/sitemap';
 import { formatDate } from '@/utils/date';
@@ -134,7 +133,18 @@ export default async function PortfolioItemPage({ params }: PageParams) {
       <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 pt-6 sm:pt-8 pb-4 sm:pb-6">
         {/* Header */}
         <div className="flex items-start gap-3 mb-2">
-          <CodeBracketSquareIcon className="h-8 w-8 text-link flex-shrink-0 mt-1" />
+          {metadata.mainImage ? (
+            <Image
+              src={metadata.mainImage}
+              alt={`${metadata.title} logo`}
+              width={48}
+              height={48}
+              className="h-10 w-10 flex-shrink-0 mt-1 object-contain"
+              priority
+            />
+          ) : (
+            <CodeBracketSquareIcon className="h-8 w-8 text-link flex-shrink-0 mt-1" />
+          )}
           <h1
             className="title font-editorial font-bold text-3xl sm:text-4xl text-c-heading"
             style={{ letterSpacing: '0.005em' }}
@@ -212,21 +222,6 @@ export default async function PortfolioItemPage({ params }: PageParams) {
           </div>
         )}
 
-        {/* Hero image */}
-        {metadata.mainImage && (
-          <div className="rounded-lg overflow-hidden border border-border mb-6 bg-bg-alt">
-            <Image
-              src={metadata.mainImage}
-              alt={metadata.title}
-              width={1600}
-              height={900}
-              sizes="(max-width: 1024px) 100vw, 80vw"
-              className="w-full h-auto object-cover"
-              priority
-            />
-          </div>
-        )}
-
         <hr className="my-6 border-border" />
 
         {/* MDX body. Table rendering (wrap-aware, no horizontal scroll)
@@ -245,8 +240,6 @@ export default async function PortfolioItemPage({ params }: PageParams) {
             ← Back to portfolio
           </Link>
         </div>
-
-        <GoBack />
       </section>
     </>
   );

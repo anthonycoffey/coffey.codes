@@ -4,7 +4,7 @@ summary: A TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaste
 publishedAt: 2026-05-17
 updated: 2026-05-17
 tags: [TypeScript, CLI, Google Ads API, GSC, GA4, Bing Webmaster Tools, SEO, npm]
-mainImage: /portfolio/periscope/hero.png
+mainImage: /periscope-logo.png
 link: https://github.com/anthonycoffey/coffey.codes/tree/main#-periscope--seo-management
 repo: https://github.com/anthonycoffey/periscope
 client: Personal / Internal Tool
@@ -15,9 +15,9 @@ category: Open Source / SEO Tooling
 
 ## What it is
 
-**Periscope** is an internal command-line tool I built for SEO research across my own websites and a small number of client sites. It unifies data from Google Search Console, Google Analytics 4, Bing Webmaster Tools, and the **Google Ads API (Keyword Planner)** into a single local snapshot, so I can make editorial and landing-page decisions from one source.
+**Periscope** is a command-line tool for SEO research across websites and client projects. It unifies data from Google Search Console, Google Analytics 4, Bing Webmaster Tools, and the **Google Ads API (Keyword Planner)** into a single local snapshot, so editorial and landing-page decisions can be made from one source instead of toggling between four dashboards.
 
-The project is distributed as a **private npm package** on GitHub Packages (`@anthonycoffey/periscope`). It is not a SaaS product, has no end users beyond the developer, and does not resell, share, or expose Google data to third parties.
+The project is distributed as an npm package on GitHub Packages (`@anthonycoffey/periscope`).
 
 ## How Periscope uses the Google Ads API
 
@@ -39,9 +39,9 @@ POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics
 
 Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
 
-### What Periscope does NOT touch
-
-No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+<Callout type="info">
+**Read-only by design.** No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+</Callout>
 
 ## CLI commands that consume the Ads API
 
@@ -143,15 +143,10 @@ periscope doctor ads
 
 ## What's next
 
-- An Ahrefs engine as a fifth data source ([SPEC-022](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/active/SPEC-022-ahrefs-snapshot-engine.md))
+- An Ahrefs engine as a fifth data source
 - A periscope-lite open-source build for community contributions
 - Additional `doctor` modules for GSC and GA4 access checks
 
-## Project history
+## Source
 
-Periscope incubated inside the coffey.codes monorepo at `tooling/periscope/` (driven by [SPEC-018](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-018-multi-engine-snapshot.md), [SPEC-019](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-019-keyword-volume-in-snapshot.md), [SPEC-020](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-020-keyword-research-tools.md), and [SPEC-023](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-023-periscope-tool-suite.md)). It was extracted to its own repo in May 2026 and published as `@anthonycoffey/periscope` 1.0.0. The current release is 1.1.0, which adds natural-language refs to the `diff` command.
-
-## Contact
-
-- Developer contact: `ads-api@coffey.codes`
-- Source: [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) (private GitHub Packages scope: `@anthonycoffey`)
+[github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) — private GitHub Packages scope: `@anthonycoffey`.

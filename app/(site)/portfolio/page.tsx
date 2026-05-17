@@ -57,7 +57,7 @@ const PortfolioSection: React.FC = () => {
         'GA4',
         'Bing Webmaster',
       ],
-      mainImage: '/portfolio/periscope/hero.png',
+      mainImage: '/periscope-logo.png',
       gallery: [],
       link: 'https://github.com/anthonycoffey/periscope',
       client: 'Personal / Internal Tool',
@@ -220,7 +220,7 @@ const PortfolioSection: React.FC = () => {
 
           const cardInner = (
             <>
-              <div className="h-56 overflow-hidden">
+              <div className="h-72 overflow-hidden">
                 <Image
                   width={1200}
                   height={1200}

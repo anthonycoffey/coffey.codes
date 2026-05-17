@@ -231,6 +231,14 @@ const components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
+  // MDX wraps fenced code blocks as `<pre><code>...</code></pre>`. The
+  // `code` -> Code component above already renders its own `<pre>` (with
+  // the copy button + multiline class), so the outer MDX `<pre>` was
+  // producing a doubled wrapper -- visually fine for many cases, but its
+  // `overflow-x-auto` styling clipped the absolutely-positioned copy
+  // button at the right edge when content was wide, and added unwanted
+  // chrome around mermaid charts. Passthrough strips the outer pre.
+  pre: ({ children }) => <>{children}</>,
   // Pipe-syntax tables (via remark-gfm) render as standard HTML elements;
   // these overrides keep them readable on narrow viewports by forcing
   // word-wrap inside cells instead of horizontal scroll.

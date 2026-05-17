@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
   statuses: write
+  # @anthonycoffey/periscope ships from GitHub Packages; the workflow's
+  # GITHUB_TOKEN (with packages: read) authenticates the npm install.
+  packages: read
 
 jobs:
   lint:
@@ -24,7 +27,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
+        # the GitHub Packages registry. The workflow's per-run GITHUB_TOKEN
+        # (granted packages: read in the top-level permissions block)
+        # satisfies that reference. Same name everywhere: local shell,
+        # Vercel env, and these workflows.
         run: npm ci
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run ESLint
         run: npm run lint
@@ -42,7 +52,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
+        # the GitHub Packages registry. The workflow's per-run GITHUB_TOKEN
+        # (granted packages: read in the top-level permissions block)
+        # satisfies that reference. Same name everywhere: local shell,
+        # Vercel env, and these workflows.
         run: npm ci
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests with coverage
         run: npm run test:coverage
@@ -68,7 +85,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
+        # the GitHub Packages registry. The workflow's per-run GITHUB_TOKEN
+        # (granted packages: read in the top-level permissions block)
+        # satisfies that reference. Same name everywhere: local shell,
+        # Vercel env, and these workflows.
         run: npm ci
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run typecheck
         run: npm run typecheck

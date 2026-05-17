@@ -42,7 +42,9 @@ Vitest + Testing Library is configured for unit/component tests; Playwright live
 
 ## Periscope (SEO tooling) setup
 
-The `seo:*` scripts call `@anthonycoffey/periscope`, a private package on GitHub Packages. One-time setup per machine:
+The `seo:*` scripts call `@anthonycoffey/periscope`, a private package on GitHub Packages. Source lives at https://github.com/anthonycoffey/periscope (extracted from this repo in 2026-05; originally driven by [SPEC-023](docs/specs/archive/SPEC-023-periscope-tool-suite.md)).
+
+One-time setup per machine:
 
 1. Generate a PAT at https://github.com/settings/tokens with **only** the `read:packages` scope. Copy the `ghp_...` value.
 2. Set the env var so npm can read it:
@@ -52,16 +54,22 @@ The `seo:*` scripts call `@anthonycoffey/periscope`, a private package on GitHub
    ```bash
    cp .npmrc.example .npmrc
    ```
-4. Install the package:
+4. Install (it's already in `devDependencies`, so a fresh clone just needs `npm install`):
    ```bash
-   npm install @anthonycoffey/periscope --save-dev
+   npm install
    ```
 5. Verify:
    ```bash
+   npx periscope --version
    npx periscope --help
    ```
 
-Periscope is currently in Phase A (scaffolding only) — the commands respond but exit with "not yet implemented" until SPEC-023 commits 2-9 land and a new version is published.
+To update to a new release:
+```bash
+npm update @anthonycoffey/periscope
+```
+
+Project-specific config lives at `periscope.config.mjs` at the repo root.
 
 ## Architecture
 

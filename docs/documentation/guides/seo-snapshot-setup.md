@@ -8,7 +8,7 @@ description: How to wire and run the three-engine SEO snapshot script (GSC + GA4
 
 The `@anthonycoffey/periscope` package owns the SEO tool suite: `periscope snapshot` pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a paired JSON + Markdown file in `outputDir` (default `docs/strategy/data/`). `periscope diff` reports the delta between two snapshots. The four keyword research commands (`audit articles`, `discover topics`, `validate lps`, `probe <url>`) consume the snapshot to answer concrete editorial questions.
 
-This guide is the consolidated walk-through for getting credentials in place and running the commands. The package itself lives at `tooling/periscope/` in this repo and ships to GitHub Packages.
+This guide is the consolidated walk-through for getting credentials in place and running the commands. The package source lives at https://github.com/anthonycoffey/periscope (extracted from this repo 2026-05) and ships to GitHub Packages.
 
 ## Why snapshot
 
@@ -216,7 +216,7 @@ GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` varian
 | Google Ads `DEVELOPER_TOKEN_NOT_APPROVED` | Token is in pending state | Apply for the basic-access tier in the Ads UI's API Center |
 | Google Ads `INVALID_CUSTOMER_ID` | Customer ID is wrong account | The scripts now strip dashes automatically; if you still see this, recheck the ID at the top right of the Ads UI |
 | Google Ads `CUSTOMER_NOT_ENABLED` | Ads account hasn't completed billing setup | Set billing country and add a payment method in Ads UI → Tools → Billing → Summary (no charge for Keyword Planner use) |
-| Google Ads HTTP 404 with HTML error page | API version in the engine is sunset | Bump `API_VERSION` constant in `tooling/periscope/src/engines/ads.ts`, build, publish a new periscope version, `npm update`. Google deprecates versions ~3 months after release; the engine uses v21 as of 2026-05-11 |
+| Google Ads HTTP 404 with HTML error page | API version in the engine is sunset | Bump `API_VERSION` constant in `src/engines/ads.ts` in the [periscope repo](https://github.com/anthonycoffey/periscope), publish a new version, `npm update` here. Google deprecates versions ~3 months after release; the engine uses v21 as of 2026-05-11 |
 | Google Ads `USER_PERMISSION_DENIED` (or any auth/access uncertainty) | Service account not added to the target customer, or `LOGIN_CUSTOMER_ID` ≠ the Manager account where the developer token lives | Run `npm run seo:doctor -- ads`. It lists which customer IDs the service account can see and names exactly which env id is misaligned. |
 | Keyword research scripts return zero ideas | URL probe: target URL is not indexed by Google. Other scripts: seed terms are too generic/specific | Adjust the seed or pick a different URL |
 | `[snapshot] no engines returned data; not overwriting any existing snapshot file` | Every engine failed; protective guard fired | Investigate the specific engine errors; existing snapshot file is unchanged |

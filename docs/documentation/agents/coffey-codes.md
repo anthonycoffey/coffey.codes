@@ -146,7 +146,7 @@ npm run typecheck      # tsc --noEmit
 
 ### Pull and compare SEO snapshots
 
-All SEO work runs through `@anthonycoffey/periscope` (SPEC-018 + SPEC-019 + SPEC-020 + SPEC-023). The package source lives at `tooling/periscope/`; coffey.codes consumes it as a devDependency and exposes it through `npm run seo:*` scripts. Project-specific paths and ids come from `periscope.config.mjs` at the repo root. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
+All SEO work runs through `@anthonycoffey/periscope` (SPEC-018 + SPEC-019 + SPEC-020 + SPEC-023). The package source lives at https://github.com/anthonycoffey/periscope (extracted from this repo 2026-05). coffey.codes consumes it as a devDependency and exposes it through `npm run seo:*` scripts. Project-specific paths and ids come from `periscope.config.mjs` at the repo root. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
 
 ```bash
 npm run seo:snapshot                            # all configured engines, 365d

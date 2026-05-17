@@ -6,6 +6,9 @@ on:
 permissions:
   contents: read
   statuses: write
+  # @anthonycoffey/periscope ships from GitHub Packages; npm ci needs
+  # auth via the workflow's GITHUB_TOKEN.
+  packages: read
 
 concurrency:
   group: e2e-${{ github.event.deployment.sha }}
@@ -29,7 +32,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
+        # the GitHub Packages registry. The workflow's per-run GITHUB_TOKEN
+        # (granted packages: read in the top-level permissions block)
+        # satisfies that reference. Same name everywhere: local shell,
+        # Vercel env, and these workflows.
         run: npm ci
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

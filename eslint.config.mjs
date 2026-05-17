@@ -44,10 +44,6 @@ const config = [
       'coverage',
       '**/*.d.ts',
       '**/*.mdx',
-      // periscope is its own package with its own tsconfig + lint config
-      // (vitest covers it via its own runner). Build artifacts live under
-      // tooling/periscope/dist/ and would otherwise trip the root lint.
-      'tooling/**',
     ],
   },
 ];

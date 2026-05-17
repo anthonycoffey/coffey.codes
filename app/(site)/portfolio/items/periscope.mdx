@@ -21,14 +21,27 @@ The project is distributed as a **private npm package** on GitHub Packages (`@an
 
 ## How Periscope uses the Google Ads API
 
-Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only:
+Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only.
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `generateKeywordIdeas` | `POST /v21/customers/{customerId}:generateKeywordIdeas` | Seed-based keyword expansion (keywords, URL, or both) |
-| `generateKeywordHistoricalMetrics` | `POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics` | Average monthly volume, competition, and CPC bid range for a keyword set |
+### `generateKeywordIdeas`
 
-Periscope does **not** call any other Google Ads API service. It does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+```http
+POST /v21/customers/{customerId}:generateKeywordIdeas
+```
+
+Seed-based keyword expansion. Accepts a list of seed keywords, a seed URL, or both, and returns the keyword universe Ads suggests is adjacent to the seed.
+
+### `generateKeywordHistoricalMetrics`
+
+```http
+POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics
+```
+
+Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
+
+### What Periscope does NOT touch
+
+No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
 
 ## CLI commands that consume the Ads API
 
@@ -66,16 +79,44 @@ Call volume is **low** — on the order of dozens to low hundreds of requests pe
 
 ## Architecture
 
-| Layer | Tech | Notes |
-| --- | --- | --- |
-| Language | TypeScript (strict) | Compiled to ESM via tsup; typed snapshot JSON contracts |
-| CLI parser | commander | Nested subcommands, per-command `--help` with examples |
-| Engine modules | `src/engines/{gsc,ga4,bing,ads}.ts` | One file per upstream API |
-| Lib | `src/lib/*.ts` | Auth, bucket math, markdown renderer, config loader (zod), ANSI colors, snapshot store, NL date resolver |
-| Tests | vitest | 56 unit tests across bucket math, config schema, frontmatter parser, color helpers, diagnostics, and snapshot ref resolution |
-| Distribution | GitHub Packages | Private npm package `@anthonycoffey/periscope`, published via tag-triggered workflow |
+### Language and build
 
-The engine code is project-agnostic: each engine takes its config explicitly (site URL, property id, API key, bot regions) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That means the same package serves any number of consumer projects, each with its own config.
+TypeScript in strict mode. Compiled to ESM via tsup with typed snapshot JSON contracts. Targets Node 22+; the published artifact is the `dist/` directory plus the README.
+
+### CLI
+
+Built on commander, with nested subcommands and a per-command `--help` that includes copy-pasteable examples. The entry point is a single `bin/periscope` that resolves to a small bundled script.
+
+### Engine modules
+
+One file per upstream API under `src/engines/`:
+
+- `gsc.ts` — Google Search Console
+- `ga4.ts` — Google Analytics 4
+- `bing.ts` — Bing Webmaster Tools
+- `ads.ts` — Google Ads Keyword Planner
+
+Each engine takes its config explicitly (site URL, property id, API key, bot regions) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That's what makes the same package usable across any number of consumer projects, each with its own config.
+
+### Shared library
+
+`src/lib/*` holds the cross-cutting pieces:
+
+- Service-account JWT auth (shared across the Google engines)
+- Bucket math for keyword volume tiers
+- Snapshot markdown renderer
+- Config loader (zod-validated)
+- ANSI color helpers
+- Snapshot store (load / write / list)
+- Natural-language date resolver (for the `diff` command)
+
+### Tests
+
+56 unit tests on vitest covering bucket math, config schema, frontmatter parser, color helpers, diagnostics, and snapshot ref resolution. No live API in tests — engines are mocked at the HTTP boundary.
+
+### Distribution
+
+Private npm package `@anthonycoffey/periscope` on GitHub Packages, published via a tag-triggered GitHub Actions workflow. Tags follow `v*` (semver from 1.0.0); consumers pin with `^1.0.0` and pick up minors with `npm update`.
 
 ## Command surface
 

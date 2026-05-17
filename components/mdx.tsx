@@ -119,6 +119,22 @@ function RoundedImage(props) {
   );
 }
 
+// sugar-high is a JavaScript-focused highlighter. For other languages it
+// happily mis-colors random tokens (e.g. "Pull" in a bash comment gets
+// styled like a JS identifier). Restrict highlighting to JS-family fences
+// and inline code; everything else renders as plain text inside the same
+// dark code-block chrome.
+const JS_LANGUAGES = new Set([
+  'js',
+  'jsx',
+  'ts',
+  'tsx',
+  'javascript',
+  'typescript',
+  'mjs',
+  'cjs',
+]);
+
 function Code({ children, className, ...props }) {
   const language = className?.replace(/language-/, '');
 
@@ -136,13 +152,25 @@ function Code({ children, className, ...props }) {
 
   const isMultiline = React.Children.toArray(children).join('').includes('\n');
   const codeString = React.Children.toArray(children).join('');
-  const codeHTML = highlight(codeString);
+  // Highlight when:
+  //   - the fence explicitly names a JS-family language, OR
+  //   - it's inline code (no language on inline backticks; let the
+  //     highlighter take its best guess on short snippets)
+  // Skip highlight for explicitly non-JS fences (bash, sh, mermaid handled
+  // above, json, yaml, etc.).
+  const useHighlight =
+    !language || JS_LANGUAGES.has(language) || !isMultiline;
+  const codeHTML = useHighlight ? highlight(codeString) : null;
 
   if (isMultiline) {
     return (
       <span style={{ position: 'relative', display: 'block' }}>
         <pre className={`multiline ${className || ''}`}>
-          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          {codeHTML ? (
+            <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          ) : (
+            <code {...props}>{codeString}</code>
+          )}
           <CopyButton text={codeString} />
         </pre>
       </span>
@@ -150,7 +178,11 @@ function Code({ children, className, ...props }) {
   } else {
     return (
       <span className={`singleline ${className || ''}`}>
-        <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+        {codeHTML ? (
+          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+        ) : (
+          <code {...props}>{codeString}</code>
+        )}
       </span>
     );
   }

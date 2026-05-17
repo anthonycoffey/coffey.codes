@@ -7,6 +7,7 @@
  */
 
 import { Command } from 'commander';
+import { runSnapshot } from './commands/snapshot.js';
 
 const program = new Command();
 
@@ -36,8 +37,19 @@ Examples:
   $ periscope snapshot --window=180 --asof=2026-05-09
 `,
   )
-  .action(async () => {
-    notImplemented('snapshot');
+  .action(async (opts: {
+    engines?: string;
+    window?: string;
+    asof?: string;
+    dryRun?: boolean;
+    config?: string;
+  }) => {
+    await runSnapshot({
+      engines: opts.engines,
+      window: opts.window,
+      asof: opts.asof,
+      dryRun: opts.dryRun,
+    });
   });
 
 // ---------------------------------------------------------------------------

@@ -7,6 +7,7 @@
  */
 
 import { Command } from 'commander';
+import { runDiff } from './commands/diff.js';
 import { runSnapshot } from './commands/snapshot.js';
 
 const program = new Command();
@@ -66,8 +67,8 @@ Examples:
   $ periscope diff snapshot-2026-05-01.json snapshot-2026-05-15.json
 `,
   )
-  .action(async () => {
-    notImplemented('diff');
+  .action((older: string, newer: string) => {
+    runDiff({ older, newer });
   });
 
 // ---------------------------------------------------------------------------

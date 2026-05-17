@@ -146,38 +146,38 @@ npm run typecheck      # tsc --noEmit
 
 ### Pull and compare SEO snapshots
 
-`scripts/seo-snapshot.mjs` (SPEC-018 + SPEC-019) pulls GSC, GA4, Bing, and Google Ads keyword data in one shot, writing both a dated JSON file and a Markdown summary to `docs/strategy/data/`. The JSON is the source of truth for the diff script; the `.md` companion (`scripts/lib/snapshot-markdown.mjs`) is the AI/RAG-friendly view. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
+All SEO work runs through `@anthonycoffey/periscope` (SPEC-018 + SPEC-019 + SPEC-020 + SPEC-023). The package source lives at `tooling/periscope/`; coffey.codes consumes it as a devDependency and exposes it through `npm run seo:*` scripts. Project-specific paths and ids come from `periscope.config.mjs` at the repo root. Snapshots are committed to git so older periods (GSC's window only goes back 16 months) stay diffable.
 
 ```bash
-node scripts/seo-snapshot.mjs                       # all configured engines, 365d
-node scripts/seo-snapshot.mjs --engines=gsc         # one engine only
-node scripts/seo-snapshot.mjs --engines=gsc,keywords  # enrich GSC with Ads
-node scripts/seo-snapshot.mjs --asof=2026-05-09     # anchor "today" to a past date
-node scripts/seo-snapshot.mjs --dry-run             # print plan, skip API calls
-node scripts/seo-snapshot-diff.mjs older.json newer.json
+npm run seo:snapshot                            # all configured engines, 365d
+npm run seo:snapshot -- --engines=gsc           # one engine only
+npm run seo:snapshot -- --engines=gsc,keywords  # enrich GSC with Ads
+npm run seo:snapshot -- --asof=2026-05-09       # anchor "today" to a past date
+npm run seo:snapshot -- --dry-run               # print plan, skip API calls
+npm run seo:diff -- older.json newer.json
 ```
 
 Setup (env vars in `.env` or `.env.local`):
 
 - `GSC_SERVICE_ACCOUNT_KEY_PATH` or `GSC_SERVICE_ACCOUNT_JSON` (Google service account; reused for GA4 and Google Ads)
-- `GA4_PROPERTY_ID` (currently `416080229`; Data API enabled in Cloud, service account granted Viewer in GA4 Property Access)
+- `GA4_PROPERTY_ID` (currently `416080229`; Data API enabled in Cloud, service account granted Viewer in GA4 Property Access). Also settable via `periscope.config.ga4PropertyId`.
 - `BING_WEBMASTER_API_KEY` (generated in Bing Webmaster Tools → Settings → API Access)
 - `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID` (developer token from Ads UI; the service account must be added as a user inside the Ads account)
 
-Each engine skips gracefully if its env vars are missing. Full setup walk-through is in [docs/documentation/guides/seo-snapshot-setup.md](../guides/seo-snapshot-setup.md).
+Each engine skips gracefully if its env vars are missing. Full setup walk-through is in [docs/documentation/guides/seo-snapshot-setup.md](../guides/seo-snapshot-setup.md). One-time periscope install (PAT + `.npmrc`) is in `CLAUDE.md`.
 
-### Run keyword research tools (SPEC-020)
+### Run keyword research tools
 
-Four scripts consume the snapshot + Google Ads API to answer concrete editorial questions:
+Four commands consume the snapshot + Google Ads API to answer concrete editorial questions:
 
 ```bash
-node scripts/keyword-audit-articles.mjs                    # OPPORTUNITY flags per article
-node scripts/keyword-discover-topics.mjs                   # ranked editorial backlog
-node scripts/keyword-validate-lps.mjs                      # WELL_TARGETED / OVER_AMBITIOUS verdict per LP
-node scripts/keyword-probe-url.mjs https://competitor.com  # stdout-only competitor probe
+npm run seo:audit-articles                          # OPPORTUNITY flags per article
+npm run seo:discover-topics                         # ranked editorial backlog
+npm run seo:validate-lps                            # WELL_TARGETED / OVER_AMBITIOUS verdict per LP
+npm run seo:probe -- https://competitor.com         # stdout-only competitor probe
 ```
 
-Reports land in `docs/strategy/data/` as dated markdown; reruns on the same day overwrite (history lives in git).
+Reports land in `outputDir` (default `docs/strategy/data/`) as dated markdown; reruns on the same day overwrite (history lives in git).
 
 Vitest + Testing Library + jsdom is configured for unit and component tests. Playwright e2e lives in `e2e/` and exercises rendered pages against a live Vercel preview. TDD (RED → GREEN → REFACTOR) is the expected workflow per `docs/documentation/development-standards.md`.
 
@@ -204,4 +204,5 @@ Production promotion is blocked until every required check is green (see [system
 - [Development Standards](../development-standards.md)
 - [On-Page SEO Strategy](../deep-dives/onpage-seo-strategy.md) — page-level metadata and structured data
 - [CTR-by-position baseline](../deep-dives/ctr-by-position-baseline.md) — site-specific SEO performance curve
-- [SEO snapshot setup](../guides/seo-snapshot-setup.md) — how to wire and run the four-engine snapshot script (and its Markdown companion)
+- [SEO snapshot setup](../guides/seo-snapshot-setup.md) — how to wire and run periscope's four-engine snapshot command
+- [SEO tooling inventory](../guides/seo-tooling-inventory.md) — at-a-glance map of every periscope command, engine, and lib module

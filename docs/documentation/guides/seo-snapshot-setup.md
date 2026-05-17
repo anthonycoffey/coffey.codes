@@ -6,9 +6,9 @@ description: How to wire and run the three-engine SEO snapshot script (GSC + GA4
 
 # SEO snapshot setup
 
-`scripts/seo-snapshot.mjs` pulls Google Search Console, GA4, and Bing Webmaster Tools into a single dated JSON file in `docs/strategy/data/`. `scripts/seo-snapshot-diff.mjs` reports the delta between two snapshots. Both ship under SPEC-018.
+The `@anthonycoffey/periscope` package owns the SEO tool suite: `periscope snapshot` pulls Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner into a paired JSON + Markdown file in `outputDir` (default `docs/strategy/data/`). `periscope diff` reports the delta between two snapshots. The four keyword research commands (`audit articles`, `discover topics`, `validate lps`, `probe <url>`) consume the snapshot to answer concrete editorial questions.
 
-This guide is the consolidated walk-through for getting credentials in place and running the script. The script header in `scripts/seo-snapshot.mjs` is the authoritative spec.
+This guide is the consolidated walk-through for getting credentials in place and running the commands. The package itself lives at `tooling/periscope/` in this repo and ships to GitHub Packages.
 
 ## Why snapshot
 
@@ -106,10 +106,16 @@ GOOGLE_ADS_LOGIN_CUSTOMER_ID=<10-digits-with-or-without-dashes>
 
 > **Volume bucket vs precise integer:** accounts without spend history get bucketed volumes (`100-1K`, `1K-10K`, `10K-100K`, `100K+`). Competition (`LOW/MEDIUM/HIGH`) and competition index (0-100) are always precise. Spend history unlocks integer volumes; not a blocker for any of the tooling described below.
 
+## Periscope (the package)
+
+All commands ship via `@anthonycoffey/periscope`, a TypeScript package on GitHub Packages. coffey.codes consumes it as a devDependency; the root `npm run seo:*` scripts call `periscope` directly. One-time setup (PAT + `.npmrc` + `npm install`) is documented in `CLAUDE.md`.
+
+Project-specific paths and ids come from `periscope.config.mjs` at the repo root. The config schema is validated by zod at load. Env vars stay supported for credentials and as fallbacks.
+
 ## Verifying the wiring
 
 ```powershell
-node scripts/seo-snapshot.mjs --dry-run
+npm run seo:snapshot -- --dry-run
 ```
 
 Should print:
@@ -124,62 +130,62 @@ Or list which engines were skipped and why. If a step is wrong, the error messag
 
 ```powershell
 # Full run, 365-day window, all configured engines
-node scripts/seo-snapshot.mjs
+npm run seo:snapshot
 
 # Subset
-node scripts/seo-snapshot.mjs --engines=gsc
-node scripts/seo-snapshot.mjs --engines=gsc,ga4,keywords
+npm run seo:snapshot -- --engines=gsc
+npm run seo:snapshot -- --engines=gsc,ga4,keywords
 
 # Custom window
-node scripts/seo-snapshot.mjs --window=180
+npm run seo:snapshot -- --window=180
 
 # Anchor "today" to a past date. Drives both the output filename
 # (snapshot-2026-05-09.json) and the GSC window. Useful for filling
 # a few consecutive snapshots in one sitting.
-node scripts/seo-snapshot.mjs --asof=2026-05-09
+npm run seo:snapshot -- --asof=2026-05-09
 
 # Plan without API calls
-node scripts/seo-snapshot.mjs --dry-run
+npm run seo:snapshot -- --dry-run
 ```
 
-Output goes to `docs/strategy/data/`. Two files per run, same date stem:
+Output goes to `periscope.config.outputDir` (default: `docs/strategy/data/`). Two files per run, same date stem:
 
-- `snapshot-<YYYY-MM-DD>.json` — full structured data; source of truth for the diff script and any tooling
+- `snapshot-<YYYY-MM-DD>.json` — full structured data; source of truth for the diff command and any tooling
 - `snapshot-<YYYY-MM-DD>.md` — condensed Markdown summary with frontmatter, headline numbers, and per-engine sections. Renders cleanly in any markdown viewer and is the form AI tools should ingest (RAG, search indexers, etc.) since the JSON is too large and structurally noisy for that purpose
 
-The script prints a one-line summary per engine on completion. The markdown renderer lives at `scripts/lib/snapshot-markdown.mjs` and runs automatically after the JSON write succeeds.
+The command prints a one-line summary per engine on completion. The markdown renderer lives in periscope's `src/lib/markdown.ts` and runs automatically after the JSON write succeeds.
 
 When the `keywords` engine is enabled, the JSON snapshot also gets a top-level `keywords` key (with `historicalMetrics` + `ideas`) and each `gsc.topQueries` row is enriched in place with `volumeBucket`, `competition`, `competitionIndex`, and `cpcRangeMicros`. Rows the Ads side has no data for gain `_keywordsMatch: false`. The Markdown summary picks the same enrichment up automatically.
 
-## Keyword research tools (SPEC-020)
+## Keyword research tools
 
-Four scripts that consume the snapshot + Google Ads API to answer concrete editorial questions. All four require the same `GOOGLE_ADS_*` env vars as the snapshot's `keywords` engine.
+Four commands that consume the snapshot + Google Ads API to answer concrete editorial questions. All four require the same `GOOGLE_ADS_*` env vars as the snapshot's `keywords` engine.
 
 ```powershell
 # Audit existing articles: which ones could target higher-volume keywords?
-node scripts/keyword-audit-articles.mjs
+npm run seo:audit-articles
 # -> docs/strategy/data/keyword-audit-articles-<YYYY-MM-DD>.md
 
 # Discover new topic ideas seeded from categories + top GSC queries
-node scripts/keyword-discover-topics.mjs
+npm run seo:discover-topics
 # -> docs/strategy/data/keyword-topics-<YYYY-MM-DD>.md
 
 # Validate /lp/* pages: are they targeting realistic-volume keywords?
-node scripts/keyword-validate-lps.mjs
+npm run seo:validate-lps
 # -> docs/strategy/data/keyword-lp-validation-<YYYY-MM-DD>.md
 
 # One-shot probe of a competitor URL (stdout only, no file output)
-node scripts/keyword-probe-url.mjs https://competitor.com/their-post
+npm run seo:probe -- https://competitor.com/their-post
 ```
 
-The article auditor and topic discovery read the latest snapshot in `docs/strategy/data/` for GSC context. If no recent snapshot exists they fall back gracefully but the output is less useful — rerun `seo-snapshot.mjs` first when in doubt.
+The article auditor and topic discovery read the latest snapshot in `outputDir` for GSC context. If no recent snapshot exists they fall back gracefully but the output is less useful — rerun `seo:snapshot` first when in doubt.
 
 The reports use the bucket order `<100 < 100-1K < 1K-10K < 10K-100K < 100K+` and the competition trio `LOW / MEDIUM / HIGH` for everything. Output is markdown, committed to git like snapshot files. Reruns on the same day overwrite (date in filename, not timestamp).
 
 ## Diffing snapshots
 
 ```powershell
-node scripts/seo-snapshot-diff.mjs <older.json> <newer.json>
+npm run seo:diff -- <older.json> <newer.json>
 ```
 
 Prints per-engine totals delta, top-page click delta, new entrants (queries with >=5 impressions absent from older), and fallers (>30% impression drop). When stdout is a TTY, output is colored and box-bordered; piped output strips back to plain text.
@@ -194,7 +200,7 @@ Snapshots are first-party aggregate data. Commit them.
 
 ## Bot region exclusion (GA4)
 
-GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` variant that filters out China and Singapore (the audit-identified bot-skew countries). The list is hard-coded in `scripts/seo-snapshot.mjs` per SPEC-018 must-have #5. If the bot signature changes, edit the constant and ship a new SPEC.
+GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` variant that filters out China and Singapore (the audit-identified bot-skew countries). The list comes from `periscope.config.ga4.botRegions` (default: `['China', 'Singapore']`). Update the config and re-snapshot if the bot signature changes.
 
 ## Troubleshooting
 
@@ -210,7 +216,7 @@ GA4 captures both raw `trafficSources` and a `trafficSourcesExBotRegions` varian
 | Google Ads `DEVELOPER_TOKEN_NOT_APPROVED` | Token is in pending state | Apply for the basic-access tier in the Ads UI's API Center |
 | Google Ads `INVALID_CUSTOMER_ID` | Customer ID is wrong account | The scripts now strip dashes automatically; if you still see this, recheck the ID at the top right of the Ads UI |
 | Google Ads `CUSTOMER_NOT_ENABLED` | Ads account hasn't completed billing setup | Set billing country and add a payment method in Ads UI → Tools → Billing → Summary (no charge for Keyword Planner use) |
-| Google Ads HTTP 404 with HTML error page | API version in the script is sunset | Bump `API_VERSION` constant in `scripts/lib/google-ads.mjs`. Google deprecates versions ~3 months after release; the script uses v21 as of 2026-05-11 |
+| Google Ads HTTP 404 with HTML error page | API version in the engine is sunset | Bump `API_VERSION` constant in `tooling/periscope/src/engines/ads.ts`, build, publish a new periscope version, `npm update`. Google deprecates versions ~3 months after release; the engine uses v21 as of 2026-05-11 |
 | Keyword research scripts return zero ideas | URL probe: target URL is not indexed by Google. Other scripts: seed terms are too generic/specific | Adjust the seed or pick a different URL |
 | `[snapshot] no engines returned data; not overwriting any existing snapshot file` | Every engine failed; protective guard fired | Investigate the specific engine errors; existing snapshot file is unchanged |
 

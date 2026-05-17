@@ -34,7 +34,6 @@ import {
   sectionOpen,
 } from '../lib/colors.js';
 import type {
-  BingEngineData,
   BingQueryRow,
   Ga4Section,
   GscRow,

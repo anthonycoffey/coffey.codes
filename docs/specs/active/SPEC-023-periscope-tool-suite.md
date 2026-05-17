@@ -1,7 +1,7 @@
 ---
 id: SPEC-023
 title: 'Periscope: extract SEO tooling into a reusable TypeScript package'
-status: draft
+status: in-review
 created: 2026-05-15
 author: Anthony Coffey
 reviewers: []

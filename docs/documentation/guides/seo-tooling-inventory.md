@@ -1,28 +1,30 @@
 ---
 service: coffey.codes
-updated: 2026-05-14
-description: At-a-glance inventory of every SEO script, library, and data engine in the repo. Companion to seo-snapshot-setup.md (which covers how to run them).
+updated: 2026-05-15
+description: At-a-glance inventory of the SEO tool suite. coffey.codes consumes @anthonycoffey/periscope; the package source lives in this repo at tooling/periscope/.
 ---
 
 # SEO tooling inventory
 
-Everything SEO-related in this repo lives under `scripts/` and writes to `docs/strategy/data/`. This doc is the inventory. For setup, env vars, and run commands see [seo-snapshot-setup.md](./seo-snapshot-setup.md).
+All SEO work runs through `@anthonycoffey/periscope`, a TypeScript package on GitHub Packages. The package source lives in this repo at [`tooling/periscope/`](../../../tooling/periscope/); coffey.codes consumes it as a devDependency. Outputs land in `periscope.config.outputDir` (default `docs/strategy/data/`). For setup and run instructions see [seo-snapshot-setup.md](./seo-snapshot-setup.md).
 
 ## At a glance
 
 | Layer | What it does | Where it lives |
 | --- | --- | --- |
-| Data collection | Pulls from four engines into dated JSON + Markdown snapshots | `scripts/seo-snapshot.mjs` |
-| Diffing | Reports deltas between any two snapshots | `scripts/seo-snapshot-diff.mjs` |
-| Keyword research | Four targeted scripts that consume snapshots + Google Ads API | `scripts/keyword-*.mjs` |
-| Shared library | Ads client, snapshot loaders, markdown renderer | `scripts/lib/*.mjs` |
-| Output | Snapshots, diffs, and reports | `docs/strategy/data/` |
+| Data collection | Pulls from four engines into dated JSON + Markdown snapshots | `periscope snapshot` (cmd: `src/commands/snapshot.ts`) |
+| Diffing | Reports deltas between any two snapshots | `periscope diff` (cmd: `src/commands/diff.ts`) |
+| Keyword research | Four targeted commands that consume snapshots + Google Ads API | `periscope audit/discover/validate/probe` |
+| Engines | One module per upstream API | `src/engines/{gsc,ga4,bing,ads}.ts` |
+| Shared library | Auth, bucket math, markdown render, config loader, frontmatter parser, ANSI colors, snapshot store | `src/lib/*.ts` |
+| Config | Project-specific paths + ids | `periscope.config.mjs` at the consumer repo root |
+| Output | Snapshots, diffs, and reports | `docs/strategy/data/` (committed to git) |
 
 ## Data collection
 
-### `scripts/seo-snapshot.mjs`
+### `periscope snapshot`
 
-The foundation. Pulls four engines into one dated JSON + Markdown pair in `docs/strategy/data/`.
+The foundation. Pulls four engines into one dated JSON + Markdown pair in `outputDir`.
 
 | Engine | What it gives us | Auth |
 | --- | --- | --- |
@@ -37,13 +39,14 @@ Flags:
 - `--window=180` — days of history (default 365)
 - `--asof=2026-05-09` — anchor "today" to a past date for backfill
 - `--dry-run` — plan without API calls
+- `--config <path>` — override periscope.config location
 
 Two files per run, same date stem:
 
-- `snapshot-<YYYY-MM-DD>.json` — full structured data, source of truth for the diff script
+- `snapshot-<YYYY-MM-DD>.json` — full structured data, source of truth for diff and downstream consumers
 - `snapshot-<YYYY-MM-DD>.md` — condensed Markdown summary, what humans and AI tools should read
 
-### `scripts/seo-snapshot-diff.mjs`
+### `periscope diff`
 
 Diffs two snapshot JSONs. Surfaces:
 
@@ -52,66 +55,101 @@ Diffs two snapshot JSONs. Surfaces:
 - New entrants (queries with >=5 impressions absent from older snapshot)
 - Fallers (>30% impression drop)
 
-TTY-colored when stdout is a terminal, plain text when piped.
+TTY-colored when stdout is a terminal, plain text when piped. Reuses `src/lib/colors.ts` for the ANSI helpers shared with `probe`.
 
-## Keyword research (SPEC-020)
+## Keyword research
 
-All four scripts use Google Ads' `KeywordPlanIdeaService`. All four reuse the same auth and rate-limit handling via the shared library.
+All four commands use Google Ads' `KeywordPlanIdeaService` via `src/engines/ads.ts`. All four reuse the same auth via `src/lib/auth.ts`.
 
-### `scripts/keyword-audit-articles.mjs`
+### `periscope audit articles`
 
-Walks every MDX in `app/(site)/articles/posts/`, joins the slug to the latest snapshot's GSC data, asks Ads for related keywords using title + tags + summary as seed. Flags each article as `OPPORTUNITY` (higher-volume term available with competition <= MEDIUM) or `WELL_TARGETED`.
+Walks every MDX under `periscope.config.articles.dir`, joins the slug to the latest snapshot's GSC data, asks Ads for related keywords using title + tags as seed. Flags each article as `OPPORTUNITY` (higher-volume term available with competition <= MEDIUM) or `WELL_TARGETED`.
 
-Output: `docs/strategy/data/keyword-audit-articles-<YYYY-MM-DD>.md`
+Output: `<outputDir>/keyword-audit-articles-<YYYY-MM-DD>.md`
 
-### `scripts/keyword-discover-topics.mjs`
+### `periscope discover topics`
 
-Seeds Ads with the site's article categories plus the top 25 GSC queries. Filters out anything already covered by an existing article (token-overlap heuristic). Returns a ranked editorial backlog grouped by competition bucket, sorted by volume bucket descending.
+Seeds Ads with `periscope.config.categories` plus the top 25 GSC queries from the latest snapshot. Filters out anything already covered by an existing article slug (60% token-overlap heuristic). Returns a ranked editorial backlog grouped by competition bucket, sorted by volume bucket descending.
 
-Output: `docs/strategy/data/keyword-topics-<YYYY-MM-DD>.md`
+Output: `<outputDir>/keyword-topics-<YYYY-MM-DD>.md`
 
-### `scripts/keyword-validate-lps.mjs`
+### `periscope validate lps`
 
-For each `app/lp/<slug>/page.tsx`, pulls the metadata title + first `<h1>` as seed. Issues a verdict per LP:
+For each `<landingPages.dir>/<slug>/<pageFile>`, pulls the metadata title + first `<h1>` as seed. Strips the configured `brandSuffix` from titles before seeding. Issues a verdict per LP:
 
 - `UNDER_INVESTED` — top idea bucket is `<100` or `100-1K`
 - `WELL_TARGETED` — bucket is `1K-10K` or `10K-100K` with LOW or MEDIUM competition
 - `OVER_AMBITIOUS` — bucket is `10K-100K` or `100K+` with HIGH competition
 
-Output: `docs/strategy/data/keyword-lp-validation-<YYYY-MM-DD>.md`
+Output: `<outputDir>/keyword-lp-validation-<YYYY-MM-DD>.md`
 
-### `scripts/keyword-probe-url.mjs`
+### `periscope probe <url>`
 
 One-shot competitor URL probe. Single positional arg, top 30 keyword ideas to stdout. No file output. Pre-writing recon for competitive pieces.
 
 ```bash
-node scripts/keyword-probe-url.mjs https://competitor.com/their-post
+npm run seo:probe -- https://competitor.com/their-post
 ```
+
+## Engines
+
+### `src/engines/gsc.ts`
+
+`pullGsc({ siteUrl, startDate, endDate, windowDays, credentials })` runs four parallel Search Console queries (page/query/country/device). Totals derive from byDevice rows.
+
+### `src/engines/ga4.ts`
+
+`pullGa4({ propertyId, startDate, endDate, windowDays, credentials, botRegions })` runs seven parallel reports including two bot-region-excluded variants. The `botRegions` list is passed in via config.
+
+### `src/engines/bing.ts`
+
+`pullBing({ siteUrl, apiKey, startDate, endDate, windowDays })` hits two Webmaster API endpoints. Expects `siteUrl` in the full URL form (`https://example.com/`), not GSC's `sc-domain:` form. The orchestrator converts.
+
+### `src/engines/ads.ts`
+
+Direct REST against `https://googleads.googleapis.com/<API_VERSION>/`. Exports `generateKeywordIdeas`, `generateHistoricalMetrics`, `generateIdeasFromUrl`, and `GoogleAdsError`. API version pinned (currently `v21` as of 2026-05-11). Google sunsets versions roughly quarterly; bump the `API_VERSION` constant when the API starts returning 404 HTML pages, then publish a new periscope version.
 
 ## Shared library
 
-### `scripts/lib/google-ads.mjs`
+| File | Exports |
+| --- | --- |
+| `src/lib/auth.ts` | `loadGoogleCredentials`, `getAdsAuth` (cached service-account JWT), `adsHeaders`, `buildGoogleAuth` |
+| `src/lib/bucket.ts` | `BUCKET_ORDER`, `bucketRank`, `bucketLabel` |
+| `src/lib/colors.ts` | TTY-aware ANSI helpers used by `diff` and `probe` |
+| `src/lib/config.ts` | zod schema + multi-format loader for `periscope.config.{ts,mjs,js,json}` |
+| `src/lib/frontmatter.ts` | Minimal YAML frontmatter parser (no gray-matter dep) |
+| `src/lib/markdown.ts` | Snapshot Markdown renderer |
+| `src/lib/snapshot-store.ts` | `loadLatestSnapshot`, `isSnapshotStale`, `writeSnapshotJson`, `writeSnapshotMarkdown` |
 
-Ads auth and helpers shared across the snapshot's `keywords` engine and all four research scripts.
+## Config
 
-Exports:
+`periscope.config.mjs` at the consumer repo root, validated by zod at load:
 
-- `getAdsAuth()` — configured client from `GOOGLE_ADS_*` env vars
-- `generateKeywordIdeas(seedConfig)` — seed-based ideas
-- `generateIdeasFromUrl(url)` — URL-seeded ideas
-- `loadLatestSnapshot()` — reads most recent JSON in `docs/strategy/data/`
-- `isSnapshotStale(snap, days = 30)` — staleness guard
-- `bucketRank(label)` — fixed ordering of volume buckets
+```js
+{
+  siteUrl: 'sc-domain:coffey.codes',
+  ga4PropertyId: '416080229',
+  outputDir: 'docs/strategy/data',
+  articles: { dir: 'app/(site)/articles/posts' },
+  landingPages: {
+    dir: 'app/lp',
+    pageFile: 'page.tsx',
+    brandSuffix: ' | Anthony Coffey',
+  },
+  ads: {
+    languageCode: 'languageConstants/1000',
+    geoTargets: ['geoTargetConstants/2840'],
+  },
+  ga4: { botRegions: ['China', 'Singapore'] },
+  categories: ['Web Development', /* ... */ ],
+}
+```
 
-API version pinned (currently `v21` as of 2026-05-11). Google sunsets versions roughly quarterly; bump the `API_VERSION` constant when the API starts returning 404 HTML pages.
-
-### `scripts/lib/snapshot-markdown.mjs`
-
-Renders the human-readable `.md` companion to each snapshot. Runs automatically after the JSON write succeeds.
+Env vars still drive credentials (`GSC_SERVICE_ACCOUNT_*`, `GA4_PROPERTY_ID`, `BING_WEBMASTER_API_KEY`, `GOOGLE_ADS_*`). The config file owns project shape; env owns secrets.
 
 ## Output conventions
 
-All output goes to `docs/strategy/data/` and is committed to git.
+All output goes to `outputDir` and is committed to git.
 
 | Pattern | What it is |
 | --- | --- |
@@ -131,12 +169,11 @@ Date in filename, not timestamp. Reruns on the same day overwrite; history lives
 | SPEC-019 | Google Ads Keyword Planner as the fourth engine | Archived |
 | SPEC-020 | The four keyword research scripts | Archived |
 | SPEC-022 | Ahrefs as a fifth snapshot engine | Active (proposed) |
-
-Recent backfill commits (`87d1fed`, `9dab21b`, `e73b36a`, `78d1190`) used the new `--asof` flag to fill 2026-05-09 through 2026-05-11.
+| SPEC-023 | Extract everything into the `@anthonycoffey/periscope` package | Active |
 
 ## What is intentionally not here
 
-- **No Ahrefs integration yet.** SPEC-022 covers adding it. Ahrefs MCP requires the $129/mo plan; lower tiers return "Insufficient plan."
+- **No Ahrefs integration yet.** SPEC-022 covers adding it as a fifth engine (`src/engines/ahrefs.ts`). Ahrefs MCP requires the $129/mo plan; lower tiers return "Insufficient plan."
 - **No Bing comparison in diffs yet.** Property added recently; ~90 days of data needed before the Bing column means anything.
 - **No automated scheduling.** Commit cadence is manual: monthly minimum, after material content changes, quarterly diffs against the same-week snapshot from the prior quarter.
 - **No IndexNow or sitemap resubmits.** All tooling here is read-only against the SEO APIs.
@@ -144,6 +181,7 @@ Recent backfill commits (`87d1fed`, `9dab21b`, `e73b36a`, `78d1190`) used the ne
 ## Related docs
 
 - [seo-snapshot-setup.md](./seo-snapshot-setup.md) — setup, env vars, run commands, troubleshooting
+- [tooling/periscope/README.md](../../../tooling/periscope/README.md) — package-internal docs (config, install from GH Packages, publishing)
 - [onpage-seo-strategy.md](../deep-dives/onpage-seo-strategy.md) — what the audits measure
 - [ctr-by-position-baseline.md](../deep-dives/ctr-by-position-baseline.md) — site-specific CTR curve
 - [docs/strategy/](../../strategy/) — quarterly narrative reports built from these snapshots

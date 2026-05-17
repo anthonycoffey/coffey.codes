@@ -57,7 +57,7 @@ const PortfolioSection: React.FC = () => {
         'GA4',
         'Bing Webmaster',
       ],
-      mainImage: '/portfolio/periscope/hero.png',
+      mainImage: '/periscope-logo.png',
       gallery: [],
       link: 'https://github.com/anthonycoffey/periscope',
       client: 'Personal / Internal Tool',

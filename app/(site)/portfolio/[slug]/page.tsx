@@ -216,7 +216,7 @@ export default async function PortfolioItemPage({ params }: PageParams) {
                 className="inline-flex items-center gap-2 bg-surface border border-border text-c-text text-sm font-semibold px-4 py-2 rounded-lg hover:bg-bg-alt transition-colors"
               >
                 <CodeBracketSquareIcon className="h-4 w-4" />
-                Source repository
+                View on GitHub
               </a>
             )}
           </div>

@@ -5,7 +5,6 @@ publishedAt: 2026-05-17
 updated: 2026-05-17
 tags: [TypeScript, CLI, Google Ads API, GSC, GA4, Bing Webmaster Tools, SEO, npm]
 mainImage: /periscope-logo.png
-link: https://github.com/anthonycoffey/coffey.codes/tree/main#-periscope--seo-management
 repo: https://github.com/anthonycoffey/periscope
 client: Personal / Internal Tool
 year: 2026
@@ -23,35 +22,68 @@ The project is distributed as an npm package on GitHub Packages (`@anthonycoffey
 
 Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only.
 
-### `generateKeywordIdeas`
+  ### POST `generateKeywordIdeas`
 
-Seed-based keyword expansion. Accepts a list of seed keywords, a seed URL, or both, and returns the keyword universe Ads suggests is adjacent to the seed.
+  **Description:** 
+  Executes seed-based keyword expansion. Returns an adjacent keyword universe suggested by Google Ads based on provided seed keywords, a seed URL, or both.
 
-```http
-POST /v21/customers/{customerId}:generateKeywordIdeas
-Authorization: Bearer <service-account-access-token>
-developer-token: <google-ads-developer-token>
-Content-Type: application/json
+  **HTTP Request:** 
+  `POST /v21/customers/{customerId}:generateKeywordIdeas`
 
-# Body (one of):
-#   { "keywordSeed": { "keywords": [...] } }
-#   { "urlSeed": { "url": "https://..." } }
-#   { "keywordAndUrlSeed": { "keywords": [...], "url": "..." } }
+  **Required Headers:**
+  * `Authorization`: `Bearer <service-account-access-token>`
+  * `developer-token`: `<google-ads-developer-token>`
+  * `Content-Type`: `application/json`
+
+  **Request Body (JSON):**
+  Provide exactly one of the following seed configurations:
+
+  ```json
+  {
+    "keywordSeed": { 
+      "keywords": ["<string>"] 
+    },
+    "urlSeed": { 
+      "url": "https://<string>" 
+    },
+    "keywordAndUrlSeed": { 
+      "keywords": ["<string>"], 
+      "url": "https://<string>" 
+    }
+  }
+  ```
+
+
+### POST `generateKeywordHistoricalMetrics`
+
+**Description**
+Retrieves historical performance data—including average monthly search volume, competition tier, and CPC bid ranges—for a specified array of keywords.
+
+**HTTP Request**
+`POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics`
+
+**Headers**
+* `Authorization`: `Bearer <service-account-access-token>`
+* `developer-token`: `<google-ads-developer-token>`
+* `Content-Type`: `application/json`
+
+**Path Parameters**
+* `customerId` *(string)*: The unique identifier for the target customer account.
+
+**Request Payload**
+```json
+{
+  "keywords": [
+    "term one",
+    "term two"
+  ]
+}
 ```
 
-### `generateKeywordHistoricalMetrics`
+**Output**
 
-Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
 
-```http
-POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics
-Authorization: Bearer <service-account-access-token>
-developer-token: <google-ads-developer-token>
-Content-Type: application/json
 
-# Body:
-#   { "keywords": ["term one", "term two", ...] }
-```
 
 <Callout type="info">
 **Read-only by design.** No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
@@ -205,11 +237,10 @@ periscope doctor ads
 
 ## What's next
 
-- An Ahrefs engine as a fifth data source
-- A periscope-lite open-source build for community contributions
+- An optional Ahrefs engine as a fifth data source
 - Additional `doctor` modules for GSC and GA4 access checks
 
-## Source
+## Source Code
 
 - [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)
-  - private GitHub Packages scope: `@anthonycoffey`
+

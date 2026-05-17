@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
 import { highlight } from 'sugar-high';
 import React from 'react';
 import Counter from '@/components/Counter';
@@ -27,6 +28,62 @@ function Table({ data }) {
       </thead>
       <tbody>{rows}</tbody>
     </table>
+  );
+}
+
+// ── GFM-pipe-table rendering overrides ────────────────────────────────
+// These wrap markdown pipe-syntax tables (rendered as HTML <table>) in
+// a non-prose container with `table-layout: fixed`, so wide content
+// wraps within cells instead of overflowing the page width. The
+// PascalCase `Table` component above (data-prop form) is unaffected.
+function MdxTable({ children }) {
+  return (
+    <div className="not-prose my-6 w-full">
+      <table
+        className="w-full border-collapse text-sm"
+        style={{ tableLayout: 'fixed' }}
+      >
+        {children}
+      </table>
+    </div>
+  );
+}
+
+function MdxThead({ children }) {
+  return (
+    <thead className="border-b-2 border-border bg-bg-alt/40">{children}</thead>
+  );
+}
+
+function MdxTbody({ children }) {
+  return <tbody>{children}</tbody>;
+}
+
+function MdxTr({ children }) {
+  return (
+    <tr className="border-b border-border last:border-b-0">{children}</tr>
+  );
+}
+
+function MdxTh({ children }) {
+  return (
+    <th
+      className="px-3 py-2 text-left font-semibold align-top text-c-heading"
+      style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+    >
+      {children}
+    </th>
+  );
+}
+
+function MdxTd({ children }) {
+  return (
+    <td
+      className="px-3 py-2 align-top text-c-text"
+      style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+    >
+      {children}
+    </td>
   );
 }
 
@@ -62,6 +119,22 @@ function RoundedImage(props) {
   );
 }
 
+// sugar-high is a JavaScript-focused highlighter. For other languages it
+// happily mis-colors random tokens (e.g. "Pull" in a bash comment gets
+// styled like a JS identifier). Restrict highlighting to JS-family fences
+// and inline code; everything else renders as plain text inside the same
+// dark code-block chrome.
+const JS_LANGUAGES = new Set([
+  'js',
+  'jsx',
+  'ts',
+  'tsx',
+  'javascript',
+  'typescript',
+  'mjs',
+  'cjs',
+]);
+
 function Code({ children, className, ...props }) {
   const language = className?.replace(/language-/, '');
 
@@ -79,13 +152,25 @@ function Code({ children, className, ...props }) {
 
   const isMultiline = React.Children.toArray(children).join('').includes('\n');
   const codeString = React.Children.toArray(children).join('');
-  const codeHTML = highlight(codeString);
+  // Highlight when:
+  //   - the fence explicitly names a JS-family language, OR
+  //   - it's inline code (no language on inline backticks; let the
+  //     highlighter take its best guess on short snippets)
+  // Skip highlight for explicitly non-JS fences (bash, sh, mermaid handled
+  // above, json, yaml, etc.).
+  const useHighlight =
+    !language || JS_LANGUAGES.has(language) || !isMultiline;
+  const codeHTML = useHighlight ? highlight(codeString) : null;
 
   if (isMultiline) {
     return (
       <span style={{ position: 'relative', display: 'block' }}>
         <pre className={`multiline ${className || ''}`}>
-          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          {codeHTML ? (
+            <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          ) : (
+            <code {...props}>{codeString}</code>
+          )}
           <CopyButton text={codeString} />
         </pre>
       </span>
@@ -93,7 +178,11 @@ function Code({ children, className, ...props }) {
   } else {
     return (
       <span className={`singleline ${className || ''}`}>
-        <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+        {codeHTML ? (
+          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+        ) : (
+          <code {...props}>{codeString}</code>
+        )}
       </span>
     );
   }
@@ -142,15 +231,35 @@ const components = {
   Image: RoundedImage,
   a: CustomLink,
   code: Code,
+  // Pipe-syntax tables (via remark-gfm) render as standard HTML elements;
+  // these overrides keep them readable on narrow viewports by forcing
+  // word-wrap inside cells instead of horizontal scroll.
+  table: MdxTable,
+  thead: MdxThead,
+  tbody: MdxTbody,
+  tr: MdxTr,
+  th: MdxTh,
+  td: MdxTd,
+  // PascalCase JSX form (used by some articles): unchanged.
   Table,
   Counter,
   Callout,
+};
+
+// MDX pipeline options. `remark-gfm` enables GitHub-Flavored Markdown:
+// pipe tables, strikethrough, task lists, footnotes, and bare-URL autolinks.
+// Without it, `| col | col |` and similar render as raw text.
+const mdxOptions = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+  },
 };
 
 export async function CustomMDX(props) {
   return (
     <MDXRemote
       {...props}
+      options={mdxOptions}
       components={{ ...components, ...(props.components || {}) }}
     />
   );

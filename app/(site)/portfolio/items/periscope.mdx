@@ -4,7 +4,7 @@ summary: A TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaste
 publishedAt: 2026-05-17
 updated: 2026-05-17
 tags: [TypeScript, CLI, Google Ads API, GSC, GA4, Bing Webmaster Tools, SEO, npm]
-mainImage: /portfolio/periscope/hero.png
+mainImage: /periscope-logo.png
 link: https://github.com/anthonycoffey/coffey.codes/tree/main#-periscope--seo-management
 repo: https://github.com/anthonycoffey/periscope
 client: Personal / Internal Tool
@@ -15,20 +15,33 @@ category: Open Source / SEO Tooling
 
 ## What it is
 
-**Periscope** is an internal command-line tool I built for SEO research across my own websites and a small number of client sites. It unifies data from Google Search Console, Google Analytics 4, Bing Webmaster Tools, and the **Google Ads API (Keyword Planner)** into a single local snapshot, so I can make editorial and landing-page decisions from one source.
+**Periscope** is a command-line tool for SEO research across websites and client projects. It unifies data from Google Search Console, Google Analytics 4, Bing Webmaster Tools, and the **Google Ads API (Keyword Planner)** into a single local snapshot, so editorial and landing-page decisions can be made from one source instead of toggling between four dashboards.
 
-The project is distributed as a **private npm package** on GitHub Packages (`@anthonycoffey/periscope`). It is not a SaaS product, has no end users beyond the developer, and does not resell, share, or expose Google data to third parties.
+The project is distributed as an npm package on GitHub Packages (`@anthonycoffey/periscope`).
 
 ## How Periscope uses the Google Ads API
 
-Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only:
+Periscope calls the Google Ads API solely to retrieve **keyword ideas and historical search-volume metrics** from the Keyword Planner. Specifically, it uses the `KeywordPlanIdeaService` and invokes exactly two methods, both read-only.
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `generateKeywordIdeas` | `POST /v21/customers/{customerId}:generateKeywordIdeas` | Seed-based keyword expansion (keywords, URL, or both) |
-| `generateKeywordHistoricalMetrics` | `POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics` | Average monthly volume, competition, and CPC bid range for a keyword set |
+### `generateKeywordIdeas`
 
-Periscope does **not** call any other Google Ads API service. It does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+```http
+POST /v21/customers/{customerId}:generateKeywordIdeas
+```
+
+Seed-based keyword expansion. Accepts a list of seed keywords, a seed URL, or both, and returns the keyword universe Ads suggests is adjacent to the seed.
+
+### `generateKeywordHistoricalMetrics`
+
+```http
+POST /v21/customers/{customerId}:generateKeywordHistoricalMetrics
+```
+
+Returns average monthly search volume, competition tier, and CPC bid range for a specific set of keywords.
+
+<Callout type="info">
+**Read-only by design.** No other Google Ads API service is called. Periscope does not create, read, update, or delete campaigns, ad groups, ads, budgets, conversions, audiences, or billing data. It performs zero mutations of any kind on the Google Ads account.
+</Callout>
 
 ## CLI commands that consume the Ads API
 
@@ -66,16 +79,92 @@ Call volume is **low** — on the order of dozens to low hundreds of requests pe
 
 ## Architecture
 
-| Layer | Tech | Notes |
-| --- | --- | --- |
-| Language | TypeScript (strict) | Compiled to ESM via `tsup`; typed snapshot JSON contracts |
-| CLI parser | `commander` | Nested subcommands, `--help` per command with examples |
-| Engine modules | `src/engines/{gsc,ga4,bing,ads}.ts` | One file per upstream API |
-| Lib | `src/lib/*.ts` | Auth, bucket math, markdown renderer, zod config loader, ANSI colors, snapshot store, NL date resolver |
-| Tests | `vitest` | 56 unit tests covering bucket math, config schema, frontmatter parser, color helpers, diagnostics, snapshot ref resolution |
-| Distribution | GitHub Packages | Private npm package `@anthonycoffey/periscope`, published via tag-triggered workflow |
+```mermaid
+flowchart LR
+    Dev([Developer<br/>local machine])
 
-The engine code is project-agnostic: each engine takes its config explicitly (`siteUrl`, `propertyId`, `apiKey`, `botRegions`) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That means the same package serves any number of consumer projects, each with its own config.
+    subgraph Periscope["Periscope CLI"]
+        direction TB
+        Cmds["snapshot · discover · audit validate · probe · doctor"]
+        Engines["Engine modules<br/>(GSC · GA4 · Bing · Ads)"]
+        Cmds --> Engines
+    end
+
+    subgraph Google["Google APIs (read-only)"]
+        GSC["Search Console API"]
+        GA4["GA4 Data API"]
+        ADS["Google Ads API v21<br/>KeywordPlanIdeaService,\ngenerateKeywordIdeas,\ngenerateKeywordHistoricalMetrics"]
+    end
+
+    BING["Bing Webmaster Tools API"]
+    Snap[("Local snapshots<br/>JSON + Markdown<br/>in outputDir/")]
+
+    Dev -->|invokes| Periscope
+    Engines -->|HTTPS GET/POST| GSC
+    Engines -->|HTTPS GET/POST| GA4
+    Engines -->|HTTPS POST<br/>service-account auth| ADS
+    Engines -->|HTTPS GET/POST| BING
+    Periscope -->|writes| Snap
+
+    %% --- Original Classes (Slightly enhanced stroke-width consistency) --- %%
+    classDef ads fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#000
+    classDef sink fill:#e0e7ff,stroke:#3730a3,stroke-width:2px,color:#000
+
+    %% --- New Custom Styling Classes --- %%
+    classDef actor fill:#334155,stroke:#0f172a,stroke-width:2px,color:#fff
+    classDef internal fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#000
+    classDef externalApi fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#000
+
+    %% --- Apply Classes --- %%
+    class ADS ads
+    class Snap sink
+    class Dev actor
+    class Cmds,Engines internal
+    class GSC,GA4,BING externalApi
+
+    %% --- Subgraph Styling --- %%
+    style Periscope fill:#f8fafc,stroke:#94a3b8,stroke-width:2px,color:#1e293b
+    style Google fill:#fff5f5,stroke:#ea4335,stroke-width:2px,color:#b91c1c
+```
+
+### Language and build
+
+TypeScript in strict mode. Compiled to ESM via tsup with typed snapshot JSON contracts. Targets Node 22+; the published artifact is the `dist/` directory plus the README.
+
+### CLI
+
+Built on commander, with nested subcommands and a per-command `--help` that includes copy-pasteable examples. The entry point is a single `bin/periscope` that resolves to a small bundled script.
+
+### Engine modules
+
+One file per upstream API under `src/engines/`:
+
+- `gsc.ts` — Google Search Console
+- `ga4.ts` — Google Analytics 4
+- `bing.ts` — Bing Webmaster Tools
+- `ads.ts` — Google Ads Keyword Planner
+
+Each engine takes its config explicitly (site URL, property id, API key, bot regions) rather than reading env vars itself. The orchestrator command reads env vars and a `periscope.config.mjs` from the consumer repo and threads them through. That's what makes the same package usable across any number of consumer projects, each with its own config.
+
+### Shared library
+
+`src/lib/*` holds the cross-cutting pieces:
+
+- Service-account JWT auth (shared across the Google engines)
+- Bucket math for keyword volume tiers
+- Snapshot markdown renderer
+- Config loader (zod-validated)
+- ANSI color helpers
+- Snapshot store (load / write / list)
+- Natural-language date resolver (for the `diff` command)
+
+### Tests
+
+56 unit tests on vitest covering bucket math, config schema, frontmatter parser, color helpers, diagnostics, and snapshot ref resolution. No live API in tests — engines are mocked at the HTTP boundary.
+
+### Distribution
+
+Private npm package `@anthonycoffey/periscope` on GitHub Packages, published via a tag-triggered GitHub Actions workflow. Tags follow `v*` (semver from 1.0.0); consumers pin with `^1.0.0` and pick up minors with `npm update`.
 
 ## Command surface
 
@@ -102,15 +191,11 @@ periscope doctor ads
 
 ## What's next
 
-- **Ahrefs engine** as a fifth data source ([SPEC-022](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/active/SPEC-022-ahrefs-snapshot-engine.md))
-- A `periscope-lite` open-source build for community contributions
+- An Ahrefs engine as a fifth data source
+- A periscope-lite open-source build for community contributions
 - Additional `doctor` modules for GSC and GA4 access checks
 
-## Project history
+## Source
 
-Periscope incubated inside the `coffey.codes` monorepo at `tooling/periscope/` (driven by [SPEC-018](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-018-multi-engine-snapshot.md), [SPEC-019](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-019-keyword-volume-in-snapshot.md), [SPEC-020](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-020-keyword-research-tools.md), and [SPEC-023](https://github.com/anthonycoffey/coffey.codes/blob/main/docs/specs/archive/SPEC-023-periscope-tool-suite.md)). It was extracted to its own repo in May 2026 and published as `@anthonycoffey/periscope@1.0.0`. The current release is `1.1.0`, which adds natural-language refs to the `diff` command.
-
-## Contact
-
-- Developer contact: `ads-api@coffey.codes`
-- Source: [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope) (private GitHub Packages scope: `@anthonycoffey`)
+- [github.com/anthonycoffey/periscope](https://github.com/anthonycoffey/periscope)
+  - private GitHub Packages scope: `@anthonycoffey`

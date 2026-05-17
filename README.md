@@ -207,7 +207,7 @@ npm lint:fix        # ESLint auto-fix
 
 ## 🔭 Periscope — SEO Management
 
-All SEO data work runs through **[`@anthonycoffey/periscope`](https://github.com/anthonycoffey/periscope)**, a TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner under a single command surface. Originally incubated in this repo at `tooling/periscope/` (driven by SPEC-018, 019, 020, 023), extracted to its own home in 2026-05.
+All SEO data work runs through **[`@anthonycoffey/periscope`](https://github.com/anthonycoffey/periscope)**, a TypeScript CLI that unifies Google Search Console, GA4, Bing Webmaster Tools, and Google Ads Keyword Planner under a single command surface.
 
 ### Commands
 
@@ -251,8 +251,6 @@ Engine setup (Google service account, Bing API key, Google Ads dev token) is doc
 ```bash
 npm update @anthonycoffey/periscope
 ```
-
-Plain `npm update` works because periscope follows semver from 1.0.0.
 
 ---
 

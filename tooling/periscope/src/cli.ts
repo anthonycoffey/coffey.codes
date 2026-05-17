@@ -6,6 +6,9 @@
  * `node tooling/periscope/dist/cli.js <command>` during local development.
  */
 
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Command } from 'commander';
 
 import { runAuditArticles } from './commands/audit-articles.js';
@@ -16,12 +19,28 @@ import { runProbe } from './commands/probe.js';
 import { runSnapshot } from './commands/snapshot.js';
 import { runValidateLps } from './commands/validate-lps.js';
 
+/**
+ * Read the package version from package.json at runtime. dist/cli.js sits
+ * one level below the package root, so `../package.json` works whether
+ * installed in node_modules or run from the source repo's dist/.
+ */
+function readPackageVersion(): string {
+  try {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const pkgPath = path.resolve(here, '..', 'package.json');
+    const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8')) as { version?: string };
+    return pkg.version ?? '0.0.0-unknown';
+  } catch {
+    return '0.0.0-unknown';
+  }
+}
+
 const program = new Command();
 
 program
   .name('periscope')
   .description('SEO data tooling: pull snapshots, diff them, run keyword research.')
-  .version('0.1.0');
+  .version(readPackageVersion());
 
 // ---------------------------------------------------------------------------
 // snapshot

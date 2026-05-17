@@ -132,14 +132,14 @@ export default async function PortfolioItemPage({ params }: PageParams) {
 
       <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 pt-6 sm:pt-8 pb-4 sm:pb-6">
         {/* Header */}
-        <div className="flex items-start gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-2">
           {metadata.mainImage ? (
             <Image
               src={metadata.mainImage}
               alt={`${metadata.title} logo`}
-              width={48}
-              height={48}
-              className="h-10 w-10 flex-shrink-0 mt-1 object-contain"
+              width={150}
+              height={150}
+              className="h-150 w-150 flex-shrink-0 mt-1 object-contain"
               priority
             />
           ) : (
@@ -159,22 +159,12 @@ export default async function PortfolioItemPage({ params }: PageParams) {
 
         {/* Tag chips + meta row */}
         <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-c-muted">
-          {metadata.client && (
-            <span className="inline-flex items-center gap-1">
-              <span className="font-semibold text-c-text">Client:</span>
-              {metadata.client}
-            </span>
-          )}
-          {metadata.client && metadata.year && (
-            <span className="text-c-muted">·</span>
-          )}
           {metadata.year && (
             <span className="inline-flex items-center gap-1">
               <span className="font-semibold text-c-text">Year:</span>
               {metadata.year}
             </span>
           )}
-          <span className="text-c-muted">·</span>
           <time dateTime={metadata.publishedAt} itemProp="datePublished">
             Updated {formatDate(metadata.updated ?? metadata.publishedAt)}
           </time>

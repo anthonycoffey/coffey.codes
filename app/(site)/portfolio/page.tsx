@@ -220,7 +220,7 @@ const PortfolioSection: React.FC = () => {
 
           const cardInner = (
             <>
-              <div className="h-56 overflow-hidden">
+              <div className="h-72 overflow-hidden">
                 <Image
                   width={1200}
                   height={1200}

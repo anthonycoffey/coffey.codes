@@ -14,12 +14,13 @@ Look at the SERPs from a hidden vantage. Your repo is the vantage. The SERPs are
 | `periscope discover topics` | Seed Ads with categories + top GSC queries to surface editorial backlog |
 | `periscope validate lps` | Validate `/lp/*` pages: `UNDER_INVESTED` / `WELL_TARGETED` / `OVER_AMBITIOUS` verdicts |
 | `periscope probe <url>` | One-shot competitor URL probe; top 30 keyword ideas to stdout |
+| `periscope doctor [engine]` | Diagnose engine credentials and access (currently: `ads`) |
 
 ## Status
 
-**Phase A, in development.** This package lives inside `coffey.codes` at `tooling/periscope/` and ports the existing `scripts/seo-*.mjs` + `scripts/keyword-*.mjs` files into a typed, unified, config-driven package. Driven by [SPEC-023](../../docs/specs/active/SPEC-023-periscope-tool-suite.md).
+Phase A is complete. The package ships every capability the legacy `scripts/seo-*.mjs` + `scripts/keyword-*.mjs` files provided, plus a config layer, types, tests, and the `doctor` diagnostic command. Driven by [SPEC-023](../../docs/specs/active/SPEC-023-periscope-tool-suite.md).
 
-Once parity against coffey.codes is proven, Phases B (extract to own repo) and C (publish to GitHub Packages) follow under their own SPECs.
+Phases B (extract to own repo) and C (further publish workflow polish) are future work tracked under their own specs.
 
 ## Install (from source, during Phase A)
 

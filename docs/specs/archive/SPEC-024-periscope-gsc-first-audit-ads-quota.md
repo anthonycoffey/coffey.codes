@@ -1,11 +1,17 @@
 ---
 id: SPEC-024
 title: 'Periscope GSC-first audit + Ads quota strategy + enterprise error handling'
-status: draft
+status: complete
 created: 2026-05-17
+completed: 2026-05-18
 author: Anthony Coffey
 reviewers: []
 affected_repos: [periscope, coffey.codes]
+shipped_as:
+  - 'periscope v1.2.0 (anthonycoffey/periscope#3)'
+  - 'coffey.codes @anthonycoffey/periscope devDep bump'
+carve_outs:
+  - 'Multi-property config (must-have #9) → SPEC-029 (draft)'
 ---
 
 ## Reviewer Notes

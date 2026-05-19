@@ -1,103 +1,103 @@
 {
   "window": {
-    "startDate": "2025-05-08",
-    "endDate": "2026-05-08",
+    "startDate": "2025-05-11",
+    "endDate": "2026-05-11",
     "days": 365
   },
-  "pulledAt": "2026-05-17T11:03:26.285Z",
+  "pulledAt": "2026-05-17T11:02:54.435Z",
   "siteUrl": "sc-domain:coffey.codes",
   "gsc": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-11",
+      "endDate": "2026-05-11",
       "days": 365
     },
     "totals": {
-      "clicks": 1152,
-      "impressions": 294996,
-      "ctr": 0.0039051376967823292
+      "clicks": 1156,
+      "impressions": 299398,
+      "ctr": 0.0038610812363476044
     },
     "topPages": [
       {
         "keys": [
           "https://coffey.codes/articles/building-location-based-features-using-expo-location"
         ],
-        "clicks": 390,
-        "impressions": 151786,
-        "ctr": 0.002569406928175194,
-        "position": 6.753000935527651
+        "clicks": 392,
+        "impressions": 154591,
+        "ctr": 0.0025357232956640424,
+        "position": 6.749060423957411
       },
       {
         "keys": [
           "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
         ],
-        "clicks": 248,
-        "impressions": 9062,
-        "ctr": 0.027367027146325315,
-        "position": 8.481240344294857
+        "clicks": 249,
+        "impressions": 9106,
+        "ctr": 0.02734460795080167,
+        "position": 8.489347682846475
       },
       {
         "keys": [
           "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
         ],
-        "clicks": 237,
-        "impressions": 71286,
-        "ctr": 0.0033246359734029124,
-        "position": 5.844429481244564
+        "clicks": 235,
+        "impressions": 71959,
+        "ctr": 0.0032657485512583555,
+        "position": 5.843410831167748
       },
       {
         "keys": [
           "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
         ],
         "clicks": 180,
-        "impressions": 43542,
-        "ctr": 0.00413393964448119,
-        "position": 7.4645859170456115
+        "impressions": 43976,
+        "ctr": 0.004093141713661997,
+        "position": 7.468460069128616
       },
       {
         "keys": [
           "https://coffey.codes/articles/react-19-features-and-design-patterns"
         ],
-        "clicks": 52,
-        "impressions": 15329,
-        "ctr": 0.0033922630308565464,
-        "position": 8.6312871028769
+        "clicks": 53,
+        "impressions": 15788,
+        "ctr": 0.003356979984798581,
+        "position": 8.692741322523435
       },
       {
         "keys": [
           "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
         ],
-        "clicks": 15,
-        "impressions": 465,
-        "ctr": 0.03225806451612903,
-        "position": 39.73548387096774
+        "clicks": 16,
+        "impressions": 466,
+        "ctr": 0.034334763948497854,
+        "position": 39.65450643776824
       },
       {
         "keys": [
           "https://coffey.codes/articles/authorize-net-for-react-native-expo-sdk-49"
         ],
         "clicks": 15,
-        "impressions": 885,
-        "ctr": 0.01694915254237288,
-        "position": 11.483615819209039
+        "impressions": 891,
+        "ctr": 0.016835016835016835,
+        "position": 11.506172839506172
       },
       {
         "keys": [
           "https://coffey.codes/"
         ],
-        "clicks": 4,
-        "impressions": 310,
-        "ctr": 0.012903225806451613,
-        "position": 13.893548387096773
+        "clicks": 6,
+        "impressions": 317,
+        "ctr": 0.01892744479495268,
+        "position": 13.725552050473187
       },
       {
         "keys": [
           "https://coffey.codes/contact"
         ],
         "clicks": 4,
-        "impressions": 221,
-        "ctr": 0.01809954751131222,
-        "position": 26.357466063348415
+        "impressions": 219,
+        "ctr": 0.0182648401826484,
+        "position": 25.735159817351597
       },
       {
         "keys": [
@@ -113,18 +113,27 @@
           "https://coffey.codes/articles/how-to-end-a-process-by-port-number"
         ],
         "clicks": 2,
-        "impressions": 706,
-        "ctr": 0.0028328611898017,
-        "position": 19.879603399433428
+        "impressions": 705,
+        "ctr": 0.0028368794326241137,
+        "position": 19.892198581560283
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles"
+        ],
+        "clicks": 1,
+        "impressions": 97,
+        "ctr": 0.010309278350515464,
+        "position": 8.329896907216494
       },
       {
         "keys": [
           "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
         ],
         "clicks": 1,
-        "impressions": 632,
-        "ctr": 0.0015822784810126582,
-        "position": 17.522151898734176
+        "impressions": 629,
+        "ctr": 0.001589825119236884,
+        "position": 17.5818759936407
       },
       {
         "keys": [
@@ -137,30 +146,21 @@
       },
       {
         "keys": [
-          "https://coffey.codes/articles"
-        ],
-        "clicks": 0,
-        "impressions": 96,
-        "ctr": 0,
-        "position": 8.395833333333332
-      },
-      {
-        "keys": [
           "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
         ],
         "clicks": 0,
-        "impressions": 264,
+        "impressions": 266,
         "ctr": 0,
-        "position": 24.393939393939394
+        "position": 24.26691729323308
       },
       {
         "keys": [
           "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
         ],
         "clicks": 0,
-        "impressions": 23,
+        "impressions": 18,
         "ctr": 0,
-        "position": 11.565217391304348
+        "position": 12.166666666666666
       },
       {
         "keys": [
@@ -170,15 +170,6 @@
         "impressions": 4,
         "ctr": 0,
         "position": 5
-      },
-      {
-        "keys": [
-          "https://coffey.codes/articles/category/development"
-        ],
-        "clicks": 0,
-        "impressions": 2,
-        "ctr": 0,
-        "position": 10
       },
       {
         "keys": [
@@ -194,9 +185,9 @@
           "https://coffey.codes/articles/how-to-deploy-a-flask-rest-api-on-google-cloud-run"
         ],
         "clicks": 0,
-        "impressions": 13,
+        "impressions": 8,
         "ctr": 0,
-        "position": 6.153846153846154
+        "position": 7.125
       },
       {
         "keys": [
@@ -212,9 +203,9 @@
           "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
         ],
         "clicks": 0,
-        "impressions": 720,
+        "impressions": 733,
         "ctr": 0,
-        "position": 6.022222222222222
+        "position": 6.023192360163711
       },
       {
         "keys": [
@@ -230,18 +221,27 @@
           "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
         ],
         "clicks": 0,
-        "impressions": 185,
+        "impressions": 188,
         "ctr": 0,
-        "position": 6.410810810810811
+        "position": 6.420212765957447
       },
       {
         "keys": [
           "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
         ],
         "clicks": 0,
-        "impressions": 42,
+        "impressions": 43,
         "ctr": 0,
-        "position": 6.5476190476190474
+        "position": 6.534883720930233
+      },
+      {
+        "keys": [
+          "https://coffey.codes/articles/react-19-features-and-design-patterns#islands-architecture"
+        ],
+        "clicks": 0,
+        "impressions": 83,
+        "ctr": 0,
+        "position": 5.9879518072289155
       }
     ],
     "topQueries": [
@@ -250,27 +250,27 @@
           "flutter vibe coding"
         ],
         "clicks": 49,
-        "impressions": 1088,
-        "ctr": 0.04503676470588235,
-        "position": 8.475183823529413
+        "impressions": 1093,
+        "ctr": 0.04483074107959744,
+        "position": 8.486733760292772
       },
       {
         "keys": [
           "expo location"
         ],
-        "clicks": 24,
-        "impressions": 9696,
-        "ctr": 0.0024752475247524753,
-        "position": 7.7275165016501655
+        "clicks": 25,
+        "impressions": 9787,
+        "ctr": 0.0025544089097782772,
+        "position": 7.724226014100338
       },
       {
         "keys": [
           "vibe coding flutter"
         ],
         "clicks": 24,
-        "impressions": 649,
-        "ctr": 0.03697996918335902,
-        "position": 8.26964560862866
+        "impressions": 654,
+        "ctr": 0.03669724770642202,
+        "position": 8.302752293577981
       },
       {
         "keys": [
@@ -286,27 +286,27 @@
           "expo-location"
         ],
         "clicks": 10,
-        "impressions": 5298,
-        "ctr": 0.001887504718761797,
-        "position": 6.603435258588147
+        "impressions": 5356,
+        "ctr": 0.0018670649738610904,
+        "position": 6.602315160567588
       },
       {
         "keys": [
           "vibe code flutter app"
         ],
         "clicks": 9,
-        "impressions": 157,
-        "ctr": 0.05732484076433121,
-        "position": 7.547770700636943
+        "impressions": 158,
+        "ctr": 0.056962025316455694,
+        "position": 7.575949367088608
       },
       {
         "keys": [
           "expo geofencing"
         ],
         "clicks": 7,
-        "impressions": 216,
-        "ctr": 0.032407407407407406,
-        "position": 7.583333333333333
+        "impressions": 217,
+        "ctr": 0.03225806451612903,
+        "position": 7.580645161290323
       },
       {
         "keys": [
@@ -358,9 +358,9 @@
           "expo geolocation"
         ],
         "clicks": 3,
-        "impressions": 495,
-        "ctr": 0.006060606060606061,
-        "position": 6.91919191919192
+        "impressions": 499,
+        "ctr": 0.006012024048096192,
+        "position": 6.905811623246493
       },
       {
         "keys": [
@@ -376,54 +376,54 @@
           "react native expo location"
         ],
         "clicks": 3,
-        "impressions": 230,
-        "ctr": 0.013043478260869565,
-        "position": 5.065217391304348
+        "impressions": 233,
+        "ctr": 0.012875536480686695,
+        "position": 5.07725321888412
       },
       {
         "keys": [
           "requestforegroundpermissionsasync"
         ],
         "clicks": 3,
-        "impressions": 224,
-        "ctr": 0.013392857142857142,
-        "position": 7.825892857142857
+        "impressions": 225,
+        "ctr": 0.013333333333333334,
+        "position": 7.822222222222222
       },
       {
         "keys": [
           "android emulator slow"
         ],
         "clicks": 2,
-        "impressions": 387,
-        "ctr": 0.00516795865633075,
-        "position": 7.390180878552972
+        "impressions": 395,
+        "ctr": 0.005063291139240506,
+        "position": 7.3443037974683545
       },
       {
         "keys": [
           "apphosting.yaml"
         ],
         "clicks": 2,
-        "impressions": 449,
-        "ctr": 0.004454342984409799,
-        "position": 8.454342984409799
+        "impressions": 452,
+        "ctr": 0.004424778761061947,
+        "position": 8.464601769911503
       },
       {
         "keys": [
           "expo gps"
         ],
         "clicks": 2,
-        "impressions": 259,
-        "ctr": 0.007722007722007722,
-        "position": 7.594594594594595
+        "impressions": 261,
+        "ctr": 0.007662835249042145,
+        "position": 7.586206896551724
       },
       {
         "keys": [
           "expo location api"
         ],
         "clicks": 2,
-        "impressions": 237,
-        "ctr": 0.008438818565400843,
-        "position": 5.0042194092827
+        "impressions": 238,
+        "ctr": 0.008403361344537815,
+        "position": 5.0210084033613445
       },
       {
         "keys": [
@@ -475,9 +475,9 @@
           "react 19 best practices"
         ],
         "clicks": 2,
-        "impressions": 73,
-        "ctr": 0.0273972602739726,
-        "position": 9.58904109589041
+        "impressions": 80,
+        "ctr": 0.025,
+        "position": 9.6
       },
       {
         "keys": [
@@ -502,9 +502,9 @@
           "android emulator very slow"
         ],
         "clicks": 1,
-        "impressions": 136,
-        "ctr": 0.007352941176470588,
-        "position": 6.757352941176471
+        "impressions": 138,
+        "ctr": 0.007246376811594203,
+        "position": 6.717391304347826
       },
       {
         "keys": [
@@ -547,9 +547,9 @@
           "expo location permissions"
         ],
         "clicks": 1,
-        "impressions": 210,
-        "ctr": 0.004761904761904762,
-        "position": 6.576190476190476
+        "impressions": 212,
+        "ctr": 0.0047169811320754715,
+        "position": 6.570754716981132
       },
       {
         "keys": [
@@ -574,9 +574,18 @@
           "expo-location documentation"
         ],
         "clicks": 1,
-        "impressions": 339,
-        "ctr": 0.0029498525073746312,
-        "position": 4.775811209439528
+        "impressions": 341,
+        "ctr": 0.002932551319648094,
+        "position": 4.765395894428153
+      },
+      {
+        "keys": [
+          "expo-location permissionstatus.granted"
+        ],
+        "clicks": 1,
+        "impressions": 1144,
+        "ctr": 0.0008741258741258741,
+        "position": 8.407342657342657
       },
       {
         "keys": [
@@ -592,9 +601,9 @@
           "location expo"
         ],
         "clicks": 1,
-        "impressions": 167,
-        "ctr": 0.005988023952095809,
-        "position": 8.664670658682635
+        "impressions": 169,
+        "ctr": 0.005917159763313609,
+        "position": 8.633136094674557
       },
       {
         "keys": [
@@ -646,9 +655,9 @@
           "why is android emulator so slow"
         ],
         "clicks": 1,
-        "impressions": 112,
-        "ctr": 0.008928571428571428,
-        "position": 4.714285714285714
+        "impressions": 115,
+        "ctr": 0.008695652173913044,
+        "position": 4.739130434782609
       },
       {
         "keys": [
@@ -685,15 +694,6 @@
         "impressions": 12,
         "ctr": 0,
         "position": 10.083333333333334
-      },
-      {
-        "keys": [
-          "\"adb emu geo fix\""
-        ],
-        "clicks": 0,
-        "impressions": 2,
-        "ctr": 0,
-        "position": 4
       }
     ],
     "countries": [
@@ -701,136 +701,136 @@
         "keys": [
           "usa"
         ],
-        "clicks": 184,
-        "impressions": 170752,
-        "ctr": 0.0010775862068965517,
-        "position": 6.8764875374812595
+        "clicks": 188,
+        "impressions": 173398,
+        "ctr": 0.001084210890552371,
+        "position": 6.872945478033195
       },
       {
         "keys": [
           "ind"
         ],
         "clicks": 85,
-        "impressions": 11767,
-        "ctr": 0.007223591399677063,
-        "position": 7.097475992181525
+        "impressions": 11880,
+        "ctr": 0.007154882154882155,
+        "position": 7.091750841750842
       },
       {
         "keys": [
           "deu"
         ],
         "clicks": 72,
-        "impressions": 4959,
-        "ctr": 0.014519056261343012,
-        "position": 6.617664851784634
+        "impressions": 5057,
+        "ctr": 0.014237690330235317,
+        "position": 6.6126161755981805
       },
       {
         "keys": [
           "gbr"
         ],
         "clicks": 47,
-        "impressions": 11745,
-        "ctr": 0.004001702852277565,
-        "position": 5.820093656875266
+        "impressions": 11808,
+        "ctr": 0.003980352303523035,
+        "position": 5.8191903794037945
       },
       {
         "keys": [
           "fra"
         ],
         "clicks": 43,
-        "impressions": 4078,
-        "ctr": 0.010544384502206964,
-        "position": 7.392839627268269
+        "impressions": 4132,
+        "ctr": 0.010406582768635044,
+        "position": 7.3792352371732814
       },
       {
         "keys": [
           "can"
         ],
         "clicks": 35,
-        "impressions": 6816,
-        "ctr": 0.005134976525821597,
-        "position": 7.248092723004695
+        "impressions": 6888,
+        "ctr": 0.00508130081300813,
+        "position": 7.243466898954704
       },
       {
         "keys": [
           "esp"
         ],
         "clicks": 35,
-        "impressions": 3253,
-        "ctr": 0.010759299108515216,
-        "position": 7.243467568398401
+        "impressions": 3283,
+        "ctr": 0.010660980810234541,
+        "position": 7.2375875723423695
       },
       {
         "keys": [
           "bel"
         ],
         "clicks": 30,
-        "impressions": 1050,
-        "ctr": 0.02857142857142857,
-        "position": 6.424761904761905
+        "impressions": 1058,
+        "ctr": 0.02835538752362949,
+        "position": 6.431001890359168
       },
       {
         "keys": [
           "ita"
         ],
         "clicks": 27,
-        "impressions": 2666,
-        "ctr": 0.010127531882970742,
-        "position": 7.85258814703676
+        "impressions": 2688,
+        "ctr": 0.010044642857142858,
+        "position": 7.838913690476191
       },
       {
         "keys": [
           "idn"
         ],
         "clicks": 26,
-        "impressions": 2997,
-        "ctr": 0.008675342008675343,
-        "position": 6.366366366366367
+        "impressions": 3048,
+        "ctr": 0.00853018372703412,
+        "position": 6.363517060367454
       },
       {
         "keys": [
           "nld"
         ],
         "clicks": 24,
-        "impressions": 2323,
-        "ctr": 0.010331467929401636,
-        "position": 6.727507533362032
+        "impressions": 2350,
+        "ctr": 0.010212765957446808,
+        "position": 6.733617021276595
       },
       {
         "keys": [
           "bra"
         ],
         "clicks": 22,
-        "impressions": 6786,
-        "ctr": 0.0032419687592101384,
-        "position": 7.051134689065724
-      },
-      {
-        "keys": [
-          "aus"
-        ],
-        "clicks": 21,
-        "impressions": 2795,
-        "ctr": 0.0075134168157423974,
-        "position": 7.179248658318426
+        "impressions": 6860,
+        "ctr": 0.003206997084548105,
+        "position": 7.039795918367347
       },
       {
         "keys": [
           "swe"
         ],
         "clicks": 21,
-        "impressions": 1486,
-        "ctr": 0.014131897711978465,
-        "position": 6.710632570659489
+        "impressions": 1500,
+        "ctr": 0.014,
+        "position": 6.693333333333333
+      },
+      {
+        "keys": [
+          "aus"
+        ],
+        "clicks": 20,
+        "impressions": 2843,
+        "ctr": 0.007034822370735139,
+        "position": 7.158283503341541
       },
       {
         "keys": [
           "kor"
         ],
         "clicks": 19,
-        "impressions": 2280,
-        "ctr": 0.008333333333333333,
-        "position": 7.650438596491228
+        "impressions": 2395,
+        "ctr": 0.007933194154488519,
+        "position": 7.660542797494781
       }
     ],
     "devices": [
@@ -838,35 +838,35 @@
         "keys": [
           "DESKTOP"
         ],
-        "clicks": 913,
-        "impressions": 262889,
-        "ctr": 0.0034729486589397045,
-        "position": 7.191282252205303
+        "clicks": 915,
+        "impressions": 267185,
+        "ctr": 0.003424593446488388,
+        "position": 7.189322005352097
       },
       {
         "keys": [
           "MOBILE"
         ],
-        "clicks": 233,
-        "impressions": 27709,
-        "ctr": 0.008408820238911544,
-        "position": 4.783608213937709
+        "clicks": 235,
+        "impressions": 27812,
+        "ctr": 0.008449590104990651,
+        "position": 4.78052639148569
       },
       {
         "keys": [
           "TABLET"
         ],
         "clicks": 6,
-        "impressions": 4398,
-        "ctr": 0.001364256480218281,
-        "position": 6.655070486584811
+        "impressions": 4401,
+        "ctr": 0.0013633265167007499,
+        "position": 6.6514428538968415
       }
     ]
   },
   "ga4": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-11",
+      "endDate": "2026-05-11",
       "days": 365
     },
     "propertyId": "416080229",
@@ -911,7 +911,7 @@
           ],
           "metricValues": [
             {
-              "value": "6086"
+              "value": "6314"
             },
             {
               "value": "62"
@@ -932,7 +932,7 @@
           ],
           "metricValues": [
             {
-              "value": "1549"
+              "value": "1548"
             },
             {
               "value": "7"
@@ -953,7 +953,7 @@
           ],
           "metricValues": [
             {
-              "value": "238"
+              "value": "237"
             },
             {
               "value": "0"
@@ -995,7 +995,7 @@
           ],
           "metricValues": [
             {
-              "value": "109"
+              "value": "108"
             },
             {
               "value": "1"
@@ -1026,6 +1026,27 @@
         {
           "dimensionValues": [
             {
+              "value": "Referral"
+            },
+            {
+              "value": "github.com"
+            },
+            {
+              "value": "referral"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "32"
+            },
+            {
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
               "value": "Organic Social"
             },
             {
@@ -1038,27 +1059,6 @@
           "metricValues": [
             {
               "value": "31"
-            },
-            {
-              "value": "1"
-            }
-          ]
-        },
-        {
-          "dimensionValues": [
-            {
-              "value": "Referral"
-            },
-            {
-              "value": "github.com"
-            },
-            {
-              "value": "referral"
-            }
-          ],
-          "metricValues": [
-            {
-              "value": "27"
             },
             {
               "value": "1"
@@ -1100,7 +1100,7 @@
           ],
           "metricValues": [
             {
-              "value": "24"
+              "value": "25"
             },
             {
               "value": "3"
@@ -1251,19 +1251,19 @@
           ],
           "metricValues": [
             {
-              "value": "464"
+              "value": "465"
             },
             {
-              "value": "0.39224137931034481"
+              "value": "0.39139784946236561"
             },
             {
               "value": "1"
             },
             {
-              "value": "0.60775862068965514"
+              "value": "0.60860215053763445"
             },
             {
-              "value": "184.66402498706896"
+              "value": "184.29732155268817"
             }
           ]
         },
@@ -1299,19 +1299,19 @@
           ],
           "metricValues": [
             {
-              "value": "336"
+              "value": "337"
             },
             {
-              "value": "0.98511904761904767"
+              "value": "0.98516320474777452"
             },
             {
               "value": "0"
             },
             {
-              "value": "0.01488095238095238"
+              "value": "0.01483679525222552"
             },
             {
-              "value": "4.4089979077380947"
+              "value": "4.3959148278931748"
             }
           ]
         },
@@ -1323,19 +1323,19 @@
           ],
           "metricValues": [
             {
-              "value": "243"
+              "value": "242"
             },
             {
-              "value": "0.49382716049382713"
+              "value": "0.49586776859504134"
             },
             {
               "value": "0"
             },
             {
-              "value": "0.50617283950617287"
+              "value": "0.50413223140495866"
             },
             {
-              "value": "187.56133695061729"
+              "value": "182.99263400413224"
             }
           ]
         },
@@ -1371,19 +1371,19 @@
           ],
           "metricValues": [
             {
-              "value": "76"
+              "value": "75"
             },
             {
-              "value": "0.53947368421052633"
+              "value": "0.54666666666666663"
             },
             {
               "value": "0"
             },
             {
-              "value": "0.46052631578947367"
+              "value": "0.45333333333333331"
             },
             {
-              "value": "159.01837968421052"
+              "value": "160.76955850666667"
             }
           ]
         },
@@ -1395,19 +1395,19 @@
           ],
           "metricValues": [
             {
-              "value": "47"
+              "value": "46"
             },
             {
-              "value": "0.51063829787234039"
+              "value": "0.5"
             },
             {
               "value": "0"
             },
             {
-              "value": "0.48936170212765956"
+              "value": "0.5"
             },
             {
-              "value": "146.35400244680849"
+              "value": "149.32215167391305"
             }
           ]
         },
@@ -1419,19 +1419,19 @@
           ],
           "metricValues": [
             {
-              "value": "28"
+              "value": "26"
             },
             {
-              "value": "0.21428571428571427"
+              "value": "0.23076923076923078"
             },
             {
               "value": "4"
             },
             {
-              "value": "0.7857142857142857"
+              "value": "0.76923076923076927"
             },
             {
-              "value": "228.43832785714287"
+              "value": "240.1543459230769"
             }
           ]
         },
@@ -1635,13 +1635,13 @@
             ],
             "metricValues": [
               {
-                "value": "6815"
+                "value": "7033"
               },
               {
-                "value": "7813"
+                "value": "8019"
               },
               {
-                "value": "0.19339562268014848"
+                "value": "0.18880159620900361"
               }
             ]
           },
@@ -1708,10 +1708,10 @@
             ],
             "metricValues": [
               {
-                "value": "4278"
+                "value": "4479"
               },
               {
-                "value": "4635"
+                "value": "4876"
               }
             ]
           },
@@ -1723,10 +1723,10 @@
             ],
             "metricValues": [
               {
-                "value": "958"
+                "value": "959"
               },
               {
-                "value": "966"
+                "value": "967"
               }
             ]
           },
@@ -1738,10 +1738,10 @@
             ],
             "metricValues": [
               {
-                "value": "744"
+                "value": "752"
               },
               {
-                "value": "745"
+                "value": "753"
               }
             ]
           },
@@ -1798,10 +1798,10 @@
             ],
             "metricValues": [
               {
-                "value": "68"
+                "value": "67"
               },
               {
-                "value": "93"
+                "value": "92"
               }
             ]
           },
@@ -1813,10 +1813,10 @@
             ],
             "metricValues": [
               {
-                "value": "59"
+                "value": "60"
               },
               {
-                "value": "59"
+                "value": "60"
               }
             ]
           },
@@ -1831,7 +1831,7 @@
                 "value": "56"
               },
               {
-                "value": "74"
+                "value": "75"
               }
             ]
           },
@@ -1869,10 +1869,10 @@
             "dimensionValues": [],
             "metricValues": [
               {
-                "value": "62.70514363015004"
+                "value": "61.209598814612612"
               },
               {
-                "value": "0.21195522743510359"
+                "value": "0.20710883958647927"
               }
             ]
           }
@@ -1916,7 +1916,7 @@
           ],
           "metricValues": [
             {
-              "value": "4567"
+              "value": "4793"
             },
             {
               "value": "60"
@@ -1937,7 +1937,7 @@
           ],
           "metricValues": [
             {
-              "value": "1529"
+              "value": "1528"
             },
             {
               "value": "6"
@@ -1958,7 +1958,7 @@
           ],
           "metricValues": [
             {
-              "value": "231"
+              "value": "230"
             },
             {
               "value": "0"
@@ -1979,7 +1979,7 @@
           ],
           "metricValues": [
             {
-              "value": "109"
+              "value": "108"
             },
             {
               "value": "1"
@@ -2031,6 +2031,27 @@
         {
           "dimensionValues": [
             {
+              "value": "Referral"
+            },
+            {
+              "value": "github.com"
+            },
+            {
+              "value": "referral"
+            }
+          ],
+          "metricValues": [
+            {
+              "value": "32"
+            },
+            {
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "dimensionValues": [
+            {
               "value": "Organic Social"
             },
             {
@@ -2043,27 +2064,6 @@
           "metricValues": [
             {
               "value": "31"
-            },
-            {
-              "value": "1"
-            }
-          ]
-        },
-        {
-          "dimensionValues": [
-            {
-              "value": "Referral"
-            },
-            {
-              "value": "github.com"
-            },
-            {
-              "value": "referral"
-            }
-          ],
-          "metricValues": [
-            {
-              "value": "27"
             },
             {
               "value": "1"
@@ -2105,7 +2105,7 @@
           ],
           "metricValues": [
             {
-              "value": "24"
+              "value": "25"
             },
             {
               "value": "3"
@@ -2245,10 +2245,10 @@
             ],
             "metricValues": [
               {
-                "value": "4278"
+                "value": "4479"
               },
               {
-                "value": "4635"
+                "value": "4876"
               }
             ]
           },
@@ -2305,10 +2305,10 @@
             ],
             "metricValues": [
               {
-                "value": "68"
+                "value": "67"
               },
               {
-                "value": "93"
+                "value": "92"
               }
             ]
           },
@@ -2320,10 +2320,10 @@
             ],
             "metricValues": [
               {
-                "value": "59"
+                "value": "60"
               },
               {
-                "value": "59"
+                "value": "60"
               }
             ]
           },
@@ -2338,7 +2338,7 @@
                 "value": "56"
               },
               {
-                "value": "74"
+                "value": "75"
               }
             ]
           },
@@ -2393,8 +2393,8 @@
   },
   "bing": {
     "window": {
-      "startDate": "2025-05-08",
-      "endDate": "2026-05-08",
+      "startDate": "2025-05-11",
+      "endDate": "2026-05-11",
       "days": 365
     },
     "siteUrl": "https://coffey.codes/",
@@ -2420,91 +2420,91 @@
     "topQueries": []
   },
   "totals": {
-    "clicks": 1152,
-    "impressions": 294996,
-    "ctr": 0.0039051376967823292
+    "clicks": 1156,
+    "impressions": 299398,
+    "ctr": 0.0038610812363476044
   },
   "topPages": [
     {
       "keys": [
         "https://coffey.codes/articles/building-location-based-features-using-expo-location"
       ],
-      "clicks": 390,
-      "impressions": 151786,
-      "ctr": 0.002569406928175194,
-      "position": 6.753000935527651
+      "clicks": 392,
+      "impressions": 154591,
+      "ctr": 0.0025357232956640424,
+      "position": 6.749060423957411
     },
     {
       "keys": [
         "https://coffey.codes/articles/vibe-coding-building-an-app-entirely-with-ai-prompts"
       ],
-      "clicks": 248,
-      "impressions": 9062,
-      "ctr": 0.027367027146325315,
-      "position": 8.481240344294857
+      "clicks": 249,
+      "impressions": 9106,
+      "ctr": 0.02734460795080167,
+      "position": 8.489347682846475
     },
     {
       "keys": [
         "https://coffey.codes/articles/slow-android-emulator-flutter-dev"
       ],
-      "clicks": 237,
-      "impressions": 71286,
-      "ctr": 0.0033246359734029124,
-      "position": 5.844429481244564
+      "clicks": 235,
+      "impressions": 71959,
+      "ctr": 0.0032657485512583555,
+      "position": 5.843410831167748
     },
     {
       "keys": [
         "https://coffey.codes/articles/managing-secrets-firebase-apphosting-yaml-nextjs"
       ],
       "clicks": 180,
-      "impressions": 43542,
-      "ctr": 0.00413393964448119,
-      "position": 7.4645859170456115
+      "impressions": 43976,
+      "ctr": 0.004093141713661997,
+      "position": 7.468460069128616
     },
     {
       "keys": [
         "https://coffey.codes/articles/react-19-features-and-design-patterns"
       ],
-      "clicks": 52,
-      "impressions": 15329,
-      "ctr": 0.0033922630308565464,
-      "position": 8.6312871028769
+      "clicks": 53,
+      "impressions": 15788,
+      "ctr": 0.003356979984798581,
+      "position": 8.692741322523435
     },
     {
       "keys": [
         "https://coffey.codes/Anthony%20Coffey%20-%20Resume.pdf"
       ],
-      "clicks": 15,
-      "impressions": 465,
-      "ctr": 0.03225806451612903,
-      "position": 39.73548387096774
+      "clicks": 16,
+      "impressions": 466,
+      "ctr": 0.034334763948497854,
+      "position": 39.65450643776824
     },
     {
       "keys": [
         "https://coffey.codes/articles/authorize-net-for-react-native-expo-sdk-49"
       ],
       "clicks": 15,
-      "impressions": 885,
-      "ctr": 0.01694915254237288,
-      "position": 11.483615819209039
+      "impressions": 891,
+      "ctr": 0.016835016835016835,
+      "position": 11.506172839506172
     },
     {
       "keys": [
         "https://coffey.codes/"
       ],
-      "clicks": 4,
-      "impressions": 310,
-      "ctr": 0.012903225806451613,
-      "position": 13.893548387096773
+      "clicks": 6,
+      "impressions": 317,
+      "ctr": 0.01892744479495268,
+      "position": 13.725552050473187
     },
     {
       "keys": [
         "https://coffey.codes/contact"
       ],
       "clicks": 4,
-      "impressions": 221,
-      "ctr": 0.01809954751131222,
-      "position": 26.357466063348415
+      "impressions": 219,
+      "ctr": 0.0182648401826484,
+      "position": 25.735159817351597
     },
     {
       "keys": [
@@ -2520,18 +2520,27 @@
         "https://coffey.codes/articles/how-to-end-a-process-by-port-number"
       ],
       "clicks": 2,
-      "impressions": 706,
-      "ctr": 0.0028328611898017,
-      "position": 19.879603399433428
+      "impressions": 705,
+      "ctr": 0.0028368794326241137,
+      "position": 19.892198581560283
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles"
+      ],
+      "clicks": 1,
+      "impressions": 97,
+      "ctr": 0.010309278350515464,
+      "position": 8.329896907216494
     },
     {
       "keys": [
         "https://coffey.codes/articles/step-by-step-building-your-blog-with-next-js-and-mdx"
       ],
       "clicks": 1,
-      "impressions": 632,
-      "ctr": 0.0015822784810126582,
-      "position": 17.522151898734176
+      "impressions": 629,
+      "ctr": 0.001589825119236884,
+      "position": 17.5818759936407
     },
     {
       "keys": [
@@ -2544,30 +2553,21 @@
     },
     {
       "keys": [
-        "https://coffey.codes/articles"
-      ],
-      "clicks": 0,
-      "impressions": 96,
-      "ctr": 0,
-      "position": 8.395833333333332
-    },
-    {
-      "keys": [
         "https://coffey.codes/articles/building-an-mdx-powered-blog-using-app-router-next-js"
       ],
       "clicks": 0,
-      "impressions": 264,
+      "impressions": 266,
       "ctr": 0,
-      "position": 24.393939393939394
+      "position": 24.26691729323308
     },
     {
       "keys": [
         "https://coffey.codes/articles/building-interactive-3d-experiences-with-react-three-fiber"
       ],
       "clicks": 0,
-      "impressions": 23,
+      "impressions": 18,
       "ctr": 0,
-      "position": 11.565217391304348
+      "position": 12.166666666666666
     },
     {
       "keys": [
@@ -2577,15 +2577,6 @@
       "impressions": 4,
       "ctr": 0,
       "position": 5
-    },
-    {
-      "keys": [
-        "https://coffey.codes/articles/category/development"
-      ],
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0,
-      "position": 10
     },
     {
       "keys": [
@@ -2601,9 +2592,9 @@
         "https://coffey.codes/articles/how-to-deploy-a-flask-rest-api-on-google-cloud-run"
       ],
       "clicks": 0,
-      "impressions": 13,
+      "impressions": 8,
       "ctr": 0,
-      "position": 6.153846153846154
+      "position": 7.125
     },
     {
       "keys": [
@@ -2619,9 +2610,9 @@
         "https://coffey.codes/articles/react-19-features-and-design-patterns#actions-api"
       ],
       "clicks": 0,
-      "impressions": 720,
+      "impressions": 733,
       "ctr": 0,
-      "position": 6.022222222222222
+      "position": 6.023192360163711
     },
     {
       "keys": [
@@ -2637,18 +2628,27 @@
         "https://coffey.codes/articles/react-19-features-and-design-patterns#enhanced-server-components"
       ],
       "clicks": 0,
-      "impressions": 185,
+      "impressions": 188,
       "ctr": 0,
-      "position": 6.410810810810811
+      "position": 6.420212765957447
     },
     {
       "keys": [
         "https://coffey.codes/articles/react-19-features-and-design-patterns#hybrid-rendering-strategies"
       ],
       "clicks": 0,
-      "impressions": 42,
+      "impressions": 43,
       "ctr": 0,
-      "position": 6.5476190476190474
+      "position": 6.534883720930233
+    },
+    {
+      "keys": [
+        "https://coffey.codes/articles/react-19-features-and-design-patterns#islands-architecture"
+      ],
+      "clicks": 0,
+      "impressions": 83,
+      "ctr": 0,
+      "position": 5.9879518072289155
     }
   ],
   "topQueries": [
@@ -2657,27 +2657,27 @@
         "flutter vibe coding"
       ],
       "clicks": 49,
-      "impressions": 1088,
-      "ctr": 0.04503676470588235,
-      "position": 8.475183823529413
+      "impressions": 1093,
+      "ctr": 0.04483074107959744,
+      "position": 8.486733760292772
     },
     {
       "keys": [
         "expo location"
       ],
-      "clicks": 24,
-      "impressions": 9696,
-      "ctr": 0.0024752475247524753,
-      "position": 7.7275165016501655
+      "clicks": 25,
+      "impressions": 9787,
+      "ctr": 0.0025544089097782772,
+      "position": 7.724226014100338
     },
     {
       "keys": [
         "vibe coding flutter"
       ],
       "clicks": 24,
-      "impressions": 649,
-      "ctr": 0.03697996918335902,
-      "position": 8.26964560862866
+      "impressions": 654,
+      "ctr": 0.03669724770642202,
+      "position": 8.302752293577981
     },
     {
       "keys": [
@@ -2693,27 +2693,27 @@
         "expo-location"
       ],
       "clicks": 10,
-      "impressions": 5298,
-      "ctr": 0.001887504718761797,
-      "position": 6.603435258588147
+      "impressions": 5356,
+      "ctr": 0.0018670649738610904,
+      "position": 6.602315160567588
     },
     {
       "keys": [
         "vibe code flutter app"
       ],
       "clicks": 9,
-      "impressions": 157,
-      "ctr": 0.05732484076433121,
-      "position": 7.547770700636943
+      "impressions": 158,
+      "ctr": 0.056962025316455694,
+      "position": 7.575949367088608
     },
     {
       "keys": [
         "expo geofencing"
       ],
       "clicks": 7,
-      "impressions": 216,
-      "ctr": 0.032407407407407406,
-      "position": 7.583333333333333
+      "impressions": 217,
+      "ctr": 0.03225806451612903,
+      "position": 7.580645161290323
     },
     {
       "keys": [
@@ -2765,9 +2765,9 @@
         "expo geolocation"
       ],
       "clicks": 3,
-      "impressions": 495,
-      "ctr": 0.006060606060606061,
-      "position": 6.91919191919192
+      "impressions": 499,
+      "ctr": 0.006012024048096192,
+      "position": 6.905811623246493
     },
     {
       "keys": [
@@ -2783,54 +2783,54 @@
         "react native expo location"
       ],
       "clicks": 3,
-      "impressions": 230,
-      "ctr": 0.013043478260869565,
-      "position": 5.065217391304348
+      "impressions": 233,
+      "ctr": 0.012875536480686695,
+      "position": 5.07725321888412
     },
     {
       "keys": [
         "requestforegroundpermissionsasync"
       ],
       "clicks": 3,
-      "impressions": 224,
-      "ctr": 0.013392857142857142,
-      "position": 7.825892857142857
+      "impressions": 225,
+      "ctr": 0.013333333333333334,
+      "position": 7.822222222222222
     },
     {
       "keys": [
         "android emulator slow"
       ],
       "clicks": 2,
-      "impressions": 387,
-      "ctr": 0.00516795865633075,
-      "position": 7.390180878552972
+      "impressions": 395,
+      "ctr": 0.005063291139240506,
+      "position": 7.3443037974683545
     },
     {
       "keys": [
         "apphosting.yaml"
       ],
       "clicks": 2,
-      "impressions": 449,
-      "ctr": 0.004454342984409799,
-      "position": 8.454342984409799
+      "impressions": 452,
+      "ctr": 0.004424778761061947,
+      "position": 8.464601769911503
     },
     {
       "keys": [
         "expo gps"
       ],
       "clicks": 2,
-      "impressions": 259,
-      "ctr": 0.007722007722007722,
-      "position": 7.594594594594595
+      "impressions": 261,
+      "ctr": 0.007662835249042145,
+      "position": 7.586206896551724
     },
     {
       "keys": [
         "expo location api"
       ],
       "clicks": 2,
-      "impressions": 237,
-      "ctr": 0.008438818565400843,
-      "position": 5.0042194092827
+      "impressions": 238,
+      "ctr": 0.008403361344537815,
+      "position": 5.0210084033613445
     },
     {
       "keys": [
@@ -2882,9 +2882,9 @@
         "react 19 best practices"
       ],
       "clicks": 2,
-      "impressions": 73,
-      "ctr": 0.0273972602739726,
-      "position": 9.58904109589041
+      "impressions": 80,
+      "ctr": 0.025,
+      "position": 9.6
     },
     {
       "keys": [
@@ -2909,9 +2909,9 @@
         "android emulator very slow"
       ],
       "clicks": 1,
-      "impressions": 136,
-      "ctr": 0.007352941176470588,
-      "position": 6.757352941176471
+      "impressions": 138,
+      "ctr": 0.007246376811594203,
+      "position": 6.717391304347826
     },
     {
       "keys": [
@@ -2954,9 +2954,9 @@
         "expo location permissions"
       ],
       "clicks": 1,
-      "impressions": 210,
-      "ctr": 0.004761904761904762,
-      "position": 6.576190476190476
+      "impressions": 212,
+      "ctr": 0.0047169811320754715,
+      "position": 6.570754716981132
     },
     {
       "keys": [
@@ -2981,9 +2981,18 @@
         "expo-location documentation"
       ],
       "clicks": 1,
-      "impressions": 339,
-      "ctr": 0.0029498525073746312,
-      "position": 4.775811209439528
+      "impressions": 341,
+      "ctr": 0.002932551319648094,
+      "position": 4.765395894428153
+    },
+    {
+      "keys": [
+        "expo-location permissionstatus.granted"
+      ],
+      "clicks": 1,
+      "impressions": 1144,
+      "ctr": 0.0008741258741258741,
+      "position": 8.407342657342657
     },
     {
       "keys": [
@@ -2999,9 +3008,9 @@
         "location expo"
       ],
       "clicks": 1,
-      "impressions": 167,
-      "ctr": 0.005988023952095809,
-      "position": 8.664670658682635
+      "impressions": 169,
+      "ctr": 0.005917159763313609,
+      "position": 8.633136094674557
     },
     {
       "keys": [
@@ -3053,9 +3062,9 @@
         "why is android emulator so slow"
       ],
       "clicks": 1,
-      "impressions": 112,
-      "ctr": 0.008928571428571428,
-      "position": 4.714285714285714
+      "impressions": 115,
+      "ctr": 0.008695652173913044,
+      "position": 4.739130434782609
     },
     {
       "keys": [
@@ -3092,15 +3101,6 @@
       "impressions": 12,
       "ctr": 0,
       "position": 10.083333333333334
-    },
-    {
-      "keys": [
-        "\"adb emu geo fix\""
-      ],
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0,
-      "position": 4
     }
   ],
   "countries": [
@@ -3108,136 +3108,136 @@
       "keys": [
         "usa"
       ],
-      "clicks": 184,
-      "impressions": 170752,
-      "ctr": 0.0010775862068965517,
-      "position": 6.8764875374812595
+      "clicks": 188,
+      "impressions": 173398,
+      "ctr": 0.001084210890552371,
+      "position": 6.872945478033195
     },
     {
       "keys": [
         "ind"
       ],
       "clicks": 85,
-      "impressions": 11767,
-      "ctr": 0.007223591399677063,
-      "position": 7.097475992181525
+      "impressions": 11880,
+      "ctr": 0.007154882154882155,
+      "position": 7.091750841750842
     },
     {
       "keys": [
         "deu"
       ],
       "clicks": 72,
-      "impressions": 4959,
-      "ctr": 0.014519056261343012,
-      "position": 6.617664851784634
+      "impressions": 5057,
+      "ctr": 0.014237690330235317,
+      "position": 6.6126161755981805
     },
     {
       "keys": [
         "gbr"
       ],
       "clicks": 47,
-      "impressions": 11745,
-      "ctr": 0.004001702852277565,
-      "position": 5.820093656875266
+      "impressions": 11808,
+      "ctr": 0.003980352303523035,
+      "position": 5.8191903794037945
     },
     {
       "keys": [
         "fra"
       ],
       "clicks": 43,
-      "impressions": 4078,
-      "ctr": 0.010544384502206964,
-      "position": 7.392839627268269
+      "impressions": 4132,
+      "ctr": 0.010406582768635044,
+      "position": 7.3792352371732814
     },
     {
       "keys": [
         "can"
       ],
       "clicks": 35,
-      "impressions": 6816,
-      "ctr": 0.005134976525821597,
-      "position": 7.248092723004695
+      "impressions": 6888,
+      "ctr": 0.00508130081300813,
+      "position": 7.243466898954704
     },
     {
       "keys": [
         "esp"
       ],
       "clicks": 35,
-      "impressions": 3253,
-      "ctr": 0.010759299108515216,
-      "position": 7.243467568398401
+      "impressions": 3283,
+      "ctr": 0.010660980810234541,
+      "position": 7.2375875723423695
     },
     {
       "keys": [
         "bel"
       ],
       "clicks": 30,
-      "impressions": 1050,
-      "ctr": 0.02857142857142857,
-      "position": 6.424761904761905
+      "impressions": 1058,
+      "ctr": 0.02835538752362949,
+      "position": 6.431001890359168
     },
     {
       "keys": [
         "ita"
       ],
       "clicks": 27,
-      "impressions": 2666,
-      "ctr": 0.010127531882970742,
-      "position": 7.85258814703676
+      "impressions": 2688,
+      "ctr": 0.010044642857142858,
+      "position": 7.838913690476191
     },
     {
       "keys": [
         "idn"
       ],
       "clicks": 26,
-      "impressions": 2997,
-      "ctr": 0.008675342008675343,
-      "position": 6.366366366366367
+      "impressions": 3048,
+      "ctr": 0.00853018372703412,
+      "position": 6.363517060367454
     },
     {
       "keys": [
         "nld"
       ],
       "clicks": 24,
-      "impressions": 2323,
-      "ctr": 0.010331467929401636,
-      "position": 6.727507533362032
+      "impressions": 2350,
+      "ctr": 0.010212765957446808,
+      "position": 6.733617021276595
     },
     {
       "keys": [
         "bra"
       ],
       "clicks": 22,
-      "impressions": 6786,
-      "ctr": 0.0032419687592101384,
-      "position": 7.051134689065724
-    },
-    {
-      "keys": [
-        "aus"
-      ],
-      "clicks": 21,
-      "impressions": 2795,
-      "ctr": 0.0075134168157423974,
-      "position": 7.179248658318426
+      "impressions": 6860,
+      "ctr": 0.003206997084548105,
+      "position": 7.039795918367347
     },
     {
       "keys": [
         "swe"
       ],
       "clicks": 21,
-      "impressions": 1486,
-      "ctr": 0.014131897711978465,
-      "position": 6.710632570659489
+      "impressions": 1500,
+      "ctr": 0.014,
+      "position": 6.693333333333333
+    },
+    {
+      "keys": [
+        "aus"
+      ],
+      "clicks": 20,
+      "impressions": 2843,
+      "ctr": 0.007034822370735139,
+      "position": 7.158283503341541
     },
     {
       "keys": [
         "kor"
       ],
       "clicks": 19,
-      "impressions": 2280,
-      "ctr": 0.008333333333333333,
-      "position": 7.650438596491228
+      "impressions": 2395,
+      "ctr": 0.007933194154488519,
+      "position": 7.660542797494781
     }
   ],
   "devices": [
@@ -3245,28 +3245,28 @@
       "keys": [
         "DESKTOP"
       ],
-      "clicks": 913,
-      "impressions": 262889,
-      "ctr": 0.0034729486589397045,
-      "position": 7.191282252205303
+      "clicks": 915,
+      "impressions": 267185,
+      "ctr": 0.003424593446488388,
+      "position": 7.189322005352097
     },
     {
       "keys": [
         "MOBILE"
       ],
-      "clicks": 233,
-      "impressions": 27709,
-      "ctr": 0.008408820238911544,
-      "position": 4.783608213937709
+      "clicks": 235,
+      "impressions": 27812,
+      "ctr": 0.008449590104990651,
+      "position": 4.78052639148569
     },
     {
       "keys": [
         "TABLET"
       ],
       "clicks": 6,
-      "impressions": 4398,
-      "ctr": 0.001364256480218281,
-      "position": 6.655070486584811
+      "impressions": 4401,
+      "ctr": 0.0013633265167007499,
+      "position": 6.6514428538968415
     }
   ]
 }

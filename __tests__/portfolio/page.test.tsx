@@ -1,10 +1,27 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { render, screen, within } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+vi.mock('@/app/(site)/portfolio/utils', () => ({
+  getAllPortfolioItems: vi.fn(),
+}));
 
 vi.mock('next/image', () => ({
-  default: ({ alt, src, ...rest }: { alt?: string; src?: string }) => (
+  default: ({
+    alt,
+    priority,
+    fill,
+    ...rest
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
+    priority?: boolean;
+    fill?: boolean;
+  }) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img alt={alt} src={src} {...rest} />
+    <img
+      alt={alt ?? ''}
+      data-priority={priority ? 'true' : undefined}
+      data-fill={fill ? 'true' : undefined}
+      {...rest}
+    />
   ),
 }));
 
@@ -13,30 +30,14 @@ vi.mock('next/link', () => ({
     href,
     children,
     className,
-    style,
   }: {
     href: string;
     children: React.ReactNode;
     className?: string;
-    style?: React.CSSProperties;
   }) => (
-    <a href={href} className={className} style={style}>
+    <a href={href} className={className}>
       {children}
     </a>
-  ),
-}));
-
-vi.mock('@/components/ui/RetroWindow', () => ({
-  default: ({
-    title,
-    children,
-  }: {
-    title?: string;
-    children: React.ReactNode;
-  }) => (
-    <div data-testid="retro-window" data-title={title}>
-      {children}
-    </div>
   ),
 }));
 
@@ -60,22 +61,105 @@ vi.mock('@/components/ui/Button', () => ({
 
 vi.mock('@heroicons/react/24/solid', () => ({
   ArrowDownTrayIcon: () => null,
-  ChatBubbleOvalLeftIcon: () => null,
   CalendarDaysIcon: () => null,
-  ArrowTopRightOnSquareIcon: () => null,
-  CheckCircleIcon: () => null,
-  TagIcon: () => null,
-  UserIcon: () => null,
+  ChatBubbleOvalLeftIcon: () => null,
+  ChevronRightIcon: () => null,
   ClockIcon: () => null,
   CodeBracketSquareIcon: () => null,
-  XMarkIcon: () => null,
+  UserIcon: () => null,
 }));
 
 vi.mock('@/components/Testimonials', () => ({
   default: () => <div data-testid="testimonials" />,
 }));
 
+import { getAllPortfolioItems } from '@/app/(site)/portfolio/utils';
 import PortfolioPage from '@/app/(site)/portfolio/page';
+
+// Sorted publishedAt-descending, as getAllPortfolioItems() returns them.
+// Periscope leads (logo, no client/year); coffey.codes anchors the list.
+const ITEMS = [
+  {
+    slug: 'periscope',
+    metadata: {
+      title: 'Periscope — SEO Data Tooling',
+      summary: 'A TypeScript CLI that unifies GSC, GA4, Bing, and Google Ads.',
+      publishedAt: '2026-05-17',
+      tags: ['TypeScript', 'CLI'],
+      mainImage: '/periscope-logo.png',
+      repo: 'https://github.com/anthonycoffey/periscope',
+      category: 'Open Source / SEO Tooling',
+    },
+    content: '',
+  },
+  {
+    slug: 'drum-machine',
+    metadata: {
+      title: 'React Drum Machine',
+      summary: 'A retro-inspired browser-based step sequencer.',
+      publishedAt: '2025-01-01',
+      tags: ['React', 'Vite'],
+      mainImage: '/portfolio/drum-machine-2.jpg',
+      link: 'https://anthonycoffey.github.io/React-Drum-Kit',
+      repo: 'https://github.com/anthonycoffey/React-Drum-Kit',
+      client: 'Hobby Project',
+      year: '2025',
+    },
+    content: '',
+  },
+  {
+    slug: 'piano-scale-visualizer',
+    metadata: {
+      title: 'Piano Scale Visualizer',
+      summary: 'An interactive browser-based piano that highlights scales.',
+      publishedAt: '2025-01-01',
+      tags: ['React', 'Music Theory'],
+      mainImage: '/portfolio/piano-scale-visualizer.png',
+      link: 'https://anthonycoffey.github.io/piano-scale-visualizer/',
+      repo: 'https://github.com/anthonycoffey/piano-scale-visualizer',
+      client: 'Hobby Project',
+      year: '2025',
+    },
+    content: '',
+  },
+  {
+    slug: 'simply-voice',
+    metadata: {
+      title: 'Simply Voice — Text-to-Speech App',
+      summary: 'A no-fuss web app that converts text to .wav files.',
+      publishedAt: '2025-01-01',
+      tags: ['React', 'Supabase'],
+      mainImage: '/portfolio/tts-home.jpg',
+      link: 'https://simply-voice-452800.web.app/',
+      repo: 'https://github.com/anthonycoffey/simply-voice',
+      client: 'Hobby Project',
+      year: '2025',
+    },
+    content: '',
+  },
+  {
+    slug: 'coffey-codes',
+    metadata: {
+      title: 'coffey.codes — Personal Blog & Portfolio',
+      summary: 'A performant, SEO-optimized personal site and technical blog.',
+      publishedAt: '2023-01-01',
+      tags: ['Next.js', 'TypeScript'],
+      mainImage: '/portfolio/coffey.codes-portfolio.png',
+      link: 'https://coffey.codes',
+      repo: 'https://github.com/anthonycoffey/coffey.codes',
+      client: 'Personal Project',
+      year: '2023',
+    },
+    content: '',
+  },
+];
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  vi.mocked(
+    getAllPortfolioItems as unknown as () => typeof ITEMS,
+  ).mockReturnValue(ITEMS);
+});
 
 describe('PortfolioPage', () => {
   it('renders the page heading', () => {
@@ -85,77 +169,63 @@ describe('PortfolioPage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders all hard-coded project titles in the grid', () => {
+  it('renders every portfolio item title as an h2', () => {
     render(<PortfolioPage />);
-    // Use heading queries because the same title appears inside the modal
-    // (which is not in the DOM until a card is clicked) — at initial render
-    // there is exactly one h3 per project.
-    expect(
-      screen.getByRole('heading', {
-        level: 3,
-        name: /personal blog & portfolio/i,
-      }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', {
-        level: 3,
-        name: /react drum machine/i,
-      }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { level: 3, name: /simply voice/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', {
-        level: 3,
-        name: /piano scale visualizer/i,
-      }),
-    ).toBeInTheDocument();
-  });
-
-  it('does not render modal content before a project is clicked', () => {
-    render(<PortfolioPage />);
-    // Modal-only headings — only appear once a project card opens the modal
-    expect(
-      screen.queryByRole('heading', { level: 4, name: /^challenge$/i }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole('heading', { level: 4, name: /project details/i }),
-    ).not.toBeInTheDocument();
-  });
-
-  it('all project cards render as Next.js Links with correct hrefs', () => {
-    render(<PortfolioPage />);
-    const expectedLinks = [
-      { name: /periscope/i, href: '/portfolio/periscope' },
-      { name: /personal blog & portfolio/i, href: '/portfolio/coffey-codes' },
-      { name: /react drum machine/i, href: '/portfolio/drum-machine' },
-      { name: /simply voice/i, href: '/portfolio/simply-voice' },
-      {
-        name: /piano scale visualizer/i,
-        href: '/portfolio/piano-scale-visualizer',
-      },
-    ];
-    for (const { name, href } of expectedLinks) {
-      const heading = screen.getByRole('heading', { level: 3, name });
-      const link = heading.closest('a') as HTMLAnchorElement;
-      expect(link).not.toBeNull();
-      expect(link.getAttribute('href')).toBe(href);
+    for (const item of ITEMS) {
+      expect(
+        screen.getByRole('heading', { level: 2, name: item.metadata.title }),
+      ).toBeInTheDocument();
     }
   });
 
+  it('renders each project card as a Link to its detail page', () => {
+    render(<PortfolioPage />);
+    for (const item of ITEMS) {
+      const heading = screen.getByRole('heading', {
+        level: 2,
+        name: item.metadata.title,
+      });
+      const link = heading.closest('a');
+      expect(link).not.toBeNull();
+      expect(link!.getAttribute('href')).toBe(`/portfolio/${item.slug}`);
+    }
+  });
+
+  it('does not render any legacy polaroid markup', () => {
+    const { container } = render(<PortfolioPage />);
+    expect(container.querySelector('.polaroid-card')).toBeNull();
+    expect(container.querySelector('.vhs-card')).toBeNull();
+  });
+
+  it('shows client and year metadata for items that declare them', () => {
+    render(<PortfolioPage />);
+    const heading = screen.getByRole('heading', {
+      level: 2,
+      name: 'React Drum Machine',
+    });
+    const card = heading.closest('a') as HTMLElement;
+    expect(within(card).getByText('Hobby Project')).toBeInTheDocument();
+    expect(within(card).getByText('2025')).toBeInTheDocument();
+  });
+
   describe('CWV image hygiene', () => {
-    it('polaroid grid thumbnails declare a sizes attribute', () => {
+    it('renders exactly one thumbnail per project, each with a sizes hint', () => {
       const { container } = render(<PortfolioPage />);
-      const cards = container.querySelectorAll('.polaroid-card');
-      expect(cards.length).toBeGreaterThan(0);
-      cards.forEach((card) => {
-        const img = card.querySelector('img');
-        expect(img).not.toBeNull();
-        expect(img!.getAttribute('sizes')).toBeTruthy();
+      const imgs = container.querySelectorAll('img');
+      expect(imgs.length).toBe(ITEMS.length);
+      imgs.forEach((img) => {
+        expect(img.getAttribute('sizes')).toBeTruthy();
       });
     });
 
+    it('marks only the first card image as priority (the LCP candidate)', () => {
+      const { container } = render(<PortfolioPage />);
+      const imgs = Array.from(container.querySelectorAll('img'));
+      expect(imgs[0].getAttribute('data-priority')).toBe('true');
+      imgs.slice(1).forEach((img) => {
+        expect(img.getAttribute('data-priority')).toBeNull();
+      });
+    });
   });
 
   it('renders the bottom CTA with links to /contact and Calendly', () => {

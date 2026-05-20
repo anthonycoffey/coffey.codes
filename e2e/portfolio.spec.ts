@@ -8,9 +8,7 @@ test.describe('Portfolio index', () => {
     ).toBeVisible();
   });
 
-  test('all project cards are navigable links (no modal trigger)', async ({
-    page,
-  }) => {
+  test('all project cards are navigable links', async ({ page }) => {
     await page.goto('/portfolio');
     const expectedLinks = [
       { name: /periscope/i, href: '/portfolio/periscope' },
@@ -20,7 +18,7 @@ test.describe('Portfolio index', () => {
       { name: /piano scale/i, href: '/portfolio/piano-scale-visualizer' },
     ];
     for (const { name, href } of expectedLinks) {
-      const heading = page.getByRole('heading', { level: 3, name });
+      const heading = page.getByRole('heading', { level: 2, name });
       const link = heading.locator('xpath=ancestor::a[1]');
       await expect(link).toHaveAttribute('href', href);
     }
@@ -69,7 +67,7 @@ test.describe('Portfolio item pages', () => {
   }) => {
     await page.goto('/portfolio');
     const coffeyCodesHeading = page.getByRole('heading', {
-      level: 3,
+      level: 2,
       name: /personal blog/i,
     });
     const card = coffeyCodesHeading.locator('xpath=ancestor::a[1]');

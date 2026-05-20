@@ -102,6 +102,7 @@ const PortfolioSection: React.FC = () => {
       ],
       year: '2023',
       featured: true,
+      slug: 'coffey-codes',
     },
     {
       id: 2,
@@ -123,6 +124,7 @@ const PortfolioSection: React.FC = () => {
       ],
       year: '2025',
       featured: true,
+      slug: 'drum-machine',
     },
     {
       id: 3,
@@ -151,6 +153,7 @@ const PortfolioSection: React.FC = () => {
       ],
       year: '2025',
       featured: true,
+      slug: 'simply-voice',
     },
     {
       id: 4,
@@ -173,6 +176,7 @@ const PortfolioSection: React.FC = () => {
       ],
       year: '2025',
       featured: true,
+      slug: 'piano-scale-visualizer',
     },
   ];
 

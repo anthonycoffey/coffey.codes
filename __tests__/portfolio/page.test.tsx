@@ -1,10 +1,28 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('next/image', () => ({
   default: ({ alt, src, ...rest }: { alt?: string; src?: string }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img alt={alt} src={src} {...rest} />
+  ),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({
+    href,
+    children,
+    className,
+    style,
+  }: {
+    href: string;
+    children: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
+  }) => (
+    <a href={href} className={className} style={style}>
+      {children}
+    </a>
   ),
 }));
 
@@ -106,56 +124,24 @@ describe('PortfolioPage', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('opens the modal when a project card is clicked', () => {
+  it('all project cards render as Next.js Links with correct hrefs', () => {
     render(<PortfolioPage />);
-    // Click the first project card
-    const cardHeading = screen.getByRole('heading', {
-      level: 3,
-      name: /personal blog & portfolio/i,
-    });
-    const card = cardHeading.closest('.polaroid-card') as HTMLElement;
-    expect(card).not.toBeNull();
-    fireEvent.click(card);
-
-    // Modal-only sections should now be in the DOM
-    expect(
-      screen.getByRole('heading', { level: 4, name: /^challenge$/i }),
-    ).toBeInTheDocument();
-    // Anchored — the sidebar also has a "similar solution?" h4 that would
-    // match an unanchored /solution/i.
-    expect(
-      screen.getByRole('heading', { level: 4, name: /^solution$/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { level: 4, name: /^results$/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { level: 4, name: /project details/i }),
-    ).toBeInTheDocument();
-  });
-
-  it('closes the modal when the close button is clicked', () => {
-    render(<PortfolioPage />);
-    const cardHeading = screen.getByRole('heading', {
-      level: 3,
-      name: /personal blog & portfolio/i,
-    });
-    const card = cardHeading.closest('.polaroid-card') as HTMLElement;
-    fireEvent.click(card);
-
-    // Modal is open
-    expect(
-      screen.getByRole('heading', { level: 4, name: /^challenge$/i }),
-    ).toBeInTheDocument();
-
-    // Close it
-    const closeBtn = screen.getByRole('button', { name: /close modal/i });
-    fireEvent.click(closeBtn);
-
-    // Modal-only headings are gone
-    expect(
-      screen.queryByRole('heading', { level: 4, name: /^challenge$/i }),
-    ).not.toBeInTheDocument();
+    const expectedLinks = [
+      { name: /periscope/i, href: '/portfolio/periscope' },
+      { name: /personal blog & portfolio/i, href: '/portfolio/coffey-codes' },
+      { name: /react drum machine/i, href: '/portfolio/drum-machine' },
+      { name: /simply voice/i, href: '/portfolio/simply-voice' },
+      {
+        name: /piano scale visualizer/i,
+        href: '/portfolio/piano-scale-visualizer',
+      },
+    ];
+    for (const { name, href } of expectedLinks) {
+      const heading = screen.getByRole('heading', { level: 3, name });
+      const link = heading.closest('a') as HTMLAnchorElement;
+      expect(link).not.toBeNull();
+      expect(link.getAttribute('href')).toBe(href);
+    }
   });
 
   describe('CWV image hygiene', () => {
@@ -170,40 +156,6 @@ describe('PortfolioPage', () => {
       });
     });
 
-    it('modal main image is wrapped in an aspect-ratio container (CLS reservation)', () => {
-      render(<PortfolioPage />);
-      const cardHeading = screen.getByRole('heading', {
-        level: 3,
-        name: /personal blog & portfolio/i,
-      });
-      const card = cardHeading.closest('.polaroid-card') as HTMLElement;
-      fireEvent.click(card);
-
-      const retroWindow = screen.getByTestId('retro-window');
-      const wrapper = retroWindow.querySelector('div');
-      expect(wrapper).not.toBeNull();
-      expect(wrapper!.className).toMatch(/aspect-/);
-    });
-
-    it('modal thumbnail images declare sizes hints', () => {
-      render(<PortfolioPage />);
-      const cardHeading = screen.getByRole('heading', {
-        level: 3,
-        name: /personal blog & portfolio/i,
-      });
-      const card = cardHeading.closest('.polaroid-card') as HTMLElement;
-      fireEvent.click(card);
-
-      // Find the thumbnail row inside the modal — Image elements with h-16 class
-      const thumbs = document.querySelectorAll('img.h-16');
-      // The Image component spreads className on the underlying <img>, but the
-      // h-16 class might not propagate through our test mock. Fall back to
-      // selecting all imgs with sizes="80px" (modal thumbs).
-      const thumbsWithSize = Array.from(
-        document.querySelectorAll('img'),
-      ).filter((img) => img.getAttribute('sizes') === '80px');
-      expect(thumbs.length + thumbsWithSize.length).toBeGreaterThan(0);
-    });
   });
 
   it('renders the bottom CTA with links to /contact and Calendly', () => {

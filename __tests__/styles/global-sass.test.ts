@@ -29,14 +29,6 @@ describe('global.sass — route-specific rules extracted', () => {
     expect(src).toMatch(/\.callout\b/);
   });
 
-  it('portfolio card rules live in styles/portfolio-cards.sass', () => {
-    expect(existsSync(resolve(root, 'styles/portfolio-cards.sass'))).toBe(
-      true,
-    );
-    const src = read('styles/portfolio-cards.sass');
-    expect(src).toMatch(/\.polaroid-card\b/);
-  });
-
   it('retro-window rules live in styles/retro-window.sass', () => {
     expect(existsSync(resolve(root, 'styles/retro-window.sass'))).toBe(true);
     const src = read('styles/retro-window.sass');

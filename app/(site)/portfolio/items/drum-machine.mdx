@@ -1,0 +1,41 @@
+---
+title: React Drum Machine
+summary: A retro-inspired browser-based step sequencer rebuilt from a 2016 drum kit — Howler.js audio, 16-step grid, tempo and volume controls, and a built-in demo pattern.
+publishedAt: 2025-01-01
+tags: [React, Vite, Tailwind CSS, Howler.js, Web Audio]
+mainImage: /portfolio/drum-machine-2.jpg
+link: https://anthonycoffey.github.io/React-Drum-Kit
+repo: https://github.com/anthonycoffey/React-Drum-Kit
+client: Hobby Project
+year: "2025"
+featured: true
+category: Creative / Audio
+---
+
+## Overview
+
+React Drum Machine is a browser-based step sequencer — the kind of tool you'd actually compose with. Load a pattern, dial in the tempo, and hear all sixteen steps fire on beat. No install, no plugins, just a URL.
+
+## Background
+
+The original drum kit dates back to 2016: a single-page app that played samples on button click. It was fine for a weekend hack, but it wasn't a *sequencer* — you couldn't lay down a groove and let it loop. Coming back to it in 2025, the goal was to rebuild it into something with real compositional utility.
+
+## The Rebuild
+
+The core data structure is a 2D boolean array — `steps[track][step]` — where each cell represents whether that instrument fires on that beat. On every tick of the playback loop, the engine reads the current step column and triggers every active track.
+
+**Howler.js** handles audio scheduling. It abstracts away cross-browser `AudioContext` differences and provides a clean API for loading and playing sprite-mapped samples. Using raw `AudioContext` directly would have required more boilerplate and more browser-specific workarounds.
+
+**Vite** keeps the dev loop tight — hot module replacement and near-instant rebuilds made iterating on the playback timing straightforward.
+
+## Features
+
+- 16-step sequencer grid with per-track on/off toggles
+- BPM slider for tempo control
+- Master volume control
+- Pre-loaded demo pattern so the machine sounds good on first load
+- Reset button to clear the grid
+
+## What I Learned
+
+Getting timing right in the browser is harder than it looks. `setInterval` drifts; `AudioContext.currentTime` does not. The rebuild reinforced why audio-first scheduling (schedule the next tick using the audio clock, not wall time) is the correct mental model for any sequencer work in the browser.

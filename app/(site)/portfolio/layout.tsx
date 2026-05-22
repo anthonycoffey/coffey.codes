@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import '@/styles/portfolio-cards.sass';
 // Same MDX prose styling articles + case-studies use. Portfolio items
 // at /portfolio/[slug] render MDX content (code blocks, inline code,
 // mermaid charts, callouts) and need these rules to match the rest of

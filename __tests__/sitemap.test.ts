@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 vi.mock('@/app/(site)/articles/utils', () => ({
   getAllBlogPosts: vi.fn(),
   getAllCategories: vi.fn(() => []),
-  getAllTags: vi.fn(() => []),
 }));
 
 vi.mock('@/app/(site)/case-studies/case-studies', () => ({
@@ -121,5 +120,21 @@ describe('sitemap article lastModified (SPEC-030 WS4)', () => {
 
     expect(a!.lastModified).toBe('2026-05-22');
     expect(b!.lastModified).toBe('2025-06-01');
+  });
+});
+
+describe('sitemap excludes tag pages (GSC Coverage cleanup 2026-05-23)', () => {
+  // Per the GSC Coverage report from 2026-05-23, 103 tag URLs in the
+  // sitemap were the bulk of 132 "Discovered - currently not indexed"
+  // entries that destroyed Google's crawl budget. Tag pages remain
+  // accessible for user browsing but are noindex,follow at the page
+  // level and absent from the sitemap.
+  it('does not emit any /articles/tag/* URLs', async () => {
+    vi.mocked(getAllBlogPosts as unknown as () => Post[]).mockReturnValue([]);
+
+    const entries = await sitemap();
+    const tagEntries = entries.filter((e) => e.url.includes('/articles/tag/'));
+
+    expect(tagEntries).toHaveLength(0);
   });
 });

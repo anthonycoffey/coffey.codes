@@ -1,7 +1,6 @@
 import {
   getAllBlogPosts,
   getAllCategories,
-  getAllTags,
 } from '@/app/(site)/articles/utils';
 import { caseStudies } from '@/app/(site)/case-studies/case-studies';
 import { getAllPortfolioItems } from '@/app/(site)/portfolio/utils';
@@ -39,12 +38,14 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
     priority: 0.5,
   }));
 
-  const tags: SitemapEntry[] = getAllTags().map((tag) => ({
-    url: `${baseUrl}/articles/tag/${encodeURIComponent(tag.toLowerCase())}`,
-    lastModified: today,
-    changeFrequency: 'weekly',
-    priority: 0.4,
-  }));
+  // Tag pages are deliberately excluded from the sitemap. The site has 100+
+  // unique tags, most of which surface only 1-2 articles each (thin /
+  // near-duplicate content from Google's perspective). Per the GSC
+  // Coverage report 2026-05-23, tag URLs were the bulk of 132 "Discovered
+  // - currently not indexed" entries that wasted crawl budget. Tag pages
+  // remain accessible for user browsing (linked from /articles and
+  // /articles/tags) and are marked noindex,follow in the page metadata,
+  // so internal-link equity still flows to the underlying articles.
 
   const caseStudyEntries: SitemapEntry[] = caseStudies.map((study) => ({
     url: `${baseUrl}/case-study/${study.slug}`,
@@ -133,7 +134,6 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
     ...staticRoutes,
     ...articles,
     ...categories,
-    ...tags,
     ...caseStudyEntries,
     ...portfolioItems,
   ];

@@ -178,6 +178,12 @@ Run `pagespeed_core_web_vitals` against the top 5 pages, record LCP / CLS / INP 
 
 - [ ] `npm run seo:snapshot` after deploy.
 - [ ] `npm run seo:diff -- 2026-05-22` to baseline CTR/impression deltas on the four WS1 pages.
-- [ ] `mcp__search-console__schema_validate` on each of the four WS1 article URLs.
-- [ ] PageSpeed baseline on the top 5 pages when rate limit clears.
+- [x] `mcp__search-console__schema_validate` on each of the four WS1 article URLs — **all four `valid: true`, zero errors** (2026-05-23, post-merge). Live BlogPosting JSON-LD confirms the new `headline`, `description`, `dateModified: 2026-05-22T00:00:00.000Z`, and OG image URLs with the rewritten titles are deployed.
+- [ ] PageSpeed baseline on the top 5 pages when rate limit clears (still rate-limited as of 2026-05-23).
 - [ ] Six-week follow-up: rerun `seo:diff` and record movement against the snapshot in `docs/strategy/data/`.
+
+### Regression coverage added (PR #211)
+
+- `__tests__/sitemap.test.ts` (new) — asserts article sitemap entries use `metadata.updated ?? metadata.publishedAt` for `lastModified`. WS4 wiring is now regression-protected.
+- `__tests__/articles/slug-page.test.tsx` — added: `BlogPosting.dateModified` reads from frontmatter `updated:` with precedence over `mtime` and `publishedAt`; `RelatedPosts` is rendered on the article page when shared-tag candidates exist (and not rendered when none exist). WS2a + WS3 wiring are now regression-protected.
+- Test suite is now 292 passing (up from 286), 54 files.

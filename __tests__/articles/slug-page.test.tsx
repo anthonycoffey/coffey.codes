@@ -22,7 +22,18 @@ vi.mock('@/components/Breadcrumbs', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  default: ({
+    href,
+    children,
+    ...rest
+  }: {
+    href: string;
+    children: React.ReactNode;
+  }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
 }));
 
 vi.mock('next/image', () => ({
@@ -238,5 +249,116 @@ describe('Article page CWV image hygiene', () => {
 
     expect(tag).toMatch(/data-priority="true"/);
     expect(tag).toMatch(/sizes="/);
+  });
+});
+
+describe('Article page `updated` frontmatter -> BlogPosting.dateModified', () => {
+  // Locks in SPEC-030 WS2a: frontmatter `updated:` is the editorial signal for
+  // a substantive edit (title, meta description, body). When present, it MUST
+  // be the dateModified Google sees in JSON-LD.
+  it('dateModified reads from `updated` when set (precedence over mtime / publishedAt)', async () => {
+    const POST_WITH_UPDATED = {
+      slug: 'updated-article',
+      metadata: {
+        title: 'An Updated Article',
+        publishedAt: '2025-01-01',
+        updated: '2026-05-22',
+        summary: 'Refreshed for the WS1 metadata sprint',
+        tags: ['react'],
+        category: 'engineering',
+      },
+      content: 'body',
+      // mtime is a much more recent date — `updated` should still win.
+      mtime: '2026-11-30T00:00:00.000Z',
+    };
+    vi.mocked(
+      getAllBlogPosts as unknown as () => (typeof POST_WITH_UPDATED)[],
+    ).mockReturnValue([POST_WITH_UPDATED]);
+
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'updated-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const blogPosting = findJsonLdByType(html, 'BlogPosting');
+
+    expect(blogPosting!.dateModified).toBe('2026-05-22T00:00:00.000Z');
+  });
+});
+
+describe('Article page renders RelatedPosts (SPEC-030 WS3 wiring)', () => {
+  // Locks in that the article template actually mounts the RelatedPosts
+  // component. RelatedPosts' own ranking logic is tested in
+  // __tests__/components/RelatedPosts.test.tsx — this just guards the wiring.
+  it('renders the "Related articles" section when other tag-overlap candidates exist', async () => {
+    const CURRENT = {
+      slug: 'test-article',
+      metadata: {
+        title: 'Test Article',
+        publishedAt: '2026-01-01',
+        summary: 'A test summary',
+        tags: ['react', 'typescript'],
+        category: 'engineering',
+      },
+      content: 'body',
+    };
+    const SIBLING = {
+      slug: 'sibling-article',
+      metadata: {
+        title: 'Sibling Article',
+        publishedAt: '2026-02-01',
+        summary: 'Shares tags with the current article',
+        tags: ['react', 'typescript'],
+        category: 'engineering',
+      },
+      content: 'body',
+    };
+    vi.mocked(
+      getAllBlogPosts as unknown as () => (typeof CURRENT)[],
+    ).mockReturnValue([CURRENT, SIBLING]);
+
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+
+    expect(html).toMatch(/Related articles/);
+    expect(html).toMatch(/Sibling Article/);
+    expect(html).toMatch(/href="\/articles\/sibling-article"/);
+  });
+
+  it('renders no related-posts section when no candidates share tags or category', async () => {
+    const CURRENT = {
+      slug: 'test-article',
+      metadata: {
+        title: 'Test Article',
+        publishedAt: '2026-01-01',
+        summary: 'A test summary',
+        tags: ['react'],
+        category: 'engineering',
+      },
+      content: 'body',
+    };
+    const UNRELATED = {
+      slug: 'unrelated',
+      metadata: {
+        title: 'Unrelated',
+        publishedAt: '2026-02-01',
+        summary: 'No tag overlap, different category',
+        tags: ['aws'],
+        category: 'cloud-and-devops',
+      },
+      content: 'body',
+    };
+    vi.mocked(
+      getAllBlogPosts as unknown as () => (typeof CURRENT)[],
+    ).mockReturnValue([CURRENT, UNRELATED]);
+
+    const element = await Blog({
+      params: Promise.resolve({ slug: 'test-article' }),
+    });
+    const html = renderToStaticMarkup(element);
+
+    expect(html).not.toMatch(/Related articles/);
+    expect(html).not.toMatch(/href="\/articles\/unrelated"/);
   });
 });

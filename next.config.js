@@ -116,6 +116,21 @@ const nextConfig = {
         destination: '/articles',
         permanent: true,
       },
+      // GSC Coverage 404 cleanup (2026-05-23): both URLs have been 404ing
+      // since at least early 2026 with no internal references. Add 308
+      // redirects to the closest semantic match so any external backlinks
+      // resolve cleanly.
+      {
+        source: '/articles/mdx-components',
+        destination:
+          '/articles/step-by-step-building-your-blog-with-next-js-and-mdx',
+        permanent: true,
+      },
+      {
+        source: '/articles/tag/styling',
+        destination: '/articles',
+        permanent: true,
+      },
     ];
   },
   sassOptions: {

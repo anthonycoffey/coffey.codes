@@ -252,7 +252,7 @@ The Section 3 trend table flagged four declining top pages: `slow-android-emulat
 
 The fourth declining page (`vibe-coding-...`) was deliberately not touched — its 2.73% CTR is healthy, so the issue is a traffic-volume decline, not a SERP-snippet problem. That one belongs to Editorial Slot 1 in `docs/strategy/editorial-calendar.md`.
 
-SPEC-030 WS6 also ran live `seo_cannibalization` with `minImpressions: 30` (vs the audit's default 50) and surfaced one issue: the React 19 article cannibalizing itself via `#actions-api`, `#react-compiler`, `#resource-loading-patterns`, `#streaming-patterns` anchor URLs (177 impressions / 0 clicks across 5 URL variants for `react 19 new features and patterns`). The audit's `seo_cannibalization: []` at `minImpressions: 50` was technically correct — each individual anchor URL sits at 43-48 impressions, below threshold. **Recommend lowering `minImpressions` to 30 for future cannibalization checks** to catch fragment-level self-competition.
+SPEC-030 WS6 also ran live `seo_cannibalization` with `minImpressions: 30` (vs the audit's default 50) and surfaced one issue: the React 19 article cannibalizing itself via `#actions-api`, `#react-compiler`, `#resource-loading-patterns` anchor URLs (177 impressions / 0 clicks across 4 URL variants for `react 19 new features and patterns` — parent at 48 impr + 3 anchors at 43 impr each). The audit's `seo_cannibalization: []` at `minImpressions: 50` was technically correct — each individual anchor URL sits at 43-48 impressions, below threshold. **Recommend lowering `minImpressions` to 30 for future cannibalization checks** to catch fragment-level self-competition.
 
 ### Recheck triggers (2026-08-10 quarterly target)
 

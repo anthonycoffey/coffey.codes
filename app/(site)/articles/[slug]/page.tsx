@@ -5,6 +5,7 @@ import { baseUrl } from '@/app/sitemap';
 import GoBack from '@/components/GoBack';
 import CommentsLazy from '@/components/CommentsLazy';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import RelatedPosts from '@/components/RelatedPosts';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';
@@ -129,7 +130,8 @@ export async function generateMetadata({ params }) {
 export default async function Blog({ params }) {
   const { slug } = await params;
 
-  const post = getAllBlogPosts().find((post) => post.slug === slug);
+  const allPosts = getAllBlogPosts();
+  const post = allPosts.find((post) => post.slug === slug);
 
   if (!post) {
     notFound();
@@ -312,6 +314,7 @@ export default async function Blog({ params }) {
         <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert mt-8">
           <CustomMDX source={post.content} components={extraComponents} />
         </article>
+        <RelatedPosts current={post} candidates={allPosts} />
         <CommentsLazy />
         <GoBack />
       </section>

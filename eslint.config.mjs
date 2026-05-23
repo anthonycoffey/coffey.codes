@@ -40,6 +40,8 @@ const config = [
     ignores: [
       'node_modules',
       '.next',
+      '**/.next/**',
+      '.claude/worktrees/**',
       'public',
       'coverage',
       '**/*.d.ts',

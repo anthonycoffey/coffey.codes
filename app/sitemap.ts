@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<SitemapEntry[]> {
 
   const articles: SitemapEntry[] = getAllBlogPosts().map((post) => ({
     url: `${baseUrl}/articles/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
+    lastModified: post.metadata.updated ?? post.metadata.publishedAt,
     changeFrequency: 'monthly',
     priority: 0.7,
   }));

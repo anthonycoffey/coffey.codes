@@ -21,6 +21,10 @@ vi.mock('@/components/Breadcrumbs', () => ({
   default: () => null,
 }));
 
+vi.mock('@/components/ShareButtons', () => ({
+  default: () => null,
+}));
+
 vi.mock('next/link', () => ({
   default: ({
     href,

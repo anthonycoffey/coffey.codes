@@ -6,6 +6,7 @@ import GoBack from '@/components/GoBack';
 import CommentsLazy from '@/components/CommentsLazy';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import RelatedPosts from '@/components/RelatedPosts';
+import ShareButtons from '@/components/ShareButtons';
 import Link from 'next/link';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';
@@ -307,6 +308,11 @@ export default async function Blog({ params }) {
               </div>
             </div>
           )}
+
+          <ShareButtons
+            url={`${baseUrl}/articles/${post.slug}`}
+            title={post.metadata.title}
+          />
         </div>
 
         <hr className="my-8 border-border" />

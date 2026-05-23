@@ -1,8 +1,9 @@
 ---
 id: SPEC-030
 title: 'Technical SEO sprint: CTR recovery & on-page optimization'
-status: ready
+status: complete
 created: 2026-05-22
+completed: 2026-05-23
 author: Anthony Coffey
 reviewers: []
 affected_repos: [coffey.codes]

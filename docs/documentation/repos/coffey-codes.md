@@ -2,7 +2,7 @@
 
 **Repo:** https://github.com/anthonycoffey/coffey.codes  
 **Deployment:** Vercel (auto-deploys from `main`, gated by GitHub Actions + Playwright e2e)
-**Last updated:** 2026-05-11
+**Last updated:** 2026-05-23
 
 ---
 
@@ -120,6 +120,8 @@ Custom components available in blog posts are registered in `components/mdx.tsx`
 2. Page component reads MDX file from `app/articles/posts/{slug}.mdx`
 3. `next-mdx-remote` processes MDX content with custom components from `components/mdx.tsx`
 4. `generateMetadata` constructs title from frontmatter `title` field, description from `summary`
+5. `components/RelatedPosts.tsx` is rendered at the article foot — server component, ranks other posts by shared-tag count → same-category tiebreak → recency, exports a pure `selectRelatedPosts()` ranker for testability (SPEC-030 WS3)
+6. `app/sitemap.ts` `lastModified` for each article reads `metadata.updated ?? metadata.publishedAt` so frontmatter `updated:` propagates the freshness signal to crawlers (SPEC-030 WS4)
 
 ### Article Search
 

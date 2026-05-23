@@ -13,17 +13,28 @@ import {
   UserPlusIcon,
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
+const LP_TITLE = 'Senior Engineer on Retainer for Agencies & Tech Teams';
+const LP_DESCRIPTION =
+  'Embedded senior developer / lead dev for agencies, startups, and tech teams — architecture, DevOps, and practical AI, hands-on the keyboard.';
+const LP_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent(LP_TITLE)}&category=${encodeURIComponent('Engineering Retainer')}`;
+
 export const metadata: Metadata = {
-  title: 'Senior Engineer on Retainer for Agencies & Tech Teams',
+  title: LP_TITLE,
   description:
     'Embedded senior developer / lead dev for agencies, startups, and tech teams. 12+ years shipping production work in architecture, DevOps, and practical AI integration — no ramp, no hiring loop.',
   alternates: { canonical: '/lp/strategic-partners' },
   openGraph: {
-    title: 'Senior Engineer on Retainer for Agencies & Tech Teams',
-    description:
-      'Embedded senior developer / lead dev for agencies, startups, and tech teams — architecture, DevOps, and practical AI, hands-on the keyboard.',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
     url: '/lp/strategic-partners',
     type: 'website',
+    images: [{ url: LP_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
+    images: [LP_OG_IMAGE],
   },
 };
 

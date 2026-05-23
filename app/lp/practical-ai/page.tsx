@@ -13,17 +13,28 @@ import {
   ChartBarIcon,
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
+const LP_TITLE = 'Practical AI Solutions for Business Growth';
+const LP_DESCRIPTION =
+  'Production-ready, scalable AI/ML solutions integrated with your business for measurable ROI.';
+const LP_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent(LP_TITLE)}&category=${encodeURIComponent('AI Consulting')}`;
+
 export const metadata: Metadata = {
-  title: 'Practical AI Solutions for Business Growth',
+  title: LP_TITLE,
   description:
     'Move past AI hype. Production-ready, scalable AI/ML solutions integrated with your business for tangible, measurable results.',
   alternates: { canonical: '/lp/practical-ai' },
   openGraph: {
-    title: 'Practical AI Solutions for Business Growth',
-    description:
-      'Production-ready, scalable AI/ML solutions integrated with your business for measurable ROI.',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
     url: '/lp/practical-ai',
     type: 'website',
+    images: [{ url: LP_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
+    images: [LP_OG_IMAGE],
   },
 };
 

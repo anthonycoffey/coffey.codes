@@ -28,11 +28,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata({ params }) {
   const { tag } = await params;
-  const resolvedSearchParams = await searchParams;
-  const isPaginated =
-    resolvedSearchParams?.page && Number(resolvedSearchParams.page) > 1;
   const decodedTag = capitalizeWords(decodeURIComponent(tag));
   const title = `${decodedTag} Articles`;
   const description = `Articles tagged ${decodedTag}, technical write-ups and deep dives by Anthony Coffey.`;
@@ -43,7 +40,14 @@ export async function generateMetadata({ params, searchParams }) {
     title,
     description,
     alternates: { canonical: url },
-    robots: isPaginated ? { index: false, follow: true } : undefined,
+    // Tag pages are noindex,follow site-wide: most tags surface only 1-2
+    // articles, which Google reads as thin/duplicate content (see GSC
+    // Coverage report 2026-05-23 — 103 tag pages were the bulk of the
+    // 132 "Discovered - currently not indexed" findings). Keeping the
+    // page crawlable preserves link-equity flow to the articles via the
+    // `follow` directive. `isPaginated` no longer matters; all tag pages
+    // and their paginated siblings are noindex.
+    robots: { index: false, follow: true },
     openGraph: {
       type: 'website',
       url,

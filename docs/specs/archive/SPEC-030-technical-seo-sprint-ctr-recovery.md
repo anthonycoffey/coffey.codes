@@ -1,8 +1,9 @@
 ---
 id: SPEC-030
 title: 'Technical SEO sprint: CTR recovery & on-page optimization'
-status: ready
+status: complete
 created: 2026-05-22
+completed: 2026-05-23
 author: Anthony Coffey
 reviewers: []
 affected_repos: [coffey.codes]
@@ -163,7 +164,7 @@ Run `pagespeed_core_web_vitals` against the top 5 pages, record LCP / CLS / INP 
 - **WS5** ⏸ Blocked by PageSpeed API rate limit (consistent error across multiple attempts). Re-run when the limit clears.
 - **WS6** ✅ Closed against live GSC (90-day window). Findings:
   - **Pair #13/#14 (mdx-blog) and pair #12/#20 (three-js)**: **no cannibalization detected**. The hypothesis from `content-disposition.md` was wrong — these pairs coexist cleanly. **No canonicals needed.**
-  - **One real cannibalization issue**: the `react-19-features-and-design-patterns` article cannibalizes itself. Google indexes the article's anchor fragments (`#actions-api`, `#react-compiler`, `#resource-loading-patterns`, `#streaming-patterns`) as separate URLs that compete with the parent URL for `react 19 new features and patterns` (177 total impressions, 0 clicks total across all 5 URLs). Not fixable via canonical (anchor fragments share the canonical with the parent). Logged as an editorial item — the article TOC's prominent anchor links are the structural cause, and a content refresh (per the editorial calendar) is the appropriate fix vehicle.
+  - **One real cannibalization issue**: the `react-19-features-and-design-patterns` article cannibalizes itself. Google indexes the article's anchor fragments (`#actions-api`, `#react-compiler`, `#resource-loading-patterns`) as separate URLs that compete with the parent URL for `react 19 new features and patterns` (177 total impressions, 0 clicks across 4 URL variants — parent at 48 impr + 3 anchors at 43 impr each). A fourth anchor `#streaming-patterns` ranks for the same query at 26 impressions per `seo_striking_distance` but sits below the cannibalization tool's surfacing threshold. Not fixable via canonical (anchor fragments share the canonical with the parent). Logged as an editorial item — the article TOC's prominent anchor links are the structural cause, and a content refresh (per the editorial calendar) is the appropriate fix vehicle.
   - **Striking-distance heading coverage** spot-checked against the live pull: all WS1-rewritten articles already have on-page heading coverage for their position 8-15 queries (auto-anchored by `components/mdx.tsx` `createHeading`). The biggest unaddressed cluster is the Expo-location function-name long-tails, which are owned by Editorial Slot 2 in `docs/strategy/editorial-calendar.md`.
   - **Low-CTR validation** of WS1: `expo location` (3,615 impr, 0.19% CTR, benchmark 2%) and `expo-location` (2,003 impr, 0.30%, benchmark 3%) are both 10x below benchmark — confirms WS1's thesis that the parent article's SERP snippet wasn't satisfying head queries.
   - Live data pulled via `seo_cannibalization` / `seo_striking_distance` / `seo_low_ctr_opportunities` MCP calls on 2026-05-22 via the Google service-account auth path.
@@ -177,6 +178,12 @@ Run `pagespeed_core_web_vitals` against the top 5 pages, record LCP / CLS / INP 
 
 - [ ] `npm run seo:snapshot` after deploy.
 - [ ] `npm run seo:diff -- 2026-05-22` to baseline CTR/impression deltas on the four WS1 pages.
-- [ ] `mcp__search-console__schema_validate` on each of the four WS1 article URLs.
-- [ ] PageSpeed baseline on the top 5 pages when rate limit clears.
+- [x] `mcp__search-console__schema_validate` on each of the four WS1 article URLs — **all four `valid: true`, zero errors** (2026-05-23, post-merge). Live BlogPosting JSON-LD confirms the new `headline`, `description`, `dateModified: 2026-05-22T00:00:00.000Z`, and OG image URLs with the rewritten titles are deployed.
+- [ ] PageSpeed baseline on the top 5 pages when rate limit clears (still rate-limited as of 2026-05-23).
 - [ ] Six-week follow-up: rerun `seo:diff` and record movement against the snapshot in `docs/strategy/data/`.
+
+### Regression coverage added (PR #211)
+
+- `__tests__/sitemap.test.ts` (new) — asserts article sitemap entries use `metadata.updated ?? metadata.publishedAt` for `lastModified`. WS4 wiring is now regression-protected.
+- `__tests__/articles/slug-page.test.tsx` — added: `BlogPosting.dateModified` reads from frontmatter `updated:` with precedence over `mtime` and `publishedAt`; `RelatedPosts` is rendered on the article page when shared-tag candidates exist (and not rendered when none exist). WS2a + WS3 wiring are now regression-protected.
+- Test suite is now 292 passing (up from 286), 54 files.

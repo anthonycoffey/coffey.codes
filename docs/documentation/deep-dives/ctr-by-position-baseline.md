@@ -85,6 +85,12 @@ A title rewrite that lifts CTR from 0.25% to 1.5% (a 6x improvement, which is ag
 
 **Future audits should cite the site-specific curve, not generic industry numbers.**
 
+### Postscript (2026-05-23, SPEC-030): the 6x-lift prediction is now a live experiment
+
+SPEC-030 WS1 shipped the title and meta-description rewrite on the Expo Location article (and three other high-impression pages). The 6x-CTR-lift estimate above is no longer hypothetical — it has a real-world test in flight. The expected next-data-delta is the 2026-08-10 quarterly audit. Pre-deploy baseline frozen in `docs/strategy/data/snapshot-2026-05-22.json` (`expo location` 0.19% CTR / 3,615 impr at pos 7.1 over 90 days, against a `benchmarkCtr` of 2.0%). Post-deploy `npm run seo:diff -- 2026-05-22` will measure the actual lift.
+
+Also worth recording: the live `seo_low_ctr_opportunities` pull on 2026-05-22 returned a `benchmarkCtr` of 2.0% for `expo location` at position 7 and 3.0% for `expo-location` at position 6. Those benchmarks come from the same source as this doc's "industry-standard curve" table, and they're 5-10x above the site's measured CTR at the same positions. The site-specific curve in the table above remains the authoritative read for this property.
+
 ### For setting expectations
 
 The site is technically ranking well (avg position 6.95) but earning clicks at one-quarter to one-tenth of industry-standard rates. Two causes worth distinguishing in future analysis:

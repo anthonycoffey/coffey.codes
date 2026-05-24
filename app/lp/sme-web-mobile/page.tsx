@@ -13,17 +13,28 @@ import {
   ShieldCheckIcon,
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
+const LP_TITLE = 'Custom Web & Mobile Apps for Growing SMEs';
+const LP_DESCRIPTION =
+  'Reliable, scalable web and mobile apps built directly by a senior engineer with 12+ years shipping production systems.';
+const LP_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent(LP_TITLE)}&category=${encodeURIComponent('Web & Mobile')}`;
+
 export const metadata: Metadata = {
-  title: 'Custom Web & Mobile Apps for Growing SMEs',
+  title: LP_TITLE,
   description:
     'Reliable, scalable web and mobile apps built by a senior developer. Direct, hands-on engineering for established SMEs focused on long-term growth — no junior hand-off, no agency overhead.',
   alternates: { canonical: '/lp/sme-web-mobile' },
   openGraph: {
-    title: 'Custom Web & Mobile Apps for Growing SMEs',
-    description:
-      'Reliable, scalable web and mobile apps built directly by a senior engineer with 12+ years shipping production systems.',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
     url: '/lp/sme-web-mobile',
     type: 'website',
+    images: [{ url: LP_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
+    images: [LP_OG_IMAGE],
   },
 };
 

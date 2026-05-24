@@ -80,22 +80,27 @@ describe('Articles list pagination — noindex on paginated views', () => {
     });
   });
 
-  describe('/articles/tag/[tag]', () => {
-    it('page 1 does not set noindex', async () => {
+  describe('/articles/tag/[tag] (always noindex,follow)', () => {
+    // Per GSC Coverage report 2026-05-23: 103 tag URLs were the bulk of
+    // 132 "Discovered - currently not indexed" entries. Tag pages are
+    // now noindex on every page (including page 1) and absent from the
+    // sitemap. They remain accessible for user browsing via the
+    // /articles/tags index.
+    it('page 1 sets noindex,follow', async () => {
       const meta = await tagMeta({
         params: Promise.resolve({ tag: 'react' }),
-        searchParams: Promise.resolve({}),
       });
-      const robots = meta.robots as
-        | { index?: boolean; follow?: boolean }
-        | undefined;
-      expect(robots?.index).not.toBe(false);
+      const robots = meta.robots as { index: boolean; follow: boolean };
+      expect(robots).toBeDefined();
+      expect(robots.index).toBe(false);
+      expect(robots.follow).toBe(true);
     });
 
-    it('page 4 sets noindex,follow', async () => {
+    it('page 4 also noindex,follow (no change from page 1)', async () => {
+      // Tag pages no longer differentiate based on ?page= — every paginated
+      // view is noindex,follow because every tag page (paginated or not) is.
       const meta = await tagMeta({
         params: Promise.resolve({ tag: 'react' }),
-        searchParams: Promise.resolve({ page: '4' }),
       });
       const robots = meta.robots as { index: boolean; follow: boolean };
       expect(robots.index).toBe(false);

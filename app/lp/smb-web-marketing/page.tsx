@@ -13,17 +13,28 @@ import {
   RocketLaunchIcon,
 } from '@heroicons/react/24/outline'; // Import necessary icons
 
+const LP_TITLE = 'Web & Marketing Tech for Small Businesses';
+const LP_DESCRIPTION =
+  'Professional websites integrated with Google Analytics and Tag Manager — built for SMB growth.';
+const LP_OG_IMAGE = `${baseUrl}/og?title=${encodeURIComponent(LP_TITLE)}&category=${encodeURIComponent('Web Marketing')}`;
+
 export const metadata: Metadata = {
-  title: 'Web & Marketing Tech for Small Businesses',
+  title: LP_TITLE,
   description:
     'Professional websites (WordPress & JavaScript) wired up with Google Analytics and Tag Manager, so your SMB can track and grow with confidence.',
   alternates: { canonical: '/lp/smb-web-marketing' },
   openGraph: {
-    title: 'Web & Marketing Tech for Small Businesses',
-    description:
-      'Professional websites integrated with Google Analytics and Tag Manager — built for SMB growth.',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
     url: '/lp/smb-web-marketing',
     type: 'website',
+    images: [{ url: LP_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: LP_TITLE,
+    description: LP_DESCRIPTION,
+    images: [LP_OG_IMAGE],
   },
 };
 

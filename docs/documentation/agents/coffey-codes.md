@@ -1,7 +1,7 @@
 ---
 service: coffey.codes
 repo: https://github.com/anthonycoffey/coffey.codes
-updated: 2026-05-11
+updated: 2026-05-23
 ---
 
 # Agent Brief: coffey.codes
@@ -55,6 +55,7 @@ Personal website, portfolio, and blog for Anthony Coffey (coffey.codes). It serv
 - `components/canvas/WorldCanvas.tsx` — Scroll-driven 3D homepage scene (Three.js + R3F)
 - `components/Comments.tsx` — Giscus widget on every article
 - `components/mdx.tsx` — MDX component registry (custom components available in blog posts)
+- `components/RelatedPosts.tsx` — Server component rendered at the foot of every article. Ranks other posts by shared-tag count → same-category tiebreak → recency. Exports a pure `selectRelatedPosts(current, candidates, limit)` for testability (SPEC-030 WS3).
 
 ## Key File Locations
 

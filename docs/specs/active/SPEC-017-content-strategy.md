@@ -257,11 +257,11 @@ When a Bucket B article is deprecated by `noindex` (rare, only for articles with
 ## Notes
 
 - **Source data**: [`docs/strategy/seo-audit-2026-Q2.md`](docs/strategy/seo-audit-2026-Q2.md). Every Bucket A and Q3 calendar slot traces to a numbered finding in the audit.
-- **Sibling spec**: [`docs/specs/active/SPEC-016-seo-strategy.md`](docs/specs/active/SPEC-016-seo-strategy.md) owns the technical and on-page layer. The two specs share inputs and the next quarterly audit but ship independently.
-- **Related specs**:
-  - SPEC-013 (GSC issue remediation): complete. Establishes the 308 single-hop redirect convention used in the deprecation mechanics above.
-  - SPEC-014 (article perf and a11y): in flight. Owns CWV; this spec does not.
-  - SPEC-015 (SEO audit, data-driven): review-pending. Provides the data this spec consumes.
+- **Sibling spec**: [`SPEC-016-seo-strategy.md`](../archive/SPEC-016-seo-strategy.md) (now archived, `status: complete`) owned the technical and on-page layer through Q2 2026. The follow-up technical sprint shipped as [`SPEC-030-technical-seo-sprint-ctr-recovery.md`](../archive/SPEC-030-technical-seo-sprint-ctr-recovery.md) on 2026-05-23 (CTR-recovery metadata rewrites, RelatedPosts component, sitemap fix, GSC indexation rescue). SPEC-030's WS1 metadata-only edits on the four Bucket A articles do not substitute for the full editorial refreshes this spec still owns (see Tasks > Q3 / Q4 2026).
+- **Related specs (all archived, `status: complete`)**:
+  - [SPEC-013](../archive/SPEC-013-gsc-issue-remediation.md) (GSC issue remediation). Establishes the 308 single-hop redirect convention used in the deprecation mechanics above.
+  - [SPEC-014](../archive/SPEC-014-article-perf-a11y-polish.md) (article perf and a11y). Owned CWV; this spec does not.
+  - [SPEC-015](../archive/SPEC-015-seo-audit-data-driven.md) (SEO audit, data-driven). Produced the data this spec consumes.
 - **Voice references**:
   - The user's auto-memory `feedback_voice_no_em_dashes.md` is the canonical voice rule source. The voice-and-style guide produced under this spec restates and expands on those rules.
   - "Win Without Pitching" by Blair Enns is the underlying posture (memory: `feedback_blair_enns.md`). Articles present work; they do not pursue the reader.

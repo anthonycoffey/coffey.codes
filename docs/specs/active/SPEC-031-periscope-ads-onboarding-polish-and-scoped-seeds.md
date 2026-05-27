@@ -1,12 +1,16 @@
 ---
 id: SPEC-031
 title: 'Periscope Ads onboarding polish + scoped seed phrases for keyword ideas'
-status: draft
+status: complete
 created: 2026-05-26
+completed: 2026-05-27
 author: Anthony Coffey
 reviewers: []
 affected_repos: [periscope]
 priority: medium
+shipped_as:
+  - 'periscope v1.4.0 (anthonycoffey/periscope#9) — print-only auth flow + scoped seed phrases'
+  - 'periscope v1.4.1 (anthonycoffey/periscope#10) — fix MISSING_HOST on urlSeed + extend stopword list'
 ---
 
 ## Reviewer Notes

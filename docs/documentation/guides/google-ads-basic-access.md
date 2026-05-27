@@ -1,12 +1,14 @@
 ---
 service: coffey.codes
-updated: 2026-05-17
+updated: 2026-05-27
 description: Application checklist for upgrading a Google Ads developer token from Test → Basic access so periscope can query production customer accounts. Field-by-field walkthrough, RMF positioning, README requirements, and a privacy/ToS template.
 ---
 
 # Google Ads Basic Access — application checklist
 
 A freshly minted Google Ads developer token is granted **Test access only**. That means the API works, but every call against a production customer ID returns HTTP 403 `DEVELOPER_TOKEN_NOT_APPROVED`. To run [`periscope audit articles`](../../strategy/data/snapshot-2026-05-17.md) (or any other `seo:*` command) against `coffey.codes`'s real Google Ads account, the token must be upgraded to **Basic access**.
+
+> **Auth model note (periscope v1.3+):** periscope authenticates to the Google Ads API via **OAuth 2.0 user-flow** (Desktop application type, loopback redirect), with a service-account fallback for Workspace MCCs and test accounts. The Basic-access developer-token requirement is identical in either path — the token is what unlocks production customer access at the API level, regardless of how the operator authenticates. Run `periscope auth ads` once to mint the OAuth refresh token; see the periscope README's "Google Ads setup" section for the full setup walk-through.
 
 Basic is the right level for periscope — it caps at 15,000 ops/day per token (we use a handful per snapshot) and 1,000 ops/day per `login-customer-id`, which is far more than the tool needs. Standard access only matters for resellers managing many MCC accounts.
 

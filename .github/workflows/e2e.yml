@@ -18,25 +18,25 @@ jobs:
   e2e:
     name: Playwright
     if: github.event.deployment_status.state == 'success'
-    # Pinned to 22.04 (jammy). `ubuntu-latest` rolled to a newer image
-    # around 2026-05-27 that makes `playwright install` hang silently
-    # for >20 minutes after the Chrome ZIP finishes downloading —
-    # extract/verify never completes and the job hits its timeout. The
-    # jammy image worked reliably on identical Playwright 1.59.1 the day
-    # before. Revisit when Playwright ships a build that handles the
-    # newer image cleanly.
     runs-on: ubuntu-22.04
+    # Microsoft's pre-baked Playwright image ships with Node, chromium,
+    # firefox, webkit, ffmpeg, and all required apt deps already
+    # installed. Running the job inside the container bypasses the
+    # `playwright install` step entirely — that command was hanging
+    # silently for >19 minutes after the Chrome ZIP downloaded
+    # (extract/verify never returns), timing out every run since
+    # 2026-05-27 on both `ubuntu-latest` (noble) and `ubuntu-22.04`
+    # (jammy). The image tag MUST match the @playwright/test version
+    # in package.json; bump both together.
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-jammy
+      options: --user 1001
     timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.deployment.sha }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: 'npm'
 
       - name: Install dependencies
         # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
@@ -47,45 +47,6 @@ jobs:
         run: npm ci
         env:
           GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Resolve Playwright version
-        id: playwright-version
-        # Cache key needs to flip when @playwright/test moves. Pulling the
-        # exact installed version from package-lock keeps the cache scoped
-        # per lockfile commit without re-hashing the whole file.
-        run: |
-          VERSION=$(node -p "require('@playwright/test/package.json').version")
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
-
-      - name: Install Playwright browsers
-        # Skip on cache hit so we don't re-trigger the install hang on
-        # every run. `needrestart` env vars stay set for the first-run
-        # / cache-miss path where apt-get still has to install system
-        # deps via --with-deps.
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          NEEDRESTART_MODE: a
-          NEEDRESTART_SUSPEND: '1'
-
-      - name: Install Playwright OS dependencies
-        # Browser binary came from cache, but apt deps are runner-local
-        # and need to be installed fresh on every job. install-deps is
-        # the apt-only sibling of `install --with-deps`.
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
-        env:
-          DEBIAN_FRONTEND: noninteractive
-          NEEDRESTART_MODE: a
-          NEEDRESTART_SUSPEND: '1'
 
       - name: Run E2E tests against preview
         id: playwright

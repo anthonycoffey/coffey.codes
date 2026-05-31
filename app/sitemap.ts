@@ -7,6 +7,14 @@ import { getAllPortfolioItems } from '@/app/(site)/portfolio/utils';
 
 export const baseUrl = 'https://coffey.codes';
 
+type SitemapVideo = {
+  title: string;
+  thumbnail_loc: string;
+  description: string;
+  content_loc?: string;
+  player_loc?: string;
+};
+
 type SitemapEntry = {
   url: string;
   lastModified: string;
@@ -19,17 +27,32 @@ type SitemapEntry = {
     | 'yearly'
     | 'never';
   priority?: number;
+  videos?: SitemapVideo[];
 };
 
 export default async function sitemap(): Promise<SitemapEntry[]> {
   const today = new Date().toISOString().split('T')[0];
 
-  const articles: SitemapEntry[] = getAllBlogPosts().map((post) => ({
-    url: `${baseUrl}/articles/${post.slug}`,
-    lastModified: post.metadata.updated ?? post.metadata.publishedAt,
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }));
+  const articles: SitemapEntry[] = getAllBlogPosts().map((post) => {
+    const youtubeId = post.metadata.youtubeId;
+    return {
+      url: `${baseUrl}/articles/${post.slug}`,
+      lastModified: post.metadata.updated ?? post.metadata.publishedAt,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      ...(youtubeId && {
+        videos: [
+          {
+            title: post.metadata.title,
+            thumbnail_loc: `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`,
+            description: post.metadata.summary,
+            content_loc: `https://www.youtube.com/watch?v=${youtubeId}`,
+            player_loc: `https://www.youtube.com/embed/${youtubeId}`,
+          },
+        ],
+      }),
+    };
+  });
 
   const categories: SitemapEntry[] = getAllCategories().map((category) => ({
     url: `${baseUrl}/articles/category/${encodeURIComponent(category.toLowerCase())}`,

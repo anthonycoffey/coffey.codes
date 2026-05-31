@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 
-export default function Loader() {
+// Hard safety cap — the loader always dismisses by this point even if the
+// scene never signals ready (e.g. WebGL fails to init). Kept short so it never
+// gates LCP: the overlay text behind it can paint as soon as it's gone.
+const SAFETY_CAP_MS = 1500;
+
+interface LoaderProps {
+  /** Flips true once the WebGL scene has rendered its first frame. */
+  loaded?: boolean;
+}
+
+export default function Loader({ loaded = false }: LoaderProps) {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [text, setText] = useState('');
@@ -16,6 +26,11 @@ export default function Loader() {
       document.body.style.overflow = '';
     };
   }, [loading]);
+
+  // Dismiss as soon as the scene reports its first frame.
+  useEffect(() => {
+    if (loaded) setLoading(false);
+  }, [loaded]);
 
   useEffect(() => {
     const fullText = 'LOADING...';
@@ -33,9 +48,10 @@ export default function Loader() {
       setTimeout(() => setProgress(100), 100);
     });
 
+    // Safety net so the overlay can never hang past the cap.
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, SAFETY_CAP_MS);
 
     return () => {
       clearInterval(typeInterval);

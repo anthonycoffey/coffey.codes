@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import dynamic from 'next/dynamic';
@@ -22,6 +22,58 @@ const SCROLL_MULTIPLIER = 6;
 export default function ScrollContainer() {
   const spacerRef = useRef<HTMLDivElement>(null);
   const scrollProgress = useRef(0);
+
+  // Defer the WebGL canvas until the browser is idle *after* first paint, so
+  // the heavy three.js chunk download + scene init fall outside the critical
+  // render path (FCP/LCP) and the Lighthouse main-thread (TBT) window.
+  const [canvasReady, setCanvasReady] = useState(false);
+  // Flipped by WorldCanvas once its first frame has rendered — used to dismiss
+  // the Loader on a real signal instead of a blind timeout.
+  const [sceneReady, setSceneReady] = useState(false);
+
+  useEffect(() => {
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    const schedule = () => {
+      const ric = (
+        window as Window &
+          typeof globalThis & {
+            requestIdleCallback?: (
+              cb: () => void,
+              opts?: { timeout: number },
+            ) => number;
+          }
+      ).requestIdleCallback;
+      if (typeof ric === 'function') {
+        idleId = ric(() => setCanvasReady(true), { timeout: 2000 });
+      } else {
+        // Safari has no requestIdleCallback — fall back to a short timeout.
+        timeoutId = setTimeout(() => setCanvasReady(true), 200);
+      }
+    };
+
+    // Wait for the load event so the canvas mounts after the initial paint and
+    // existing resources have settled. If the page is already loaded, schedule
+    // immediately.
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener('load', schedule);
+      if (timeoutId) clearTimeout(timeoutId);
+      const cic = (
+        window as Window &
+          typeof globalThis & {
+            cancelIdleCallback?: (id: number) => void;
+          }
+      ).cancelIdleCallback;
+      if (idleId !== undefined && typeof cic === 'function') cic(idleId);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const spacer = spacerRef.current;
@@ -62,9 +114,14 @@ export default function ScrollContainer() {
           height: '100dvh',
         }}
       >
-        <WorldCanvas scrollProgress={scrollProgress} />
+        {canvasReady && (
+          <WorldCanvas
+            scrollProgress={scrollProgress}
+            onReady={() => setSceneReady(true)}
+          />
+        )}
         <HUDOverlay scrollProgress={scrollProgress} />
-        <Loader />
+        <Loader loaded={sceneReady} />
       </div>
     </div>
   );

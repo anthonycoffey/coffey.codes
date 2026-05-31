@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sampleMerkaba } from '@/utils/merkaba';
@@ -23,19 +23,21 @@ const MERKABA_RADIUS = 2;
 const DISPERSE_DISTANCE = 10;
 
 // Background star field — static, always visible (the ONLY source of stars).
-const BG_STAR_COUNT = 1500;
+// Mobile gets a sparser field to cut per-frame draw cost and init work.
+const BG_STAR_COUNT_DESKTOP = 1500;
+const BG_STAR_COUNT_MOBILE = 700;
 const BG_STAR_Z_MIN = -65;
 const BG_STAR_Z_MAX = -180;
-const BG_STAR_POSITIONS = (() => {
-  const arr = new Float32Array(BG_STAR_COUNT * 3);
-  for (let i = 0; i < BG_STAR_COUNT; i++) {
+function buildBgStars(count: number): Float32Array {
+  const arr = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
     arr[i * 3] = (Math.random() - 0.5) * 160;
     arr[i * 3 + 1] = (Math.random() - 0.5) * 160;
     arr[i * 3 + 2] =
       BG_STAR_Z_MIN + Math.random() * (BG_STAR_Z_MAX - BG_STAR_Z_MIN);
   }
   return arr;
-})();
+}
 
 // ── Pre-computed geometry data (computed once at module load) ──────────
 const MERKABA_POSITIONS = sampleMerkaba(MERKABA_RADIUS, PARTICLE_COUNT);
@@ -151,12 +153,38 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
 // ── WorldCanvas — full-viewport canvas, IS the visual experience ──────────
 interface WorldCanvasProps {
   scrollProgress: React.RefObject<number>;
+  /** Called once the canvas has created its WebGL context / first frame. */
+  onReady?: () => void;
 }
 
-export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
+export default function WorldCanvas({
+  scrollProgress,
+  onReady,
+}: WorldCanvasProps) {
   // Spaceship (with thrust particles, lasers, and per-frame work) is desktop-only.
   // Below 1024px the scene reads cleaner and avoids the GPU/CPU cost on mobile.
   const showSpaceship = useMediaQuery('(min-width: 1024px)');
+  // Single quality gate for the whole scene: < 1024px runs the low tier
+  // (fewer particles, lower dpr, lighter post-processing, simpler shaders).
+  const isMobile = !showSpaceship;
+
+  // Static background star field — fewer points on mobile.
+  const bgStars = useMemo(
+    () => buildBgStars(isMobile ? BG_STAR_COUNT_MOBILE : BG_STAR_COUNT_DESKTOP),
+    [isMobile],
+  );
+
+  // Pause the render loop while the tab is backgrounded — the scene animates
+  // continuously, so 'demand' isn't viable, but there's no reason to keep
+  // rendering when the page isn't visible.
+  const [frameloop, setFrameloop] = useState<'always' | 'never'>('always');
+  useEffect(() => {
+    const onVisibility = () =>
+      setFrameloop(document.hidden ? 'never' : 'always');
+    document.addEventListener('visibilitychange', onVisibility);
+    onVisibility();
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
   return (
     <div
@@ -169,7 +197,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
     >
       <Canvas
         camera={{ position: [0, 0, 4], fov: 70 }}
-        dpr={[1, 1.5]}
+        dpr={[1, isMobile ? 1 : 1.5]}
         gl={{
           antialias: false,
           alpha: true,
@@ -177,7 +205,8 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
           toneMappingExposure: 1,
         }}
         style={{ background: 'transparent' }}
-        frameloop="always"
+        frameloop={frameloop}
+        onCreated={() => onReady?.()}
       >
         {/* Lighting — ambient base + directional sun from upper-left */}
         <ambientLight intensity={0.4} />
@@ -192,10 +221,7 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
         {/* Static background star field — always visible, never animated */}
         <points>
           <bufferGeometry>
-            <bufferAttribute
-              attach="attributes-position"
-              args={[BG_STAR_POSITIONS, 3]}
-            />
+            <bufferAttribute attach="attributes-position" args={[bgStars, 3]} />
           </bufferGeometry>
           <pointsMaterial
             size={0.007}
@@ -208,19 +234,21 @@ export default function WorldCanvas({ scrollProgress }: WorldCanvasProps) {
 
         <ParticleSystem scrollProgress={scrollProgress} />
         <UFO scrollProgress={scrollProgress} />
-        <Planet scrollProgress={scrollProgress} />
+        <Planet scrollProgress={scrollProgress} isMobile={isMobile} />
         <Satellite scrollProgress={scrollProgress} />
-        <Galaxy scrollProgress={scrollProgress} />
+        <Galaxy scrollProgress={scrollProgress} isMobile={isMobile} />
         {showSpaceship && <Spaceship scrollProgress={scrollProgress} />}
 
         <EffectComposer multisampling={0}>
+          {/* Bloom is the heaviest post pass; mobile uses fewer mip levels and
+              a lower intensity to cut fragment cost while keeping the glow. */}
           <Bloom
             luminanceThreshold={0.9}
             luminanceSmoothing={0.3}
-            intensity={1.5}
+            intensity={isMobile ? 1.0 : 1.5}
             mipmapBlur
-            radius={0.85}
-            levels={5}
+            radius={isMobile ? 0.7 : 0.85}
+            levels={isMobile ? 3 : 5}
           />
           <Vignette eskil={false} offset={0.3} darkness={0.55} />
         </EffectComposer>

@@ -4,6 +4,12 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+// Quality-tier particle counts (low tier = mobile).
+const GALAXY_COUNT_DESKTOP = 1000;
+const GALAXY_COUNT_MOBILE = 500;
+const RING_COUNT_DESKTOP = 250;
+const RING_COUNT_MOBILE = 120;
+
 function smoothstep(t: number): number {
   const c = Math.max(0, Math.min(1, t));
   return c * c * (3 - 2 * c);
@@ -13,7 +19,6 @@ function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
 
-const GALAXY_COUNT = 1000;
 // Minimum spiral-particle radius — creates a visible gap around the core ("eye"
 // of the galaxy) so stars don't overlap the glowing sun sphere.
 const CORE_GAP = 6;
@@ -117,6 +122,8 @@ const STAR_MAX_R = 24;
 
 interface GalaxyProps {
   scrollProgress: React.RefObject<number>;
+  /** Low-quality tier: fewer disc + ring particles. */
+  isMobile?: boolean;
 }
 
 /**
@@ -151,14 +158,18 @@ interface GalaxyProps {
  *   - Moons orbit their parent planets on independent, inclined timers
  */
 
-// Pre-compute spiral galaxy particle positions AND per-star color gradient
-// (module level — computed once). Inner stars inherit warm sun-light tint;
-// outer stars fade to cool near-white.
-const { positions: GALAXY_POSITIONS, colors: GALAXY_COLORS } = (() => {
-  const positions = new Float32Array(GALAXY_COUNT * 3);
-  const colors = new Float32Array(GALAXY_COUNT * 3);
+// Build spiral galaxy particle positions AND per-star color gradient for a
+// given star count. Inner stars inherit warm sun-light tint; outer stars fade
+// to cool near-white. Called from a useMemo so the count tracks the quality
+// tier (desktop vs mobile).
+function buildGalaxy(count: number): {
+  positions: Float32Array;
+  colors: Float32Array;
+} {
+  const positions = new Float32Array(count * 3);
+  const colors = new Float32Array(count * 3);
   const tmp = new THREE.Color();
-  for (let i = 0; i < GALAXY_COUNT; i++) {
+  for (let i = 0; i < count; i++) {
     const arm = i % 2; // two arms, 180° apart
     // Exponential radius distribution — dense core, long sparse arms.
     // CORE_GAP pushes the inner edge outward to create the central deadzone.
@@ -199,7 +210,7 @@ const { positions: GALAXY_POSITIONS, colors: GALAXY_COLORS } = (() => {
     colors[i * 3 + 2] = tmp.b;
   }
   return { positions, colors };
-})();
+}
 
 /**
  * Small helper — a moon that orbits a parent point.
@@ -254,21 +265,20 @@ function OrbitingMoon({
  * Tuned for low density, a thin radial band, small particle size, and a
  * cool icy color so the ring reads distinctly from the warm galaxy stars.
  */
-const RING_COUNT = 250;
 const RING_INNER = 1.1;
 const RING_OUTER = 1.6;
 
-function RingParticles() {
+function RingParticles({ count }: { count: number }) {
   const pointsRef = useRef<THREE.Points>(null);
 
   // Stable per-particle state (angle, radius, angular speed, y-scatter).
   const { positions, angles, radii, speeds, ys } = useMemo(() => {
-    const positions = new Float32Array(RING_COUNT * 3);
-    const angles = new Float32Array(RING_COUNT);
-    const radii = new Float32Array(RING_COUNT);
-    const speeds = new Float32Array(RING_COUNT);
-    const ys = new Float32Array(RING_COUNT);
-    for (let i = 0; i < RING_COUNT; i++) {
+    const positions = new Float32Array(count * 3);
+    const angles = new Float32Array(count);
+    const radii = new Float32Array(count);
+    const speeds = new Float32Array(count);
+    const ys = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
       // Bias radius so the ring has a faint gap-and-band texture
       const u = Math.random();
       const r = RING_INNER + u * (RING_OUTER - RING_INNER);
@@ -283,14 +293,14 @@ function RingParticles() {
       positions[i * 3 + 2] = r * Math.sin(theta);
     }
     return { positions, angles, radii, speeds, ys };
-  }, []);
+  }, [count]);
 
   useFrame(({ clock }) => {
     const pts = pointsRef.current;
     if (!pts) return;
     const t = clock.getElapsedTime();
     const arr = pts.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < RING_COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const a = angles[i] + t * speeds[i];
       const r = radii[i];
       arr[i * 3] = r * Math.cos(a);
@@ -317,9 +327,19 @@ function RingParticles() {
   );
 }
 
-export default function Galaxy({ scrollProgress }: GalaxyProps) {
+export default function Galaxy({
+  scrollProgress,
+  isMobile = false,
+}: GalaxyProps) {
   const groupRef = useRef<THREE.Group>(null);
   const pointsRef = useRef<THREE.Points>(null);
+
+  // Quality-tier particle buffers — rebuilt only when the tier changes.
+  const { positions: galaxyPositions, colors: galaxyColors } = useMemo(
+    () => buildGalaxy(isMobile ? GALAXY_COUNT_MOBILE : GALAXY_COUNT_DESKTOP),
+    [isMobile],
+  );
+  const ringCount = isMobile ? RING_COUNT_MOBILE : RING_COUNT_DESKTOP;
   // Refs for per-planet axial spin. Each planet rotates about its local Y-axis
   // independent of the galaxy's overall rotation.
   const planet1MeshRef = useRef<THREE.Mesh>(null);
@@ -436,11 +456,11 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            args={[GALAXY_POSITIONS, 3]}
+            args={[galaxyPositions, 3]}
           />
           <bufferAttribute
             attach="attributes-color"
-            args={[GALAXY_COLORS, 3]}
+            args={[galaxyColors, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
@@ -508,7 +528,7 @@ export default function Galaxy({ scrollProgress }: GalaxyProps) {
             />
           </mesh>
           {/* Particle rings — swirling dust annulus, Keplerian rotation. */}
-          <RingParticles />
+          <RingParticles count={ringCount} />
           {/* Moon — orbital plane sits between parallel and perpendicular to
               the rings (~57° inclination). Inside the tilt group so the
               inclination is preserved as the planet wobbles. */}

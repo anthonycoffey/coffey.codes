@@ -59,19 +59,37 @@ describe('Loader', () => {
     expect(cursor).toHaveClass('animate-blink');
   });
 
-  it('slides out completely after 2000ms', () => {
+  it('slides out via the safety cap when no ready signal arrives', () => {
     const { container } = render(<Loader />);
     const overlay = container.firstChild as HTMLElement;
 
-    // Before timeout (e.g. 1500ms)
+    // Before the safety cap (1500ms)
     act(() => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(1400);
     });
     expect(overlay).toHaveClass('loading');
 
-    // After timeout (2000ms total)
+    // After the safety cap fires
     act(() => {
-      vi.advanceTimersByTime(500);
+      vi.advanceTimersByTime(200);
+    });
+    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('pointer-events-none');
+  });
+
+  it('slides out immediately when the scene reports ready', () => {
+    const { container, rerender } = render(<Loader loaded={false} />);
+    const overlay = container.firstChild as HTMLElement;
+
+    // Still loading well before the safety cap
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(overlay).toHaveClass('loading');
+
+    // Scene signals first frame — loader dismisses without waiting for the cap
+    act(() => {
+      rerender(<Loader loaded={true} />);
     });
     expect(overlay).toHaveClass('-translate-y-full');
     expect(overlay).toHaveClass('pointer-events-none');

@@ -31,6 +31,11 @@ export default function Page() {
     <>
       <Navbar />
       <main>
+        {/* Server-rendered page heading. Present in the initial HTML so there is
+            a fast, crawlable LCP/SEO target independent of the WebGL canvas
+            (which is client-only and deferred). Visually hidden so the cinematic
+            scroll experience stays unchanged. */}
+        <h1 className="sr-only">{HOME_TITLE}</h1>
         <ScrollContainer />
       </main>
     </>

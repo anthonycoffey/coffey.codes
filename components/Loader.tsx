@@ -12,6 +12,13 @@ const SAFETY_CAP_MS = 1500;
 // on a low-end device before the loader force-dismisses as a fallback.
 const POST_TAP_CAP_MS = 8000;
 
+// Progress-bar fill timing. The gate ("SCENE LOADED." + tap button) is only
+// revealed once the bar has visibly filled, so it never pops in over a
+// half-full bar. Kept snappy so the wait stays short.
+const BAR_START_MS = 80; // let the empty bar paint before it animates
+const BAR_FILL_MS = 1100; // CSS transition duration for the fill
+const FILL_COMPLETE_MS = BAR_START_MS + BAR_FILL_MS + 120; // + small buffer
+
 interface LoaderProps {
   /** Flips true once the WebGL scene has rendered its first frame. */
   loaded?: boolean;
@@ -35,6 +42,8 @@ export default function Loader({
   const [progress, setProgress] = useState(0);
   const [text, setText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
+  // True once the progress bar has finished filling.
+  const [filled, setFilled] = useState(false);
   // Avoid a hydration mismatch: the gate button is client-only state.
   const [mounted, setMounted] = useState(false);
   const [tapped, setTapped] = useState(false);
@@ -92,11 +101,16 @@ export default function Loader({
       }
     }, 50);
 
-    requestAnimationFrame(() => {
-      setTimeout(() => setProgress(100), 100);
-    });
+    // Kick the bar from 0 → 100 after a beat, then mark it filled once the
+    // transition has visibly completed.
+    const startTimer = setTimeout(() => setProgress(100), BAR_START_MS);
+    const fillTimer = setTimeout(() => setFilled(true), FILL_COMPLETE_MS);
 
-    return () => clearInterval(typeInterval);
+    return () => {
+      clearInterval(typeInterval);
+      clearTimeout(startTimer);
+      clearTimeout(fillTimer);
+    };
   }, []);
 
   // Auto-dismiss safety net. While gating and awaiting the tap there is no cap
@@ -116,14 +130,15 @@ export default function Loader({
     onStart?.();
   };
 
-  // Show the gate prompt once mounted, gating, not yet tapped, and the intro
-  // typing has finished.
-  const showGate = mounted && gate && !tapped && !isTyping;
+  // Gate prompt: shown once mounted, gating, not yet tapped, and the bar has
+  // filled (so it never appears over a half-full bar).
+  const showGate = mounted && gate && !tapped && filled;
 
-  // Once the gate is ready to tap, the heavy assets the loader masks are done,
-  // so report "SCENE LOADED." instead of the typing "LOADING..." line. After
-  // the tap (showGate false) it reverts to "LOADING..." while the scene mounts.
-  const statusText = showGate ? 'SCENE LOADED.' : text;
+  // "SCENE LOADED." replaces the typing "LOADING..." line once the gate is
+  // ready, and — crucially — stays put after the tap so it doesn't flicker
+  // back to "LOADING..." before the overlay slides away.
+  const sceneLoaded = showGate || tapped;
+  const statusText = sceneLoaded ? 'SCENE LOADED.' : text;
 
   return (
     <div
@@ -132,17 +147,24 @@ export default function Loader({
       }`}
     >
       <div className="w-64 space-y-4">
-        <div className="font-mono text-xl text-[#FFCC00]">
+        <div
+          className={`font-mono text-xl text-[#FFCC00] ${
+            sceneLoaded ? 'text-center' : 'text-left'
+          }`}
+        >
           {statusText}
           <span className={isTyping ? '' : 'animate-blink'}>█</span>
         </div>
         {/* Progress bar is only meaningful while loading — hide it once the
-            gate reports "SCENE LOADED." (the blinking cursor stays). */}
-        {!showGate && (
+            scene is reported loaded (the blinking cursor stays). */}
+        {!sceneLoaded && (
           <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-900 shadow-[0_0_10px_#FFCC00]">
             <div
-              className="h-full bg-[#FFCC00] shadow-[0_0_10px_#FFCC00] transition-all duration-[2500ms] ease-out"
-              style={{ width: `${progress}%` }}
+              className="h-full bg-[#FFCC00] shadow-[0_0_10px_#FFCC00] transition-all ease-out"
+              style={{
+                width: `${progress}%`,
+                transitionDuration: `${BAR_FILL_MS}ms`,
+              }}
             />
           </div>
         )}

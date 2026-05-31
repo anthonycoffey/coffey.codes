@@ -1,4 +1,4 @@
-import { render, act } from '@testing-library/react';
+import { render, act, fireEvent, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Loader from '@/components/Loader';
 
@@ -93,5 +93,75 @@ describe('Loader', () => {
     });
     expect(overlay).toHaveClass('-translate-y-full');
     expect(overlay).toHaveClass('pointer-events-none');
+  });
+
+  // ── Mobile "tap to explore" gate ──────────────────────────────────────────
+
+  it('in gate mode, shows the tap prompt after typing and never auto-dismisses', () => {
+    const { container } = render(<Loader gate={true} />);
+    const overlay = container.firstChild as HTMLElement;
+
+    // After typing completes the prompt appears
+    act(() => {
+      vi.advanceTimersByTime(600);
+    });
+    expect(
+      screen.getByRole('button', { name: /tap to explore/i }),
+    ).toBeInTheDocument();
+
+    // Well past the desktop safety cap, the gate is still showing (no auto-dismiss)
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(overlay).toHaveClass('loading');
+  });
+
+  it('gate calls onStart and dismisses once the scene reports ready', () => {
+    const onStart = vi.fn();
+    const { container, rerender } = render(
+      <Loader gate={true} onStart={onStart} />,
+    );
+    const overlay = container.firstChild as HTMLElement;
+
+    act(() => {
+      vi.advanceTimersByTime(600);
+    });
+
+    // Tap the gate — starts the experience but stays visible while the scene boots
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+    });
+    expect(onStart).toHaveBeenCalledTimes(1);
+    expect(overlay).toHaveClass('loading');
+
+    // Scene reports its first frame — loader dismisses
+    act(() => {
+      rerender(<Loader gate={true} onStart={onStart} loaded={true} />);
+    });
+    expect(overlay).toHaveClass('-translate-y-full');
+  });
+
+  it('gate force-dismisses via the post-tap safety cap if the scene never loads', () => {
+    const { container } = render(<Loader gate={true} />);
+    const overlay = container.firstChild as HTMLElement;
+
+    act(() => {
+      vi.advanceTimersByTime(600);
+    });
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+    });
+
+    // Still loading shortly after tap
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(overlay).toHaveClass('loading');
+
+    // Past the post-tap cap (8s), it force-dismisses
+    act(() => {
+      vi.advanceTimersByTime(7000);
+    });
+    expect(overlay).toHaveClass('-translate-y-full');
   });
 });

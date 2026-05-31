@@ -30,6 +30,29 @@ export default function ScrollContainer() {
   // Flipped by WorldCanvas once its first frame has rendered — used to dismiss
   // the Loader on a real signal instead of a blind timeout.
   const [sceneReady, setSceneReady] = useState(false);
+  // Mobile gets a "tap to explore" gate: the WebGL scene is NOT mounted until
+  // the user taps. This keeps the heavy scene init (and its continuous render
+  // loop) entirely off the main thread for non-interacting visitors — most
+  // importantly Lighthouse/PSI, which never taps — collapsing mobile TBT.
+  // Defaults to false so SSR and the first client render agree (desktop path);
+  // corrected after mount to avoid a hydration mismatch.
+  const [isMobile, setIsMobile] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+    const mql = window.matchMedia('(max-width: 1023px)');
+    // Re-read on mount and subscribe to changes so the tier always reflects the
+    // current viewport — a one-shot read can latch a stale value across remounts
+    // or transient resizes, which would wrongly un-gate the mobile experience.
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener('change', update);
+    return () => mql.removeEventListener('change', update);
+  }, []);
+
+  // Desktop auto-mounts the canvas once idle; mobile waits for the tap.
+  const shouldMountCanvas = isMobile ? started : canvasReady;
 
   useEffect(() => {
     let idleId: number | undefined;
@@ -114,14 +137,18 @@ export default function ScrollContainer() {
           height: '100dvh',
         }}
       >
-        {canvasReady && (
+        {shouldMountCanvas && (
           <WorldCanvas
             scrollProgress={scrollProgress}
             onReady={() => setSceneReady(true)}
           />
         )}
         <HUDOverlay scrollProgress={scrollProgress} />
-        <Loader loaded={sceneReady} />
+        <Loader
+          loaded={sceneReady}
+          gate={isMobile && !started}
+          onStart={() => setStarted(true)}
+        />
       </div>
     </div>
   );

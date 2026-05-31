@@ -95,19 +95,20 @@ describe('Loader', () => {
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  // ── Mobile "tap to explore" gate ──────────────────────────────────────────
+  // ── Mobile "tap to enter" gate ─────────────────────────────────────────────
 
   it('in gate mode, shows the tap prompt after typing and never auto-dismisses', () => {
     const { container } = render(<Loader gate={true} />);
     const overlay = container.firstChild as HTMLElement;
 
-    // After typing completes the prompt appears
+    // After typing completes the prompt appears and the status reads "loaded"
     act(() => {
       vi.advanceTimersByTime(600);
     });
     expect(
-      screen.getByRole('button', { name: /tap to explore/i }),
+      screen.getByRole('button', { name: /tap to enter/i }),
     ).toBeInTheDocument();
+    expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
 
     // Well past the desktop safety cap, the gate is still showing (no auto-dismiss)
     act(() => {
@@ -129,7 +130,7 @@ describe('Loader', () => {
 
     // Tap the gate — starts the experience but stays visible while the scene boots
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+      fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
     expect(onStart).toHaveBeenCalledTimes(1);
     expect(overlay).toHaveClass('loading');
@@ -149,7 +150,7 @@ describe('Loader', () => {
       vi.advanceTimersByTime(600);
     });
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+      fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
 
     // Still loading shortly after tap

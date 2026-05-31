@@ -30,7 +30,7 @@ export default function ScrollContainer() {
   // Flipped by WorldCanvas once its first frame has rendered — used to dismiss
   // the Loader on a real signal instead of a blind timeout.
   const [sceneReady, setSceneReady] = useState(false);
-  // Mobile gets a "tap to explore" gate: the WebGL scene is NOT mounted until
+  // Mobile gets a "tap to enter" gate: the WebGL scene is NOT mounted until
   // the user taps. This keeps the heavy scene init (and its continuous render
   // loop) entirely off the main thread for non-interacting visitors — most
   // importantly Lighthouse/PSI, which never taps — collapsing mobile TBT.

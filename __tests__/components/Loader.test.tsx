@@ -95,19 +95,30 @@ describe('Loader', () => {
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  // ── Mobile "tap to explore" gate ──────────────────────────────────────────
+  // ── Mobile "tap to enter" gate ─────────────────────────────────────────────
 
   it('in gate mode, shows the tap prompt after typing and never auto-dismisses', () => {
     const { container } = render(<Loader gate={true} />);
     const overlay = container.firstChild as HTMLElement;
 
-    // After typing completes the prompt appears
+    // The gate only appears after the bar has filled (~1.3s), not right after
+    // the intro typing finishes — so it never shows over a half-full bar.
     act(() => {
-      vi.advanceTimersByTime(600);
+      vi.advanceTimersByTime(700);
+    });
+    expect(screen.queryByRole('button', { name: /tap to enter/i })).toBeNull();
+    expect(screen.queryByText(/SCENE LOADED\./)).toBeNull();
+
+    // Once the bar has filled, the prompt + "SCENE LOADED." appear and the bar
+    // is hidden (the blinking cursor stays).
+    act(() => {
+      vi.advanceTimersByTime(800);
     });
     expect(
-      screen.getByRole('button', { name: /tap to explore/i }),
+      screen.getByRole('button', { name: /tap to enter/i }),
     ).toBeInTheDocument();
+    expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
+    expect(container.querySelector('.bg-zinc-900')).toBeNull();
 
     // Well past the desktop safety cap, the gate is still showing (no auto-dismiss)
     act(() => {
@@ -124,19 +135,25 @@ describe('Loader', () => {
     const overlay = container.firstChild as HTMLElement;
 
     act(() => {
-      vi.advanceTimersByTime(600);
+      vi.advanceTimersByTime(1500);
     });
 
     // Tap the gate — starts the experience but stays visible while the scene boots
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+      fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
     expect(onStart).toHaveBeenCalledTimes(1);
     expect(overlay).toHaveClass('loading');
+    // "SCENE LOADED." persists after the tap (no flicker back to "LOADING...").
+    // The parent stops gating once started, so re-render with gate=false.
+    act(() => {
+      rerender(<Loader gate={false} onStart={onStart} />);
+    });
+    expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
 
     // Scene reports its first frame — loader dismisses
     act(() => {
-      rerender(<Loader gate={true} onStart={onStart} loaded={true} />);
+      rerender(<Loader gate={false} onStart={onStart} loaded={true} />);
     });
     expect(overlay).toHaveClass('-translate-y-full');
   });
@@ -145,11 +162,12 @@ describe('Loader', () => {
     const { container } = render(<Loader gate={true} />);
     const overlay = container.firstChild as HTMLElement;
 
+    // Wait for the bar to fill so the gate button is available, then tap.
     act(() => {
-      vi.advanceTimersByTime(600);
+      vi.advanceTimersByTime(1500);
     });
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /tap to explore/i }));
+      fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
 
     // Still loading shortly after tap

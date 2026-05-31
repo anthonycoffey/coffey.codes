@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import { LOADER_DISMISSED_EVENT } from '@/lib/loaderEvents';
+
+type LoaderWindow = Window &
+  typeof globalThis & { __appLoaderActive?: boolean };
 
 // Desktop safety cap — the loader always dismisses by this point even if the
 // scene never signals ready (e.g. WebGL fails to init). Kept short so it never
@@ -36,6 +40,28 @@ export default function Loader({
   const [tapped, setTapped] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  // Advertise whether the loading overlay is currently up, and announce when it
+  // slides away, so dependent UI (consent banner) can sequence itself.
+  useEffect(() => {
+    const w = window as LoaderWindow;
+    if (loading) {
+      w.__appLoaderActive = true;
+    } else {
+      w.__appLoaderActive = false;
+      window.dispatchEvent(new Event(LOADER_DISMISSED_EVENT));
+    }
+  }, [loading]);
+
+  // If the loader unmounts while still up (e.g. navigating away before it
+  // dismisses), clear the flag and announce so dependents aren't left waiting.
+  useEffect(() => {
+    return () => {
+      const w = window as LoaderWindow;
+      w.__appLoaderActive = false;
+      window.dispatchEvent(new Event(LOADER_DISMISSED_EVENT));
+    };
+  }, []);
 
   useEffect(() => {
     if (loading) {

@@ -109,6 +109,8 @@ describe('Loader', () => {
       screen.getByRole('button', { name: /tap to enter/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
+    // Progress bar is hidden once the gate is ready (cursor stays).
+    expect(container.querySelector('.bg-zinc-900')).toBeNull();
 
     // Well past the desktop safety cap, the gate is still showing (no auto-dismiss)
     act(() => {

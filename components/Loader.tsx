@@ -136,12 +136,16 @@ export default function Loader({
           {statusText}
           <span className={isTyping ? '' : 'animate-blink'}>█</span>
         </div>
-        <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-900 shadow-[0_0_10px_#FFCC00]">
-          <div
-            className="h-full bg-[#FFCC00] shadow-[0_0_10px_#FFCC00] transition-all duration-[2500ms] ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        {/* Progress bar is only meaningful while loading — hide it once the
+            gate reports "SCENE LOADED." (the blinking cursor stays). */}
+        {!showGate && (
+          <div className="h-1 w-full overflow-hidden rounded-full bg-zinc-900 shadow-[0_0_10px_#FFCC00]">
+            <div
+              className="h-full bg-[#FFCC00] shadow-[0_0_10px_#FFCC00] transition-all duration-[2500ms] ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        )}
         {showGate && (
           <button
             type="button"

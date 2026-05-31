@@ -42,7 +42,15 @@ jobs:
           GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Playwright browsers
+        # Ubuntu 22.04+ runner images include `needrestart`, which prompts
+        # during the apt-get install run by `playwright install --with-deps`
+        # and blocks the job indefinitely with no TTY attached. The env vars
+        # below silence the prompt and let apt-get continue noninteractively.
         run: npx playwright install --with-deps chromium
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          NEEDRESTART_MODE: a
+          NEEDRESTART_SUSPEND: '1'
 
       - name: Run E2E tests against preview
         id: playwright

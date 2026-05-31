@@ -18,18 +18,25 @@ jobs:
   e2e:
     name: Playwright
     if: github.event.deployment_status.state == 'success'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    # Microsoft's pre-baked Playwright image ships with Node, chromium,
+    # firefox, webkit, ffmpeg, and all required apt deps already
+    # installed. Running the job inside the container bypasses the
+    # `playwright install` step entirely — that command was hanging
+    # silently for >19 minutes after the Chrome ZIP downloaded
+    # (extract/verify never returns), timing out every run since
+    # 2026-05-27 on both `ubuntu-latest` (noble) and `ubuntu-22.04`
+    # (jammy). The image tag MUST match the @playwright/test version
+    # in package.json; bump both together.
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-jammy
+      options: --user 1001
     timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.deployment.sha }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: 'npm'
 
       - name: Install dependencies
         # The committed `.npmrc` references `${GITHUB_PACKAGES_TOKEN}` for
@@ -40,9 +47,6 @@ jobs:
         run: npm ci
         env:
           GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
 
       - name: Run E2E tests against preview
         id: playwright

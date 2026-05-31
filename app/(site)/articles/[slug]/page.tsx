@@ -207,6 +207,48 @@ export default async function Blog({ params }) {
           }),
         }}
       />
+      {post.metadata.youtubeId && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'VideoObject',
+              name: post.metadata.title,
+              description: post.metadata.summary,
+              thumbnailUrl: [
+                `https://img.youtube.com/vi/${post.metadata.youtubeId}/maxresdefault.jpg`,
+                `https://img.youtube.com/vi/${post.metadata.youtubeId}/hqdefault.jpg`,
+              ],
+              uploadDate: toIsoDatetime(
+                post.metadata.updated || post.metadata.publishedAt,
+              ),
+              contentUrl: `https://www.youtube.com/watch?v=${post.metadata.youtubeId}`,
+              embedUrl: `https://www.youtube.com/embed/${post.metadata.youtubeId}`,
+              publisher: {
+                '@type': 'Organization',
+                name: 'coffey.codes',
+                url: baseUrl,
+                logo: {
+                  '@type': 'ImageObject',
+                  url: `${baseUrl}/publisher-logo.png`,
+                  width: 601,
+                  height: 601,
+                },
+              },
+              // Marks the URL as a watch page per Google's video indexing
+              // guidelines — without this Google often treats the video as
+              // a secondary asset rather than the page's primary content.
+              potentialAction: {
+                '@type': 'SeekToAction',
+                target: `${baseUrl}/articles/${post.slug}?t={seek_to_second_number}`,
+                'startOffset-input': 'required name=seek_to_second_number',
+              },
+            }),
+          }}
+        />
+      )}
       <script
         type="application/ld+json"
         suppressHydrationWarning

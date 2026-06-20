@@ -14,6 +14,21 @@ interface ConsentSettings {
   wait_for_update?: number;
 }
 
+// gtag.js only treats a dataLayer entry as a Consent Mode command when it is the
+// `arguments` object produced by the canonical `gtag()` shim. A plain array
+// (e.g. `['consent', 'update', {…}]`) is silently ignored, so the grant never
+// reaches GA and `analytics_storage` stays denied for every visitor — including
+// those who click "Accept". Forward a real arguments object instead.
+// See docs/specs/adrs/ADR-005-fix-consent-mode-datalayer-push.md
+const toGtagCommand = function (): IArguments {
+  // eslint-disable-next-line prefer-rest-params
+  return arguments;
+} as (
+  command: 'consent',
+  type: ConsentMode,
+  settings: ConsentSettings,
+) => IArguments;
+
 const ConsentManager = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasConsented, setHasConsented] = useState(false);
@@ -45,11 +60,12 @@ const ConsentManager = () => {
   }, []);
 
   const gtag = (
-    command: string,
+    command: 'consent',
     type: ConsentMode,
     settings: ConsentSettings,
   ) => {
-    window.dataLayer?.push([command, type, settings]);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(toGtagCommand(command, type, settings));
   };
 
   const handleAcceptConsent = () => {

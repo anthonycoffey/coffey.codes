@@ -29,6 +29,20 @@ const toGtagCommand = function (): IArguments {
   settings: ConsentSettings,
 ) => IArguments;
 
+const GRANTED: ConsentSettings = {
+  ad_storage: 'granted',
+  ad_personalization: 'granted',
+  ad_user_data: 'granted',
+  analytics_storage: 'granted',
+};
+
+const DENIED: ConsentSettings = {
+  ad_storage: 'denied',
+  ad_personalization: 'denied',
+  ad_user_data: 'denied',
+  analytics_storage: 'denied',
+};
+
 const ConsentManager = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasConsented, setHasConsented] = useState(false);
@@ -42,16 +56,18 @@ const ConsentManager = () => {
       window.dataLayer = window.dataLayer || [];
 
       // Default to denied
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_personalization: 'denied',
-        ad_user_data: 'denied',
-        analytics_storage: 'denied',
-        wait_for_update: 3000,
-      });
+      gtag('consent', 'default', { ...DENIED, wait_for_update: 3000 });
 
-      // Show consent dialog if no previous consent
-      if (!existingConsent) {
+      // Re-apply a previously stored choice on every load. Consent state lives
+      // in the dataLayer per page load and is NOT restored from the GA cookie,
+      // so returning/refreshing visitors who already opted in must have their
+      // grant re-asserted — otherwise every repeat hit is sent consent-denied.
+      if (existingConsent === 'accepted') {
+        gtag('consent', 'update', GRANTED);
+      } else if (existingConsent === 'rejected') {
+        gtag('consent', 'update', DENIED);
+      } else {
+        // No prior choice — surface the banner.
         setIsVisible(true);
       }
     } catch (error) {
@@ -71,12 +87,7 @@ const ConsentManager = () => {
   const handleAcceptConsent = () => {
     try {
       // Update consent state using gtag
-      gtag('consent', 'update', {
-        ad_storage: 'granted',
-        ad_personalization: 'granted',
-        ad_user_data: 'granted',
-        analytics_storage: 'granted',
-      });
+      gtag('consent', 'update', GRANTED);
 
       // Store consent preference
       localStorage.setItem('google-consent', 'accepted');
@@ -91,12 +102,7 @@ const ConsentManager = () => {
   const handleRejectConsent = () => {
     try {
       // Update consent state using gtag
-      gtag('consent', 'update', {
-        ad_storage: 'denied',
-        ad_personalization: 'denied',
-        ad_user_data: 'denied',
-        analytics_storage: 'denied',
-      });
+      gtag('consent', 'update', DENIED);
 
       // Store consent preference
       localStorage.setItem('google-consent', 'rejected');

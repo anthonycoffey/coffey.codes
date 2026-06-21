@@ -31,18 +31,16 @@ describe('<ConsentManager /> consent-mode wiring', () => {
     (window as Window & { dataLayer?: unknown[] }).dataLayer = [];
   });
 
-  // The bug: pushing consent as a plain array (`dataLayer.push(['consent', …])`)
-  // is silently ignored by gtag.js, so consent never resolves and GA stays
-  // denied. Every consent command must be forwarded as an `arguments` object.
-  it('pushes the consent default as a gtag arguments object, not a plain array', () => {
+  // The denied `consent default` is now emitted inline in the document <head>
+  // (ConsentDefaultScript), before GTM loads, instead of from this component's
+  // effect — which used to race the GTM load. ConsentManager must therefore NOT
+  // push a second default; doing so would re-assert the default after GTM has
+  // initialized. The default's arguments-shape + denied contract is guarded in
+  // __tests__/lib/consent.test.ts. See ADR-006.
+  it('does not push a consent default — that now lives in the inline head script', () => {
     render(<ConsentManager />);
 
-    const def = findByType('default');
-    expect(def).toBeDefined();
-    expect(Array.isArray(def)).toBe(false);
-    expect(Object.prototype.toString.call(def)).toBe('[object Arguments]');
-    expect(def?.[0]).toBe('consent');
-    expect(def?.[2]?.analytics_storage).toBe('denied');
+    expect(findByType('default')).toBeUndefined();
   });
 
   it('grants analytics + ad storage as an arguments-shaped update when accepted', () => {
@@ -106,10 +104,12 @@ describe('<ConsentManager /> consent-mode wiring', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('does not push any update on a first visit (no stored choice)', () => {
+  it('does not push any consent command on a first visit (no stored choice)', () => {
     render(<ConsentManager />);
+    // No update (no stored choice) and no default (that now lives in the inline
+    // head script, not this component — see ADR-006).
     expect(findByType('update')).toBeUndefined();
-    expect(findByType('default')).toBeDefined();
+    expect(findByType('default')).toBeUndefined();
     // first-time visitor sees the banner
     expect(
       screen.getByRole('button', { name: /accept/i }),

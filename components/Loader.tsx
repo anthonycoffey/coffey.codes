@@ -8,8 +8,9 @@ type LoaderWindow = Window &
 // scene never signals ready (e.g. WebGL fails to init). Kept short so it never
 // gates LCP: the overlay text behind it can paint as soon as it's gone.
 const SAFETY_CAP_MS = 1500;
-// After a mobile "tap to enter", give the scene generous time to initialise
-// on a low-end device before the loader force-dismisses as a fallback.
+// After the visitor enters, give the scene generous time to download and
+// initialise (cold chunk on a low-end device) before the loader force-dismisses
+// as a fallback.
 const POST_TAP_CAP_MS = 8000;
 
 // Progress-bar fill timing. The gate ("SCENE LOADED." + tap button) is only
@@ -23,19 +24,23 @@ interface LoaderProps {
   /** Flips true once the WebGL scene has rendered its first frame. */
   loaded?: boolean;
   /**
-   * When true, the loader becomes a "tap to enter" gate: it does NOT
+   * When true, the loader becomes a "click/tap to enter" gate: it does NOT
    * auto-dismiss, and the WebGL scene is mounted (by the parent) only after the
-   * user taps. This keeps the heavy scene off the main thread for visitors who
-   * never interact — most importantly Lighthouse/PSI — so mobile TBT stays low.
+   * user enters. This keeps the heavy scene off the main thread for visitors who
+   * never interact — most importantly Lighthouse/PSI — so TBT stays low on every
+   * viewport.
    */
   gate?: boolean;
-  /** Called when the user taps the gate to start the experience. */
+  /** Label for the gate button — e.g. "TAP TO ENTER" / "CLICK TO ENTER". */
+  enterLabel?: string;
+  /** Called when the user enters the gate to start the experience. */
   onStart?: () => void;
 }
 
 export default function Loader({
   loaded = false,
   gate = false,
+  enterLabel = 'TAP TO ENTER',
   onStart,
 }: LoaderProps) {
   const [loading, setLoading] = useState(true);
@@ -174,7 +179,7 @@ export default function Loader({
             onClick={handleStart}
             className="w-full rounded-full border border-[#FFCC00] px-4 py-2 font-mono text-sm text-[#FFCC00] shadow-[0_0_10px_#FFCC00] transition-colors hover:bg-[#FFCC00] hover:text-black"
           >
-            TAP TO ENTER
+            {enterLabel}
           </button>
         )}
       </div>

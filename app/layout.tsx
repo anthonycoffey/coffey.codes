@@ -4,6 +4,7 @@ import { outfit, sourceSerif, GeistMono } from '../lib/fonts';
 import { ThemeProvider } from '../components/ThemeProvider';
 import ConsentManagerLazy from '../components/ConsentManagerLazy';
 import GoogleAnalyticsLazy from '../components/GoogleAnalyticsLazy';
+import AnalyticsHead from '../components/AnalyticsHead';
 import JsonLd from '../components/JsonLd';
 import { baseUrl } from './sitemap';
 
@@ -129,7 +130,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* Consent Mode denied default is emitted here, before the GTM
+            preconnect, so it lands in dataLayer before GTM initializes.
+            See ADR-006. */}
+        <AnalyticsHead />
       </head>
       <body className="antialiased bg-bg text-c-text font-outfit">
         <JsonLd data={personSchema} />

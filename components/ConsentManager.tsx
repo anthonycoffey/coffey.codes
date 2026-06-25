@@ -48,20 +48,23 @@ const ConsentManager = () => {
   const [hasConsented, setHasConsented] = useState(false);
 
   useEffect(() => {
-    // Check if consent was previously given
     try {
       const existingConsent = localStorage.getItem('google-consent');
 
-      // Initial consent setup
+      // The denied `consent default` is no longer pushed here. It is emitted
+      // synchronously inline in the document <head> (ConsentDefaultScript) so it
+      // is provably in dataLayer before GTM initializes — this component used to
+      // race the GTM load and could lose. We only ensure dataLayer exists (for
+      // the `update` push below) and decide whether to surface the banner.
+      // See docs/specs/adrs/ADR-006-consent-default-before-gtm.md.
       window.dataLayer = window.dataLayer || [];
-
-      // Default to denied
-      gtag('consent', 'default', { ...DENIED, wait_for_update: 3000 });
 
       // Re-apply a previously stored choice on every load. Consent state lives
       // in the dataLayer per page load and is NOT restored from the GA cookie,
       // so returning/refreshing visitors who already opted in must have their
       // grant re-asserted — otherwise every repeat hit is sent consent-denied.
+      // (The denied `consent default` itself is emitted inline in <head>; see
+      // the comment above and ADR-006.)
       if (existingConsent === 'accepted') {
         gtag('consent', 'update', GRANTED);
       } else if (existingConsent === 'rejected') {

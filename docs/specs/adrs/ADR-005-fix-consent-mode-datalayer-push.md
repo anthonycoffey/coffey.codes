@@ -152,3 +152,6 @@ A regression test —
   `dataLayer` before GTM initializes — today `ConsentManager` and
   `GoogleAnalyticsLazy` are independent lazy components with no ordering
   guarantee; the container-level denied default currently covers the gap.
+  **Resolved by [ADR-006](ADR-006-consent-default-before-gtm.md):** the denied
+  default is now emitted as an inline `<script>` at the top of `<head>` (Option
+  B above, adopted), so it lands in `dataLayer` before GTM loads.

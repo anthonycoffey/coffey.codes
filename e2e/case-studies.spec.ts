@@ -5,14 +5,14 @@ test.describe('Case Studies Migration', () => {
     // Go to case studies listing
     await page.goto('/case-studies');
 
-    // The listing now has multiple case studies; pick the PostGIS card's
-    // "Read Case Study" button. PostGIS is first in caseStudies[], so
-    // .first() pins to its CTA without depending on link-label uniqueness.
-    // (Each card has two links pointing at the same slug: the title and
-    // the button. We want the button.)
-    const readMoreButton = page
-      .getByRole('link', { name: 'Read Case Study' })
-      .first();
+    // The listing has multiple case studies rendered newest-first, so card
+    // position is not stable. Pin to the PostGIS card's "Read Case Study"
+    // button by its href (each card has two links to the same slug — the
+    // title and the button — so also match the button's text).
+    const readMoreButton = page.locator(
+      'a[href="/case-study/postgis-fleet-optimization"]',
+      { hasText: 'Read Case Study' },
+    );
     await expect(readMoreButton).toBeVisible();
     await readMoreButton.click();
 

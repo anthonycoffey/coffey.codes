@@ -19,6 +19,7 @@ vi.mock('next/link', () => ({
 vi.mock('@heroicons/react/20/solid', () => ({
   ClipboardDocumentCheckIcon: () => null,
   ChevronRightIcon: () => null,
+  BoltIcon: () => null,
   ChartBarIcon: () => null,
   CpuChipIcon: () => null,
 }));

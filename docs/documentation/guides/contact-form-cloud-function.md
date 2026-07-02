@@ -18,6 +18,7 @@ The function source lives only in the Google Cloud console, not in this repo. Th
 | Email provider | Mailgun (`mailgun.js`) |
 | Recipient | `anthony@coffeywebdev.com` |
 | Console | https://console.cloud.google.com/functions/details/us-central1/sendContactFormEmail?env=gen1&project=coffeywebdev-d0487&tab=source |
+| Current version | 18 (deployed 2026-07-02) |
 
 **Dependencies:** `firebase-functions`, `form-data`, `mailgun.js`, `cors`.
 
@@ -39,14 +40,16 @@ So the client posts to the same origin (`/functions/sendContactFormEmail`), whic
 ## Request contract
 
 - **Method:** `POST` (a `PUT` is explicitly rejected with `403`; `cors` handles the preflight).
-- **Body (JSON):** the function reads `name`, `email`, and `message`. Other keys sent by the forms (`company`, `phone`, `projectBrief`, `projectStage`, `timeline`, `budget`, `formName`, `consent`) are currently ignored by the backend.
-- **Responses:** `200` "Email sent successfully" on success; `500` "Error sending email" on a Mailgun failure; `403` "Forbidden!" for `PUT`.
+- **Body (JSON):** the function reads `name`, `email`, `message` (all required), and `formName` (used to label the email subject). The other keys the forms send (`company`, `phone`, `projectBrief`, `projectStage`, `timeline`, `budget`, `consent`) are not read individually; their content reaches the email through the composed `message` (see below).
+- **Responses:** `200` "Email sent successfully" on success; `400` for a missing required field; `500` "Error sending email" on a Mailgun failure; `403` "Forbidden!" for `PUT` (a bodyless `PUT` is rejected upstream with `411` before it reaches the function).
 
 ### Why the site composes a `message`
 
-Because the function only reads `name`/`email`/`message`, the lead form packs every structured field into the `message` string before posting (see `composeLeadMessage` in [`components/LeadForm.tsx`](../../../components/LeadForm.tsx)). This guarantees the full inquiry (brief, company, phone, stage, timeline, budget) is delivered even though the backend does not read those keys individually. If the backend is later changed to read the structured fields directly, the composed message can stay as a redundant fallback or be removed.
+Because the function reads `name`/`email`/`message`/`formName` but not the other structured fields, the lead form packs every remaining field into the `message` string before posting (see `composeLeadMessage` in [`components/LeadForm.tsx`](../../../components/LeadForm.tsx)). This guarantees the full inquiry (brief, company, phone, stage, timeline, budget) is delivered even though the backend does not read those keys individually. If the backend is later changed to read the structured fields directly, the composed message can stay as a redundant fallback or be removed.
 
-## Current source
+## Source, version 17 (superseded 2026-07-02)
+
+The original version, kept for reference. Superseded by version 18 below.
 
 ```js
 'use strict';
@@ -93,16 +96,16 @@ exports.sendContactFormEmail = functions.https.onRequest(async (req, res) => {
 });
 ```
 
-### Known limitations
+### Limitations of version 17 (all addressed in version 18)
 
-1. **Newlines collapse.** `message` is dropped into a single `<p>`, so the composed lead message (brief, company, phone, and the three dropdowns separated by `\n`) renders on one line in the email.
-2. **No source label.** The email subject does not say which landing page produced the lead, even though the form now sends `formName`.
-3. **Unescaped input.** `name`, `email`, and `message` are interpolated into HTML without escaping, so a submission can inject markup into the email body.
-4. **No reply target.** Replying to the notification email does not go to the lead; their address is only in the body.
+1. **Newlines collapsed.** `message` was dropped into a single `<p>`, so the composed lead message (brief, company, phone, and the three dropdowns separated by `\n`) rendered on one line.
+2. **No source label.** The subject did not say which landing page produced the lead, even though the form sends `formName`.
+3. **Unescaped input.** `name`, `email`, and `message` were interpolated into HTML without escaping, so a submission could inject markup into the email body.
+4. **No reply target.** Replying to the notification email did not go to the lead.
 
-## Recommended improved source
+## Source, version 18 (deployed 2026-07-02)
 
-Backward compatible: the nav contact form (which sends no `formName`) still works unchanged. Improvements: render newlines as `<br>`, label the source landing page from `formName`, escape HTML, and set `Reply-To` to the lead's email.
+This is the live version. Backward compatible: the nav contact form (which sends no `formName`) works unchanged. Changes versus version 17: render newlines as `<br>`, label the source landing page from `formName`, escape HTML input, set `Reply-To` to the lead's email, and return `400` when a required field is missing. Deployed via gcloud from the previously deployed source (preserving `package.json` and env vars) and verified with a live `200`/`400` test.
 
 ```js
 'use strict';

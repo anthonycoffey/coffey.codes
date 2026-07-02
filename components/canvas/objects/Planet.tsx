@@ -6,11 +6,13 @@ import * as THREE from 'three';
 
 interface PlanetProps {
   scrollProgress: React.RefObject<number>;
+  /** Low-quality tier: fewer ring particles, lower sphere tessellation, fewer
+   * fbm octaves. */
+  isMobile?: boolean;
 }
 
 // ── Flat, Saturn-like Orbital Rings ───────────────────────────────────────
-function OrbitalParticles() {
-  const count = 5000; // More particles for a dense ring
+function OrbitalParticles({ count }: { count: number }) {
   const particlesRef = useRef<THREE.Points>(null);
 
   const positions = useMemo(() => {
@@ -123,12 +125,13 @@ const NOISE_GLSL = `
     return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
   }
 
-  // Fractional Brownian Motion for cloud layers
+  // Fractional Brownian Motion for cloud layers. Octave count is injected via
+  // FBM_OCTAVES (#define) so mobile can run fewer, cheaper iterations.
   float fbm(vec3 x) {
     float v = 0.0;
     float a = 0.5;
     vec3 shift = vec3(100.0);
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < FBM_OCTAVES; ++i) {
       v += a * snoise(x);
       x = x * 2.0 + shift;
       a *= 0.5;
@@ -140,9 +143,17 @@ const NOISE_GLSL = `
 // Layer 1 is dedicated specifically to the Planet and its exclusive lighting
 const PLANET_LIGHTING_LAYER = 1;
 
-export default function Planet({ scrollProgress }: PlanetProps) {
+export default function Planet({
+  scrollProgress,
+  isMobile = false,
+}: PlanetProps) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+
+  // Quality-tier knobs.
+  const ringCount = isMobile ? 1500 : 5000;
+  const sphereSegments = isMobile ? 32 : 64;
+  const fbmOctaves = isMobile ? 3 : 4;
 
   const eclipseLightRef = useRef<THREE.PointLight>(null);
   const frontLightRef = useRef<THREE.DirectionalLight>(null);
@@ -222,6 +233,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
 
     shader.fragmentShader =
       `
+      #define FBM_OCTAVES ${fbmOctaves}
       uniform float uTime;
       varying vec3 vLocalPos;
       ${NOISE_GLSL}
@@ -279,7 +291,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
         Zero vertex displacement. Beautiful, mathematically generated swirling cloud bands.
       */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[20, 64, 64]} />
+        <sphereGeometry args={[20, sphereSegments, sphereSegments]} />
         <meshStandardMaterial
           ref={planetMatRef}
           roughness={0.6} // Gas giants are relatively smooth/matte
@@ -288,7 +300,7 @@ export default function Planet({ scrollProgress }: PlanetProps) {
         />
       </mesh>
 
-      <OrbitalParticles />
+      <OrbitalParticles count={ringCount} />
 
       {/* Lighting tailored for a smooth, massive body */}
       <pointLight

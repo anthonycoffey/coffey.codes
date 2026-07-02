@@ -38,8 +38,15 @@ async function scrollTo(page: Page, fraction: number) {
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    // Wait for the WebGL canvas to mount before any assertions or scrolling
+    // The scene is gated behind a "click/tap to enter" splash on every viewport,
+    // so the WebGL canvas does not mount until the visitor enters. Click the
+    // gate, then wait for the canvas to mount and for the loader to release the
+    // scroll lock (body overflow) before any assertions or scrolling.
+    await page.getByRole('button', { name: /enter/i }).click();
     await page.waitForSelector('canvas');
+    await page.waitForFunction(
+      () => document.body.style.overflow !== 'hidden',
+    );
   });
 
   // ── Structure ──────────────────────────────────────────────────────────

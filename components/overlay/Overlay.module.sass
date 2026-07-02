@@ -148,7 +148,9 @@
 
   @media (max-width: 768px)
     top: 80vh
-    transform: translate(-50%, -50%) scale(0.75)
+    left: 72vw
+    transform: translate(-50%, -50%) scale(0.8)
+    padding: 1rem 1rem 1rem 2.5rem
 
 .tocList
   list-style: none
@@ -166,7 +168,12 @@
   font-size: 0.8rem
   letter-spacing: 0.1em
   text-transform: uppercase
-  color: rgba(240, 240, 255, 0.4)
+  // 0.55 alpha over the ~#09090f panel background clears WCAG AA (≈5.6:1);
+  // 0.4 fell to 3.44:1. Still visibly dimmer than the hover (0.8) / active
+  // (white) states. The contrast failure was masked until the scene gate
+  // landed: with the WebGL canvas unmounted on the entry splash, the links sit
+  // over the solid page background instead of the (axe-unreadable) canvas.
+  color: rgba(240, 240, 255, 0.55)
   text-decoration: none
   transition: all 0.3s ease
   cursor: pointer
@@ -176,6 +183,7 @@
   flex-direction: row-reverse
   text-align: right
   gap: 0.5rem
+  white-space: nowrap
 
   &::before
     content: ''

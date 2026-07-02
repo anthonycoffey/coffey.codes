@@ -91,10 +91,13 @@ export default async function CaseStudiesPage() {
         description="Explore detailed case studies that showcase my expertise and approach to solving real-world problems with technology."
       />
 
+      {/* Newest first: the caseStudies array is maintained in chronological
+          (oldest -> newest) append order, so render it reversed to surface the
+          most recent case study at the top. */}
       <div className="space-y-6">
-        {caseStudies.map((study, index) => (
+        {[...caseStudies].reverse().map((study) => (
           <CaseStudyCard
-            key={index}
+            key={study.slug}
             icon={study.icon}
             title={study.title}
             description={study.description}

@@ -25,6 +25,7 @@ vi.mock('@heroicons/react/20/solid', () => ({
 }));
 
 import CaseStudiesPage from '@/app/(site)/case-studies/page';
+import { caseStudies } from '@/app/(site)/case-studies/case-studies';
 
 describe('CaseStudiesPage', () => {
   it('renders the page heading', async () => {
@@ -44,14 +45,20 @@ describe('CaseStudiesPage', () => {
     expect(screen.getByText('PostGIS')).toBeInTheDocument();
   });
 
-  it('links each card to its /case-study/:slug detail page', async () => {
+  it('links each card to its /case-study/:slug detail page, newest first', async () => {
     const jsx = await CaseStudiesPage();
     render(jsx as React.ReactElement);
     const readLinks = screen.getAllByRole('link', { name: /read case study/i });
-    expect(readLinks.length).toBeGreaterThan(0);
+    expect(readLinks).toHaveLength(caseStudies.length);
+    // The listing renders the source array reversed, so the most recently
+    // appended case study surfaces first and the oldest one appears last.
     expect(readLinks[0]).toHaveAttribute(
       'href',
-      '/case-study/postgis-fleet-optimization',
+      `/case-study/${caseStudies[caseStudies.length - 1].slug}`,
+    );
+    expect(readLinks[readLinks.length - 1]).toHaveAttribute(
+      'href',
+      `/case-study/${caseStudies[0].slug}`,
     );
   });
 });

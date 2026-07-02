@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
+import LeadForm from '@/components/LeadForm';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
@@ -182,7 +182,7 @@ export default function StrategicPartnersLandingPage() {
             <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
               Discuss Your Project
             </h3>
-            <ContactForm />
+            <LeadForm formName="lp_strategic_partners" />
           </div>
         </div>
       </section>

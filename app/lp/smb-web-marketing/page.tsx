@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
+import LeadForm from '@/components/LeadForm';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import SocialIcons from '@/components/SocialIcons';
@@ -169,7 +169,7 @@ export default function SmbWebMarketingLandingPage() {
             <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
               Get Your Project Started
             </h3>
-            <ContactForm />
+            <LeadForm formName="lp_smb_web_marketing" />
           </div>
         </div>
       </section>

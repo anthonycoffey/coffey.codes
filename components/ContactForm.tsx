@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -7,6 +7,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid';
+import { useLeadFormSubmit } from '@/hooks/useLeadFormSubmit';
 
 // Define the validation schema using Yup
 const ContactSchema = Yup.object().shape({
@@ -21,8 +22,11 @@ const ContactSchema = Yup.object().shape({
 });
 
 export default function ContactForm() {
-  const [messageSent, setMessageSent] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<string | null>(null); // Renamed to avoid conflict with Formik errors
+  // Submit behavior (POST + GA4 form_submit event) lives in the shared hook so
+  // ContactForm and LeadForm use one code path. `isSent`/`error` are aliased to
+  // the original local names to keep the rest of this component unchanged.
+  const { submit, isSent: messageSent, error: apiError } =
+    useLeadFormSubmit('contact');
 
   const inputClasses =
     'mt-1 block w-full rounded-md border border-border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent1-dark focus:ring-offset-2 bg-surface text-c-text placeholder-c-muted';
@@ -40,39 +44,12 @@ export default function ContactForm() {
             consent: false,
           }}
           validationSchema={ContactSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
-            setApiError(null);
-            setSubmitting(true);
-            try {
-              const response = await fetch('/functions/sendContactFormEmail', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values), // Send all formik values
-              });
-
-              if (response.ok) {
-                setMessageSent(true);
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                  event: 'form_submit',
-                  formName: 'contact',
-                });
-                resetForm(); // Reset form on success
-              } else {
-                const errorData = await response.json().catch(() => ({}));
-                setApiError(
-                  errorData.message ||
-                    `An error occurred: ${response.statusText} (${response.status})`,
-                );
-              }
-            } catch {
-              setApiError(
-                'An error occurred while sending your message, please try again.',
-              );
-            } finally {
-              setSubmitting(false);
+          onSubmit={async (values, { resetForm }) => {
+            // Formik manages `isSubmitting` for async onSubmit; the hook owns the
+            // POST, the success/error state, and the GA4 form_submit event.
+            const ok = await submit(values);
+            if (ok) {
+              resetForm();
             }
           }}
         >

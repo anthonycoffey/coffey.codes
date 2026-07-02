@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { XMarkIcon, CheckIcon } from '@heroicons/react/20/solid';
 
 // Add type definitions for gtag
 type ConsentMode = 'default' | 'update';
@@ -122,39 +121,30 @@ const ConsentManager = () => {
 
   return (
     <div
-      className="dark fixed bottom-0 left-0 right-0 z-50 p-3 bg-blue-600 shadow-2xl border-t-2 border-gray-200
+      className="fixed bottom-0 left-0 right-0 z-50 bg-surface border-t border-border
       animate-slide-up transform transition-all duration-500 ease-in-out"
     >
-      <div className="max-w-md mx-auto text-white">
-        <div className="flex flex-col space-y-3 px-1">
-          <h2 className="text-lg font-semibold text-neutral-1 text-center md:text-left mb-0">
-            We use cookies to improve your experience
-          </h2>
+      <div className="mx-auto max-w-5xl px-4 py-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:flex-nowrap">
+        <p className="flex-1 min-w-0 text-xs sm:text-sm text-c-muted text-center sm:text-left leading-tight">
+          We use cookies to analyze site usage and improve your experience.
+        </p>
 
-          <p className="text-sm text-neutral-2 text-center md:text-left">
-            We use cookies to enhance site navigation, analyze site usage, and
-            assist in marketing efforts.
-          </p>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            onClick={handleRejectConsent}
+            className="px-3 py-1 rounded-md text-xs sm:text-sm text-c-muted
+            hover:text-c-heading transition-colors duration-200"
+          >
+            Reject
+          </button>
 
-          <div className="flex space-x-3 mt-2">
-            <button
-              onClick={handleRejectConsent}
-              className="flex-1 flex items-center justify-center
-              bg-red-100 text-red-700 px-4 py-2 rounded-md
-              hover:bg-red-500 transition-colors duration-200"
-            >
-              <XMarkIcon className="mr-2 h-5 w-5" /> Reject
-            </button>
-
-            <button
-              onClick={handleAcceptConsent}
-              className="flex-1 flex items-center justify-center
-              bg-green-100 text-green-700 px-4 py-2 rounded-md
-              hover:bg-green-500 transition-colors duration-200"
-            >
-              <CheckIcon className="mr-2 h-5 w-5" /> Accept
-            </button>
-          </div>
+          <button
+            onClick={handleAcceptConsent}
+            className="px-3 py-1 rounded-md text-xs sm:text-sm font-medium
+            bg-accent1-dark text-surface hover:opacity-90 transition-opacity duration-200"
+          >
+            Accept
+          </button>
         </div>
       </div>
     </div>

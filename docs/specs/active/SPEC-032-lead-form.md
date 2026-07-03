@@ -1,7 +1,7 @@
 ---
 id: SPEC-032
 title: 'Reusable lead-capture form for /lp landing pages'
-status: ready
+status: review-pending
 created: 2026-07-02
 author: 'Anthony Coffey'
 reviewers: []

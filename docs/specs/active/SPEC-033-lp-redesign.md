@@ -1,7 +1,7 @@
 ---
 id: SPEC-033
 title: 'Landing-page redesign and copy rewrite (/lp)'
-status: ready
+status: review-pending
 created: 2026-07-02
 author: 'Anthony Coffey'
 reviewers: []

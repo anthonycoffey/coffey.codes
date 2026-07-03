@@ -129,13 +129,18 @@ export default function SmeWebMobileLandingPage() {
         intro="Delivered work, not a skills list."
         caseStudies={[
           {
+            href: '/case-study/wordpress-to-serverless-headless-commerce',
+            title: 'A legacy site rebuilt, delivered in days',
+            blurb: 'A slow WordPress site rebuilt into a fast, maintainable serverless app with a custom Stripe storefront.',
+          },
+          {
             href: '/case-study/postgis-fleet-optimization',
-            title: 'Geospatial fleet optimization',
-            blurb: 'A custom routing system delivered end to end, from the data model to live dispatch decisions.',
+            title: 'Geospatial routing, end to end',
+            blurb: 'A custom routing system built on PostGIS, delivered from the data model to production.',
           },
           {
             href: '/case-study/data-driven-seo-pipeline',
-            title: 'A data pipeline built from zero',
+            title: 'A data pipeline, built from zero',
             blurb: 'Shipped and running: multi-engine data collection turned into daily decisions.',
           },
         ]}

@@ -129,6 +129,11 @@ export default function SmbWebMarketingLandingPage() {
         intro="The same engineering rigor goes into a small-business site as a large custom build."
         caseStudies={[
           {
+            href: '/case-study/wordpress-to-serverless-headless-commerce',
+            title: 'A rebuild that pays for itself',
+            blurb: 'A slow WordPress site rebuilt into a fast headless storefront: perfect PageSpeed scores, no recurring platform fees, and a custom Stripe checkout.',
+          },
+          {
             href: '/case-study/data-driven-seo-pipeline',
             title: 'Turning search data into growth',
             blurb: 'How a data pipeline surfaces the pages and queries actually worth investing in.',
@@ -136,7 +141,7 @@ export default function SmbWebMarketingLandingPage() {
           {
             href: '/case-study/postgis-fleet-optimization',
             title: 'Custom software, delivered',
-            blurb: 'A data-heavy application shipped end to end, proof the same care goes into every build.',
+            blurb: 'A data-heavy application built end to end on PostGIS.',
           },
         ]}
         techLogos={TECH_LOGOS}

@@ -33,7 +33,7 @@ export default function LpProof({
       ) : null}
 
       {caseStudies.length > 0 ? (
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map(({ href, title, blurb }) => (
             <Link
               key={href}

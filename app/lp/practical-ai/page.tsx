@@ -126,17 +126,22 @@ export default function PracticalAiLandingPage() {
       />
 
       <LpProof
-        intro="A sample of delivered work. Both shipped, both measured."
+        intro="A sample of delivered work, shipped and measured."
         caseStudies={[
           {
+            href: '/case-study/wordpress-to-serverless-headless-commerce',
+            title: 'A full site rebuild, AI-assisted, in days',
+            blurb: 'A WordPress site rebuilt as a headless serverless app with AI-assisted development, scoring 100 across Google PageSpeed.',
+          },
+          {
             href: '/case-study/data-driven-seo-pipeline',
-            title: 'A data-driven pipeline, built from zero',
+            title: 'A data pipeline, built from zero',
             blurb: 'An automated pipeline that pulls multi-engine search data and turns it into editorial decisions.',
           },
           {
             href: '/case-study/postgis-fleet-optimization',
-            title: 'Geospatial fleet optimization',
-            blurb: 'A data-heavy routing system on PostGIS that turns raw location data into faster dispatch decisions.',
+            title: 'Geospatial routing on PostGIS',
+            blurb: 'A routing system built on PostGIS that turns raw location data into optimized dispatch logic.',
           },
         ]}
         techLogos={TECH_LOGOS}

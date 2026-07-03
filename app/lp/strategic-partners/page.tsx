@@ -129,9 +129,14 @@ export default function StrategicPartnersLandingPage() {
         intro="Complex work, owned start to finish."
         caseStudies={[
           {
+            href: '/case-study/wordpress-to-serverless-headless-commerce',
+            title: 'Full rebuild in 2 to 3 days',
+            blurb: 'A WordPress site rebuilt as a headless Astro and Sanity app on Cloudflare, owned end to end and shipped in days.',
+          },
+          {
             href: '/case-study/postgis-fleet-optimization',
             title: 'Complex build, owned end to end',
-            blurb: 'A geospatial optimization system delivered from the data model to production.',
+            blurb: 'A geospatial system built on PostGIS, delivered from the data model to production.',
           },
           {
             href: '/case-study/data-driven-seo-pipeline',

@@ -236,9 +236,9 @@ export const caseStudies: CaseStudyData[] = [
   {
     slug: 'wordpress-to-serverless-headless-commerce',
     title:
-      'From $15/mo WordPress to Zero-Cost Serverless: A Pixel-Perfect Rebuild with Custom Commerce',
+      'WordPress to Zero-Cost Serverless: A Pixel-Perfect Rebuild with Custom Commerce',
     description:
-      'Rebuilt Wake the Nile’s WordPress site as a headless Astro + Sanity + Cloudflare Pages app — a pixel-perfect 1:1 migration that eliminated all recurring platform fees, scored 100s across the board on Google PageSpeed, and shipped a hand-rolled Stripe + Sanity storefront instead of a Shopify subscription. Delivered in 2–3 days with Claude Code (Opus 4.8).',
+      'Rebuilt Wake the Nile’s WordPress site as a headless Astro + Sanity + Cloudflare Pages app — a pixel-perfect 1:1 migration that lifted the homepage’s mobile Lighthouse performance from 38 to 96, eliminated all recurring platform fees, and shipped a hand-rolled Stripe + Sanity storefront instead of a Shopify subscription. Built in 2–3 days with Claude Code (Opus 4.8).',
     icon: BoltIcon,
     tags: [
       'Astro',
@@ -258,47 +258,68 @@ export const caseStudies: CaseStudyData[] = [
         type: 'text',
         heading: 'The Challenge',
         content:
-          "Wake the Nile — a touring music artist on Freeda Records — ran on WordPress hosted on a $15–$20/month virtual machine at Google Cloud. Google PageSpeed graded the live site a C. It worked, but it was slow, and every month it billed regardless of traffic.\n\nThe next ask made the ceiling obvious: the artist wanted to sell merch. The plan on the table was Shopify — another recurring subscription, another checkout to brand around, and a second dashboard to live in alongside the site's own admin. Underneath all of it sat a legacy LAMP-and-plugin stack that was a dead end for modern, AI-assisted iteration: configuration buried in a database and a wp-admin UI, nothing an AI agent could reason about or safely change in a repo.",
+          "Wake the Nile — a touring artist on Freeda Records — ran on WordPress on a single ~$10/month Google Cloud VM: one shared-core instance (0.25 vCPU baseline, 1 GB RAM) pinned to one region. On mobile it scored a 38 on Lighthouse performance, with a 7.4-second Largest Contentful Paint. And the next ask, selling merch, pointed straight at Shopify — another monthly subscription, another dashboard. The whole stack was a dead end for AI-assisted iteration: config buried in a database and wp-admin, nothing an agent could safely change in a repo.",
       },
       {
         type: 'stats',
         stats: [
-          { label: 'Hosting', value: '$15–$20/mo VM' },
-          { label: 'PageSpeed grade', value: 'C' },
-          { label: 'Platform', value: 'WordPress (LAMP)' },
+          { label: 'Hosting', value: '~$10/mo GCP VM' },
+          { label: 'Infrastructure', value: '0.25 vCPU · 1 GB · 1 region' },
+          { label: 'Mobile performance', value: '38' },
           { label: 'Commerce', value: 'Shopify (proposed, +fees)' },
           { label: 'AI-agent workflow', value: 'Not viable' },
         ],
       },
       {
         type: 'text',
-        heading: 'The Solution',
+        heading: 'The Rebuild',
         content:
-          "A pixel-perfect 1:1 rebuild on Astro 5 (static output) + Sanity (headless CMS) + Cloudflare Pages, served from the edge on the free tier — recreating the live site down to the gold-on-black brand. Everything from the old site was ported over, not approximated: the video slider came across as a Swiper coverflow that is faster and smoother than the WordPress original, and the contact page kept its HubSpot form integration.\n\nServer logic — checkout and order webhooks — runs as edge-native Cloudflare Pages Functions calling the Stripe and Sanity HTTP APIs directly, with no Node runtime to provision or scale. The whole rebuild was delivered in 2–3 days using Claude Code (Opus 4.8) on the Max plan, and the entire site lives in a single GitHub repository.",
+          "A pixel-perfect 1:1 rebuild on Astro 5 (static) + Sanity (headless CMS) + Cloudflare Pages — served from a 330+-city edge network instead of one VM in one region. Nothing was approximated: the video slider came across as a smoother Swiper coverflow, the HubSpot contact form intact, the gold-on-black brand pixel-matched. Checkout and webhooks run as edge-native Pages Functions — V8 isolates hitting the Stripe and Sanity APIs directly, no server to provision or scale. Built in 2–3 days with Claude Code (Opus 4.8), the entire site in one Git repo.",
+      },
+      {
+        type: 'stats',
+        stats: [
+          { label: 'Performance', value: '38 → 96' },
+          { label: 'Largest Contentful Paint', value: '7.4s → 2.7s' },
+          { label: 'Total Blocking Time', value: '1,450ms → 30ms' },
+          { label: 'First Contentful Paint', value: '3.6s → 1.1s' },
+          { label: 'Speed Index', value: '6.4s → 2.9s' },
+          { label: 'Best Practices', value: '61 → 100' },
+        ],
       },
       {
         type: 'chart',
-        title: 'Google PageSpeed after rebuild (0–100, per page)',
+        title: 'WordPress — Lighthouse (homepage, mobile)',
         unit: '',
         data: [
-          { label: 'Home', value: 100 },
-          { label: 'Music', value: 100 },
-          { label: 'Videos', value: 99 },
-          { label: 'Connect', value: 100 },
-          { label: 'Shows', value: 100 },
+          { label: 'Performance', value: 38 },
+          { label: 'Best Practices', value: 61 },
+          { label: 'SEO', value: 92 },
+          { label: 'Accessibility', value: 100 },
+        ],
+      },
+      {
+        type: 'chart',
+        title: 'Cloudflare — Lighthouse (homepage, mobile)',
+        unit: '',
+        data: [
+          { label: 'Performance', value: 96 },
+          { label: 'Best Practices', value: 100 },
+          { label: 'SEO', value: 100 },
+          { label: 'Accessibility', value: 100 },
         ],
       },
       {
         type: 'text',
-        heading: 'From a C to straight A’s — even on the heaviest page',
+        heading: 'Fastest where it counts',
         content:
-          "The WordPress site scored a C. The rebuilt site scores 100s and all-green A’s across the board — including `/videos`, the heaviest page on the site, where multiple MP4s power the slider. Static HTML served from Cloudflare's edge, images and video delivered as optimized static assets, and zero server round-trip on page load turned performance from a liability into a feature. The site is now measurably faster than the one it replaced, for a fraction of the cost.",
+          "The gains land hardest on mobile, where most visitors are and Lighthouse is strictest: a failing 38 climbs to 96, and blocking time all but vanishes (1,450ms → 30ms). Desktop went 85 → a perfect 100. Even the heaviest page — `/videos`, several autoplaying MP4s — went from 30 → 91, its layout shift erased (CLS 0.194 → 0.002). Static HTML from the edge with zero server round-trip turned performance from a liability into a feature.",
       },
       {
         type: 'text',
         heading: 'Custom commerce — no Shopify',
         content:
-          "Rather than rent Shopify, the storefront was hand-rolled on Stripe + Sanity in about a day. Sanity is the single source of truth for the catalog and inventory; prices are sent to Stripe dynamically at checkout so the CMS stays authoritative. Shoppers get a custom cart (a localStorage island with a slide-out drawer) and an Embedded Stripe Checkout that stays on-brand and on-site, plus a thank-you page that reads a Stripe session token to render real success or error status rather than a blind redirect.\n\nOn payment, a Stripe webhook — also a Cloudflare Pages Function — writes the order into Sanity as an order document and decrements product stock automatically. Stripe carries the parts nobody wants to reinvent: fraud protection, sales tax, and billing/accounting — the whole nine yards — with zero platform subscription on top.",
+          "Instead of renting Shopify, the storefront is hand-rolled on Stripe + Sanity in about a day. Sanity is the single source of truth for catalog and inventory; prices go to Stripe dynamically. Shoppers get a custom cart and an Embedded Stripe Checkout that stays on-brand and on-site, plus a thank-you page that reads a Stripe token for real success or error status — not a blind redirect. On payment, a webhook (another Pages Function) writes the order into Sanity and decrements stock automatically. Stripe handles fraud protection, sales tax, and billing — no platform fee on top.",
       },
       {
         type: 'stats',
@@ -313,30 +334,30 @@ export const caseStudies: CaseStudyData[] = [
       },
       {
         type: 'text',
-        heading: 'Built to iterate — and AI-agent-ready',
+        heading: 'Built to iterate — AI-agent-ready',
         content:
-          "Because the whole site lives in a GitHub repo and every third-party service in the stack (Sanity, Cloudflare, Stripe) ships an MCP server, an AI agent can drive publishing, schema changes, and deploys directly — the same way this rebuild was built. A `siteSettings` collection manages global config like social-button URLs and the nav menu; a toggle marks a product sold out; page templates bind to Sanity custom fields, so new capabilities are a code or content change rather than a migration.\n\nContent and order fulfillment now live under one roof. There is no swapping between a Shopify admin and a separate website dashboard — the artist manages merchandise, fulfills orders, and edits the site from the same place.",
+          "Everything lives in one Git repo, and every service in the stack (Sanity, Cloudflare, Stripe) ships an MCP server — so an AI agent can drive publishing, schema, and deploys directly, exactly how this was built. A `siteSettings` collection owns global config; a toggle marks a product sold out; templates bind to Sanity fields, so new features are a commit, not a migration. Content and fulfillment live under one roof — no swapping between a Shopify admin and a separate site dashboard.",
       },
       {
         type: 'stats',
         stats: [
           { label: 'Recurring platform fees', value: '$0' },
-          { label: 'Annual cost avoided', value: '~$650/yr' },
-          { label: 'PageSpeed', value: 'C → 100 / A' },
+          { label: 'Annual cost avoided', value: '~$590/yr' },
+          { label: 'Mobile performance', value: '38 → 96' },
+          { label: 'Edge reach', value: '1 region → 330+ cities' },
           { label: 'Rebuild time', value: '2–3 days' },
-          { label: 'Commerce build', value: '~1 day' },
           { label: 'Platforms consolidated', value: '2 → 1' },
         ],
       },
       {
         type: 'quote',
-        text: 'One repo, one dashboard, zero recurring platform fees — a faster site than the one it replaced, with a full storefront the client owns outright.',
+        text: 'One repo, one dashboard, zero recurring fees — a faster site than the one it replaced, with a storefront the client owns outright.',
       },
       {
         type: 'text',
         heading: 'Where this leaves things',
         content:
-          "The math is simple: roughly $180–$240/year of WordPress VM hosting and ~$468/year of avoided Shopify Basic fees collapse to $0 on Cloudflare's free tier, which is more than sufficient for this client's traffic. The result is zero recurring platform fees, a site that outperforms its predecessor, and a stack purpose-built for AI-assisted iteration.\n\nThe storefront is fully fleshed out — branded checkout, secure payments, automated inventory and order capture — already built, secured, and deployed. The only work left is the tedious part: entering the product catalog on top of a foundation that is done.",
+          "The savings are concrete: ~$120/year of WordPress hosting plus a ~$468/year Shopify subscription that never had to start — about $590/year avoided, now $0 on Cloudflare's free tier and comfortably within its limits. What's left is the tedious part: loading the product catalog onto a storefront that's already built, secured, and deployed.",
       },
     ],
   },

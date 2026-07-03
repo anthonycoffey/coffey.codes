@@ -51,8 +51,11 @@ test.describe('Lead form (/lp/practical-ai)', () => {
   }) => {
     await page.goto(LP_PATH);
 
-    const caseStudies = page.getByRole('link', { name: /case studies/i });
-    const portfolio = page.getByRole('link', { name: /portfolio/i });
+    // Scope to the form: the redesigned page also has case-study cards and a
+    // "See the full portfolio" button elsewhere, so query within the form only.
+    const form = page.locator('form');
+    const caseStudies = form.getByRole('link', { name: /case studies/i });
+    const portfolio = form.getByRole('link', { name: /portfolio/i });
 
     await expect(caseStudies).toHaveAttribute('href', '/case-studies');
     await expect(caseStudies).toHaveAttribute('target', '_blank');

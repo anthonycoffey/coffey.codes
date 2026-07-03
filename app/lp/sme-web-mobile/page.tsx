@@ -1,17 +1,18 @@
 import React from 'react';
-import LeadForm from '@/components/LeadForm';
 import { Metadata } from 'next';
-import Image from 'next/image';
-import SocialIcons from '@/components/SocialIcons';
 import JsonLd from '@/components/JsonLd';
 import { baseUrl } from '@/app/sitemap';
+import LeadForm from '@/components/LeadForm';
+import LpHero from '@/components/lp/LpHero';
+import LpBenefits from '@/components/lp/LpBenefits';
+import LpProof from '@/components/lp/LpProof';
+import LpFinalCta from '@/components/lp/LpFinalCta';
 import {
-  ClockIcon,
-  ArrowsPointingOutIcon,
-  UserGroupIcon,
-  ChartBarIcon,
   ShieldCheckIcon,
-} from '@heroicons/react/24/outline'; // Import necessary icons
+  ArrowsPointingOutIcon,
+  PuzzlePieceIcon,
+  ClockIcon,
+} from '@heroicons/react/24/outline';
 
 const LP_TITLE = 'Custom Web & Mobile Apps for Growing SMEs';
 const LP_DESCRIPTION =
@@ -38,6 +39,21 @@ export const metadata: Metadata = {
   },
 };
 
+const TECH_LOGOS = [
+  'react.svg',
+  'nodejs.svg',
+  'typescript-icon.svg',
+  'expo.svg',
+  'python.svg',
+  'postgresql.svg',
+  'aws.svg',
+  'google-cloud.svg',
+  'firebase.svg',
+  'graphql.svg',
+  'tailwindcss.svg',
+  'vercel.svg',
+];
+
 export default function SmeWebMobileLandingPage() {
   const breadcrumb = {
     '@context': 'https://schema.org',
@@ -62,135 +78,75 @@ export default function SmeWebMobileLandingPage() {
       'Reliable, scalable web and mobile apps built directly by a senior engineer for established SMEs.',
     url: `${baseUrl}/lp/sme-web-mobile`,
   };
+
   return (
-    <div className="container max-w-6xl mx-auto px-4 py-16">
+    <div className="container mx-auto max-w-6xl px-4 py-16">
       <JsonLd data={breadcrumb} />
       <JsonLd data={service} />
-      <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-c-heading">
-          Stop Fighting Unreliable Tech. Get Custom Apps That Fuel Growth.
-        </h1>
-        <p className="text-xl text-c-muted max-w-3xl mx-auto">
-          Tired of tech projects that derail or agencies that disappear?
-          Established SMEs need reliable, scalable web and mobile applications
-          built for the long haul. Anthony Coffey is the senior developer you
-          work with directly — 12+ years shipping production systems,
-          hands-on the keyboard, focused squarely on delivering robust
-          solutions you can depend on.
-        </p>
-        <div className="flex justify-center mb-24 mt-10">
-          <div className="relative w-64 h-64 md:w-72 md:h-72">
-            <Image
-              width={330}
-              height={330}
-              src="/headshot.png"
-              alt="Anthony Coffey"
-              className="w-full h-full object-cover rounded-lg shadow-md"
-            />
-            <div className="absolute -bottom-12 -right-6 bg-surface p-3 rounded-lg shadow-md border border-border">
-              <p className="font-bold text-accent1-dark text-base m-0 text-right">
-                Anthony Coffey
-              </p>
-              <p className="text-c-text text-sm m-0 font-semibold">
-                Senior Solutions Architect & AI Specialist
-              </p>
-              <p className="text-c-text text-xs m-0 text-right">
-                Austin, Texas
-              </p>
-              <SocialIcons />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
-        <div>
-          <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-            Experience That Translates to Reliable Results
-          </h2>
-          <p className="text-lg text-c-text mb-4">
-            Benefit from 12+ years architecting sustainable, scalable solutions
-            specifically designed for long-term business growth. Avoid the
-            costly mistakes and delays common with junior teams or impersonal
-            agencies. Get solutions built correctly from the start, saving you
-            time and resources down the road.
-          </p>
-          {/* Enhanced Benefits List with Icons */}
-          <div className="space-y-4 text-lg text-c-text mb-6">
-            <div className="flex items-start">
-              <ClockIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">
-                  On-Time, On-Budget Delivery:
-                </span>{' '}
-                Reliable execution you can count on.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <ArrowsPointingOutIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Built to Scale:</span> Solutions
-                architected for future growth and easy maintenance.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <UserGroupIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Direct Senior Access:</span>{' '}
-                Work directly with the engineer doing the work — no
-                account-manager middle layer.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <ChartBarIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Business-Focused:</span>{' '}
-                Tangible outcomes prioritized over technical jargon.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <ShieldCheckIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Avoid Costly Rework:</span> Get
-                it right the first time with expert architecture.
-              </span>
-            </div>
-          </div>
-          <a
-            href="#schedule-call" // Placeholder link/anchor
-            className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
-          >
-            Book a Free Intro Call
-          </a>
-        </div>
-        <div className="flex flex-col items-center gap-10">
-          <div className="bg-surface p-8 rounded-lg shadow-lg w-full">
-            <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
-              Ready to Discuss Your Project?
-            </h3>
-            <LeadForm formName="lp_sme_web_mobile" />
-          </div>
-        </div>
-      </section>
+      <LpHero
+        eyebrow="Custom Web & Mobile"
+        title="Stop fighting unreliable tech. Get apps built to last."
+        subhead="For established businesses tired of stalled projects and agency churn. One senior engineer owns your custom web or mobile build end to end, and delivers on time and to spec."
+        credibility={[
+          '12+ years building production web and mobile applications',
+          'One senior engineer owns delivery, no junior bait-and-switch',
+          'On time and on spec, with no surprises at the deadline',
+        ]}
+        formHeading="Tell me about your project"
+        formWindowTitle="project_brief.exe"
+        form={<LeadForm formName="lp_sme_web_mobile" />}
+      />
 
-      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
-        <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-          Let&apos;s Talk Through Your Next Application
-        </h2>
-        <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a free 20-minute intro call to walk through what you&apos;re
-          building. If it&apos;s a fit, we&apos;ll talk scope and how to ship
-          a reliable, scalable solution.
-        </p>
-        <a
-          href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
-        >
-          Book Free Call Now
-        </a>
-      </section>
+      <LpBenefits
+        heading="Delivery you can count on"
+        intro="The problem is rarely the code. It is projects that drift, teams that hand you a junior, and a launch date nobody stands behind."
+        items={[
+          {
+            icon: ShieldCheckIcon,
+            title: 'Ownership end to end',
+            body: 'One person accountable for the whole build, from architecture to launch.',
+          },
+          {
+            icon: ArrowsPointingOutIcon,
+            title: 'Built to scale',
+            body: 'Architected for where your business is going, not just what it needs today.',
+          },
+          {
+            icon: PuzzlePieceIcon,
+            title: 'Clean integrations',
+            body: 'Connected to the systems and APIs you already depend on.',
+          },
+          {
+            icon: ClockIcon,
+            title: 'On time, on spec',
+            body: 'Realistic scope, steady progress, and a launch date that holds.',
+          },
+        ]}
+      />
+
+      <LpProof
+        intro="Delivered work, not a skills list."
+        caseStudies={[
+          {
+            href: '/case-study/postgis-fleet-optimization',
+            title: 'Geospatial fleet optimization',
+            blurb: 'A custom routing system delivered end to end, from the data model to live dispatch decisions.',
+          },
+          {
+            href: '/case-study/data-driven-seo-pipeline',
+            title: 'A data pipeline built from zero',
+            blurb: 'Shipped and running: multi-engine data collection turned into daily decisions.',
+          },
+        ]}
+        techLogos={TECH_LOGOS}
+      />
+
+      <LpFinalCta
+        heading="Ready to scope your project?"
+        body="Book a free 20-minute call to talk through what you are building and how to get it delivered without the usual friction."
+        ctaLabel="Book your free call"
+      />
     </div>
   );
 }

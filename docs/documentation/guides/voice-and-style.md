@@ -9,6 +9,8 @@ status: living-document
 
 One page. Every article, landing page, and homepage block on coffey.codes follows these rules. Short on purpose, because long style guides erode in practice. When in doubt, the rule below wins.
 
+One exception, spelled out in Rule 6: the `/lp` ad landing pages are conversion surfaces. Rule 6 (no selling) does not apply to them. Every other rule does.
+
 ## The seven rules
 
 ### 1. No em-dashes
@@ -47,11 +49,15 @@ Banned phrases (non-exhaustive): `let's dive in`, `in the world of X`, `imagine 
 
 The voice check is: does this read like Anthony wrote it, or like a pattern-completing model wrote it? If the latter, rewrite or delete.
 
-### 6. No selling
+### 6. No selling (articles only)
 
-Articles describe work. They do not invite the reader to hire the author. No `If you'd like to discuss this, contact me`, no `Need help with X? Let's chat`, no CTAs at the bottom of an article. The contact form is the only invitation surface on the site and it lives in the nav.
+Articles describe work. They do not invite the reader to hire the author. No `If you'd like to discuss this, contact me`, no `Need help with X? Let's chat`, no CTAs at the bottom of an article. On the editorial surface, the contact form is the only invitation and it lives in the nav.
 
 Win Without Pitching posture: present, do not pursue. The article ends; it does not push.
+
+**This rule is scoped to articles, the homepage, and service pages.** It does not apply to the `/lp` ad landing pages. Those pages exist to convert paid traffic into a booked call or a form submission, so headlines that make a promise, benefit copy, social proof, a lead form, and repeated CTAs are all expected there. The Win Without Pitching posture governs the content the site publishes to earn trust; the landing pages are where paid intent is met with a direct next step. Keep them honest and specific, but they are allowed to sell.
+
+Everything else in this guide still governs landing-page and ad copy: no em-dashes (Rule 1), no marketing tricolons (Rule 2), no parallel-structure decoration (Rule 4), no AI-slop tone (Rule 5), and specific over general (Rule 7). A landing page that reads like every other agency's landing page has failed the voice check even if it converts. See [`marketing/landing-page-copywriting.md`](marketing/landing-page-copywriting.md) for the landing-page copy standard and [`marketing/icp-landing-page-map.md`](marketing/icp-landing-page-map.md) for which page says what.
 
 ### 7. Specific over general
 

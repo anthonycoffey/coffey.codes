@@ -18,11 +18,15 @@ _Goal: Ensure the primary online presence (website, LinkedIn) powerfully tells t
 - **LinkedIn Profile - Align Narrative:**
   - **Rewrite Headline & Summary:** Update profile to strongly reflect the "Dependable Transformation" narrative and the refined UVP for your primary target audience(s).
   - Ensure experience section showcases projects as examples of dependable transformation.
+- **Landing Pages - Build the Ad Destinations (prerequisite for paid ads):**
+  - Ensure the four `/lp` pages are redesigned and rewritten to convert paid traffic, one per ICP (see [`icp-landing-page-map.md`](icp-landing-page-map.md) and [`landing-page-copywriting.md`](landing-page-copywriting.md)).
+  - Ship the qualifying lead form (`LeadForm`) on each `/lp` page with per-page `formName` attribution.
+  - No paid traffic runs until the destination page for that ICP exists and matches its ad.
 - **Analytics & Tracking Setup:**
-  - Configure Google Analytics (GA4) with goal tracking for transformation-oriented conversions (e.g., intro call bookings, case study downloads).
-  - Set up a basic lead tracking system (CRM or spreadsheet) to log inquiries, sources, and alignment with ICPs.
-  - Install LinkedIn Insight Tag on `coffey.codes`.
-- **Phase Completion Check:** Verify all Phase 0 items effectively communicate the core narrative before proceeding.
+  - Configure Google Analytics (GA4) with goal tracking for transformation-oriented conversions (e.g., intro call bookings, case study downloads). `form_submit` is the primary conversion.
+  - Set up a basic lead tracking system (CRM or spreadsheet) to log inquiries, sources, GCLID, and alignment with ICPs.
+  - **Install the ad pixels and conversion tracking before spend:** Meta Pixel (+ Conversions API) and Google Ads conversion import/tag, both fed by `form_submit`, plus the LinkedIn Insight Tag. All gated on consent. See [`paid-ads-conversion-tracking.md`](paid-ads-conversion-tracking.md).
+- **Phase Completion Check:** Verify all Phase 0 items effectively communicate the core narrative, the `/lp` pages are live and matched to their ICPs, and conversion tracking fires end to end before proceeding.
 
 ## Phase 1 (Months 1-3): Igniting the Narrative & Engaging Your Tribe
 
@@ -36,12 +40,12 @@ _Goal: Launch initial content that embodies the narrative, deeply engage a focus
 - **Focused Community Engagement - Go Deep:**
   - **Identify Your Tribe:** Select the _single best_ online community (e.g., specific subreddit, Slack group, LinkedIn group) where your _smallest viable audience_ (those most needing Dependable Transformation) congregates.
   - **Become Indispensable:** Engage consistently and _generously_ in that _one_ community. Share valuable insights, answer questions thoroughly, offer mini-case examples (anonymized), embody the narrative. Focus on building trust and authority _there_.
-- **Initial Ad Testing (LinkedIn) - Promise Transformation:**
-  - Launch a small, highly targeted LinkedIn Ad campaign (Budget: ~$300-$500/month).
-  - Focus on _one_ ICP initially.
-  - Test 2-3 ad creatives/messaging angles (from `ad-creatives/linkedin.md`) that _directly promise the transformation_ outlined in the refined UVP for that ICP (e.g., "Tired of unreliable tech? Get project certainty.").
-  - Direct traffic to relevant, narrative-aligned service pages or case studies.
-  - Monitor results closely using `tracking.md` framework, focusing on lead _quality_ and alignment.
+- **Initial Ad Testing (Meta + Google Search) - Promise Transformation:**
+  - Launch small, tightly targeted campaigns starting at **$5/day per platform** on Meta and Google Ads (the current live budget), with LinkedIn/Reddit as later additions per proven ROI.
+  - Match each channel to intent: Google Search for high-intent queries ([`ad-creatives/google-search.md`](ad-creatives/google-search.md)), Meta for low-CPM interruption reach ([`ad-creatives/meta.md`](ad-creatives/meta.md)), LinkedIn for the senior-IC/agency ICP ([`ad-creatives/linkedin.md`](ad-creatives/linkedin.md)).
+  - Focus on one or two ICPs initially; test 2-3 creatives/angles per ad set that _directly promise the transformation_ in the refined UVP (e.g., "Tired of unreliable tech? Get project certainty.").
+  - Direct every ad to its matched `/lp` page (never the homepage), with the canonical UTM from `tracking.md`.
+  - Monitor using the `tracking.md` framework, focusing on message match and lead _quality_ over statistically thin CPL deltas at this budget.
 - **Phase Completion Check:** Review KPIs (engagement quality, lead alignment, ad performance) against `tracking.md`. Analyze if the narrative is resonating. Adjust next phase priorities/budget.
 
 ## Phase 2 (Months 3-6): Scaling with Generosity & Data
@@ -80,7 +84,7 @@ _Goal: Maintain consistent, high-quality lead flow, optimize for efficiency, and
 
 ## Budget & Time Considerations
 
-- **Advertising:** Start small (~$300-500/month), scale based _only_ on proven positive ROI and _high-quality, narrative-aligned leads_.
+- **Advertising:** Start at **$5/day per platform** (Meta and Google Search, roughly $150/month each while both run), scale based _only_ on proven positive ROI and _high-quality, narrative-aligned leads_. Do not scale a channel out of the learning phase before its conversion tracking shows real, qualified leads.
 - **Tools:** Potential costs for CRM, SEO tools (optional).
 - **Time:** Significant ongoing time investment required for _high-quality, narrative-driven_ content creation, _deep_ community engagement, ad management, and analysis. Factor this in.
 

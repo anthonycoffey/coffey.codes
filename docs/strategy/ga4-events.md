@@ -61,6 +61,29 @@ GA4 attributes a key event to the **landing page** of the session, not to the pa
 
 When citing GA4 conversions in future SEO docs, always cite the landing-page attribution, not where the event fired.
 
+## Forwarding conversions to Meta and Google Ads
+
+GA4 key events do not automatically reach the ad platforms. For paid campaigns (see [`../documentation/guides/marketing/paid-ads-conversion-tracking.md`](../documentation/guides/marketing/paid-ads-conversion-tracking.md)), `form_submit` is forwarded as the primary conversion:
+
+- **Google Ads:** either import the GA4 `form_submit` key event via the GA4 -> Google Ads link, or fire a native Google Ads conversion tag from the same `form_submit` dataLayer event in GTM. Use one, not both, to avoid double-counting.
+- **Meta:** a GTM tag maps `form_submit` to a Meta `Lead` standard event (browser Pixel), ideally deduplicated with a server-side Conversions API event.
+- **Consent:** every ad tag must be gated on `ad_storage` consent, consistent with the ConsentManager default-deny posture attested above. Denied-consent conversions are recovered through Consent Mode v2 modeling, so platform-reported counts run lower than raw submissions by design.
+- **Offline conversions:** once the CRM tracks lead outcomes, upload qualified/won events (keyed by GCLID for Google, contact info or CAPI for Meta) so bidding optimizes toward revenue, not just form fills.
+
+### `form_submit` `formName` values
+
+The event carries a `formName` parameter identifying the surface that produced the lead. This is the per-page attribution key for paid campaigns.
+
+| `formName` | Surface |
+| --- | --- |
+| `contact` | Nav/`/contact` contact form ([components/ContactForm.tsx](../../components/ContactForm.tsx)) |
+| `lp_practical_ai` | `/lp/practical-ai` lead form |
+| `lp_sme_web_mobile` | `/lp/sme-web-mobile` lead form |
+| `lp_smb_web_marketing` | `/lp/smb-web-marketing` lead form |
+| `lp_strategic_partners` | `/lp/strategic-partners` lead form |
+
+The `lp_*` values are produced by the shared `LeadForm` component introduced for the landing-page funnel (each `/lp` page passes its own `formName`). Cross-reference [`../documentation/guides/marketing/icp-landing-page-map.md`](../documentation/guides/marketing/icp-landing-page-map.md). When these ship, add a GTM variable to read `formName` off the dataLayer and register it as a GA4 event parameter/custom dimension so per-page conversion reporting works.
+
 ## Walk-through log
 
 ### 2026-05-10

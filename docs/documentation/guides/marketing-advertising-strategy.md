@@ -162,7 +162,7 @@ For the canonical, sharper UVP statements per ICP — and the explicit positioni
 
 ## VII. Advertising Platform Suitability Analysis
 
-Evaluating the requested advertising platforms (YouTube, LinkedIn, Reddit, Instagram, Facebook) for reaching the defined ICPs for B2B software services and AI consulting:
+Evaluating the advertising platforms (YouTube, LinkedIn, Reddit, Meta/Facebook/Instagram, and Google Search) for reaching the defined ICPs for B2B software services and AI consulting. Note: the live plan leads with Google Search and Meta at $5/day each; the reassessment of Meta and the addition of Google Search below reflect that.
 
 ### A. LinkedIn Ads:
 
@@ -182,19 +182,21 @@ Evaluating the requested advertising platforms (YouTube, LinkedIn, Reddit, Insta
 - **Rationale**: Reddit allows targeting specific subreddits where potential clients or technical influencers might congregate (e.g., r/webdev, r/programming, r/node, r/Python, potentially business or AI-focused subreddits like r/MachineLearning, r/smallbusiness). Ads appear native and can be effective if highly relevant to the subreddit's topic and audience. It allows reaching technical audiences directly. However, Reddit users are often skeptical of overt advertising. Authenticity and value proposition are key.
 - **Potential ROI**: Moderate. Can yield relevant leads if targeting niche technical or business communities effectively. Requires careful monitoring of sentiment and engagement. Less effective for reaching senior buyers (CTOs, CIOs) than LinkedIn, but well-suited for reaching engineering managers, founders, and technical leads who already know they need senior IC capacity.
 
-### D. Instagram Ads:
+### D. Meta Ads (Facebook & Instagram):
 
-- **Suitability**: Generally Unsuitable.
-- **Rationale**: Instagram is a highly visual, consumer-focused platform. User intent is primarily social interaction, entertainment, and lifestyle content consumption. While some B2B marketing exists, reaching specific technical decision-makers for high-value software development or AI consulting services is difficult and inefficient. The platform's context does not align well with the offering.
-- **Potential ROI**: Very Low. Ad spend is unlikely to reach the target audience effectively or generate qualified leads for these specific services.
+- **Suitability**: Situational, and better than this doc originally judged. The blanket "Generally Unsuitable" verdict was written for the two title-level B2B profiles (CTOs, VPs) where LinkedIn clearly wins. It does not hold for the owner-operator ICPs.
+- **Rationale**: For **ICP 3 (SMBs needing an integrated web presence)** and **ICP 1 (established SME owners)**, the buyer is often the founder or owner, who is reachable on Meta through interest and behavior targeting at a far lower CPM than LinkedIn. Meta is an interruption channel, so the creative must lead with a felt pain rather than a title-based pitch. It is weak for reaching senior technical titles (that is LinkedIn's job) and for the pure senior-IC/agency ICP 4.
+- **Potential ROI**: Moderate for the owner-operator ICPs at low daily budgets; low for the senior-title ICPs. Depends heavily on creative and on landing-page message match.
+- **Execution**: Frameworks, audiences, and per-ICP ad examples are in [`marketing/ad-creatives/meta.md`](marketing/ad-creatives/meta.md).
 
-### E. Facebook Ads:
+### E. Google Search Ads:
 
-- **Suitability**: Generally Unsuitable (with minor exceptions).
-- **Rationale**: While Facebook offers extensive targeting options, its primary context remains social and consumer-oriented. Like Instagram, reaching specific B2B decision-makers for complex technical services is challenging. While some professionals use Facebook, they are typically not in a work-related mindset. Targeting based on job titles or firmographics is less reliable than on LinkedIn.
-- **Potential ROI**: Very Low for core ICPs. Might have niche applications (e.g., targeting members of specific tech groups), but generally less efficient than LinkedIn or potentially Reddit for this specific business.
+- **Suitability**: Highly Suitable, and missing from the original platform list. Search is the only channel where the prospect is actively looking for a developer or a solution.
+- **Rationale**: High commercial intent. A person searching "custom mobile app developer" or "ai integration consultant" is mid-decision, so the ad's job is to be the most relevant, most credible result. Tight keyword-to-ad-to-landing-page match and disciplined negative keywords make even a small budget productive.
+- **Potential ROI**: High per-lead intent, but requires aggressive negative-keyword hygiene on a small budget to avoid wasting spend on job-seeker and free-tool queries.
+- **Execution**: Campaign structure, keyword themes, negatives, and RSA assets are in [`marketing/ad-creatives/google-search.md`](marketing/ad-creatives/google-search.md). Note: this is Google **Search** advertising, unrelated to the Google Ads **API** access covered in `google-ads-basic-access.md`.
 
-**Recommendation**: Prioritize LinkedIn Ads as the primary paid advertising channel due to its superior B2B targeting capabilities and professional context. Consider Reddit Ads for reaching specific technical niches and YouTube Ads for broader brand awareness via build-in-public / walkthrough content after establishing a strong foundation on LinkedIn and organic channels, and only if budget and content creation resources allow. Allocate budget away from Instagram and Facebook for this specific service offering.
+**Recommendation**: The current live plan starts with **Google Search and Meta at $5/day each**, routing every ad to its ICP-matched `/lp` page (see [`marketing/icp-landing-page-map.md`](marketing/icp-landing-page-map.md)). Google Search captures high-intent demand; Meta buys cheap reach to owner-operator ICPs. LinkedIn remains the strongest channel for the senior-IC/agency ICP 4 and for title-level B2B targeting, to layer in as budget allows; Reddit and YouTube stay as later, niche/awareness additions. The old "allocate budget away from Instagram and Facebook" guidance is superseded for the owner-operator ICPs.
 
 ## VIII. Advertising Copy Frameworks & Messaging Angles
 

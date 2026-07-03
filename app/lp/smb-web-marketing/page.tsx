@@ -1,17 +1,18 @@
 import React from 'react';
-import ContactForm from '@/components/ContactForm'; // Assuming ContactForm path
 import { Metadata } from 'next';
-import Image from 'next/image';
-import SocialIcons from '@/components/SocialIcons';
 import JsonLd from '@/components/JsonLd';
 import { baseUrl } from '@/app/sitemap';
+import LeadForm from '@/components/LeadForm';
+import LpHero from '@/components/lp/LpHero';
+import LpBenefits from '@/components/lp/LpBenefits';
+import LpProof from '@/components/lp/LpProof';
+import LpFinalCta from '@/components/lp/LpFinalCta';
 import {
-  CodeBracketSquareIcon,
-  ChartPieIcon,
-  SparklesIcon,
-  UserGroupIcon,
-  RocketLaunchIcon,
-} from '@heroicons/react/24/outline'; // Import necessary icons
+  GlobeAltIcon,
+  ChartBarIcon,
+  BoltIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline';
 
 const LP_TITLE = 'Web & Marketing Tech for Small Businesses';
 const LP_DESCRIPTION =
@@ -38,6 +39,21 @@ export const metadata: Metadata = {
   },
 };
 
+const TECH_LOGOS = [
+  'wordpress.svg',
+  'react.svg',
+  'nodejs.svg',
+  'typescript-icon.svg',
+  'tailwindcss.svg',
+  'php.svg',
+  'mysql.svg',
+  'google-cloud.svg',
+  'vercel.svg',
+  'sass.svg',
+  'javascript.svg',
+  'firebase.svg',
+];
+
 export default function SmbWebMarketingLandingPage() {
   const breadcrumb = {
     '@context': 'https://schema.org',
@@ -62,137 +78,75 @@ export default function SmbWebMarketingLandingPage() {
       'Professional websites (WordPress & JavaScript) integrated with Google Analytics and Tag Manager for SMB growth.',
     url: `${baseUrl}/lp/smb-web-marketing`,
   };
+
   return (
-    <div className="container max-w-6xl mx-auto px-4 py-16">
+    <div className="container mx-auto max-w-6xl px-4 py-16">
       <JsonLd data={breadcrumb} />
       <JsonLd data={service} />
-      <section className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 text-c-heading">
-          Stop Worrying About Your Website. Start Growing Your Business.
-        </h1>
-        <p className="text-xl text-c-muted max-w-3xl mx-auto">
-          Is your website just an online brochure, or is it actively helping you
-          grow? For SMBs needing more than just a pretty design, Anthony Coffey
-          delivers professional websites integrated with essential marketing
-          tools (like Google Analytics & Tag Manager) – all backed by reliable,
-          expert support.
-        </p>
-        <div className="flex justify-center mb-24 mt-10">
-          <div className="relative w-64 h-64 md:w-72 md:h-72">
-            <Image
-              width={330}
-              height={330}
-              src="/headshot.png"
-              alt="Anthony Coffey"
-              className="w-full h-full object-cover rounded-lg shadow-md"
-            />
-            <div className="absolute -bottom-12 -right-6 bg-surface p-3 rounded-lg shadow-md border border-border">
-              <p className="font-bold text-accent1-dark text-base m-0 text-right">
-                Anthony Coffey
-              </p>
-              <p className="text-c-text text-sm m-0 font-semibold">
-                Senior Solutions Architect & AI Specialist
-              </p>
-              <p className="text-c-text text-xs m-0 text-right">
-                Austin, Texas
-              </p>
-              <SocialIcons />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
-        <div>
-          <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-            Beyond the Build: Websites That Drive Results
-          </h2>
-          <p className="text-lg text-c-text mb-4">
-            You need a website that looks great *and* performs. With 12 years of
-            experience in both WordPress and modern JavaScript development, I
-            build high-quality sites designed for your specific needs.
-            Crucially, I ensure they&apos;re properly configured with essential
-            tools like Google Analytics and Tag Manager, so you can actually
-            track your marketing efforts and understand what&apos;s working. Get
-            a dependable partner, not just a developer.
-          </p>
-          {/* Enhanced Benefits List with Icons */}
-          <div className="space-y-4 text-lg text-c-text mb-6">
-            <div className="flex items-start">
-              <CodeBracketSquareIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Flexible Development:</span>{' '}
-                Expertise in WordPress & modern JS to fit your needs.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <ChartPieIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Track Your Success:</span>{' '}
-                Seamless Google Analytics & Tag Manager setup.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <SparklesIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Professional & Polished:</span>{' '}
-                High-quality design that builds trust.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <UserGroupIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Reliable Partnership:</span>{' '}
-                Dependable support and clear technical advice.
-              </span>
-            </div>
-            <div className="flex items-start">
-              <RocketLaunchIcon className="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-accent1-dark" />
-              <span>
-                <span className="font-semibold">Marketing-Ready:</span> A web
-                presence built to achieve your business goals.
-              </span>
-            </div>
-          </div>
-          <a
-            href="#schedule-call" // Placeholder link/anchor
-            className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-6 rounded-lg text-lg transition duration-300"
-          >
-            Book a Free Intro Call
-          </a>
-        </div>
-        {/* Right column now includes headshot ABOVE the contact form */}
-        <div className="flex flex-col items-center gap-10">
-          {/* Original Contact Form Box */}
-          <div className="bg-surface p-8 rounded-lg shadow-lg w-full">
-            {/* Ensure form takes full width */}
-            <h3 className="text-2xl font-semibold mb-6 text-center text-c-heading">
-              Get Your Project Started
-            </h3>
-            <ContactForm />
-          </div>
-        </div>
-      </section>
+      <LpHero
+        eyebrow="Websites That Work"
+        title="A website that brings you customers, not just sits there."
+        subhead="For small businesses that need a professional site wired to actually get results. Expert web development plus the analytics and tracking most shops skip, built by a senior engineer in Austin."
+        credibility={[
+          'Professional websites built by a senior engineer, not a template farm',
+          'Analytics and conversion tracking set up from day one',
+          'Austin-based, local accountability, no offshore handoff',
+        ]}
+        formHeading="Get your project started"
+        formWindowTitle="new_website.exe"
+        form={<LeadForm formName="lp_smb_web_marketing" />}
+      />
 
-      {/* Placeholder section for scheduling call */}
-      <section id="schedule-call" className="text-center bg-bg-alt rounded-lg">
-        <h2 className="text-3xl font-semibold mb-4 text-c-heading">
-          Plan Your Integrated Web Presence
-        </h2>
-        <p className="text-lg text-c-muted mb-6 max-w-2xl mx-auto">
-          Book a free 20-minute intro call to talk through your website needs
-          and how integrating marketing technology can help you actually
-          measure growth.
-        </p>
-        <a
-          href="https://calendly.com/antcoffpersonal/meet" // Replace with actual scheduling link
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-accent1-dark hover:opacity-90 text-surface font-bold py-3 px-8 rounded-lg text-xl transition duration-300"
-        >
-          Book Free Web Call Now
-        </a>
-      </section>
+      <LpBenefits
+        heading="More than a pretty page"
+        intro="A website should earn its cost. That means it is built to convert and wired so you can see what is working."
+        items={[
+          {
+            icon: GlobeAltIcon,
+            title: 'Built to convert',
+            body: 'Structured and written to turn visitors into inquiries, not just look nice.',
+          },
+          {
+            icon: ChartBarIcon,
+            title: 'Tracking that proves it',
+            body: 'GA4 and conversion tracking so you can see what is actually bringing in business.',
+          },
+          {
+            icon: BoltIcon,
+            title: 'Fast and reliable',
+            body: 'Quick to load and dependable, on modern infrastructure.',
+          },
+          {
+            icon: WrenchScrewdriverIcon,
+            title: 'A real person to call',
+            body: 'One engineer you can reach directly when something needs to change.',
+          },
+        ]}
+      />
+
+      <LpProof
+        intro="The same engineering rigor goes into a small-business site as a large custom build."
+        caseStudies={[
+          {
+            href: '/case-study/data-driven-seo-pipeline',
+            title: 'Turning search data into growth',
+            blurb: 'How a data pipeline surfaces the pages and queries actually worth investing in.',
+          },
+          {
+            href: '/case-study/postgis-fleet-optimization',
+            title: 'Custom software, delivered',
+            blurb: 'A data-heavy application shipped end to end, proof the same care goes into every build.',
+          },
+        ]}
+        techLogos={TECH_LOGOS}
+      />
+
+      <LpFinalCta
+        heading="Ready for a site that pulls its weight?"
+        body="Book a free 20-minute call to talk through your business and what your website should be doing for it."
+        ctaLabel="Book your free web call"
+      />
     </div>
   );
 }

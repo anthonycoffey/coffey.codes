@@ -46,6 +46,7 @@ _Goal: Launch initial content that embodies the narrative, deeply engage a focus
   - Focus on one or two ICPs initially; test 2-3 creatives/angles per ad set that _directly promise the transformation_ in the refined UVP (e.g., "Tired of unreliable tech? Get project certainty.").
   - Direct every ad to its matched `/lp` page (never the homepage), with the canonical UTM from `tracking.md`.
   - Monitor using the `tracking.md` framework, focusing on message match and lead _quality_ over statistically thin CPL deltas at this budget.
+  - Execute the launch with the step-by-step [`ads-launch-runbook.md`](ads-launch-runbook.md) (prerequisites, per-platform build, launch-day checks, monitoring cadence, and kill/scale rules).
 - **Phase Completion Check:** Review KPIs (engagement quality, lead alignment, ad performance) against `tracking.md`. Analyze if the narrative is resonating. Adjust next phase priorities/budget.
 
 ## Phase 2 (Months 3-6): Scaling with Generosity & Data

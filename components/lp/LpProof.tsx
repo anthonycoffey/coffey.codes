@@ -4,6 +4,10 @@ import Button from '@/components/ui/Button';
 import Testimonials from '@/components/Testimonials';
 import LogoGrid from '@/components/LogoGrid';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+
+// Public path in /public, URL-encoded for the space in the filename.
+const RESUME_HREF = '/Anthony%20Coffey%20-%20Resume.pdf';
 
 export interface LpCaseStudy {
   href: string;
@@ -38,6 +42,8 @@ export default function LpProof({
             <Link
               key={href}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex flex-col rounded-lg border border-border bg-surface p-6 no-underline transition-colors hover:bg-surface-hover"
             >
               <h3 className="mb-2 text-lg font-semibold text-c-heading">
@@ -64,9 +70,28 @@ export default function LpProof({
         <LogoGrid logos={techLogos} />
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <Button as="a" href="/portfolio" variant="secondary" size="md">
-          See the full portfolio
+      <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <Button
+          as="a"
+          href="/portfolio"
+          variant="primary"
+          size="md"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          See my portfolio
+        </Button>
+        <Button
+          as="a"
+          href={RESUME_HREF}
+          variant="secondary"
+          size="md"
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+        >
+          <ArrowDownTrayIcon className="h-4 w-4" />
+          Download my resume
         </Button>
       </div>
     </section>

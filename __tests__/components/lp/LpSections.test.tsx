@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { BoltIcon } from '@heroicons/react/24/outline';
 
-import LpHero, { LP_FORM_ANCHOR } from '@/components/lp/LpHero';
+import LpHero from '@/components/lp/LpHero';
 import LpBenefits from '@/components/lp/LpBenefits';
 import LpFinalCta from '@/components/lp/LpFinalCta';
 
 describe('LpHero', () => {
-  it('renders the promise, eyebrow, credibility, CTA anchor, and the form island', () => {
+  it('renders the promise, eyebrow, credibility, booking CTA, and the form island', () => {
     render(
       <LpHero
         eyebrow="Practical AI"
@@ -28,8 +28,9 @@ describe('LpHero', () => {
     ).toBeInTheDocument();
     expect(screen.getByTestId('form-island')).toBeInTheDocument();
 
-    const cta = screen.getByRole('link', { name: /start your project/i });
-    expect(cta).toHaveAttribute('href', `#${LP_FORM_ANCHOR}`);
+    const cta = screen.getByRole('link', { name: /book a free intro call/i });
+    expect(cta).toHaveAttribute('href', 'https://calendly.com/antcoffpersonal/meet');
+    expect(cta).toHaveAttribute('target', '_blank');
   });
 });
 

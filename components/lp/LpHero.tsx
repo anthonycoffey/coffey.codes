@@ -24,8 +24,12 @@ export interface LpHeroProps {
   form: React.ReactNode;
 }
 
-// Anchor the hero CTA scrolls to and the form column carries.
+// Id the form column carries (kept for deep-linking).
 export const LP_FORM_ANCHOR = 'start-project';
+// The hero CTA books a call by default so it has a clear destination; on desktop
+// the form is already visible beside it, so scrolling to it read as "nothing
+// happened". Pages can override via primaryCta.
+const DEFAULT_BOOKING_HREF = 'https://calendly.com/antcoffpersonal/meet';
 
 export default function LpHero({
   eyebrow,
@@ -37,8 +41,9 @@ export default function LpHero({
   formWindowTitle = 'start_project.exe',
   form,
 }: LpHeroProps) {
-  const ctaLabel = primaryCta?.label ?? 'Start your project';
-  const ctaHref = primaryCta?.href ?? `#${LP_FORM_ANCHOR}`;
+  const ctaLabel = primaryCta?.label ?? 'Book a free intro call';
+  const ctaHref = primaryCta?.href ?? DEFAULT_BOOKING_HREF;
+  const ctaExternal = /^https?:\/\//.test(ctaHref);
 
   return (
     <section className="grid gap-12 lg:grid-cols-2 lg:items-start">
@@ -60,7 +65,15 @@ export default function LpHero({
           ))}
         </ul>
 
-        <Button as="a" href={ctaHref} variant="primary" size="lg">
+        <Button
+          as="a"
+          href={ctaHref}
+          variant="primary"
+          size="lg"
+          {...(ctaExternal
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : {})}
+        >
           {ctaLabel}
         </Button>
 

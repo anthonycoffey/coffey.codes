@@ -82,7 +82,9 @@ The event carries a `formName` parameter identifying the surface that produced t
 | `lp_smb_web_marketing` | `/lp/smb-web-marketing` lead form |
 | `lp_strategic_partners` | `/lp/strategic-partners` lead form |
 
-The `lp_*` values are produced by the shared `LeadForm` component introduced for the landing-page funnel (each `/lp` page passes its own `formName`). Cross-reference [`../documentation/guides/marketing/icp-landing-page-map.md`](../documentation/guides/marketing/icp-landing-page-map.md). When these ship, add a GTM variable to read `formName` off the dataLayer and register it as a GA4 event parameter/custom dimension so per-page conversion reporting works.
+The `lp_*` values are produced by the shared `LeadForm` component introduced for the landing-page funnel (each `/lp` page passes its own `formName`). Cross-reference [`../documentation/guides/marketing/icp-landing-page-map.md`](../documentation/guides/marketing/icp-landing-page-map.md).
+
+> ⚠️ **`formName` is NOT yet captured in GA4** (confirmed by reviewing the GTM container export on 2026-07-05). The `form_submit` GA4 Event tag (`tagId 7`) declares no event parameters, so the `formName` the app pushes is dropped — every lead lands in one undifferentiated bucket and per-landing-page conversion attribution is impossible. **Fix (GTM UI, ~2 min):** (1) create a Data Layer Variable named `formName` (data layer variable name `formName`); (2) on the `form_submit GA4 Event` tag add an event parameter `form_name` = `{{formName}}`; (3) in GA4 Admin → Custom definitions, register a custom dimension `form_name` (event-scoped). The app side is guarded by `e2e/analytics-consent.spec.ts` (asserts the push always carries a non-empty `formName`).
 
 ## Walk-through log
 
@@ -93,6 +95,23 @@ The `lp_*` values are produced by the shared `LeadForm` component introduced for
 - Created a custom GTM tag + trigger for the `form_submit` dataLayer event in workspace `GTM-KJC6Q389`. The tag did not previously exist, which explains why no `form_submit` events were recorded in the audit window.
 - Marked `form_submit` ON as a GA4 key event.
 - Affirmed the Google EU User Consent Policy compliance attestation in GA4 admin. The site's consent banner ([components/ConsentManager.tsx](components/ConsentManager.tsx)) is the audit answer if Google asks: default state denies all storage flags, granted only after explicit user opt-in.
+
+### 2026-07-05 — GTM container export review (SPEC-034)
+
+Reviewed the exported `GTM-KJC6Q389` container against the live property to verify the server side, plus GA4 Admin → Consent settings.
+
+**Confirmed healthy:**
+
+- GA4 config tag (`tagId 5`, `googtag` → `G-MV8YG7QQW0`) fires on *Consent Initialization – All Pages*; `form_submit GA4 Event` tag (`tagId 7`) fires on the `form_submit` custom-event trigger. Both wired correctly.
+- Both tags have `consentStatus: NOT_SET`. This is **correct** for advanced Consent Mode — the Google/GA4 tags respect `analytics_storage` on their own (cookieless pings when denied). Do **not** add a "require `analytics_storage`" additional-consent check; that would fully block the tag when denied and forfeit cookieless pings + modeling.
+- GA4 Consent settings panel: "Good / No issues detected." Behavioral + advertising consent signals both show **inactive** — expected, since the outage denied everyone; behavioral analytics signals should flip to **active** after the SPEC-034 geo-scoped granted-default deploys. **Watch this as the post-merge health signal.**
+
+**Gaps found (tracked):**
+
+1. **`formName` not captured** → see the ⚠️ note under "`form_submit` `formName` values" above. GTM-side fix, ~2 min. App side now guarded by e2e.
+2. **No container-level consent default exists.** The container has no CMP template / Consent Initialization tag setting consent defaults. The inline `<head>` script (`lib/consent.ts`, ADR-006/007) is the **sole** authority for Consent Mode defaults — there is no GTM "backstop" (the ADR-005/006 prose implying one was inaccurate; corrected in ADR-007 Notes). This is *why* the `e2e/analytics-consent.spec.ts` + `monitor-ga4` guardrails matter: nothing else catches a regression in that script.
+3. **SPA page_views — verify Enhanced Measurement.** The GA4 tag has no History Change trigger, so internal Next.js soft navigations are only counted if GA4 Data Stream → Enhanced Measurement → **"Page changes based on browser history events"** is ON. Verify in GA4 Admin; if off, multi-page journeys register as a single page_view.
+4. **Future — ad tags need consent gating.** When Meta/Google Ads conversion tags are added (see `../documentation/guides/marketing/paid-ads-conversion-tracking.md`), they MUST carry an additional-consent check requiring `ad_storage` — unlike the analytics tags, ad tags do need to be gated (ads stay denied-by-default everywhere).
 
 ## How to verify this doc is current
 

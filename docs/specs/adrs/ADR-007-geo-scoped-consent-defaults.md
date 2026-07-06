@@ -132,6 +132,14 @@ branches, and that `ConsentManager` no longer re-pushes consent on mount.
 - Implements [SPEC-034](../active/SPEC-034-harden-ga4-tracking.md).
 - Builds on [ADR-005](ADR-005-fix-consent-mode-datalayer-push.md) and
   [ADR-006](ADR-006-consent-default-before-gtm.md).
+- **Correction to ADR-005/006:** those ADRs described the GTM container's
+  "server-side denied default" as a redundant backstop. A review of the exported
+  `GTM-KJC6Q389` container on 2026-07-05 found **no such container-level consent
+  default** (no CMP template, no Consent Initialization tag setting defaults). The
+  inline `<head>` script here is the *sole* authority for Consent Mode defaults —
+  there is no backstop. This makes the `e2e/analytics-consent.spec.ts` and
+  `monitor-ga4` guardrails the only safety net against a regression in that
+  script, not merely redundant coverage.
 - Modifies [`lib/consent.ts`](../../../lib/consent.ts),
   [`components/ConsentManager.tsx`](../../../components/ConsentManager.tsx);
   updates [`docs/strategy/ga4-events.md`](../../strategy/ga4-events.md).

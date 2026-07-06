@@ -183,15 +183,21 @@ test.describe('GA4 consent + tracking contract', () => {
 
     await expect(page.getByText(/your message has been sent/i)).toBeVisible();
 
-    const hasFormSubmit = await page.evaluate(() => {
+    const formSubmit = await page.evaluate(() => {
       const dl = (window as unknown as { dataLayer?: unknown[] }).dataLayer ?? [];
-      return dl.some(
+      return dl.find(
         (e) =>
           e &&
           typeof e === 'object' &&
           (e as { event?: string }).event === 'form_submit',
-      );
+      ) as { event?: string; formName?: unknown } | undefined;
     });
-    expect(hasFormSubmit).toBe(true);
+    expect(formSubmit).toBeDefined();
+    // The push MUST carry a non-empty `formName` — it is the per-page attribution
+    // key the GTM `form_submit` tag maps to a GA4 event parameter (see
+    // docs/strategy/ga4-events.md). A missing/blank value silently collapses all
+    // landing-page lead attribution into one bucket.
+    expect(typeof formSubmit?.formName).toBe('string');
+    expect((formSubmit?.formName as string).length).toBeGreaterThan(0);
   });
 });

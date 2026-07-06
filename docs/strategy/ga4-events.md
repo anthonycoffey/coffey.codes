@@ -13,7 +13,7 @@ Living document. Whenever a GA4 key event is added, removed, or renamed, update 
 
 - **Property:** coffey.codes (id `416080229`)
 - **Tag manager:** Google Tag Manager (`GTM-KJC6Q389`), loaded via [components/GoogleAnalyticsClient.tsx](components/GoogleAnalyticsClient.tsx)
-- **Consent mode:** managed by [components/ConsentManager.tsx](components/ConsentManager.tsx); default state denies `ad_storage`, `ad_personalization`, and `analytics_storage` until the user grants via the banner. Compliance attestation was affirmed in GA4 on 2026-05-10 (Google may audit; the ConsentManager component is the audit answer).
+- **Consent mode:** geo-scoped defaults are emitted inline in `<head>` from [lib/consent.ts](lib/consent.ts) (see [ADR-007](../specs/adrs/ADR-007-geo-scoped-consent-defaults.md)), with live Accept/Reject handled by [components/ConsentManager.tsx](components/ConsentManager.tsx). Since 2026-07-05 (SPEC-034): `analytics_storage` is **granted by default outside the opt-in regions** (US opt-out regime, Canada, rest of world) and **denied by default inside the EEA/UK/Switzerland** (`OPT_IN_REGIONS`) until the banner grants; all `ad_*` signals stay denied everywhere until an explicit grant. A returning visitor's stored choice is re-asserted synchronously in the same inline script before GTM loads. This supersedes the 2026-05-10 global deny-everywhere attestation; the geo-scoped posture is the current audit answer if Google asks.
 
 ## Key events as of 2026-05-10
 

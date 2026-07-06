@@ -30,12 +30,19 @@ describe('consent default runs before GTM', () => {
       expect(html).not.toMatch(/\sdefer/);
     });
 
-    it('sets the denied-by-default Consent Mode baseline inline', () => {
+    it('sets geo-scoped Consent Mode defaults inline (ADR-007)', () => {
       expect(html).toContain("gtag('consent','default'");
+      // Global default grants analytics (lawful outside opt-in regions)...
+      expect(html).toContain('"analytics_storage":"granted"');
+      // ...and a region-scoped default denies it inside the EEA/UK/CH.
       expect(html).toContain('"analytics_storage":"denied"');
+      expect(html).toContain('"region":[');
+      expect(html).toContain('"GB"');
+      expect(html).toContain('"CH"');
+      // Advertising stays denied by default everywhere until an explicit grant.
+      // (The exact per-signal default values are pinned structurally in
+      // __tests__/lib/consent.test.ts; here we only assert the inline shape.)
       expect(html).toContain('"ad_storage":"denied"');
-      // Opt-in only: nothing is granted by the default.
-      expect(html).not.toContain('granted');
     });
   });
 

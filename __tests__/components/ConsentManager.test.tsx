@@ -75,30 +75,29 @@ describe('<ConsentManager /> consent-mode wiring', () => {
     expect(window.localStorage.getItem('google-consent')).toBe('accepted');
   });
 
-  // Consent state is re-established per page load from the dataLayer, not from
-  // the GA cookie. Returning visitors who already accepted must have their grant
-  // re-asserted on mount, or every repeat hit goes out consent-denied.
-  it('re-asserts a granted update on mount for a returning visitor who accepted', () => {
+  // Consent state is re-established per page load, but the re-assertion now
+  // happens synchronously in the inline <head> script (lib/consent.ts), BEFORE
+  // GTM loads — not from this component's effect, which raced the idle-loaded
+  // container and the homepage loader. This component must therefore NOT re-push
+  // a stored choice on mount (doing so would land after GTM init and duplicate
+  // the head-script command). It only hides the banner for returning visitors.
+  // See ADR-007. The head-script re-assert is pinned in __tests__/lib/consent.test.ts.
+  it('does not re-push consent on mount for a returning visitor who accepted', () => {
     window.localStorage.setItem('google-consent', 'accepted');
     render(<ConsentManager />);
 
-    const update = findByType('update');
-    expect(update).toBeDefined();
-    expect(Array.isArray(update)).toBe(false);
-    expect(update?.[2]?.analytics_storage).toBe('granted');
+    expect(findByType('update')).toBeUndefined();
     // and the banner stays hidden for a returning visitor
     expect(
       screen.queryByRole('button', { name: /accept/i }),
     ).not.toBeInTheDocument();
   });
 
-  it('re-asserts a denied update on mount for a returning visitor who rejected', () => {
+  it('does not re-push consent on mount for a returning visitor who rejected', () => {
     window.localStorage.setItem('google-consent', 'rejected');
     render(<ConsentManager />);
 
-    const update = findByType('update');
-    expect(update).toBeDefined();
-    expect(update?.[2]?.analytics_storage).toBe('denied');
+    expect(findByType('update')).toBeUndefined();
     expect(
       screen.queryByRole('button', { name: /accept/i }),
     ).not.toBeInTheDocument();

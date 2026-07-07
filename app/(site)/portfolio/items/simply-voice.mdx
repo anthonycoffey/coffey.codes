@@ -3,13 +3,13 @@ title: Simply Voice — Text-to-Speech App
 summary: A no-fuss web app that converts text to downloadable .wav files using Google Cloud Text-to-Speech, with Supabase auth, per-user file storage, and a history panel.
 publishedAt: 2025-01-01
 tags: [React, Supabase, Firebase, Cloud Functions, Google Cloud TTS]
-mainImage: /portfolio/tts-home.jpg
-gallery: [/portfolio/tts-created.jpg, /portfolio/tts-history.jpg]
+thumbnail: /portfolio/tts-home.jpg
+featured: /portfolio/tts-home.jpg
+images: [/portfolio/tts-created.jpg, /portfolio/tts-history.jpg]
 link: https://simply-voice-452800.web.app/
 repo: https://github.com/anthonycoffey/simply-voice
 client: Hobby Project
 year: "2025"
-featured: true
 category: Web App / Cloud
 ---
 
@@ -23,12 +23,15 @@ Most TTS tools are buried three clicks deep in a cloud console, or they require 
 
 ## Architecture
 
-```
-React SPA (Firebase Hosting)
-  → Cloud Function (Node.js, service-account auth)
-    → Google Cloud Text-to-Speech API
-      → Supabase Storage (per-user file persistence)
-Supabase Auth (user sessions)
+```mermaid
+flowchart LR
+  U([User]) --> SPA[React SPA<br/>Firebase Hosting]
+  SPA -.->|sign in| SBA[(Supabase Auth)]
+  SPA -->|text payload| CF[Cloud Function<br/>Node.js · service account]
+  CF -->|synthesize| TTS[[Google Cloud<br/>Text-to-Speech]]
+  TTS -->|.wav buffer| CF
+  CF -->|upload to user namespace| SB[(Supabase Storage)]
+  SPA -->|signed URL · download| SB
 ```
 
 The Cloud Function acts as a secure proxy: it holds the Google Cloud service account credentials and never exposes them to the client. The React app calls the function with the text payload; the function synthesizes the audio and stores the resulting `.wav` in Supabase Storage under the authenticated user's namespace.

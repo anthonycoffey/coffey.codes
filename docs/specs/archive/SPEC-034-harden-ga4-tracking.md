@@ -1,11 +1,12 @@
 ---
 id: SPEC-034
 title: 'Harden GA4 tracking: geo-scoped consent defaults, fix homepage grant race, CI + synthetic guardrails'
-status: ready
+status: complete
 created: 2026-07-05
+completed: 2026-07-06
 author: Anthony Coffey
 reviewers: []
-affected_repos: [coffey-codes]
+affected_repos: [coffey.codes]
 ---
 
 ## Reviewer Notes

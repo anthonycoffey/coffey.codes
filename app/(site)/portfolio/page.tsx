@@ -29,6 +29,11 @@ export default function PortfolioSection() {
       <div className="space-y-6 mb-12">
         {items.map((item, i) => {
           const { slug, metadata } = item;
+          // Index cards prefer `thumbnail` (purpose-built for this surface);
+          // fall back to `featured` so legacy / partial frontmatter still
+          // renders an image. Both are optional — the slot remains reserved
+          // by `aspect-video` either way to prevent CLS.
+          const cardImage = metadata.thumbnail ?? metadata.featured;
           return (
             <Link
               key={slug}
@@ -39,9 +44,9 @@ export default function PortfolioSection() {
                * aspect-video reserves space on mobile (CLS guard); on md+
                * the column stretches to match the content height. */}
               <div className="relative aspect-video bg-bg-alt md:aspect-auto md:w-2/5 lg:w-1/2">
-                {metadata.mainImage && (
+                {cardImage && (
                   <Image
-                    src={metadata.mainImage}
+                    src={cardImage}
                     alt={metadata.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"

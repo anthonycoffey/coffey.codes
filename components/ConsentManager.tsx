@@ -1,17 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-
-// Add type definitions for gtag
-type ConsentMode = 'default' | 'update';
-type ConsentStatus = 'granted' | 'denied';
-
-interface ConsentSettings {
-  ad_storage: ConsentStatus;
-  ad_personalization: ConsentStatus;
-  ad_user_data: ConsentStatus;
-  analytics_storage: ConsentStatus;
-  wait_for_update?: number;
-}
+import {
+  CONSENT_STORAGE_KEY,
+  CONSENT_UPDATE_GRANTED,
+  CONSENT_UPDATE_DENIED,
+  type ConsentUpdateSettings,
+} from '@/lib/consent';
 
 // gtag.js only treats a dataLayer entry as a Consent Mode command when it is the
 // `arguments` object produced by the canonical `gtag()` shim. A plain array
@@ -24,23 +18,9 @@ const toGtagCommand = function (): IArguments {
   return arguments;
 } as (
   command: 'consent',
-  type: ConsentMode,
-  settings: ConsentSettings,
+  type: 'update',
+  settings: ConsentUpdateSettings,
 ) => IArguments;
-
-const GRANTED: ConsentSettings = {
-  ad_storage: 'granted',
-  ad_personalization: 'granted',
-  ad_user_data: 'granted',
-  analytics_storage: 'granted',
-};
-
-const DENIED: ConsentSettings = {
-  ad_storage: 'denied',
-  ad_personalization: 'denied',
-  ad_user_data: 'denied',
-  analytics_storage: 'denied',
-};
 
 const ConsentManager = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -48,28 +28,16 @@ const ConsentManager = () => {
 
   useEffect(() => {
     try {
-      const existingConsent = localStorage.getItem('google-consent');
+      const existingConsent = localStorage.getItem(CONSENT_STORAGE_KEY);
 
-      // The denied `consent default` is no longer pushed here. It is emitted
-      // synchronously inline in the document <head> (ConsentDefaultScript) so it
-      // is provably in dataLayer before GTM initializes — this component used to
-      // race the GTM load and could lose. We only ensure dataLayer exists (for
-      // the `update` push below) and decide whether to surface the banner.
-      // See docs/specs/adrs/ADR-006-consent-default-before-gtm.md.
-      window.dataLayer = window.dataLayer || [];
-
-      // Re-apply a previously stored choice on every load. Consent state lives
-      // in the dataLayer per page load and is NOT restored from the GA cookie,
-      // so returning/refreshing visitors who already opted in must have their
-      // grant re-asserted — otherwise every repeat hit is sent consent-denied.
-      // (The denied `consent default` itself is emitted inline in <head>; see
-      // the comment above and ADR-006.)
-      if (existingConsent === 'accepted') {
-        gtag('consent', 'update', GRANTED);
-      } else if (existingConsent === 'rejected') {
-        gtag('consent', 'update', DENIED);
-      } else {
-        // No prior choice — surface the banner.
+      // This component no longer pushes the `consent default` OR re-asserts a
+      // stored choice. Both now happen synchronously in the inline <head> script
+      // (ConsentDefaultScript / lib/consent.ts) BEFORE GTM loads, so a returning
+      // visitor's grant is applied to the first hit instead of racing the
+      // idle-loaded container and the homepage loader. See ADR-006 / ADR-007.
+      // This component only decides whether to surface the banner for a
+      // first-time visitor and handles their live Accept/Reject click.
+      if (existingConsent !== 'accepted' && existingConsent !== 'rejected') {
         setIsVisible(true);
       }
     } catch (error) {
@@ -79,8 +47,8 @@ const ConsentManager = () => {
 
   const gtag = (
     command: 'consent',
-    type: ConsentMode,
-    settings: ConsentSettings,
+    type: 'update',
+    settings: ConsentUpdateSettings,
   ) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(toGtagCommand(command, type, settings));
@@ -89,10 +57,10 @@ const ConsentManager = () => {
   const handleAcceptConsent = () => {
     try {
       // Update consent state using gtag
-      gtag('consent', 'update', GRANTED);
+      gtag('consent', 'update', CONSENT_UPDATE_GRANTED);
 
       // Store consent preference
-      localStorage.setItem('google-consent', 'accepted');
+      localStorage.setItem(CONSENT_STORAGE_KEY, 'accepted');
 
       setHasConsented(true);
       setIsVisible(false);
@@ -104,10 +72,10 @@ const ConsentManager = () => {
   const handleRejectConsent = () => {
     try {
       // Update consent state using gtag
-      gtag('consent', 'update', DENIED);
+      gtag('consent', 'update', CONSENT_UPDATE_DENIED);
 
       // Store consent preference
-      localStorage.setItem('google-consent', 'rejected');
+      localStorage.setItem(CONSENT_STORAGE_KEY, 'rejected');
 
       setHasConsented(false);
       setIsVisible(false);

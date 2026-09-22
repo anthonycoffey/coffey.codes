@@ -122,10 +122,26 @@ export default function ScrollContainer() {
         }}
       >
         {shouldMountCanvas && (
-          <WorldCanvas
-            scrollProgress={scrollProgress}
-            onReady={() => setSceneReady(true)}
-          />
+          // The overlay now slides away the instant the visitor taps "enter"
+          // (decoupled from WebGL readiness), so the canvas can be revealed
+          // before its first frame has painted. Fade it in on the real ready
+          // signal so the scene appears smoothly over the dark background
+          // instead of popping in. If the scene never signals ready (e.g. WebGL
+          // fails to init) this simply stays at opacity 0 — a graceful blank
+          // rather than a trapped overlay.
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: sceneReady ? 1 : 0,
+              transition: 'opacity 500ms ease-in',
+            }}
+          >
+            <WorldCanvas
+              scrollProgress={scrollProgress}
+              onReady={() => setSceneReady(true)}
+            />
+          </div>
         )}
         <HUDOverlay scrollProgress={scrollProgress} />
         <Loader

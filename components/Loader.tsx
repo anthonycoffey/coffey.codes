@@ -4,14 +4,12 @@ import { LOADER_DISMISSED_EVENT } from '@/lib/loaderEvents';
 type LoaderWindow = Window &
   typeof globalThis & { __appLoaderActive?: boolean };
 
-// Desktop safety cap — the loader always dismisses by this point even if the
-// scene never signals ready (e.g. WebGL fails to init). Kept short so it never
-// gates LCP: the overlay text behind it can paint as soon as it's gone.
+// Safety cap for the NON-gated usage only — the loader always dismisses by this
+// point even if the scene never signals ready (e.g. WebGL fails to init). Kept
+// short so it never gates LCP: the overlay text behind it can paint as soon as
+// it's gone. The gated ("click to enter") path never uses a blind timeout — it
+// dismisses synchronously on tap (see handleStart).
 const SAFETY_CAP_MS = 1500;
-// After the visitor enters, give the scene generous time to download and
-// initialise (cold chunk on a low-end device) before the loader force-dismisses
-// as a fallback.
-const POST_TAP_CAP_MS = 8000;
 
 // Progress-bar fill timing. The gate ("SCENE LOADED." + tap button) is only
 // revealed once the bar has visibly filled, so it never pops in over a
@@ -118,20 +116,26 @@ export default function Loader({
     };
   }, []);
 
-  // Auto-dismiss safety net. While gating and awaiting the tap there is no cap
-  // (the loader is meant to wait indefinitely); once tapped — or on desktop,
-  // which never gates — a cap guarantees the overlay can't hang.
+  // Auto-dismiss safety net for the NON-gated usage only. A gated loader waits
+  // for the visitor's tap (which dismisses it synchronously, see handleStart),
+  // so it needs no blind timeout — a tap can never leave the overlay hanging on
+  // a WebGL-ready signal that may be slow or never arrive. Without a gate, the
+  // cap guarantees the overlay still can't hang.
   useEffect(() => {
-    if (gate && !tapped) return;
-    const cap = setTimeout(
-      () => setLoading(false),
-      tapped ? POST_TAP_CAP_MS : SAFETY_CAP_MS,
-    );
+    if (gate) return;
+    const cap = setTimeout(() => setLoading(false), SAFETY_CAP_MS);
     return () => clearTimeout(cap);
-  }, [gate, tapped]);
+  }, [gate]);
 
   const handleStart = () => {
+    // Dismiss the overlay immediately and synchronously. The gate's sole purpose
+    // — keep the heavy WebGL scene off the main thread until the visitor shows
+    // intent — is satisfied the moment they tap. Waiting on the scene's ready
+    // signal afterwards is what let the overlay stall (up to the old 8s cap)
+    // when that signal was slow or never fired. The scene mounts behind the
+    // overlay and fades in when its first frame is ready.
     setTapped(true);
+    setLoading(false);
     onStart?.();
   };
 

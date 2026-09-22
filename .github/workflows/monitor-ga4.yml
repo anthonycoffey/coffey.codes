@@ -1,0 +1,52 @@
+name: GA4 Tracking Monitor
+
+# Synthetic production check for GA4 tracking (SPEC-034). Loads production in a
+# real browser and asserts the whole consent + tag chain still counts traffic;
+# posts to Slack on failure. This is the drift alarm the 2026-05 outage lacked.
+
+on:
+  schedule:
+    # Every 6 hours. GA4 drift is not urgent-to-the-minute, but six-weeks-late
+    # (the original outage) is unacceptable.
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      heartbeat:
+        description: 'Post a success ping to Slack too'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  # @anthonycoffey/periscope ships from GitHub Packages; npm ci needs auth.
+  packages: read
+
+concurrency:
+  group: monitor-ga4
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    name: Synthetic GA4 check
+    runs-on: ubuntu-22.04
+    # Same pre-baked Playwright image as e2e.yml (browsers + deps preinstalled).
+    # The tag MUST match @playwright/test in package.json; bump both together.
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-jammy
+      options: --user 1001
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run GA4 tracking monitor against production
+        run: node scripts/monitor-ga4.mjs
+        env:
+          MONITOR_URL: 'https://coffey.codes'
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MONITOR_HEARTBEAT: ${{ inputs.heartbeat == true && '1' || '' }}

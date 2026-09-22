@@ -16,7 +16,7 @@ Per-landing-page attribution comes from the `formName` parameter on the event (`
 
 - **GA4 property:** `416080229`.
 - **Tag manager:** GTM container `GTM-KJC6Q389`, loaded via [`components/GoogleAnalyticsClient.tsx`](../../../../components/GoogleAnalyticsClient.tsx).
-- **Consent Mode:** [`components/ConsentManager.tsx`](../../../../components/ConsentManager.tsx) denies `ad_storage`, `ad_personalization`, and `analytics_storage` by default and grants only after the banner opt-in.
+- **Consent Mode:** geo-scoped defaults are emitted inline in `<head>` from [`lib/consent.ts`](../../../../lib/consent.ts) (see [ADR-007](../../../specs/adrs/ADR-007-geo-scoped-consent-defaults.md)); live opt-in is handled by [`components/ConsentManager.tsx`](../../../../components/ConsentManager.tsx). **All ad signals (`ad_storage`, `ad_personalization`, `ad_user_data`) are denied by default everywhere** and granted only after banner opt-in — so the ad-tag gating below is unchanged. `analytics_storage` is geo-scoped (denied by default in the EEA/UK/CH, granted elsewhere), which does not affect ad tags.
 - **The event:** `dataLayer.push({ event: 'form_submit', formName: '<page>' })` fires from the form components inside the success branch.
 
 Everything below is added inside GTM so there is one place to manage tags, one consent model, and no hard-coded pixel snippets in the app.

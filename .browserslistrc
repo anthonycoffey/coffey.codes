@@ -1,4 +1,13 @@
+# Support floor is intentionally old: the production bundle is Turbopack, and
+# untranspiled ES2021/ES2022 syntax (class `static {}` blocks, `??=`/`||=`/`&&=`)
+# was shipping in framework chunks (e.g. next/error) and throwing
+# `SyntaxError: Unexpected token '{'` on iOS < 16.4 — breaking hydration and the
+# homepage "enter" gate. Targeting iOS 13.4 forces those down to ES2020.
+# 13.4 is the practical floor: Turbopack's own runtime uses optional chaining
+# (Safari 13.1+), so we cannot truthfully support anything older.
 > 0.5%
 last 2 versions
 not dead
 not IE 11
+iOS >= 13.4
+Safari >= 13.1

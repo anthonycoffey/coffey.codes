@@ -16,6 +16,7 @@
     "test:coverage": "vitest run --coverage",
     "test:coverage:ui": "vitest run --coverage --coverage.reporter=html",
     "test:e2e": "playwright test",
+    "monitor:ga4": "node scripts/monitor-ga4.mjs",
     "typecheck": "tsc --noEmit",
     "analyze": "cross-env ANALYZE=true next build",
     "thumbnail:youtube": "node scripts/youtube-thumbnail.mjs",

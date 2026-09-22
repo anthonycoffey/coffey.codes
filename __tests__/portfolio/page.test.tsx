@@ -86,7 +86,8 @@ const ITEMS = [
       summary: 'A TypeScript CLI that unifies GSC, GA4, Bing, and Google Ads.',
       publishedAt: '2026-05-17',
       tags: ['TypeScript', 'CLI'],
-      mainImage: '/periscope-logo.png',
+      thumbnail: '/periscope-logo.png',
+      featured: '/periscope-logo.png',
       repo: 'https://github.com/anthonycoffey/periscope',
       category: 'Open Source / SEO Tooling',
     },
@@ -99,7 +100,8 @@ const ITEMS = [
       summary: 'A retro-inspired browser-based step sequencer.',
       publishedAt: '2025-01-01',
       tags: ['React', 'Vite'],
-      mainImage: '/portfolio/drum-machine-2.jpg',
+      thumbnail: '/portfolio/drum-machine-2.jpg',
+      featured: '/portfolio/drum-machine-2.jpg',
       link: 'https://anthonycoffey.github.io/React-Drum-Kit',
       repo: 'https://github.com/anthonycoffey/React-Drum-Kit',
       client: 'Hobby Project',
@@ -114,7 +116,8 @@ const ITEMS = [
       summary: 'An interactive browser-based piano that highlights scales.',
       publishedAt: '2025-01-01',
       tags: ['React', 'Music Theory'],
-      mainImage: '/portfolio/piano-scale-visualizer.png',
+      thumbnail: '/portfolio/piano-scale-visualizer.png',
+      featured: '/portfolio/piano-scale-visualizer.png',
       link: 'https://anthonycoffey.github.io/piano-scale-visualizer/',
       repo: 'https://github.com/anthonycoffey/piano-scale-visualizer',
       client: 'Hobby Project',
@@ -129,7 +132,8 @@ const ITEMS = [
       summary: 'A no-fuss web app that converts text to .wav files.',
       publishedAt: '2025-01-01',
       tags: ['React', 'Supabase'],
-      mainImage: '/portfolio/tts-home.jpg',
+      thumbnail: '/portfolio/tts-home.jpg',
+      featured: '/portfolio/tts-home.jpg',
       link: 'https://simply-voice-452800.web.app/',
       repo: 'https://github.com/anthonycoffey/simply-voice',
       client: 'Hobby Project',
@@ -144,7 +148,8 @@ const ITEMS = [
       summary: 'A performant, SEO-optimized personal site and technical blog.',
       publishedAt: '2023-01-01',
       tags: ['Next.js', 'TypeScript'],
-      mainImage: '/portfolio/coffey.codes-portfolio.png',
+      thumbnail: '/portfolio/coffey.codes-portfolio.png',
+      featured: '/portfolio/coffey.codes-portfolio.png',
       link: 'https://coffey.codes',
       repo: 'https://github.com/anthonycoffey/coffey.codes',
       client: 'Personal Project',
@@ -225,6 +230,55 @@ describe('PortfolioPage', () => {
       imgs.slice(1).forEach((img) => {
         expect(img.getAttribute('data-priority')).toBeNull();
       });
+    });
+  });
+
+  describe('thumbnail fallback', () => {
+    it('uses metadata.thumbnail as the card image when present', () => {
+      const { container } = render(<PortfolioPage />);
+      const imgs = Array.from(container.querySelectorAll('img'));
+      // First card is periscope; thumbnail is /periscope-logo.png
+      expect(imgs[0].getAttribute('src')).toBe('/periscope-logo.png');
+    });
+
+    it('falls back to metadata.featured when thumbnail is omitted', () => {
+      vi.mocked(
+        getAllPortfolioItems as unknown as () => typeof ITEMS,
+      ).mockReturnValue([
+        {
+          slug: 'no-thumb',
+          metadata: {
+            title: 'No-Thumbnail Item',
+            summary: 'Has only featured, no explicit thumbnail.',
+            publishedAt: '2025-01-01',
+            tags: [],
+            featured: '/portfolio/featured-fallback.png',
+          },
+          content: '',
+        },
+      ] as unknown as typeof ITEMS);
+      const { container } = render(<PortfolioPage />);
+      const img = container.querySelector('img');
+      expect(img?.getAttribute('src')).toBe('/portfolio/featured-fallback.png');
+    });
+
+    it('omits the image element when neither thumbnail nor featured is set', () => {
+      vi.mocked(
+        getAllPortfolioItems as unknown as () => typeof ITEMS,
+      ).mockReturnValue([
+        {
+          slug: 'no-media',
+          metadata: {
+            title: 'No-Media Item',
+            summary: 'Has neither thumbnail nor featured.',
+            publishedAt: '2025-01-01',
+            tags: [],
+          },
+          content: '',
+        },
+      ] as unknown as typeof ITEMS);
+      const { container } = render(<PortfolioPage />);
+      expect(container.querySelector('img')).toBeNull();
     });
   });
 

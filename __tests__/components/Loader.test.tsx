@@ -127,38 +127,27 @@ describe('Loader', () => {
     expect(overlay).toHaveClass('loading');
   });
 
-  it('gate calls onStart and dismisses once the scene reports ready', () => {
+  it('gate calls onStart and dismisses synchronously on tap', () => {
     const onStart = vi.fn();
-    const { container, rerender } = render(
-      <Loader gate={true} onStart={onStart} />,
-    );
+    const { container } = render(<Loader gate={true} onStart={onStart} />);
     const overlay = container.firstChild as HTMLElement;
 
     act(() => {
       vi.advanceTimersByTime(1500);
     });
 
-    // Tap the gate — starts the experience but stays visible while the scene boots
+    // Tap the gate — the overlay slides away immediately, WITHOUT waiting on any
+    // `loaded` signal. This is the guarantee: a tap can never leave the overlay
+    // hanging on a WebGL-ready signal that may be slow or never arrive.
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
     expect(onStart).toHaveBeenCalledTimes(1);
-    expect(overlay).toHaveClass('loading');
-    // "SCENE LOADED." persists after the tap (no flicker back to "LOADING...").
-    // The parent stops gating once started, so re-render with gate=false.
-    act(() => {
-      rerender(<Loader gate={false} onStart={onStart} />);
-    });
-    expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
-
-    // Scene reports its first frame — loader dismisses
-    act(() => {
-      rerender(<Loader gate={false} onStart={onStart} loaded={true} />);
-    });
     expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  it('gate force-dismisses via the post-tap safety cap if the scene never loads', () => {
+  it('gate dismisses on tap even if the scene never reports ready', () => {
     const { container } = render(<Loader gate={true} />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -170,15 +159,13 @@ describe('Loader', () => {
       fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
 
-    // Still loading shortly after tap
-    act(() => {
-      vi.advanceTimersByTime(2000);
-    });
-    expect(overlay).toHaveClass('loading');
+    // No `loaded` prop is ever passed and no further timers are advanced: the
+    // dismissal comes purely from the tap, not from any post-tap timeout.
+    expect(overlay).toHaveClass('-translate-y-full');
 
-    // Past the post-tap cap (8s), it force-dismisses
+    // ...and advancing well past the old 8s cap changes nothing (it's gone).
     act(() => {
-      vi.advanceTimersByTime(7000);
+      vi.advanceTimersByTime(9000);
     });
     expect(overlay).toHaveClass('-translate-y-full');
   });

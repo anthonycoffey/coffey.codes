@@ -19,9 +19,9 @@ describe('Loader', () => {
   it('renders initially with the loading overlay visible', () => {
     const { container } = render(<Loader />);
     const overlay = container.firstChild as HTMLElement;
-    // The component uses 'loading' class initially and slides up when done
+    // The component uses the 'loading' class initially and fades out when done.
     expect(overlay).toHaveClass('loading');
-    expect(overlay).not.toHaveClass('-translate-y-full');
+    expect(overlay).not.toHaveClass('opacity-0');
   });
 
   it('types out "LOADING..." character by character', () => {
@@ -59,7 +59,7 @@ describe('Loader', () => {
     expect(cursor).toHaveClass('animate-blink');
   });
 
-  it('slides out via the safety cap when no ready signal arrives', () => {
+  it('fades out via the safety cap when no ready signal arrives', () => {
     const { container } = render(<Loader />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -73,11 +73,11 @@ describe('Loader', () => {
     act(() => {
       vi.advanceTimersByTime(200);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  it('slides out immediately when the scene reports ready', () => {
+  it('fades out immediately when the scene reports ready', () => {
     const { container, rerender } = render(<Loader loaded={false} />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -91,7 +91,7 @@ describe('Loader', () => {
     act(() => {
       rerender(<Loader loaded={true} />);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
@@ -127,27 +127,36 @@ describe('Loader', () => {
     expect(overlay).toHaveClass('loading');
   });
 
-  it('gate calls onStart and dismisses synchronously on tap', () => {
+  it('gate calls onStart on tap and cross-fades out when the scene reports ready', () => {
     const onStart = vi.fn();
-    const { container } = render(<Loader gate={true} onStart={onStart} />);
+    const { container, rerender } = render(
+      <Loader gate={true} onStart={onStart} />,
+    );
     const overlay = container.firstChild as HTMLElement;
 
     act(() => {
       vi.advanceTimersByTime(1500);
     });
 
-    // Tap the gate — the overlay slides away immediately, WITHOUT waiting on any
-    // `loaded` signal. This is the guarantee: a tap can never leave the overlay
-    // hanging on a WebGL-ready signal that may be slow or never arrive.
+    // Tap the gate — the experience starts, but the overlay HOLDS (stays up) so
+    // it can cross-fade with the scene rather than snapping away first.
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
     expect(onStart).toHaveBeenCalledTimes(1);
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('loading');
+    expect(overlay).not.toHaveClass('opacity-0');
+
+    // Parent stops gating once started; scene then reports its first frame —
+    // the overlay fades out on the same signal that fades the scene in.
+    act(() => {
+      rerender(<Loader gate={false} onStart={onStart} loaded={true} />);
+    });
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  it('gate dismisses on tap even if the scene never reports ready', () => {
+  it('gate still dismisses via a bounded fallback if the scene never reports ready', () => {
     const { container } = render(<Loader gate={true} />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -159,14 +168,15 @@ describe('Loader', () => {
       fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
 
-    // No `loaded` prop is ever passed and no further timers are advanced: the
-    // dismissal comes purely from the tap, not from any post-tap timeout.
-    expect(overlay).toHaveClass('-translate-y-full');
+    // Immediately after the tap it HOLDS, waiting to cross-fade with the scene.
+    expect(overlay).toHaveClass('loading');
 
-    // ...and advancing well past the old 8s cap changes nothing (it's gone).
+    // No `loaded` ever arrives — but the bounded post-tap fallback (2500ms) still
+    // dismisses it, so a tap can never leave the overlay hanging.
     act(() => {
-      vi.advanceTimersByTime(9000);
+      vi.advanceTimersByTime(2500);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
+    expect(overlay).toHaveClass('pointer-events-none');
   });
 });

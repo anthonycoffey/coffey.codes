@@ -129,19 +129,18 @@ export default function ScrollContainer() {
           // nothing in its place — the dark background, HUD, scroll and contact
           // links all keep working — instead of bubbling to global-error.tsx.
           <ErrorBoundary fallback={null}>
-            {/* The overlay now slides away the instant the visitor taps "enter"
-                (decoupled from WebGL readiness), so the canvas can be revealed
-                before its first frame has painted. Fade it in on the real ready
-                signal so the scene appears smoothly over the dark background
-                instead of popping in. If the scene never signals ready this
-                simply stays at opacity 0 — a graceful blank, not a trapped
-                overlay. */}
+            {/* The overlay fades out on the same `sceneReady` signal that fades
+                this canvas in, and both use the same 500ms/ease-in-out timing —
+                so the loading overlay and the scene cross-fade as one smooth
+                handoff instead of the overlay leaving first and the scene
+                popping in after. If the scene never signals ready this simply
+                stays at opacity 0 — a graceful blank, not a trapped overlay. */}
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
                 opacity: sceneReady ? 1 : 0,
-                transition: 'opacity 500ms ease-in',
+                transition: 'opacity 500ms ease-in-out',
               }}
             >
               <WorldCanvas

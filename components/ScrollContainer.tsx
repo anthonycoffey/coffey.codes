@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import dynamic from 'next/dynamic';
 import HUDOverlay from '@/components/overlay/HUDOverlay';
 import Loader from '@/components/Loader';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import styles from '@/app/page.module.sass';
 
 // WorldCanvas is browser-only (WebGL) — skip SSR. The same import is reused to
@@ -122,26 +123,32 @@ export default function ScrollContainer() {
         }}
       >
         {shouldMountCanvas && (
-          // The overlay now slides away the instant the visitor taps "enter"
-          // (decoupled from WebGL readiness), so the canvas can be revealed
-          // before its first frame has painted. Fade it in on the real ready
-          // signal so the scene appears smoothly over the dark background
-          // instead of popping in. If the scene never signals ready (e.g. WebGL
-          // fails to init) this simply stays at opacity 0 — a graceful blank
-          // rather than a trapped overlay.
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              opacity: sceneReady ? 1 : 0,
-              transition: 'opacity 500ms ease-in',
-            }}
-          >
-            <WorldCanvas
-              scrollProgress={scrollProgress}
-              onReady={() => setSceneReady(true)}
-            />
-          </div>
+          // Isolate the WebGL scene so a hard failure can't take down the page.
+          // If WorldCanvas throws while mounting (e.g. WebGL context creation
+          // fails on an old/blocked GPU), the boundary swallows it and renders
+          // nothing in its place — the dark background, HUD, scroll and contact
+          // links all keep working — instead of bubbling to global-error.tsx.
+          <ErrorBoundary fallback={null}>
+            {/* The overlay fades out on the same `sceneReady` signal that fades
+                this canvas in, and both use the same 500ms/ease-in-out timing —
+                so the loading overlay and the scene cross-fade as one smooth
+                handoff instead of the overlay leaving first and the scene
+                popping in after. If the scene never signals ready this simply
+                stays at opacity 0 — a graceful blank, not a trapped overlay. */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: sceneReady ? 1 : 0,
+                transition: 'opacity 500ms ease-in-out',
+              }}
+            >
+              <WorldCanvas
+                scrollProgress={scrollProgress}
+                onReady={() => setSceneReady(true)}
+              />
+            </div>
+          </ErrorBoundary>
         )}
         <HUDOverlay scrollProgress={scrollProgress} />
         <Loader

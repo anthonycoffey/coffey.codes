@@ -4,12 +4,18 @@ import { LOADER_DISMISSED_EVENT } from '@/lib/loaderEvents';
 type LoaderWindow = Window &
   typeof globalThis & { __appLoaderActive?: boolean };
 
-// Safety cap for the NON-gated usage only — the loader always dismisses by this
-// point even if the scene never signals ready (e.g. WebGL fails to init). Kept
-// short so it never gates LCP: the overlay text behind it can paint as soon as
-// it's gone. The gated ("click to enter") path never uses a blind timeout — it
-// dismisses synchronously on tap (see handleStart).
+// Safety cap for the NON-gated usage — the loader always dismisses by this point
+// even if the scene never signals ready (e.g. WebGL fails to init). Kept short so
+// it never gates LCP: the overlay text behind it can paint as soon as it's gone.
 const SAFETY_CAP_MS = 1500;
+
+// Post-tap fallback for the gated ("click to enter") path. Normally the overlay
+// cross-fades out the instant the scene reports ready (`loaded`), in sync with
+// the scene fading in — a single smooth handoff. If that ready signal is slow or
+// never arrives, this bounded cap still dismisses the overlay so a tap can never
+// leave it hanging (the scene simply stays a graceful blank; a hard mount throw
+// is contained by the error boundary around the canvas in ScrollContainer).
+const ENTER_FALLBACK_MS = 2500;
 
 // Progress-bar fill timing. The gate ("SCENE LOADED." + tap button) is only
 // revealed once the bar has visibly filled, so it never pops in over a
@@ -86,7 +92,10 @@ export default function Loader({
     };
   }, [loading]);
 
-  // Dismiss as soon as the scene reports its first frame.
+  // Dismiss the moment the scene reports its first frame. For the gated path this
+  // is the primary dismissal: `loaded` can only flip true after the tap (the
+  // scene mounts on entry), so the overlay fades out on the very same signal that
+  // fades the scene in — the two cross-fade together.
   useEffect(() => {
     if (loaded) setLoading(false);
   }, [loaded]);
@@ -116,26 +125,27 @@ export default function Loader({
     };
   }, []);
 
-  // Auto-dismiss safety net for the NON-gated usage only. A gated loader waits
-  // for the visitor's tap (which dismisses it synchronously, see handleStart),
-  // so it needs no blind timeout — a tap can never leave the overlay hanging on
-  // a WebGL-ready signal that may be slow or never arrive. Without a gate, the
-  // cap guarantees the overlay still can't hang.
+  // Auto-dismiss safety net. Non-gated usage caps from mount. The gated path
+  // normally dismisses on `loaded` (the effect above) so the overlay cross-fades
+  // out in sync with the scene fading in; this bounded cap only fires if that
+  // ready signal is slow or never arrives, so a tap can never leave the overlay
+  // hanging. Pre-tap, a gated loader waits indefinitely for the tap.
   useEffect(() => {
-    if (gate) return;
-    const cap = setTimeout(() => setLoading(false), SAFETY_CAP_MS);
+    if (gate && !tapped) return;
+    const cap = setTimeout(
+      () => setLoading(false),
+      tapped ? ENTER_FALLBACK_MS : SAFETY_CAP_MS,
+    );
     return () => clearTimeout(cap);
-  }, [gate]);
+  }, [gate, tapped]);
 
   const handleStart = () => {
-    // Dismiss the overlay immediately and synchronously. The gate's sole purpose
-    // — keep the heavy WebGL scene off the main thread until the visitor shows
-    // intent — is satisfied the moment they tap. Waiting on the scene's ready
-    // signal afterwards is what let the overlay stall (up to the old 8s cap)
-    // when that signal was slow or never fired. The scene mounts behind the
-    // overlay and fades in when its first frame is ready.
+    // Start the experience but DON'T dismiss the overlay here. Holding it for the
+    // beat until the scene reports ready lets the two cross-fade together (the
+    // overlay fading out exactly as the scene fades in) instead of the overlay
+    // snapping away first and the scene popping in afterwards. The bounded
+    // ENTER_FALLBACK_MS cap above guarantees it still can't hang.
     setTapped(true);
-    setLoading(false);
     onStart?.();
   };
 
@@ -145,14 +155,14 @@ export default function Loader({
 
   // "SCENE LOADED." replaces the typing "LOADING..." line once the gate is
   // ready, and — crucially — stays put after the tap so it doesn't flicker
-  // back to "LOADING..." before the overlay slides away.
+  // back to "LOADING..." before the overlay fades away.
   const sceneLoaded = showGate || tapped;
   const statusText = sceneLoaded ? 'SCENE LOADED.' : text;
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-transform duration-200 ease-in-out ${
-        loading ? 'loading' : '-translate-y-full pointer-events-none'
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-opacity duration-500 ease-in-out ${
+        loading ? 'loading opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
       <div className="w-64 space-y-4">

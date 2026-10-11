@@ -23,10 +23,21 @@ export interface PortfolioMetadata {
   updated?: string;
   /** Tech stack chips. */
   tags?: string[];
-  /** Main hero / card image, path under /public. */
-  mainImage?: string;
-  /** Additional screenshots. */
-  gallery?: string[];
+  /**
+   * Listing thumbnail — image shown on the `/portfolio` index card.
+   * Optimized for card aspect / crop. Falls back to `featured` when omitted.
+   */
+  thumbnail?: string;
+  /**
+   * Featured / hero image — the "main" shot used on the detail page hero
+   * and as the first slot in the media gallery. Path under /public.
+   */
+  featured?: string;
+  /**
+   * Additional gallery images (excluding `featured`). Rendered on the
+   * detail page in declared order, after `featured`. Path under /public.
+   */
+  images?: string[];
   /** Primary external link (live demo, repo). */
   link?: string;
   /** Source code repo (optional second link distinct from `link`). */
@@ -35,8 +46,6 @@ export interface PortfolioMetadata {
   client?: string;
   /** Year (for the card grid). */
   year?: string;
-  /** Whether to feature on listing pages. */
-  featured?: boolean;
   /** Optional category, e.g. "Open Source", "Client Work". */
   category?: string;
 }
@@ -70,8 +79,8 @@ function parseFrontmatter(raw: string): {
 
   const metadata: Partial<PortfolioMetadata> = {};
 
-  // Simple parser: key: value per line. Tags + gallery are comma-separated.
-  // featured is boolean.
+  // Simple parser: key: value per line. `tags` and `images` are
+  // comma-separated arrays; everything else is a scalar string.
   for (const line of fmBlock.trim().split('\n')) {
     const sep = line.indexOf(':');
     if (sep === -1) continue;
@@ -88,21 +97,19 @@ function parseFrontmatter(raw: string): {
           .map((s) => s.trim().replace(/^['"]|['"]$/g, ''))
           .filter(Boolean);
         break;
-      case 'gallery':
-        metadata.gallery = value
+      case 'images':
+        metadata.images = value
           .replace(/^\[|\]$/g, '')
           .split(',')
           .map((s) => s.trim().replace(/^['"]|['"]$/g, ''))
           .filter(Boolean);
         break;
-      case 'featured':
-        metadata.featured = value === 'true';
-        break;
       case 'title':
       case 'summary':
       case 'publishedAt':
       case 'updated':
-      case 'mainImage':
+      case 'thumbnail':
+      case 'featured':
       case 'link':
       case 'repo':
       case 'client':

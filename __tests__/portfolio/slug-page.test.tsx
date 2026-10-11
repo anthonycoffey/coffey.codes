@@ -14,6 +14,25 @@ vi.mock('@/components/Breadcrumbs', () => ({
   default: () => null,
 }));
 
+vi.mock('@/components/PortfolioGallery', () => ({
+  default: ({
+    featured,
+    images,
+    title,
+  }: {
+    featured?: string;
+    images?: string[];
+    title: string;
+  }) => (
+    <div
+      data-testid="portfolio-gallery"
+      data-featured={featured ?? ''}
+      data-images={(images ?? []).join('|')}
+      data-title={title}
+    />
+  ),
+}));
+
 vi.mock('next/link', () => ({
   default: ({
     href,
@@ -69,6 +88,8 @@ vi.mock('@/utils/date', () => ({
   formatDate: (d: string) => d,
 }));
 
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   getPortfolioItem,
   getAllPortfolioItems,
@@ -84,11 +105,15 @@ const SAMPLE_ITEM = {
     summary: 'A performant, SEO-optimized personal site.',
     publishedAt: '2023-01-01',
     tags: ['Next.js', 'TypeScript', 'MDX'],
-    mainImage: '/portfolio/coffey.codes-portfolio.png',
+    thumbnail: '/portfolio/coffey.codes-portfolio.png',
+    featured: '/portfolio/coffey.codes-portfolio.png',
+    images: [
+      '/portfolio/coffey.codes-articles.png',
+      '/portfolio/coffey.codes-home.png',
+    ],
     link: 'https://coffey.codes',
     client: 'Personal Project',
     year: '2023',
-    featured: true,
     category: 'Web Development',
   },
   content: '## Overview\n\nThis is the content.',
@@ -209,6 +234,50 @@ describe('PortfolioItemPage', () => {
     );
   });
 
+  it('mounts PortfolioGallery with featured + images from frontmatter', async () => {
+    const element = await PortfolioItemPage({
+      params: Promise.resolve({ slug: 'coffey-codes' }),
+    });
+    const html = renderToStaticMarkup(element);
+    expect(html).toContain('data-testid="portfolio-gallery"');
+    expect(html).toContain(
+      'data-featured="/portfolio/coffey.codes-portfolio.png"',
+    );
+    expect(html).toContain(
+      'data-images="/portfolio/coffey.codes-articles.png|/portfolio/coffey.codes-home.png"',
+    );
+  });
+
+  it('CreativeWork JSON-LD `image` resolves to the absolute featured URL', async () => {
+    const element = await PortfolioItemPage({
+      params: Promise.resolve({ slug: 'coffey-codes' }),
+    });
+    const html = renderToStaticMarkup(element);
+    const schema = findJsonLdByType(html, 'CreativeWork');
+    expect(schema!.image).toBe(
+      'https://coffey.codes/portfolio/coffey.codes-portfolio.png',
+    );
+  });
+
+  it('OG / JSON-LD image falls back to thumbnail when featured is omitted', async () => {
+    vi.mocked(getPortfolioItem).mockReturnValue({
+      ...SAMPLE_ITEM,
+      metadata: {
+        ...SAMPLE_ITEM.metadata,
+        featured: undefined,
+        thumbnail: '/portfolio/only-thumb.png',
+      },
+    });
+    const element = await PortfolioItemPage({
+      params: Promise.resolve({ slug: 'coffey-codes' }),
+    });
+    const html = renderToStaticMarkup(element);
+    // Header no longer renders an <img> — heroImage now feeds JSON-LD / OG
+    // only. Gallery hero comes from `featured` directly (undefined here).
+    const schema = findJsonLdByType(html, 'CreativeWork');
+    expect(schema!.image).toBe('https://coffey.codes/portfolio/only-thumb.png');
+  });
+
   it('datePublished in JSON-LD is a full ISO 8601 datetime with timezone', async () => {
     const element = await PortfolioItemPage({
       params: Promise.resolve({ slug: 'coffey-codes' }),
@@ -219,6 +288,28 @@ describe('PortfolioItemPage', () => {
     const ISO_DATETIME_WITH_TZ =
       /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})$/;
     expect(schema!.datePublished).toMatch(ISO_DATETIME_WITH_TZ);
+  });
+});
+
+describe('simply-voice architecture diagram', () => {
+  it('source contains a ```mermaid fence under the Architecture heading', () => {
+    // Read the real MDX file rather than mocking it — the spec acceptance
+    // criterion is that this file ships with a Mermaid diagram, so a
+    // content-level assertion is the most direct check.
+    //
+    // Done synchronously to avoid race against beforeEach mocks.
+    const raw = fs.readFileSync(
+      path.join(
+        process.cwd(),
+        'app',
+        '(site)',
+        'portfolio',
+        'items',
+        'simply-voice.mdx',
+      ),
+      'utf-8',
+    );
+    expect(raw).toMatch(/## Architecture[\s\S]*?```mermaid[\s\S]*?flowchart/);
   });
 });
 

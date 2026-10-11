@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -9,6 +8,7 @@ import {
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { CustomMDX } from '@/components/mdx';
+import PortfolioGallery from '@/components/PortfolioGallery';
 import { baseUrl } from '@/app/sitemap';
 import { formatDate } from '@/utils/date';
 import {
@@ -35,9 +35,12 @@ export async function generateMetadata({ params }: PageParams) {
   const item = getPortfolioItem(slug);
   if (!item) return;
 
-  const { title, summary, mainImage, tags } = item.metadata;
-  const ogImage = mainImage
-    ? `${baseUrl}${mainImage}`
+  const { title, summary, featured, thumbnail, tags } = item.metadata;
+  // Prefer the editorial hero image (`featured`); fall back to `thumbnail`
+  // so cards without a dedicated featured shot still get a sensible OG.
+  const heroImage = featured ?? thumbnail;
+  const ogImage = heroImage
+    ? `${baseUrl}${heroImage}`
     : `${baseUrl}/og?title=${encodeURIComponent(title)}&category=${encodeURIComponent('Portfolio')}`;
 
   return {
@@ -67,6 +70,8 @@ export default async function PortfolioItemPage({ params }: PageParams) {
   if (!item) notFound();
 
   const { metadata } = item;
+  // Same fallback chain as generateMetadata(): featured → thumbnail.
+  const heroImage = metadata.featured ?? metadata.thumbnail;
   const datePublishedIso = toIsoDatetime(metadata.publishedAt);
   const dateModifiedIso = toIsoDatetime(
     metadata.updated ?? item.mtime ?? metadata.publishedAt,
@@ -87,9 +92,7 @@ export default async function PortfolioItemPage({ params }: PageParams) {
             url: `${baseUrl}/portfolio/${slug}`,
             datePublished: datePublishedIso,
             dateModified: dateModifiedIso,
-            image: metadata.mainImage
-              ? `${baseUrl}${metadata.mainImage}`
-              : undefined,
+            image: heroImage ? `${baseUrl}${heroImage}` : undefined,
             author: {
               '@type': 'Person',
               name: 'Anthony Coffey',
@@ -131,27 +134,17 @@ export default async function PortfolioItemPage({ params }: PageParams) {
       <Breadcrumbs title={metadata.title} />
 
       <section className="bg-surface border border-border rounded-lg shadow-sm px-6 sm:px-10 pt-6 sm:pt-8 pb-4 sm:pb-6">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-2">
-          {metadata.mainImage ? (
-            <Image
-              src={metadata.mainImage}
-              alt={`${metadata.title} logo`}
-              width={150}
-              height={150}
-              className="h-150 w-150 flex-shrink-0 mt-1 object-contain"
-              priority
-            />
-          ) : (
-            <CodeBracketSquareIcon className="h-8 w-8 text-link flex-shrink-0 mt-1" />
-          )}
-          <h1
-            className="title font-editorial font-bold text-3xl sm:text-4xl text-c-heading"
-            style={{ letterSpacing: '0.005em' }}
-          >
-            {metadata.title}
-          </h1>
-        </div>
+        {/* Header — title only. `featured` renders in PortfolioGallery
+         * below the body as a landscape hero (16:9). Previously this
+         * slot rendered `featured` as a 150×150 `object-contain` logo,
+         * which forced one asset to serve two incompatible aspect ratios
+         * (logo vs. hero). Dropping the header image removes that tension. */}
+        <h1
+          className="title font-editorial font-bold text-3xl sm:text-4xl text-c-heading mb-2"
+          style={{ letterSpacing: '0.005em' }}
+        >
+          {metadata.title}
+        </h1>
 
         <p className="text-lg text-c-muted mt-2 mb-4 leading-relaxed">
           {metadata.summary}
@@ -220,6 +213,16 @@ export default async function PortfolioItemPage({ params }: PageParams) {
         <article className="prose prose-lg xl:prose-xl max-w-none dark:prose-invert">
           <CustomMDX source={item.content} />
         </article>
+
+        {/* Media gallery: featured + images[]. Renders nothing when the
+         * item declares no media. Placed below the MDX body so prose can
+         * reference shots ("see the screenshot below"); future items
+         * with heavy visuals may move this up into the header area. */}
+        <PortfolioGallery
+          featured={metadata.featured}
+          images={metadata.images}
+          title={metadata.title}
+        />
 
         {/* Footer: navigate back */}
         <div className="mt-10">

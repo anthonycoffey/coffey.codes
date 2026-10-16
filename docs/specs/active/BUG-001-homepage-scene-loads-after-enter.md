@@ -103,10 +103,40 @@ Residual edge case, accepted: a visitor who generates no input at all until clic
 
 ### Verification notes
 
-In-browser checks ran in an occluded browser pane, which Chrome throttles to ~1 rAF tick
-per second. The overlay fade and the first-frame ready signal are therefore correct but
-were observed stretched over seconds rather than at their real 500ms / 2-frame timing;
-both are pinned at speed by the unit tests instead. No console errors, no server errors.
+#### Production build (`npm run build` + `npm run start`, localhost:3000)
+
+| Measurement | Zero input | After one `pointermove` |
+| --- | --- | --- |
+| `<canvas>` elements after ~3.5s | **0** | **1** |
+| JS requests | **12** | **19** |
+| Largest extra chunks | — | 219 KB + 111 KB (three.js / r3f) |
+| Canvas mount latency | n/a | **~314 ms** |
+| Overlay state at mount | splash up, gate on bar-fill floor | splash up, still typing `LOADING..` |
+
+Two conclusions:
+
+1. **The lab-run guard holds on production bundles.** With no pointer/key/wheel/touch
+   event, the WebGL chunks are never requested at all — seven fewer JS requests, and the
+   canvas never exists. This is the mechanism the perf score depends on.
+2. **The scene now loads well inside the loading animation.** The canvas mounts ~314 ms
+   after intent, before the "LOADING..." string has finished typing, so the bar's fill is
+   covering real initialization rather than running over an idle page.
+
+Byte totals are not quoted: repeat loads were served from cache, where `transferSize`
+reports 0, so request counts are the trustworthy figure here.
+
+#### What frame-rate throttling prevented
+
+All in-browser checks ran in an occluded browser pane, which Chrome throttles to ~1 rAF
+tick per second (measured: 1–4 ticks per 4s occluded, 166/s when displayed). Everything
+above is independent of frame rate. Two things are **not** verified at real speed:
+
+- the 500 ms overlay cross-fade reading smoothly at 60 fps, and
+- the true gate-unlock latency, since `FirstFrameSignal` waits two frames — ~2 s when
+  throttled to 1 fps, but ~33 ms at 60 fps.
+
+Both behaviors are pinned by unit tests; only their *perceptual* quality is unconfirmed.
+No console errors, no server errors.
 
 ## Notes
 

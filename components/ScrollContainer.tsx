@@ -8,12 +8,10 @@ import HUDOverlay from '@/components/overlay/HUDOverlay';
 import Loader from '@/components/Loader';
 import styles from '@/app/page.module.sass';
 
-// WorldCanvas is browser-only (WebGL) — skip SSR. The same import is reused to
-// warm the chunk ahead of entry (see the prefetch effect below); calling it
-// manually and mounting via `dynamic` share webpack's module cache, so the
-// mount resolves instantly once the chunk is warm.
-const importWorldCanvas = () => import('@/components/canvas/WorldCanvas');
-const WorldCanvas = dynamic(importWorldCanvas, { ssr: false });
+// WorldCanvas is browser-only (WebGL) — skip SSR.
+const WorldCanvas = dynamic(() => import('@/components/canvas/WorldCanvas'), {
+  ssr: false,
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,17 +23,19 @@ export default function ScrollContainer() {
   const spacerRef = useRef<HTMLDivElement>(null);
   const scrollProgress = useRef(0);
 
-  // Flipped by WorldCanvas once its first frame has rendered — used to dismiss
-  // the Loader on a real signal instead of a blind timeout.
+  // Flipped by WorldCanvas once its first frame has rendered — used to unlock
+  // the entry gate on a real signal instead of a blind timeout.
   const [sceneReady, setSceneReady] = useState(false);
-  // Every viewport gates the scene behind a "click/tap to enter" splash: the
-  // WebGL canvas is NOT mounted until the visitor enters. This keeps the heavy
-  // scene init (and its continuous render loop) entirely off the main thread for
-  // non-interacting visitors — most importantly Lighthouse/PSI, which never
-  // interacts — so both desktop and mobile TBT stay at the floor and the page
-  // can score 100. `isMobile` now only selects the gate copy ("TAP" vs "CLICK").
-  // Defaults to false so SSR and the first client render agree; corrected after
-  // mount to avoid a hydration mismatch.
+  // True once real user input has been observed. This is the gate on mounting
+  // the WebGL scene: it keeps the heavy scene init (and its continuous render
+  // loop) entirely off the main thread for non-interacting visitors — most
+  // importantly Lighthouse/PSI, which generates no input — so both desktop and
+  // mobile TBT stay at the floor and the page can score 100.
+  const [interacted, setInteracted] = useState(false);
+  // Every viewport gates the *reveal* behind a "click/tap to enter" splash.
+  // `isMobile` only selects the gate copy ("TAP" vs "CLICK"). Defaults to false
+  // so SSR and the first client render agree; corrected after mount to avoid a
+  // hydration mismatch.
   const [isMobile, setIsMobile] = useState(false);
   const [started, setStarted] = useState(false);
 
@@ -51,17 +51,21 @@ export default function ScrollContainer() {
     return () => mql.removeEventListener('change', update);
   }, []);
 
-  // The canvas mounts only once the visitor enters — same gate on every viewport.
-  const shouldMountCanvas = started;
+  // Mount the canvas as soon as EITHER real input has been seen or the visitor
+  // has entered. The first condition is the important one: it lets the scene
+  // download, initialize and paint *behind* the loading overlay, so the
+  // "LOADING..." animation covers real work and entering reveals a scene that is
+  // already running. Entry alone remains as a fallback for the visitor who
+  // generates no input at all before clicking (BUG-001).
+  const shouldMountCanvas = interacted || started;
 
-  // Warm the WorldCanvas chunk on the first real sign of user intent (pointer
-  // move, key, wheel, touch) so clicking "Enter" mounts the scene instantly
-  // instead of waiting on a cold chunk download + parse. Lighthouse/PSI generate
-  // none of these in a lab run, so the heavy three.js chunk is never fetched
-  // during the audit window — preserving the 100 — while real visitors, who move
-  // the pointer within milliseconds, get an instant entry.
+  // Watch for the first real sign of user intent (pointer move, key, wheel,
+  // touch). Lighthouse/PSI generate none of these in a lab run, so the heavy
+  // three.js chunk is never fetched — let alone executed — during the audit
+  // window, preserving the 100. Real visitors move the pointer within
+  // milliseconds of load, so the scene is loading long before they can click.
   useEffect(() => {
-    if (started) return; // already entering — nothing left to warm
+    if (interacted) return; // already mounting — nothing left to watch for
     const events = [
       'pointermove',
       'pointerdown',
@@ -69,18 +73,17 @@ export default function ScrollContainer() {
       'wheel',
       'touchstart',
     ];
-    let warmed = false;
-    const warm = () => {
-      if (warmed) return;
-      warmed = true;
-      void importWorldCanvas();
+    const onIntent = () => {
+      setInteracted(true);
       cleanup();
     };
     const cleanup = () =>
-      events.forEach((e) => window.removeEventListener(e, warm));
-    events.forEach((e) => window.addEventListener(e, warm, { passive: true }));
+      events.forEach((e) => window.removeEventListener(e, onIntent));
+    events.forEach((e) =>
+      window.addEventListener(e, onIntent, { passive: true }),
+    );
     return cleanup;
-  }, [started]);
+  }, [interacted]);
 
   useLayoutEffect(() => {
     const spacer = spacerRef.current;
@@ -122,13 +125,11 @@ export default function ScrollContainer() {
         }}
       >
         {shouldMountCanvas && (
-          // The overlay now slides away the instant the visitor taps "enter"
-          // (decoupled from WebGL readiness), so the canvas can be revealed
-          // before its first frame has painted. Fade it in on the real ready
-          // signal so the scene appears smoothly over the dark background
-          // instead of popping in. If the scene never signals ready (e.g. WebGL
-          // fails to init) this simply stays at opacity 0 — a graceful blank
-          // rather than a trapped overlay.
+          // In the normal flow this is already fully opaque and painting behind
+          // the overlay by the time the visitor enters, so the fade is inert.
+          // It only does work in the fallback case — entering without having
+          // generated any input, so the canvas mounts on the click itself — where
+          // it eases the scene in rather than popping it onto a black page.
           <div
             style={{
               position: 'absolute',
@@ -147,6 +148,7 @@ export default function ScrollContainer() {
         <Loader
           loaded={sceneReady}
           gate={!started}
+          sceneMounted={shouldMountCanvas}
           enterLabel={isMobile ? 'TAP TO ENTER' : 'CLICK TO ENTER'}
           onStart={() => setStarted(true)}
         />

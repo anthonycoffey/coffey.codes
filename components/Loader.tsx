@@ -18,17 +18,28 @@ const BAR_START_MS = 80; // let the empty bar paint before it animates
 const BAR_FILL_MS = 1100; // CSS transition duration for the fill
 const FILL_COMPLETE_MS = BAR_START_MS + BAR_FILL_MS + 120; // + small buffer
 
+// Hard ceiling on waiting for the scene's ready signal before revealing the
+// gate anyway. Covers the cases where that signal cannot arrive: WebGL failed
+// to initialize, or the tab was backgrounded so the render loop never ran. The
+// visitor must never be trapped behind a gate that cannot unlock.
+const READY_CAP_MS = 6000;
+
 interface LoaderProps {
   /** Flips true once the WebGL scene has rendered its first frame. */
   loaded?: boolean;
   /**
    * When true, the loader becomes a "click/tap to enter" gate: it does NOT
-   * auto-dismiss, and the WebGL scene is mounted (by the parent) only after the
-   * user enters. This keeps the heavy scene off the main thread for visitors who
-   * never interact — most importantly Lighthouse/PSI — so TBT stays low on every
-   * viewport.
+   * auto-dismiss, so nothing is revealed until the visitor enters.
    */
   gate?: boolean;
+  /**
+   * Whether the parent has mounted the WebGL scene behind this overlay. When it
+   * has, the gate waits for `loaded` before claiming "SCENE LOADED." — covering
+   * that work is the whole point of the loading animation. When it has not (no
+   * user input yet, so nothing is loading), there is no signal to wait for and
+   * the gate unlocks on the bar-fill floor alone.
+   */
+  sceneMounted?: boolean;
   /** Label for the gate button — e.g. "TAP TO ENTER" / "CLICK TO ENTER". */
   enterLabel?: string;
   /** Called when the user enters the gate to start the experience. */
@@ -38,6 +49,7 @@ interface LoaderProps {
 export default function Loader({
   loaded = false,
   gate = false,
+  sceneMounted = false,
   enterLabel = 'TAP TO ENTER',
   onStart,
 }: LoaderProps) {
@@ -47,6 +59,13 @@ export default function Loader({
   const [isTyping, setIsTyping] = useState(true);
   // True once the progress bar has finished filling.
   const [filled, setFilled] = useState(false);
+  // True once the gate has been revealed. Latched: once the button is on screen
+  // it must never disappear again, or it would flicker out from under a cursor
+  // already moving toward it (a pointer move that lands just after the reveal
+  // starts the canvas mounting, which would otherwise re-arm the wait).
+  const [gateRevealed, setGateRevealed] = useState(false);
+  // True once the ready-signal wait has timed out.
+  const [readyCapReached, setReadyCapReached] = useState(false);
   // Avoid a hydration mismatch: the gate button is client-only state.
   const [mounted, setMounted] = useState(false);
   const [tapped, setTapped] = useState(false);
@@ -86,10 +105,14 @@ export default function Loader({
     };
   }, [loading]);
 
-  // Dismiss as soon as the scene reports its first frame.
+  // Dismiss as soon as the scene reports its first frame — but NOT in gate
+  // mode, where readiness unlocks the gate rather than dismissing the overlay.
+  // Auto-dismissing there would tear the splash away unprompted the instant the
+  // scene painted, skipping the "click to enter" moment entirely.
   useEffect(() => {
+    if (gate) return;
     if (loaded) setLoading(false);
-  }, [loaded]);
+  }, [gate, loaded]);
 
   // Typing animation + progress bar — runs once on mount.
   useEffect(() => {
@@ -127,21 +150,33 @@ export default function Loader({
     return () => clearTimeout(cap);
   }, [gate]);
 
+  // Ceiling on the ready-signal wait — see READY_CAP_MS.
+  useEffect(() => {
+    if (!gate) return;
+    const cap = setTimeout(() => setReadyCapReached(true), READY_CAP_MS);
+    return () => clearTimeout(cap);
+  }, [gate]);
+
+  // Reveal the gate once the bar has visibly filled AND there is nothing left
+  // to honestly wait for: the scene has painted a frame, no scene is mounting
+  // in the first place, or the wait has hit its ceiling.
+  useEffect(() => {
+    if (!gate || gateRevealed || !filled) return;
+    if (loaded || !sceneMounted || readyCapReached) setGateRevealed(true);
+  }, [gate, gateRevealed, filled, loaded, sceneMounted, readyCapReached]);
+
   const handleStart = () => {
-    // Dismiss the overlay immediately and synchronously. The gate's sole purpose
-    // — keep the heavy WebGL scene off the main thread until the visitor shows
-    // intent — is satisfied the moment they tap. Waiting on the scene's ready
-    // signal afterwards is what let the overlay stall (up to the old 8s cap)
-    // when that signal was slow or never fired. The scene mounts behind the
-    // overlay and fades in when its first frame is ready.
+    // Dismiss the overlay immediately and synchronously. Waiting on the scene's
+    // ready signal here is what let the overlay stall (up to the old 8s cap)
+    // when that signal was slow or never fired — and by this point the gate has
+    // already waited for it, so there is nothing left to wait on.
     setTapped(true);
     setLoading(false);
     onStart?.();
   };
 
-  // Gate prompt: shown once mounted, gating, not yet tapped, and the bar has
-  // filled (so it never appears over a half-full bar).
-  const showGate = mounted && gate && !tapped && filled;
+  // Gate prompt: shown once mounted, gating, not yet tapped, and revealed.
+  const showGate = mounted && gate && !tapped && gateRevealed;
 
   // "SCENE LOADED." replaces the typing "LOADING..." line once the gate is
   // ready, and — crucially — stays put after the tap so it doesn't flicker
@@ -151,8 +186,13 @@ export default function Loader({
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-transform duration-200 ease-in-out ${
-        loading ? 'loading' : '-translate-y-full pointer-events-none'
+      // Dismiss by fading, not sliding: the scene behind is already running by
+      // the time the visitor enters, so a cross-fade reveals it rather than
+      // wiping a black panel off a scene that is still waking up.
+      aria-hidden={!loading}
+      data-testid="loader-overlay"
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black transition-opacity duration-500 ease-in-out ${
+        loading ? 'loading' : 'opacity-0 pointer-events-none'
       }`}
     >
       <div className="w-64 space-y-4">

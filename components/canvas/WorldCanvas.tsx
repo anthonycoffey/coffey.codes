@@ -150,10 +150,36 @@ function ParticleSystem({ scrollProgress }: ParticleSystemProps) {
   );
 }
 
+// ── Readiness signal ──────────────────────────────────────────────────────
+//
+// Reports "the scene is on screen" — deliberately NOT r3f's `onCreated`, which
+// fires the moment the WebGL context exists, well before geometry upload,
+// shader compile and the first draw. The loader announces "SCENE LOADED." off
+// this signal, so it has to mean pixels.
+//
+// r3f runs frame callbacks BEFORE the draw, so the first invocation happens
+// with nothing painted yet; waiting for the second means frame 1 is complete —
+// including the EffectComposer passes, which register at a higher frame
+// priority and therefore run after this callback within the same frame.
+export function FirstFrameSignal({ onReady }: { onReady?: () => void }) {
+  const frames = useRef(0);
+  const fired = useRef(false);
+
+  useFrame(() => {
+    if (fired.current) return;
+    frames.current += 1;
+    if (frames.current < 2) return;
+    fired.current = true;
+    onReady?.();
+  });
+
+  return null;
+}
+
 // ── WorldCanvas — full-viewport canvas, IS the visual experience ──────────
 interface WorldCanvasProps {
   scrollProgress: React.RefObject<number>;
-  /** Called once the canvas has created its WebGL context / first frame. */
+  /** Called once the canvas has rendered its first frame. */
   onReady?: () => void;
 }
 
@@ -206,7 +232,6 @@ export default function WorldCanvas({
         }}
         style={{ background: 'transparent' }}
         frameloop={frameloop}
-        onCreated={() => onReady?.()}
       >
         {/* Lighting — ambient base + directional sun from upper-left */}
         <ambientLight intensity={0.4} />
@@ -215,6 +240,8 @@ export default function WorldCanvas({
           intensity={1.2}
           color="#ffe8cc"
         />
+
+        <FirstFrameSignal onReady={onReady} />
 
         <CameraRig scrollProgress={scrollProgress} />
 

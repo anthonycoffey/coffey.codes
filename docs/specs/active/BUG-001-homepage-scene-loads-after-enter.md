@@ -125,6 +125,27 @@ Two conclusions:
 Byte totals are not quoted: repeat loads were served from cache, where `transferSize`
 reports 0, so request counts are the trustworthy figure here.
 
+#### End-to-end confirmation
+
+Driving the render loop by forcing paints (screenshot capture produces frames even in a
+throttled pane) walked the whole sequence through on the production build:
+
+| Stage | Observed |
+| --- | --- |
+| After intent, before frames | splash up, `LOADING...`, bar filled, **gate locked** |
+| After 2 frames | `SCENE LOADED.` + `CLICK TO ENTER`, `sceneReady` fired, **scene wrapper at opacity 1** |
+| On click | overlay fades; button gone, text dimming, scene visible behind |
+| Settled | `opacity: 0`, `transform: none`, `aria-hidden="true"`, `pointer-events: none`, `body.overflow` released, scene rendering |
+
+The second row is the fix in one line: **the scene was fully loaded and painted at opacity
+1 before the click.** Entering only uncovers it. The settled row confirms the dismissal is
+a fade, not a slide (`transform: none`, where the old build had `-translate-y-full`), and
+that the overlay leaves the accessibility tree and stops intercepting pointer events.
+
+The revealed scene renders correctly — merkaba wireframe, galaxy, planet, starfield and
+HUD panel all present — and the consent banner still sequences in after dismissal, so the
+`LOADER_DISMISSED_EVENT` handshake is intact.
+
 #### What frame-rate throttling prevented
 
 All in-browser checks ran in an occluded browser pane, which Chrome throttles to ~1 rAF
@@ -135,7 +156,11 @@ above is independent of frame rate. Two things are **not** verified at real spee
 - the true gate-unlock latency, since `FirstFrameSignal` waits two frames — ~2 s when
   throttled to 1 fps, but ~33 ms at 60 fps.
 
-Both behaviors are pinned by unit tests; only their *perceptual* quality is unconfirmed.
+Both behaviors are pinned by unit tests, and the sequence above confirms the fade runs and
+settles correctly; what remains unconfirmed is only whether 500 ms *feels* right at a
+natural 60 fps, which is a human judgement rather than a measurement. The declared CSS is
+objectively correct: `transition-property: opacity`, `duration: 0.5s`,
+`cubic-bezier(0.4, 0, 0.2, 1)`.
 No console errors, no server errors.
 
 ## Notes

@@ -214,13 +214,29 @@ test.describe('Homepage', () => {
   });
 });
 
-// ── Scene preloading (BUG-001) ───────────────────────────────────────────────
+// ── Scene preloading (BUG-001) ───────────────────────────────────────────
 //
 // The scene must load WHILE the splash is up, so entering reveals something
 // already running — but it must still never load for a visitor who generates no
 // input at all, which is what keeps the WebGL cost outside the Lighthouse/PSI
 // audit window. These tests pin both halves of that bargain.
 test.describe('Homepage scene preloading', () => {
+  // The intent listener is attached by a React effect, so it does not exist
+  // until the page hydrates. A single pointer event fired right after goto()
+  // can land before that and is lost forever — nothing else fires, the canvas
+  // never mounts, and the test hangs until it times out. (That is exactly how
+  // this suite failed against a cold production deployment.) A real pointer
+  // moves continuously, so nudge it until the canvas appears.
+  async function signalIntent(page: Page) {
+    await expect(async () => {
+      await page.mouse.move(
+        120 + Math.round(Math.random() * 240),
+        120 + Math.round(Math.random() * 240),
+      );
+      expect(await page.locator('canvas').count()).toBeGreaterThan(0);
+    }).toPass({ timeout: 30_000, intervals: [100, 250, 500] });
+  }
+
   test('does not mount the canvas without any user interaction', async ({
     page,
   }) => {
@@ -238,40 +254,31 @@ test.describe('Homepage scene preloading', () => {
     page,
   }) => {
     await page.goto('/');
-    await page.mouse.move(200, 200);
+    await signalIntent(page);
 
-    // Canvas mounts on intent alone — before any click.
-    await page.waitForSelector('canvas');
-
-    // ...and the splash is still up, covering the init it is animating over.
+    // The canvas is mounting and initializing on intent alone — no click yet —
+    // while the splash still covers it. This is the fix: the loading animation
+    // now overlaps real scene init rather than running over an idle page.
     const overlay = page.getByTestId('loader-overlay');
     await expect(overlay).toHaveClass(/loading/);
     await expect(overlay).not.toHaveClass(/opacity-0/);
-  });
-
-  test('only offers entry once the scene has reported a rendered frame', async ({
-    page,
-  }) => {
-    await page.goto('/');
-    await page.mouse.move(200, 200);
-    await page.waitForSelector('canvas');
-
-    // "SCENE LOADED." is now a claim backed by a real first-frame signal, not a
-    // timer, so it appears alongside the enter button.
-    await expect(page.getByRole('button', { name: /enter/i })).toBeVisible();
-    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible();
   });
 
   test('fades the splash out on entry, revealing a running scene', async ({
     page,
   }) => {
     await page.goto('/');
-    await page.mouse.move(200, 200);
-    await page.waitForSelector('canvas');
+    await signalIntent(page);
 
     const overlay = page.getByTestId('loader-overlay');
     await expect(overlay).toHaveClass(/transition-opacity/);
 
+    // The gate reports the scene loaded before offering entry. That it waits on
+    // a REAL first-frame signal rather than a timer is pinned precisely in
+    // __tests__/components/Loader.test.tsx; asserting that ordering here would
+    // depend on intent landing before the bar-fill floor, which is not
+    // controllable against a cold deployment.
+    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible();
     await page.getByRole('button', { name: /enter/i }).click();
 
     // Fades (opacity) rather than sliding (translate), and the canvas that was

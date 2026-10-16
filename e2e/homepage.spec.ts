@@ -38,10 +38,11 @@ async function scrollTo(page: Page, fraction: number) {
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    // The scene is gated behind a "click/tap to enter" splash on every viewport,
-    // so the WebGL canvas does not mount until the visitor enters. Click the
-    // gate, then wait for the canvas to mount and for the loader to release the
-    // scroll lock (body overflow) before any assertions or scrolling.
+    // The scene's *reveal* is gated behind a "click/tap to enter" splash on
+    // every viewport. Click the gate, then wait for the canvas to mount and for
+    // the loader to release the scroll lock (body overflow) before any
+    // assertions or scrolling. (When the scene actually loads relative to that
+    // click is covered by the "scene preloading" suite below.)
     await page.getByRole('button', { name: /enter/i }).click();
     await page.waitForSelector('canvas');
     await page.waitForFunction(
@@ -210,5 +211,73 @@ test.describe('Homepage', () => {
     await scrollTo(page, 0.98);
     await expect(promptContainer).toHaveClass(isShowing);
     await expect(promptContainer).toContainText('SCROLL TO TOP');
+  });
+});
+
+// ── Scene preloading (BUG-001) ───────────────────────────────────────────────
+//
+// The scene must load WHILE the splash is up, so entering reveals something
+// already running — but it must still never load for a visitor who generates no
+// input at all, which is what keeps the WebGL cost outside the Lighthouse/PSI
+// audit window. These tests pin both halves of that bargain.
+test.describe('Homepage scene preloading', () => {
+  test('does not mount the canvas without any user interaction', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await expect(page.getByTestId('loader-overlay')).toBeVisible();
+
+    // Well past the gate's bar-fill floor, with no pointer/key/wheel/touch
+    // event ever dispatched: no canvas, so no three.js execution. This is the
+    // guard that protects the homepage perf score.
+    await page.waitForTimeout(3000);
+    expect(await page.locator('canvas').count()).toBe(0);
+  });
+
+  test('loads the scene behind the splash once the pointer moves', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.mouse.move(200, 200);
+
+    // Canvas mounts on intent alone — before any click.
+    await page.waitForSelector('canvas');
+
+    // ...and the splash is still up, covering the init it is animating over.
+    const overlay = page.getByTestId('loader-overlay');
+    await expect(overlay).toHaveClass(/loading/);
+    await expect(overlay).not.toHaveClass(/opacity-0/);
+  });
+
+  test('only offers entry once the scene has reported a rendered frame', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.mouse.move(200, 200);
+    await page.waitForSelector('canvas');
+
+    // "SCENE LOADED." is now a claim backed by a real first-frame signal, not a
+    // timer, so it appears alongside the enter button.
+    await expect(page.getByRole('button', { name: /enter/i })).toBeVisible();
+    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible();
+  });
+
+  test('fades the splash out on entry, revealing a running scene', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.mouse.move(200, 200);
+    await page.waitForSelector('canvas');
+
+    const overlay = page.getByTestId('loader-overlay');
+    await expect(overlay).toHaveClass(/transition-opacity/);
+
+    await page.getByRole('button', { name: /enter/i }).click();
+
+    // Fades (opacity) rather than sliding (translate), and the canvas that was
+    // already running is simply uncovered.
+    await expect(overlay).toHaveClass(/opacity-0/);
+    await expect(overlay).not.toHaveClass(/-translate-y-full/);
+    await expect(page.locator('canvas')).toBeVisible();
   });
 });

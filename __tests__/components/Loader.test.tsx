@@ -19,9 +19,9 @@ describe('Loader', () => {
   it('renders initially with the loading overlay visible', () => {
     const { container } = render(<Loader />);
     const overlay = container.firstChild as HTMLElement;
-    // The component uses 'loading' class initially and slides up when done
+    // The component uses 'loading' class initially and fades out when done
     expect(overlay).toHaveClass('loading');
-    expect(overlay).not.toHaveClass('-translate-y-full');
+    expect(overlay).not.toHaveClass('opacity-0');
   });
 
   it('types out "LOADING..." character by character', () => {
@@ -59,7 +59,7 @@ describe('Loader', () => {
     expect(cursor).toHaveClass('animate-blink');
   });
 
-  it('slides out via the safety cap when no ready signal arrives', () => {
+  it('fades out via the safety cap when no ready signal arrives', () => {
     const { container } = render(<Loader />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -73,11 +73,11 @@ describe('Loader', () => {
     act(() => {
       vi.advanceTimersByTime(200);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
-  it('slides out immediately when the scene reports ready', () => {
+  it('fades out immediately when the scene reports ready', () => {
     const { container, rerender } = render(<Loader loaded={false} />);
     const overlay = container.firstChild as HTMLElement;
 
@@ -91,7 +91,7 @@ describe('Loader', () => {
     act(() => {
       rerender(<Loader loaded={true} />);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
@@ -127,7 +127,7 @@ describe('Loader', () => {
     expect(overlay).toHaveClass('loading');
   });
 
-  it('gate calls onStart and dismisses synchronously on tap', () => {
+  it('gate calls onStart and fades out synchronously on tap', () => {
     const onStart = vi.fn();
     const { container } = render(<Loader gate={true} onStart={onStart} />);
     const overlay = container.firstChild as HTMLElement;
@@ -136,14 +136,14 @@ describe('Loader', () => {
       vi.advanceTimersByTime(1500);
     });
 
-    // Tap the gate — the overlay slides away immediately, WITHOUT waiting on any
+    // Tap the gate — the overlay fades away immediately, WITHOUT waiting on any
     // `loaded` signal. This is the guarantee: a tap can never leave the overlay
     // hanging on a WebGL-ready signal that may be slow or never arrive.
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: /tap to enter/i }));
     });
     expect(onStart).toHaveBeenCalledTimes(1);
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
     expect(overlay).toHaveClass('pointer-events-none');
   });
 
@@ -161,12 +161,130 @@ describe('Loader', () => {
 
     // No `loaded` prop is ever passed and no further timers are advanced: the
     // dismissal comes purely from the tap, not from any post-tap timeout.
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
 
     // ...and advancing well past the old 8s cap changes nothing (it's gone).
     act(() => {
       vi.advanceTimersByTime(9000);
     });
-    expect(overlay).toHaveClass('-translate-y-full');
+    expect(overlay).toHaveClass('opacity-0');
+  });
+
+  // ── Gate waits on a REAL ready signal (BUG-001) ────────────────────────────
+
+  it('withholds the gate until a mounted scene reports ready', () => {
+    const { container } = render(<Loader gate={true} sceneMounted={true} />);
+    const overlay = container.firstChild as HTMLElement;
+
+    // Bar has filled, but the scene (already mounting behind the overlay) has
+    // not reported a rendered frame — so "SCENE LOADED." would be a lie and the
+    // gate stays hidden.
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.queryByRole('button', { name: /enter/i })).toBeNull();
+    expect(screen.queryByText(/SCENE LOADED\./)).toBeNull();
+    expect(overlay).toHaveClass('loading');
+  });
+
+  it('reveals the gate once a mounted scene reports ready', () => {
+    const { rerender } = render(<Loader gate={true} sceneMounted={true} />);
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.queryByRole('button', { name: /enter/i })).toBeNull();
+
+    // The scene paints its first frame — now the claim is true.
+    act(() => {
+      rerender(<Loader gate={true} sceneMounted={true} loaded={true} />);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+    expect(screen.getByText(/SCENE LOADED\./)).toBeInTheDocument();
+  });
+
+  it('still respects the bar-fill floor when the scene is ready early', () => {
+    render(<Loader gate={true} sceneMounted={true} loaded={true} />);
+
+    // Ready from the first render, but the bar has not visibly filled yet — the
+    // gate must not pop in over a half-full bar.
+    act(() => {
+      vi.advanceTimersByTime(400);
+    });
+    expect(screen.queryByRole('button', { name: /enter/i })).toBeNull();
+
+    act(() => {
+      vi.advanceTimersByTime(1100);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+  });
+
+  it('reveals the gate at the safety cap if a mounted scene never reports ready', () => {
+    render(<Loader gate={true} sceneMounted={true} />);
+
+    // WebGL failed to init, or the tab was backgrounded so no frame ever ran.
+    // The visitor must never be trapped behind a gate that cannot unlock.
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.queryByRole('button', { name: /enter/i })).toBeNull();
+
+    act(() => {
+      vi.advanceTimersByTime(6000);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+  });
+
+  it('reveals the gate at bar-fill when no scene is mounted yet', () => {
+    // No interaction has occurred, so the canvas is not mounting and there is
+    // nothing to wait for — the visitor should not be made to wait for a signal
+    // that cannot arrive until they click.
+    render(<Loader gate={true} sceneMounted={false} />);
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+  });
+
+  it('does not re-hide a revealed gate when the scene mounts late', () => {
+    const { rerender } = render(<Loader gate={true} sceneMounted={false} />);
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+
+    // A pointer move lands just after the gate appeared: the canvas starts
+    // mounting. The button must not flicker away under the cursor.
+    act(() => {
+      rerender(<Loader gate={true} sceneMounted={true} />);
+    });
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+  });
+
+  it('in gate mode, never auto-dismisses just because the scene is ready', () => {
+    const { container, rerender } = render(
+      <Loader gate={true} sceneMounted={true} />,
+    );
+    const overlay = container.firstChild as HTMLElement;
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    act(() => {
+      rerender(<Loader gate={true} sceneMounted={true} loaded={true} />);
+    });
+
+    // Readiness unlocks the gate; it must not tear the splash away unprompted.
+    // Only the visitor's click dismisses a gated loader.
+    expect(overlay).toHaveClass('loading');
+    expect(overlay).not.toHaveClass('opacity-0');
+    expect(screen.getByRole('button', { name: /enter/i })).toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(10000);
+    });
+    expect(overlay).toHaveClass('loading');
   });
 });

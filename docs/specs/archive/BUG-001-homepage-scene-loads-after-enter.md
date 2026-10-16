@@ -1,7 +1,7 @@
 ---
 id: BUG-001
 title: 'Homepage 3D scene loads after "click to enter", not during the loading screen'
-status: review-pending
+status: complete
 severity: P2
 created: 2026-10-16
 author: 'Anthony Coffey'
@@ -97,9 +97,10 @@ Residual edge case, accepted: a visitor who generates no input at all until clic
 - [x] Gated loader never auto-dismisses on readiness — a bug this work exposed and fixed
       (`loaded` was dismissing the overlay regardless of gate mode, which would have torn
       the splash away unprompted the instant the scene painted)
-- [ ] Homepage Lighthouse perf score unchanged — **not run**. The lab-run guard above is
-      the mechanism that protects it, and it is verified, but the score itself has not
-      been re-measured.
+- [ ] Homepage Lighthouse perf score unchanged — **not run**, and tracked separately
+      (see "Open item" below). The lab-run guard above is the mechanism that protects it,
+      and that guard is verified on a production build, but the score itself has not been
+      re-measured.
 
 ### Verification notes
 
@@ -162,6 +163,21 @@ natural 60 fps, which is a human judgement rather than a measurement. The declar
 objectively correct: `transition-property: opacity`, `duration: 0.5s`,
 `cubic-bezier(0.4, 0, 0.2, 1)`.
 No console errors, no server errors.
+
+## Open item
+
+Shipped in [#249](https://github.com/anthonycoffey/coffey.codes/pull/249) (`49d0346`) and
+archived as complete: the reported bug is fixed and verified end to end on a production
+build.
+
+One verification item is deliberately left open rather than silently dropped — the
+homepage Lighthouse score has not been re-measured. It is not a known regression: the
+mechanism that protects it (no WebGL chunk request and no canvas without user input) is
+verified on the production build, as recorded above. Re-measuring the score itself needs a
+production Lighthouse run and is tracked as its own task.
+
+If that run shows a regression, reopen this bug rather than reverting the preload — the
+desired behavior is the scene loading during the splash.
 
 ## Notes
 

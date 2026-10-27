@@ -45,9 +45,7 @@ test.describe('Homepage', () => {
     // click is covered by the "scene preloading" suite below.)
     await page.getByRole('button', { name: /enter/i }).click();
     await page.waitForSelector('canvas');
-    await page.waitForFunction(
-      () => document.body.style.overflow !== 'hidden',
-    );
+    await page.waitForFunction(() => document.body.style.overflow !== 'hidden');
   });
 
   // ── Structure ──────────────────────────────────────────────────────────
@@ -220,23 +218,23 @@ test.describe('Homepage', () => {
 // already running — but it must still never load for a visitor who generates no
 // input at all, which is what keeps the WebGL cost outside the Lighthouse/PSI
 // audit window. These tests pin both halves of that bargain.
-test.describe('Homepage scene preloading', () => {
-  // The intent listener is attached by a React effect, so it does not exist
-  // until the page hydrates. A single pointer event fired right after goto()
-  // can land before that and is lost forever — nothing else fires, the canvas
-  // never mounts, and the test hangs until it times out. (That is exactly how
-  // this suite failed against a cold production deployment.) A real pointer
-  // moves continuously, so nudge it until the canvas appears.
-  async function signalIntent(page: Page) {
-    await expect(async () => {
-      await page.mouse.move(
-        120 + Math.round(Math.random() * 240),
-        120 + Math.round(Math.random() * 240),
-      );
-      expect(await page.locator('canvas').count()).toBeGreaterThan(0);
-    }).toPass({ timeout: 30_000, intervals: [100, 250, 500] });
-  }
+// The intent listener is attached by a React effect, so it does not exist
+// until the page hydrates. A single pointer event fired right after goto()
+// can land before that and is lost forever — nothing else fires, the canvas
+// never mounts, and the test hangs until it times out. (That is exactly how
+// this suite failed against a cold production deployment.) A real pointer
+// moves continuously, so nudge it until the canvas appears.
+async function signalIntent(page: Page) {
+  await expect(async () => {
+    await page.mouse.move(
+      120 + Math.round(Math.random() * 240),
+      120 + Math.round(Math.random() * 240),
+    );
+    expect(await page.locator('canvas').count()).toBeGreaterThan(0);
+  }).toPass({ timeout: 30_000, intervals: [100, 250, 500] });
+}
 
+test.describe('Homepage scene preloading', () => {
   test('does not mount the canvas without any user interaction', async ({
     page,
   }) => {
@@ -286,5 +284,88 @@ test.describe('Homepage scene preloading', () => {
     await expect(overlay).toHaveClass(/opacity-0/);
     await expect(overlay).not.toHaveClass(/-translate-y-full/);
     await expect(page.locator('canvas')).toBeVisible();
+  });
+});
+
+// ── Shader warm-up (BUG-002) ─────────────────────────────────────────────
+//
+// three.js compiles a material's program on the first frame that DRAWS it, so
+// anything held outside the frustum until partway through the scroll pays its
+// whole compile cost on the frame it arrives. The spaceship did exactly that at
+// scroll 0.62 — four programs on one frame, and a visible stall.
+//
+// The warm-up runs under the loading splash, so by the time the visitor can
+// scroll there is nothing left to compile. That is the invariant below: this
+// fails loudly if a material is ever added that is only reachable mid-scroll.
+type ProbeWindow = Window & typeof globalThis & { __linkedPrograms: number };
+
+test.describe('Homepage scene shader warm-up', () => {
+  // The craft is desktop-only (min-width: 1024px) — below that it is not in the
+  // scene at all and there is nothing to warm.
+  test.skip(
+    ({ viewport }) => !!viewport && viewport.width < 1024,
+    'spaceship is desktop-only',
+  );
+
+  async function countLinkedPrograms(page: Page) {
+    await page.addInitScript(() => {
+      const w = window as ProbeWindow;
+      w.__linkedPrograms = 0;
+      const protos = [
+        window.WebGL2RenderingContext,
+        window.WebGLRenderingContext,
+      ]
+        .filter(Boolean)
+        .map((ctor) => ctor.prototype);
+
+      for (const proto of protos) {
+        const link = proto.linkProgram;
+        proto.linkProgram = function (...args: Parameters<typeof link>) {
+          w.__linkedPrograms++;
+          return link.apply(this, args);
+        };
+      }
+    });
+  }
+
+  const linkedPrograms = (page: Page) =>
+    page.evaluate(() => (window as ProbeWindow).__linkedPrograms);
+
+  test('compiles nothing once the visitor can scroll', async ({ page }) => {
+    await countLinkedPrograms(page);
+    await page.goto('/');
+    await signalIntent(page);
+
+    // The gate waits for a painted frame AND the warm-up, and has its own 6s
+    // ceiling behind that; under a loaded parallel run it can use most of it.
+    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible({
+      timeout: 15_000,
+    });
+    await page.getByRole('button', { name: /enter/i }).click();
+
+    // Short of the craft's trigger (0.62), inside the craft HUD window.
+    await scrollTo(page, 0.55);
+    await expect(panels.craft(page)).toHaveClass(isShowing);
+
+    // Wait for the warm-up to have actually run before baselining, rather than
+    // assuming it beat us here — under a loaded parallel run it may not have.
+    await expect(async () => {
+      expect(await linkedPrograms(page)).toBeGreaterThan(0);
+    }).toPass({ timeout: 15_000, intervals: [100, 250, 500] });
+    const warmed = await linkedPrograms(page);
+
+    // Past the trigger. The scrub eases over ~1s, so give it room to land.
+    await scrollTo(page, 0.78);
+    await page.waitForTimeout(2000);
+
+    // Positive control, read off the same scrollProgress ref the craft itself
+    // runs on: the craft panel closes at 0.68, so seeing it gone proves
+    // progress really advanced through 0.62 and the craft flew. Without this,
+    // a scrub that never landed would make the assertion below vacuous.
+    await expect(panels.craft(page)).not.toHaveClass(isShowing);
+
+    // The assertion. Not one program compiled between the splash lifting and
+    // the craft flying in.
+    expect(await linkedPrograms(page)).toBe(warmed);
   });
 });

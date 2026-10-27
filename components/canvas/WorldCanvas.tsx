@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { sampleMerkaba } from '@/utils/merkaba';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
@@ -176,10 +176,110 @@ export function FirstFrameSignal({ onReady }: { onReady?: () => void }) {
   return null;
 }
 
+// ── Shader warm-up ────────────────────────────────────────────────────────
+//
+// three.js compiles a material's WebGL program on the first frame that actually
+// DRAWS it. Objects that stay outside the frustum never reach that path, so
+// anything which only enters frame partway through the scroll pays its whole
+// compile cost on the single frame it arrives.
+//
+// The spaceship is the expensive case (BUG-002): it is parked at x=250 until
+// scroll 0.62, and four programs — two of them ~76KB of generated fragment
+// source, from the grunge shader and the physical cockpit material — all
+// compiled on the frame it flew in, stalling the loop for roughly 3x the
+// surrounding frame budget.
+//
+// `compileAsync` walks the scene graph instead of the render list, so it warms
+// those programs regardless of where their objects are standing. Running it
+// here puts that cost under the loading splash, where nothing is animating.
+export const WARMUP_CAP_MS = 2500;
+
+export function SceneWarmup({ onWarm }: { onWarm?: () => void }) {
+  const { gl, scene, camera } = useThree();
+  const started = useRef(false);
+  const settled = useRef(false);
+  const flushed = useRef(false);
+
+  // Whichever arrives first — the compile, a compile failure, or the cap.
+  const settle = useCallback(() => {
+    if (settled.current) return;
+    settled.current = true;
+    onWarm?.();
+  }, [onWarm]);
+
+  // The entry gate unlocks off this signal, so it has to arrive even when the
+  // warm-up cannot. A driver that never reports the programs ready costs the
+  // visitor smoothness; it must never cost them entry.
+  //
+  // Setting `flushed` here is also what paces the warm-up below: React runs a
+  // commit's passive effects as one synchronous batch, so a frame that sees
+  // this flag has the whole batch behind it, whatever order the scene's
+  // children happen to sit in.
+  useEffect(() => {
+    flushed.current = true;
+    const cap = setTimeout(settle, WARMUP_CAP_MS);
+    return () => clearTimeout(cap);
+  }, [settle]);
+
+  // Frame-driven, and deliberately not the FIRST frame. Objects in this scene
+  // park their lights on private layers from mount effects — Planet moves
+  // three of its four onto PLANET_LIGHTING_LAYER, which the camera never
+  // enables — and those effects flush after frame 1 has already run. Light
+  // counts are part of a program's cache key, so warming before they settle
+  // builds a full set of programs against 3 directional / 9 point lights that
+  // the renderer, seeing 1 and 8, never looks up. The stall then returns
+  // untouched, with the wasted compile added to it.
+  useFrame(() => {
+    if (started.current || !flushed.current) return;
+    started.current = true;
+
+    // A program's cache key depends on the render target that is bound while
+    // it is built: tone mapping and output color space are read straight off
+    // the screen when the target is null, and forced to NoToneMapping /
+    // LinearSRGB when it is not. This scene always draws through
+    // EffectComposer — into a buffer — so warming with no target bound builds
+    // a whole set of programs under a key the renderer will never look up, and
+    // leaves the real ones to compile mid-scroll exactly as before. Any
+    // non-XR target produces the right key; a 1x1 is enough.
+    const proxy = new THREE.WebGLRenderTarget(1, 1);
+    const previous = gl?.getRenderTarget?.() ?? null;
+
+    let compiling;
+    try {
+      gl?.setRenderTarget?.(proxy);
+      // compileAsync builds the programs synchronously and only awaits the
+      // driver reporting them ready, so restoring the target below cannot
+      // race it.
+      compiling = gl?.compileAsync?.(scene, camera);
+    } catch {
+      compiling = undefined;
+    } finally {
+      gl?.setRenderTarget?.(previous);
+    }
+
+    const finish = () => {
+      proxy.dispose();
+      settle();
+    };
+
+    if (compiling && typeof compiling.then === 'function') {
+      compiling.then(finish, finish);
+    } else {
+      finish();
+    }
+  });
+
+  return null;
+}
+
 // ── WorldCanvas — full-viewport canvas, IS the visual experience ──────────
 interface WorldCanvasProps {
   scrollProgress: React.RefObject<number>;
-  /** Called once the canvas has rendered its first frame. */
+  /**
+   * Called once the scene is both painted and warm — a frame has been drawn
+   * (BUG-001) and every material's program is compiled (BUG-002). The loading
+   * splash is sized to cover both; covering real work is its whole purpose.
+   */
   onReady?: () => void;
 }
 
@@ -193,6 +293,23 @@ export default function WorldCanvas({
   // Single quality gate for the whole scene: < 1024px runs the low tier
   // (fewer particles, lower dpr, lighter post-processing, simpler shaders).
   const isMobile = !showSpaceship;
+
+  // Readiness is two independent signals that both have to land before the
+  // splash can honestly say "SCENE LOADED." Neither is ordered against the
+  // other — whichever finishes last fires onReady, exactly once.
+  const readyParts = useRef({ painted: false, warm: false, fired: false });
+  const markReady = useCallback(
+    (part: 'painted' | 'warm') => {
+      const parts = readyParts.current;
+      parts[part] = true;
+      if (parts.fired || !parts.painted || !parts.warm) return;
+      parts.fired = true;
+      onReady?.();
+    },
+    [onReady],
+  );
+  const handlePainted = useCallback(() => markReady('painted'), [markReady]);
+  const handleWarm = useCallback(() => markReady('warm'), [markReady]);
 
   // Static background star field — fewer points on mobile.
   const bgStars = useMemo(
@@ -241,7 +358,8 @@ export default function WorldCanvas({
           color="#ffe8cc"
         />
 
-        <FirstFrameSignal onReady={onReady} />
+        <FirstFrameSignal onReady={handlePainted} />
+        <SceneWarmup onWarm={handleWarm} />
 
         <CameraRig scrollProgress={scrollProgress} />
 

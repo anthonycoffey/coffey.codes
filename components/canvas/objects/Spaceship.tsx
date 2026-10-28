@@ -149,6 +149,16 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
       for (let i = 0; i < TOTAL_THRUST; i++)
         thrustRef.current.setMatrixAt(i, dummy.matrix);
       thrustRef.current.instanceMatrix.needsUpdate = true;
+
+      // Claim the instance-color buffer now, while the loading splash is still
+      // up. three.js allocates it lazily on the first setColorAt, and that call
+      // otherwise lands in the fly-in branch below — where it flips
+      // USE_INSTANCING_COLOR on, changes this material's program cache key, and
+      // forces a recompile on the one frame the craft arrives (BUG-002).
+      for (let i = 0; i < TOTAL_THRUST; i++)
+        thrustRef.current.setColorAt(i, tempColor.setRGB(0, 0, 0));
+      if (thrustRef.current.instanceColor)
+        thrustRef.current.instanceColor.needsUpdate = true;
     }
     if (laserRef.current) {
       dummy.scale.setScalar(0);
@@ -157,7 +167,7 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
         laserRef.current.setMatrixAt(i, dummy.matrix);
       laserRef.current.instanceMatrix.needsUpdate = true;
     }
-  }, [dummy]);
+  }, [dummy, tempColor]);
 
   useFrame(({ clock }, delta) => {
     if (!groupRef.current || !thrustRef.current || !laserRef.current) return;

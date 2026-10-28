@@ -1,11 +1,11 @@
 ---
 id: BUG-003
 title: 'Homepage craft is absent for most of the scroll section built around it'
-status: draft
+status: review-pending
 severity: P2
 created: 2026-10-27
 author: 'Anthony Coffey'
-reviewers: []
+reviewers: ['Anthony Coffey']
 affected_repos: ['coffey.codes']
 ---
 
@@ -137,68 +137,121 @@ amended to say so rather than left to mislead.
 
 ## Fix
 
-### WS1 — Drive the flight from scroll progress
+### WS1 — The flight is a function of scroll
 
-Replace the clock-driven `flyT` with a scroll-driven one, so the craft's position is a pure
-function of `scrollProgress` like everything else that arrives:
+[`utils/craftFlight.ts`](../../../utils/craftFlight.ts) holds the whole flight as two pure
+functions, `craftFlightProgress(scroll)` and `craftPosition(scroll)`, following the
+`utils/merkaba.ts` precedent of keeping scene maths out of the component.
+[`Spaceship.tsx`](../../../components/canvas/objects/Spaceship.tsx) now sets its group
+position from `craftPosition(progress)`; `triggered` and `triggerTime` are gone, and with
+them the replay-on-return behaviour. Standing still holds the craft in place; scrubbing
+back walks it out the way it came.
 
-```ts
-const flyT = smoothstep(
-  clamp01((progress - FLY_START) / (FLY_END - FLY_START)),
-);
-```
+Two details worth recording:
 
-`triggered` / `triggerTime` go away entirely, and with them the replay-on-return behaviour:
-scrubbing back up walks the craft back out the way it came, which is what the rest of the
-scene already does.
+- **No easing on the band.** The obvious `smoothstep` is wrong here. It compresses the
+  middle of the path — the stretch where the craft is close enough to read — into a narrow
+  slice of scroll, which is the original complaint in a new form. A straight clamp spreads
+  the readable part of the flight across the section.
+- **The path was shortened, not just re-timed.** Flying from `z = -180` to `z = 0` put the
+  craft past the camera a third of the way in, so re-timing alone would have left it in
+  frame for a small slice of the band. The path now runs `[110, 1, -120] → [-70, 6, -78]`,
+  which keeps the craft in front of the camera for nearly the whole band while still
+  closing from ~91 to ~32 units away, so it reads as an approach rather than a drift.
 
-**Open question — the scroll band.** The craft panel runs `0.52 → 0.68` and the camera's
-"HOLD — craft + satellite" keyframe sits at `0.68`. Mapping the flight across roughly
-`0.56 → 0.76` would put the craft in frame for the whole panel and carry it out as the camera
-levels off for the galaxy. The exact numbers are a judgement call about how the section
-should feel, not a technical one — worth setting by eye against the real scene before the
-test gets written to them. My suggestion is a starting point, not a recommendation I hold.
+### WS2 — Lasers
 
-### WS2 — Decide what the lasers and thrust do
-
-Two sub-animations currently hang off `elapsed`:
-
-- **Thrust particles** advance per-frame from `delta` and cycle continuously. These are idle
-  motion and should **stay** on the clock — that matches UFO and Galaxy.
-- **Lasers** fire at `elapsed = 1.8s + burstIndex * 0.15` and travel for 1.2s. A travelling
-  projectile is a time animation; driving it from scroll means scrubbing backwards un-fires
-  it, which may read as broken rather than as scrubbing.
-
-  Suggested: keep the laser flight on the clock, but **arm** it from `flyT` — fire once when
-  `flyT` first crosses a threshold, and re-arm when it drops back below. That keeps the
-  volley looking like a volley while still being something the visitor can scrub back to and
-  see again.
+Thrust particles stay on the clock: they cycle continuously and never finish, which is the
+same rule the UFO's bob and the galaxy's spin follow. The laser volley is a travelling
+projectile, so its flight stays on the clock too — driving a bolt from scroll would run it
+backwards when the visitor scrubs back, which reads as broken rather than as scrubbing.
+What scroll controls is the trigger: crossing `LASER_ARM_AT` fires the volley, dropping
+back below re-arms it, so scrubbing back and forward lets you watch it again.
 
 ### WS3 — Re-warm after a breakpoint remount
 
-Carried over from BUG-002's Out of scope. The craft is desktop-only (`min-width: 1024px`), so
-resizing across that breakpoint mounts it after `SceneWarmup` has already run, leaving its
-programs cold and the original BUG-002 stall available exactly once. `SceneWarmup` should
-re-run when the scene's composition changes — keying it on the same `showSpaceship` value
-that gates the craft is enough. Small, and it closes the one hole left in BUG-002.
+`SceneWarmup` is keyed on `showSpaceship`, so crossing the 1024px breakpoint remounts it
+and recompiles over the new scene. This closes the hole BUG-002 left open: a craft that
+mounts after the warm-up has run otherwise has cold programs and brings the original stall
+back once.
 
-### Tests (RED first, per development-standards)
+### Tests
 
-- **Unit:** craft position is a pure function of progress — same input, same position,
-  regardless of elapsed time or how many times progress has crossed the band; and the
-  position is continuous across the band (no jump at the entry edge).
-- **E2E:** hold at a scroll position inside the craft section for longer than the old 4.5s
-  flight and assert the craft is still being drawn. Draw calls per frame are the signal that
-  diagnosed this and they work as the assertion: steady state at this position is 25, with
-  the craft present it is ~72.
+- **Unit** — [`__tests__/utils/craftFlight.test.ts`](../../../__tests__/utils/craftFlight.test.ts),
+  12 tests. The two that matter state the regression directly: the same scroll gives the
+  same position every time it is asked, and gives the same position again after scrubbing
+  across the whole track and back. The rest cover clamping, monotonicity and continuity at
+  both band edges.
+
+  Deliberately **no distance thresholds**. Whether a given x is clear of the frustum depends
+  on the craft's z and on where the camera is at that scroll position, neither of which this
+  module knows — and the choreography is expected to be tuned by eye, so pinned numbers would
+  only break. The e2e test covers what actually matters.
+
+- **E2E** — `Homepage craft presence` in [`e2e/homepage.spec.ts`](../../../e2e/homepage.spec.ts).
+  Settles at scroll `0.645`, takes the peak draw count over twelve seconds, then over the
+  next twelve, and asserts the second is at least 80% of the first. Verified to fail without
+  the fix (0.58) and pass with it.
+
+  Three earlier versions of this test were wrong, each in a way worth recording because the
+  same traps are there for the next person measuring this scene:
+  1. **Spread is not a craft signal.** The scene is not static at a fixed scroll position —
+     the satellite orbits and the rocks tumble through the frustum, moving the count by
+     about 33 draws on their own. A test on variance measures the orbit.
+  2. **Different scroll positions are not comparable.** Taking a "craft-free" baseline from
+     earlier in the scroll fails because the scene content is different there — 0.45 still
+     has the UFO flyby, and reads _higher_ than the craft section does.
+  3. **The sampling window has to span a full orbit.** Two four-second windows twelve
+     seconds apart catch different phases of the satellite's cycle, which swings the result
+     by more than the craft is worth. Twelve seconds each way is the shortest that is stable.
 
 ## Acceptance Criteria
 
-1. Holding anywhere in the craft section keeps the craft on screen indefinitely.
-2. Scrolling back and forward through the section moves the craft back and forward with it —
-   no replay, no restart.
-3. Frame cost is unchanged (it is already negligible; this must not make it otherwise).
-4. The BUG-002 warm-up still holds: zero programs compiled mid-scroll.
+1. Holding anywhere in the craft section keeps the craft on screen indefinitely —
+   **met at the positions the section is built around**; see the honest note below.
+2. Scrolling back and forward through the section moves the craft with it, with no replay or
+   restart — **met**, and pinned by the two purity tests.
+3. Frame cost unchanged — **met**; the craft was already about 0.1 ms per frame and nothing
+   here adds work. The band is slightly wider, so the per-frame thrust loop runs over a
+   slightly longer stretch of scroll; the early-out when the craft is parked at either end of
+   the band is kept.
+4. The BUG-002 warm-up still holds, zero programs compiled mid-scroll — **met**, that test
+   still passes.
+
+### Where the craft actually is, measured
+
+Projecting the craft's world position through the live camera each frame, on an RTX 3080 at
+a 1249x1183 viewport:
+
+| Scroll      | NDC x            | On screen            |
+| ----------- | ---------------- | -------------------- |
+| 0.50 – 0.62 | 1.66 → 1.13      | no, off to the right |
+| 0.64 – 0.74 | 0.95 → -0.54     | **yes**              |
+| 0.76 onward | -1.02 and beyond | no, exited left      |
+
+So the craft is in frame for roughly `0.63 → 0.75` of the track at that aspect ratio, and
+wider at a more typical 16:10 window, where the horizontal frustum is about half again as
+wide — an estimated `0.58 → 0.79`. Against the craft panel's `0.52 → 0.68` that covers
+most of the back half of the panel and carries on past it.
+
+That is a large improvement on 1.7 seconds and never again, but it is **not** "the craft is
+visible everywhere in its section". A craft that holds frame across the entire band would
+have to stop approaching the camera and drift sideways instead, which trades away the thing
+the fly-in is for. Where exactly that trade should land is a judgement about how the section
+should feel, and belongs to a pass with eyes on the real scene — the band and the two
+endpoints are a single edit in `utils/craftFlight.ts`, and the tests do not pin them.
+
+## Verification
+
+- [x] Bug is reproducible before fix — craft drawn only `t = 1.6s → 3.3s`, then 25 draws per
+      frame indefinitely
+- [x] Bug is no longer reproducible after fix — e2e regression test fails at 0.58 without the
+      change, passes with it
+- [x] Regression test added — 12 unit tests, 1 e2e
+- [x] Full suite green — 401 unit tests, 20 homepage e2e (chromium), ESLint, `tsc --noEmit`
+- [x] Craft position verified by projection through the live camera on real GPU hardware
+- [ ] **Choreography judged by eye** — the band and path are measured to work, not seen to
+      look right
 
 ## Out of scope
 

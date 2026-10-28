@@ -276,7 +276,13 @@ test.describe('Homepage scene preloading', () => {
     // __tests__/components/Loader.test.tsx; asserting that ordering here would
     // depend on intent landing before the bar-fill floor, which is not
     // controllable against a cold deployment.
-    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible();
+    //
+    // Readiness means painted AND warm since BUG-002, and the gate has a 6s
+    // ceiling behind that, so this needs more than the 5s default under a
+    // loaded parallel run.
+    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible({
+      timeout: 15_000,
+    });
     await page.getByRole('button', { name: /enter/i }).click();
 
     // Fades (opacity) rather than sliding (translate), and the canvas that was
@@ -367,5 +373,115 @@ test.describe('Homepage scene shader warm-up', () => {
     // The assertion. Not one program compiled between the splash lifting and
     // the craft flying in.
     expect(await linkedPrograms(page)).toBe(warmed);
+  });
+});
+
+// ── Craft presence (BUG-003) ─────────────────────────────────────────────
+//
+// The craft's flight used to run on wall-clock time: crossing 0.62 started a
+// 4.5s animation that ran out and parked the craft off screen, so the section
+// built around it showed an empty sky for every second past the third. It is a
+// function of scroll now, like every other staged entrance in the scene, so
+// standing still in its section keeps it there.
+//
+// Draw calls per frame are the signal — the craft's hull is ~20 separate
+// meshes, so it leaving the frustum is unmistakable, and sampling the same
+// scroll position over time needs no fixed baseline to compare against.
+type DrawWindow = Window & typeof globalThis & { __drawCalls: number };
+
+test.describe('Homepage craft presence', () => {
+  test.skip(
+    ({ viewport }) => !!viewport && viewport.width < 1024,
+    'spaceship is desktop-only',
+  );
+
+  async function countDrawCalls(page: Page) {
+    await page.addInitScript(() => {
+      const w = window as DrawWindow;
+      w.__drawCalls = 0;
+      const protos = [
+        window.WebGL2RenderingContext,
+        window.WebGLRenderingContext,
+      ]
+        .filter(Boolean)
+        .map((ctor) => ctor.prototype);
+
+      for (const proto of protos) {
+        for (const name of [
+          'drawElements',
+          'drawArrays',
+          'drawElementsInstanced',
+          'drawArraysInstanced',
+        ] as const) {
+          const orig = proto[name];
+          if (!orig) continue;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (proto as any)[name] = function (...args: unknown[]) {
+            w.__drawCalls++;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return (orig as any).apply(this, args);
+          };
+        }
+      }
+    });
+  }
+
+  /** Draw calls issued during a single animation frame. */
+  const drawsPerFrame = (page: Page) =>
+    page.evaluate(
+      () =>
+        new Promise<number>((resolve) => {
+          const w = window as DrawWindow;
+          requestAnimationFrame(() => {
+            const start = w.__drawCalls;
+            requestAnimationFrame(() => resolve(w.__drawCalls - start));
+          });
+        }),
+    );
+
+  /** Highest draw count seen over `seconds` of standing still. */
+  async function peakDraws(page: Page, seconds: number) {
+    const samples: number[] = [];
+    const until = Date.now() + seconds * 1000;
+    while (Date.now() < until) {
+      samples.push(await drawsPerFrame(page));
+      await page.waitForTimeout(400);
+    }
+    return Math.max(...samples);
+  }
+
+  test('keeps the craft on screen while the visitor stays in its section', async ({
+    page,
+  }) => {
+    await countDrawCalls(page);
+    await page.goto('/');
+    await signalIntent(page);
+    await expect(page.getByText(/SCENE LOADED\./)).toBeVisible({
+      timeout: 15_000,
+    });
+    await page.getByRole('button', { name: /enter/i }).click();
+
+    // Settle at the scroll position where the old clock-driven flight did put
+    // the craft on screen, so both versions have something to show at first.
+    await scrollTo(page, 0.645);
+    await expect(panels.craft(page)).toHaveClass(isShowing);
+
+    // Watch the first 12 seconds, then the next 12 — standing still throughout,
+    // and well past the 4.5s the old flight lasted. Same scroll position both times, so the scene content
+    // is identical and only the craft's behaviour differs. Peak rather than
+    // average because the satellite and rocks orbit through the frustum on
+    // their own; the peak asks only whether the craft was drawn at all during
+    // the window.
+    // Each window has to span a full satellite orbit (~12s) or the two peaks
+    // just catch different phases of it — that alone swings the count by about
+    // 33 draws, which is most of what the craft itself is worth.
+    const fresh = await peakDraws(page, 12);
+    const late = await peakDraws(page, 12);
+
+    // The craft's hull is ~20 separate meshes. On the clock this fell off a
+    // cliff — the craft flew past, parked off screen, and left the section
+    // empty for good, taking the peak from ~72 down to the ~42 the orbiting
+    // satellite accounts for by itself.
+    expect(late / fresh).toBeGreaterThan(0.8);
   });
 });

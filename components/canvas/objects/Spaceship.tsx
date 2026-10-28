@@ -3,6 +3,7 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { craftFlightProgress, craftPosition } from '@/utils/craftFlight';
 
 const THRUST_PER_ENGINE = 70;
 const ENGINE_COUNT = 2;
@@ -26,6 +27,10 @@ const PARTICLE_DATA = (() => {
 })();
 
 const LASER_COUNT = 6;
+
+// How far into the flight the volley goes off, as a fraction of the scroll
+// band. Far enough in that the craft is properly in frame when it fires.
+const LASER_ARM_AT = 0.45;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -114,8 +119,8 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
   const groupRef = useRef<THREE.Group>(null);
   const thrustRef = useRef<THREE.InstancedMesh>(null);
   const laserRef = useRef<THREE.InstancedMesh>(null);
-  const triggered = useRef(false);
-  const triggerTime = useRef(0);
+  const laserArmed = useRef(false);
+  const laserTime = useRef(0);
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const tempColor = useMemo(() => new THREE.Color(), []);
@@ -175,25 +180,32 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
     const progress = scrollProgress.current ?? 0;
     const t = clock.getElapsedTime();
 
-    if (progress < 0.62) {
-      groupRef.current.position.set(250, 0, -80);
-      triggered.current = false;
+    // Position is a pure function of scroll (BUG-003), so standing still in
+    // the craft's section keeps the craft there, and scrubbing back walks it
+    // out the way it came.
+    const flyT = craftFlightProgress(progress);
+    const [px, py, pz] = craftPosition(progress);
+    groupRef.current.position.set(px, py, pz);
+
+    // Parked off-stage at either end of the band — nothing to animate, and no
+    // reason to spend the per-frame particle work on the rest of the scroll.
+    if (flyT <= 0 || flyT >= 1) {
+      laserArmed.current = false;
       return;
     }
 
-    if (!triggered.current) {
-      triggered.current = true;
-      triggerTime.current = t;
+    // The volley is a travelling projectile, so its flight stays on the clock:
+    // driving a bolt from scroll would run it backwards when the visitor
+    // scrubs back. Scroll controls the trigger instead — crossing into the
+    // band fires it, leaving re-arms it, so scrubbing back and forward lets
+    // you watch it again.
+    if (!laserArmed.current && flyT >= LASER_ARM_AT) {
+      laserArmed.current = true;
+      laserTime.current = t;
+    } else if (flyT < LASER_ARM_AT) {
+      laserArmed.current = false;
     }
-
-    const elapsed = t - triggerTime.current;
-    const flyT = Math.min(1, elapsed / 4.5);
-
-    groupRef.current.position.set(
-      lerp(150, -120, flyT),
-      lerp(1, 6, flyT),
-      lerp(-180, 0, flyT),
-    );
+    const sinceVolley = laserArmed.current ? t - laserTime.current : -1;
 
     const d = Math.min(delta, 1);
     const pd = pData.current;
@@ -249,14 +261,17 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
       thrustRef.current.instanceColor.needsUpdate = true;
 
     const LASER_SPEED = 70;
-    const FIRE_START = 1.8;
+    // Relative to the volley being armed, which scroll now decides — the old
+    // 1.8s offset existed to delay the volley past the start of the flight,
+    // and LASER_ARM_AT does that job instead.
+    const FIRE_START = 0;
 
     for (let i = 0; i < LASER_COUNT; i++) {
       const isPort = i % 2 === 0;
       const burstIndex = Math.floor(i / 2);
       const fireTime = FIRE_START + burstIndex * 0.15;
 
-      const timeSinceFired = elapsed - fireTime;
+      const timeSinceFired = sinceVolley - fireTime;
 
       if (timeSinceFired > 0 && timeSinceFired < 1.2) {
         const zPos = -0.4 - timeSinceFired * LASER_SPEED;

@@ -359,7 +359,14 @@ export default function WorldCanvas({
         />
 
         <FirstFrameSignal onReady={handlePainted} />
-        <SceneWarmup onWarm={handleWarm} />
+        {/* Keyed on the scene's composition: crossing the 1024px breakpoint
+            mounts or unmounts the craft, and a craft that arrives after the
+            warm-up has run has cold programs again — the BUG-002 stall, back
+            once. Remounting re-runs the compile over the new scene. */}
+        <SceneWarmup
+          key={showSpaceship ? 'with-craft' : 'without-craft'}
+          onWarm={handleWarm}
+        />
 
         <CameraRig scrollProgress={scrollProgress} />
 

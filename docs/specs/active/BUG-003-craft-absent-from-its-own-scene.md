@@ -139,25 +139,48 @@ amended to say so rather than left to mislead.
 
 ### WS1 — The flight is a function of scroll
 
-[`utils/craftFlight.ts`](../../../utils/craftFlight.ts) holds the whole flight as two pure
+[`utils/craftFlight.ts`](../../../utils/craftFlight.ts) holds the flight as two pure
 functions, `craftFlightProgress(scroll)` and `craftPosition(scroll)`, following the
 `utils/merkaba.ts` precedent of keeping scene maths out of the component.
-[`Spaceship.tsx`](../../../components/canvas/objects/Spaceship.tsx) now sets its group
-position from `craftPosition(progress)`; `triggered` and `triggerTime` are gone, and with
-them the replay-on-return behaviour. Standing still holds the craft in place; scrubbing
-back walks it out the way it came.
+[`Spaceship.tsx`](../../../components/canvas/objects/Spaceship.tsx) sets its group position
+from `craftPosition(progress)`; `triggered` and `triggerTime` are gone, and with them the
+replay-on-return behaviour.
 
-Two details worth recording:
+**The path and its pace are unchanged from the original.** The endpoints are the same
+`[150, 1, -180] → [-120, 6, 0]`, and the mapping is linear because the original flight was
+linear in time (`elapsed / 4.5`) — so a linear map from scroll reproduces its motion exactly
+for anyone scrolling at a steady rate.
 
-- **No easing on the band.** The obvious `smoothstep` is wrong here. It compresses the
-  middle of the path — the stretch where the craft is close enough to read — into a narrow
-  slice of scroll, which is the original complaint in a new form. A straight clamp spreads
-  the readable part of the flight across the section.
-- **The path was shortened, not just re-timed.** Flying from `z = -180` to `z = 0` put the
-  craft past the camera a third of the way in, so re-timing alone would have left it in
-  frame for a small slice of the band. The path now runs `[110, 1, -120] → [-70, 6, -78]`,
-  which keeps the craft in front of the camera for nearly the whole band while still
-  closing from ~91 to ~32 units away, so it reads as an approach rather than a drift.
+A first attempt reshaped the path to keep the craft in frame across its whole section,
+flattening the charge toward the camera into something closer to a sideways drift. That was
+the wrong call and was rejected on sight: the drive at the viewer is the point of the move,
+and a fly-by spread thin stops being a fly-by. **Only the mechanism was broken; the
+choreography was not.** The band is deliberately narrow (`0.60 → 0.72`) for the same reason
+— a wider band spreads the pass over more scrolling and slows it down.
+
+The craft being in frame for a slice of its section rather than all of it is therefore the
+intended behaviour, not a residual defect. The UFO's flyby earlier in the scroll works the
+same way.
+
+### WS1a — Hiding the craft outside its band
+
+Driving position from scroll removed the craft's hiding place, and that turned out to matter
+more than it sounds. The old code parked the craft at a separate `(250, 0, -80)` until its
+trigger fired; with position derived from scroll, it instead sits at the start of its path
+whenever the scroll is below the band.
+
+At 70° fov the frustum is very wide out where the flight begins. Measured on a 1600x900
+window, a craft parked at the path start sits at **NDC x ≈ 0.65 — on screen** — for the
+entire first half of the scroll: a speck hanging behind the merkaba, the UFO and the planet.
+Pushing the start further out does not fix it either; the geometry wants an x of roughly
+1.25x the distance, and the path would need an implausibly long run-up.
+
+So the craft is hidden outright outside its band. **Its two engine lights are deliberately
+left visible.** three.js gathers lights with `traverseVisible`, so hiding them would take the
+scene from 8 point lights to 6 — and light counts are part of a material's program cache key,
+so every program warmed during the loading splash would be discarded and recompiled
+mid-scroll. That is the whole of BUG-002 undone, silently. The lights illuminate nothing
+while the craft is off-stage; their `distance` is 5.5.
 
 ### WS2 — Lasers
 
@@ -207,39 +230,37 @@ back once.
 
 ## Acceptance Criteria
 
-1. Holding anywhere in the craft section keeps the craft on screen indefinitely —
-   **met at the positions the section is built around**; see the honest note below.
-2. Scrolling back and forward through the section moves the craft with it, with no replay or
-   restart — **met**, and pinned by the two purity tests.
+1. Stopping anywhere inside the pass holds the craft in place indefinitely, instead of it
+   expiring after 4.5s — **met**. Note this is not "the craft is visible everywhere in its
+   section", which was the original wording and the wrong target; see WS1.
+2. Scrolling back and forward moves the craft with it, with no replay or restart — **met**,
+   pinned by the two purity tests.
 3. Frame cost unchanged — **met**; the craft was already about 0.1 ms per frame and nothing
-   here adds work. The band is slightly wider, so the per-frame thrust loop runs over a
-   slightly longer stretch of scroll; the early-out when the craft is parked at either end of
-   the band is kept.
-4. The BUG-002 warm-up still holds, zero programs compiled mid-scroll — **met**, that test
-   still passes.
+   here adds work. The per-frame particle work still early-outs whenever the craft is
+   off-stage.
+4. The BUG-002 warm-up still holds, zero programs compiled mid-scroll — **met**, and not for
+   free: see WS1a on why the engine lights stay visible.
+5. The craft is not visible anywhere outside its band — **met**, and a regression this work
+   introduced and then fixed; see WS1a.
 
 ### Where the craft actually is, measured
 
-Projecting the craft's world position through the live camera each frame, on an RTX 3080 at
-a 1249x1183 viewport:
+Draw calls per frame on an RTX 3080 at 1600x900, standing still at each position. The
+craft's hull is ~20 separate meshes, so it is unmistakable in the count.
 
-| Scroll      | NDC x            | On screen            |
-| ----------- | ---------------- | -------------------- |
-| 0.50 – 0.62 | 1.66 → 1.13      | no, off to the right |
-| 0.64 – 0.74 | 0.95 → -0.54     | **yes**              |
-| 0.76 onward | -1.02 and beyond | no, exited left      |
+| Scroll     | Draws/frame | Craft        |
+| ---------- | ----------- | ------------ |
+| 0.05, 0.25 | 41          | no           |
+| 0.45, 0.55 | 25, 23      | no           |
+| 0.62       | **105**     | yes, close   |
+| 0.645      | **105**     | yes, close   |
+| 0.66       | **86**      | yes          |
+| 0.68       | **72**      | yes, passing |
+| 0.70, 0.73 | 25, 23      | no, gone by  |
 
-So the craft is in frame for roughly `0.63 → 0.75` of the track at that aspect ratio, and
-wider at a more typical 16:10 window, where the horizontal frustum is about half again as
-wide — an estimated `0.58 → 0.79`. Against the craft panel's `0.52 → 0.68` that covers
-most of the back half of the panel and carries on past it.
-
-That is a large improvement on 1.7 seconds and never again, but it is **not** "the craft is
-visible everywhere in its section". A craft that holds frame across the entire band would
-have to stop approaching the camera and drift sideways instead, which trades away the thing
-the fly-in is for. Where exactly that trade should land is a judgement about how the section
-should feel, and belongs to a pass with eyes on the real scene — the band and the two
-endpoints are a single edit in `utils/craftFlight.ts`, and the tests do not pin them.
+A fast charge through roughly `0.60 → 0.69`, biggest around `0.62 – 0.645`, and nothing at
+all before or after. Both halves matter: the craft is present wherever you stop inside the
+pass, and absent — not a distant speck — everywhere else.
 
 ## Verification
 
@@ -250,8 +271,9 @@ endpoints are a single edit in `utils/craftFlight.ts`, and the tests do not pin 
 - [x] Regression test added — 12 unit tests, 1 e2e
 - [x] Full suite green — 401 unit tests, 20 homepage e2e (chromium), ESLint, `tsc --noEmit`
 - [x] Craft position verified by projection through the live camera on real GPU hardware
-- [ ] **Choreography judged by eye** — the band and path are measured to work, not seen to
-      look right
+- [x] **Choreography judged by eye** — the first attempt was reviewed and rejected as "doesn't
+      feel like a fly in"; the path and pace are now the original's, unchanged. The band
+      (`0.60 → 0.72`) is the one number still worth a second look.
 
 ## Out of scope
 

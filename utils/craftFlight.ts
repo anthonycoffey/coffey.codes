@@ -16,34 +16,33 @@
  */
 
 /**
- * The scroll band the flight occupies.
+ * The scroll band the flight occupies — deliberately narrow.
  *
- * The craft's HUD panel runs 0.52 → 0.68 and the camera's "HOLD — craft +
- * satellite" keyframe sits at 0.68, so the band starts just inside the panel
- * and runs past it: the craft is approaching as the panel opens and is still
- * crossing as the camera levels off for the galaxy.
+ * A wider band spreads the pass over more scrolling, and a fly-by spread thin
+ * stops being a fly-by: the craft drifts instead of tearing past. Keeping the
+ * band short is what preserves the speed. The cost is that the craft is in
+ * frame for a slice of the section rather than all of it, which is the right
+ * trade — the UFO's flyby earlier in the scroll works the same way.
+ *
+ * Centred near 0.62, where the flight used to be triggered, so the craft shows
+ * up where it always did.
  */
-export const CRAFT_FLY_START = 0.54;
-export const CRAFT_FLY_END = 0.82;
+export const CRAFT_FLY_START = 0.6;
+export const CRAFT_FLY_END = 0.72;
 
 /**
  * Where the flight begins and ends, in world space.
  *
- * Two constraints shape this, and they pull against each other. The start has
- * to sit outside the camera frustum for the whole stretch before the band — at
- * 70° fov the frustum is very wide this far out, so "off to the right" means a
- * long way off. And the craft has to stay in frame for a decent share of the
- * band, which the old path did not: charging from z = -180 to z = 0 put it
- * past the camera a third of the way in, visible for only about 1.7s of a 4.5s
- * flight. This path approaches less far and crosses more, so the craft is in
- * frame for most of its section.
+ * These are the original path's endpoints, unchanged. The craft charges in
+ * from far off to the right and passes the camera — that drive toward the
+ * viewer is the whole point of the move, and flattening it into a sideways
+ * drift to keep the craft in frame longer trades away the thing worth having.
  *
- * These numbers are choreography, not mechanism — tune them by eye against the
- * real scene. The band and the path only have to agree that the craft starts
- * and ends outside the frustum.
+ * Choreography, not mechanism: tune these and the band by eye. Nothing in the
+ * tests pins them.
  */
-const FLY_FROM = [110, 1, -120] as const;
-const FLY_TO = [-70, 6, -78] as const;
+const FLY_FROM = [150, 1, -180] as const;
+const FLY_TO = [-120, 6, 0] as const;
 
 function clamp01(t: number): number {
   return Math.max(0, Math.min(1, t));
@@ -59,10 +58,10 @@ function lerp(a: number, b: number, t: number): number {
  * dependence on elapsed time or on how the visitor got here.
  */
 export function craftFlightProgress(scroll: number): number {
-  // Linear, deliberately. Easing the ends compresses the middle of the path —
-  // which is exactly the stretch where the craft is close enough to read — into
-  // a narrow band of scroll, so the section goes back to being mostly empty
-  // sky. The clamp is all that is needed here.
+  // Linear, deliberately. The original flight was linear in time
+  // (`elapsed / 4.5`), so a linear map from scroll reproduces its motion
+  // exactly for anyone scrolling at a steady rate. Easing here would ease a
+  // move that never had any.
   return clamp01(
     (scroll - CRAFT_FLY_START) / (CRAFT_FLY_END - CRAFT_FLY_START),
   );

@@ -121,6 +121,9 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
   const laserRef = useRef<THREE.InstancedMesh>(null);
   const laserArmed = useRef(false);
   const laserTime = useRef(0);
+  // Whether the craft's meshes are currently shown, so the toggle below only
+  // walks the children when it actually changes.
+  const shown = useRef(true);
 
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const tempColor = useMemo(() => new THREE.Color(), []);
@@ -187,9 +190,33 @@ export default function Spaceship({ scrollProgress }: SpaceshipProps) {
     const [px, py, pz] = craftPosition(progress);
     groupRef.current.position.set(px, py, pz);
 
-    // Parked off-stage at either end of the band — nothing to animate, and no
-    // reason to spend the per-frame particle work on the rest of the scroll.
-    if (flyT <= 0 || flyT >= 1) {
+    // Outside its band the craft is not in the scene at all.
+    //
+    // Hiding it by position alone does not work: at 70° fov the frustum is
+    // very wide out where the flight begins, and on a 16:9 window a craft
+    // parked at the start of its path sits at NDC x ≈ 0.65 — on screen, a
+    // speck hanging behind the merkaba, the UFO and the planet for the whole
+    // first half of the scroll. The old code dodged this by parking the craft
+    // at a separate hidden spot until its trigger fired; driving position from
+    // scroll removed that hiding place, so hide it outright instead.
+    //
+    // The craft's two engine lights are deliberately left alone. three.js
+    // gathers lights with traverseVisible, so hiding them would take the
+    // scene from 8 point lights to 6 — and light counts are part of a
+    // material's program cache key, so every program warmed during the
+    // loading splash would be thrown away and recompiled mid-scroll, which is
+    // the whole of BUG-002 undone. They light nothing while the craft is
+    // off-stage; their `distance` is 5.5.
+    //
+    // Also skips the per-frame particle work for the rest of the scroll.
+    const flying = flyT > 0 && flyT < 1;
+    if (flying !== shown.current) {
+      shown.current = flying;
+      for (const child of groupRef.current.children) {
+        if (!(child as THREE.Light).isLight) child.visible = flying;
+      }
+    }
+    if (!flying) {
       laserArmed.current = false;
       return;
     }

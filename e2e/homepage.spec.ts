@@ -461,8 +461,10 @@ test.describe('Homepage craft presence', () => {
     });
     await page.getByRole('button', { name: /enter/i }).click();
 
-    // Settle at the scroll position where the old clock-driven flight did put
-    // the craft on screen, so both versions have something to show at first.
+    // Settle where the craft is unmistakably in frame AND where the old
+    // clock-driven flight also put it, so both versions have something to show
+    // at first — without that, there is no cliff to detect and the test passes
+    // against the bug.
     await scrollTo(page, 0.645);
     await expect(panels.craft(page)).toHaveClass(isShowing);
 

@@ -97,7 +97,7 @@ test.describe('Homepage', () => {
       'Senior Software Engineer - Austin, Texas',
     );
     await expect(panels.intro(page)).toContainText(
-      'I build and fix the systems businesses run on.',
+      'The person you hire is the person who writes the code.',
     );
   });
 

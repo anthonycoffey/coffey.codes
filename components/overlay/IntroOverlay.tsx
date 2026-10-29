@@ -15,11 +15,9 @@ export default function IntroOverlay({ visible }: IntroOverlayProps) {
         <br />
         Anthony Coffey
       </h2>
-      <p className={styles.byline}>
-        Senior Software Engineer - Austin, Texas
-      </p>
+      <p className={styles.byline}>Senior Software Engineer - Austin, Texas</p>
       <p className={styles.bodyLine}>
-        I build and fix the systems businesses run on.
+        The person you hire is the person who writes the code.
       </p>
 
       <div className={styles.socialLinks}>

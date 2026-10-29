@@ -16,7 +16,7 @@ describe('IntroOverlay', () => {
   it('renders the positioning line', () => {
     render(<IntroOverlay visible={true} />);
     expect(
-      screen.getByText(/I build and fix the systems businesses run on/),
+      screen.getByText(/The person you hire is the person who writes the code/),
     ).toBeInTheDocument();
   });
 

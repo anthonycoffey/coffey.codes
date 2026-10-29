@@ -118,9 +118,9 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.44);
     await expect(panels.about(page)).toHaveClass(isShowing);
-    await expect(panels.about(page)).toContainText('Sound familiar?');
+    await expect(panels.about(page)).toContainText('The rebuild stalled.');
     await expect(panels.about(page)).toContainText(
-      'A codebase nobody wants to open.',
+      'The last developer stopped replying.',
     );
   });
 
@@ -141,7 +141,7 @@ test.describe('Homepage', () => {
     await expect(panels.craft(page)).toHaveClass(isShowing);
     await expect(panels.craft(page)).toContainText('Legacy rebuilds.');
     await expect(panels.craft(page)).toContainText(
-      '12 years, hands on the keyboard',
+      'Shipped through HIPAA, FDA and security review.',
     );
   });
 
@@ -172,7 +172,7 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.91);
     await expect(panels.final(page)).toHaveClass(isShowing);
-    await expect(panels.final(page)).toContainText('Tell me what’s broken.');
+    await expect(panels.final(page)).toContainText('Let’s get it shipped.');
   });
 
   test('final overlay contact link points to /contact and is clickable', async ({

@@ -11,7 +11,7 @@ describe('CraftOverlay', () => {
   it('renders the body line', () => {
     render(<CraftOverlay visible={true} />);
     expect(
-      screen.getByText(/12 years, hands on the keyboard/),
+      screen.getByText(/Shipped through HIPAA, FDA and security review/),
     ).toBeInTheDocument();
   });
 

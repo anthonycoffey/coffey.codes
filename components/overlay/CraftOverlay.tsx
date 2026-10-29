@@ -15,8 +15,8 @@ export default function CraftOverlay({ visible }: CraftOverlayProps) {
         <br /> Cloud + DevOps.
       </p>
       <p className={styles.bodyLine}>
-        12 years, hands on the keyboard — through HIPAA, FDA and security
-        review.
+        12 years, hands on the keyboard. Shipped through HIPAA, FDA and
+        security review.
       </p>
     </div>
   );

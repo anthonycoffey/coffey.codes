@@ -9,7 +9,7 @@ interface FinalOverlayProps {
 export default function FinalOverlay({ visible }: FinalOverlayProps) {
   return (
     <div className={`${styles.introPanel} ${visible ? styles.visible : ''}`}>
-      <p className={styles.leadLine}>Tell me what&rsquo;s broken.</p>
+      <p className={styles.leadLine}>Let&rsquo;s get it shipped.</p>
       <p className={styles.bodyLine}>
         <a href="/contact">&rarr;&nbsp;&nbsp;start a conversation</a>
       </p>

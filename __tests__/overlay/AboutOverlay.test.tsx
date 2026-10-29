@@ -5,13 +5,13 @@ import AboutOverlay from '@/components/overlay/AboutOverlay';
 describe('AboutOverlay', () => {
   it('renders the lead line', () => {
     render(<AboutOverlay visible={true} />);
-    expect(screen.getByText(/Sound familiar/)).toBeInTheDocument();
+    expect(screen.getByText(/The rebuild stalled/)).toBeInTheDocument();
   });
 
   it('renders the body line', () => {
     render(<AboutOverlay visible={true} />);
     expect(
-      screen.getByText(/A codebase nobody wants to open/),
+      screen.getByText(/The last developer stopped replying/),
     ).toBeInTheDocument();
   });
 

@@ -92,9 +92,12 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.25);
     await expect(panels.intro(page)).toHaveClass(isShowing);
-    await expect(panels.intro(page)).toContainText('Who Am I?');
+    await expect(panels.intro(page)).toContainText('Anthony Coffey');
     await expect(panels.intro(page)).toContainText(
-      'Anthony Coffey - Austin, Texas',
+      'Senior Software Engineer - Austin, Texas',
+    );
+    await expect(panels.intro(page)).toContainText(
+      'I build and fix the systems businesses run on.',
     );
   });
 
@@ -115,9 +118,9 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.44);
     await expect(panels.about(page)).toHaveClass(isShowing);
-    await expect(panels.about(page)).toContainText('Musician.');
+    await expect(panels.about(page)).toContainText('Sound familiar?');
     await expect(panels.about(page)).toContainText(
-      'Creativity is at the core of everything that I love to do.',
+      'A codebase nobody wants to open.',
     );
   });
 
@@ -136,9 +139,9 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.6);
     await expect(panels.craft(page)).toHaveClass(isShowing);
-    await expect(panels.craft(page)).toContainText('I solve big problems.');
+    await expect(panels.craft(page)).toContainText('Legacy rebuilds.');
     await expect(panels.craft(page)).toContainText(
-      'The trends and tools change, but my role does not.',
+      '12 years, hands on the keyboard',
     );
   });
 
@@ -169,7 +172,7 @@ test.describe('Homepage', () => {
   }) => {
     await scrollTo(page, 0.91);
     await expect(panels.final(page)).toHaveClass(isShowing);
-    await expect(panels.final(page)).toContainText('Want to know more?');
+    await expect(panels.final(page)).toContainText('Tell me what’s broken.');
   });
 
   test('final overlay contact link points to /contact and is clickable', async ({

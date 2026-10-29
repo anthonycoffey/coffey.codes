@@ -5,12 +5,19 @@ import IntroOverlay from '@/components/overlay/IntroOverlay';
 describe('IntroOverlay', () => {
   it('renders the headline', () => {
     render(<IntroOverlay visible={true} />);
-    expect(screen.getByText(/Who Am I/)).toBeInTheDocument();
+    expect(screen.getByText(/Anthony Coffey/)).toBeInTheDocument();
   });
 
   it('renders the byline', () => {
     render(<IntroOverlay visible={true} />);
-    expect(screen.getByText(/Anthony Coffey/)).toBeInTheDocument();
+    expect(screen.getByText(/Senior Software Engineer/)).toBeInTheDocument();
+  });
+
+  it('renders the positioning line', () => {
+    render(<IntroOverlay visible={true} />);
+    expect(
+      screen.getByText(/I build and fix the systems businesses run on/),
+    ).toBeInTheDocument();
   });
 
   it('applies visible class when visible', () => {

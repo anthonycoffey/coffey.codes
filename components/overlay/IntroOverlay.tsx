@@ -13,9 +13,14 @@ export default function IntroOverlay({ visible }: IntroOverlayProps) {
       <h2 className={styles.leadLine}>
         👨‍🚀
         <br />
-        Who Am I?
+        Anthony Coffey
       </h2>
-      <p className={styles.byline}>Anthony Coffey - Austin, Texas</p>
+      <p className={styles.byline}>
+        Senior Software Engineer - Austin, Texas
+      </p>
+      <p className={styles.bodyLine}>
+        I build and fix the systems businesses run on.
+      </p>
 
       <div className={styles.socialLinks}>
         {/* GitHub */}

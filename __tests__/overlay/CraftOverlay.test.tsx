@@ -5,13 +5,13 @@ import CraftOverlay from '@/components/overlay/CraftOverlay';
 describe('CraftOverlay', () => {
   it('renders the lead line', () => {
     render(<CraftOverlay visible={true} />);
-    expect(screen.getByText(/I solve big problems/)).toBeInTheDocument();
+    expect(screen.getByText(/Legacy rebuilds/)).toBeInTheDocument();
   });
 
   it('renders the body line', () => {
     render(<CraftOverlay visible={true} />);
     expect(
-      screen.getByText(/The trends and tools change, but my role does not/),
+      screen.getByText(/12 years, hands on the keyboard/),
     ).toBeInTheDocument();
   });
 

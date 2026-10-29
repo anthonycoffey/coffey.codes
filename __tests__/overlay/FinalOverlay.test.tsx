@@ -5,12 +5,12 @@ import FinalOverlay from '@/components/overlay/FinalOverlay';
 describe('FinalOverlay', () => {
   it('renders the headline text', () => {
     render(<FinalOverlay visible={true} />);
-    expect(screen.getByText(/Want to know more/)).toBeInTheDocument();
+    expect(screen.getByText(/Tell me what.s broken/)).toBeInTheDocument();
   });
 
   it('renders the contact link', () => {
     render(<FinalOverlay visible={true} />);
-    const link = screen.getByRole('link', { name: /reach out/i });
+    const link = screen.getByRole('link', { name: /start a conversation/i });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/contact');
   });

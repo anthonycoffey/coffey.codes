@@ -9,9 +9,14 @@ interface CraftOverlayProps {
 export default function CraftOverlay({ visible }: CraftOverlayProps) {
   return (
     <div className={`${styles.hudPanel} ${visible ? styles.visible : ''}`}>
-      <p className={styles.leadLine}>I solve big problems.</p>
+      <p className={styles.leadLine}>
+        Legacy rebuilds.
+        <br /> Production AI.
+        <br /> Cloud + DevOps.
+      </p>
       <p className={styles.bodyLine}>
-        The trends and tools change, but my role does not.
+        12 years, hands on the keyboard — through HIPAA, FDA and security
+        review.
       </p>
     </div>
   );

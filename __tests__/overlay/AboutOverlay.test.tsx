@@ -5,16 +5,13 @@ import AboutOverlay from '@/components/overlay/AboutOverlay';
 describe('AboutOverlay', () => {
   it('renders the lead line', () => {
     render(<AboutOverlay visible={true} />);
-    expect(screen.getByText(/Musician/)).toBeInTheDocument();
+    expect(screen.getByText(/Sound familiar/)).toBeInTheDocument();
   });
 
   it('renders the body line', () => {
     render(<AboutOverlay visible={true} />);
-    // "Creativity" is wrapped in a styled <span>, so the body line text is
-    // split across nodes. Match on the trailing fragment that lives in a
-    // single text node.
     expect(
-      screen.getByText(/is at the core of everything that I love to do/),
+      screen.getByText(/A codebase nobody wants to open/),
     ).toBeInTheDocument();
   });
 

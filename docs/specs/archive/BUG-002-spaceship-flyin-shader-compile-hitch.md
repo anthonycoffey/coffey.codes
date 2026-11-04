@@ -1,7 +1,7 @@
 ---
 id: BUG-002
 title: 'Homepage spaceship fly-in stalls the render loop on first draw'
-status: review-pending
+status: complete
 severity: P2
 created: 2026-10-26
 author: 'Anthony Coffey'
@@ -273,9 +273,21 @@ the homepage on real hardware settles it.
 
 ## Out of scope
 
-- **The steady-state cost step after the trigger** (~+60% per frame while the craft is on
+- ~~**The steady-state cost step after the trigger** (~+60% per frame while the craft is on
   screen). Real, measured, and a separate piece of work — thrust instance count, per-frame
-  `instanceColor` re-upload, and the two point lights are the candidates.
+  `instanceColor` re-upload, and the two point lights are the candidates.~~
+
+  **Withdrawn 2026-10-27 — this finding was wrong.** It was measured in an occluded browser
+  pane throttled to ~1fps and in headless Chromium rendering WebGL through SwiftShader, and
+  it did not survive contact with a GPU. Re-measured on an RTX 3080 (ANGLE/D3D11) at three
+  scroll positions, frame time is identical whether the craft is on screen or not — 6.1 ms
+  median in every phase, which is this display's vsync interval, with p95 of 7.2 ms while
+  the craft is up against 7.6 ms while it is absent. Throttling the CPU 6x to force real
+  competition for the frame budget puts the craft's cost at about 0.1 ms median, inside the
+  noise, while it is drawing nearly 3x the draw calls (72 vs 25). **The craft is cheap and
+  the optimisation work proposed here should not be done.** See
+  [BUG-003](../active/BUG-003-craft-absent-from-its-own-scene.md) for the measurement.
+
 - **The fly-in replaying on scrub-back.** `triggered.current` resets below `0.62`
   ([`Spaceship.tsx`](../../../components/canvas/objects/Spaceship.tsx)) and the animation is
   driven by `clock.getElapsedTime()` rather than scroll progress, so scrolling back and
@@ -283,7 +295,8 @@ the homepage on real hardware settles it.
   pure function of scroll. Worth reconciling, but it is a behaviour change, not this bug.
 - **A viewport resize across the 1024px breakpoint mid-session.** That mounts the craft
   after the warm-up has run, so its programs are cold again and the stall returns once. The
-  warm-up covers the scene composition present at load. Rare enough to leave.
+  warm-up covers the scene composition present at load. Rare enough to leave — now picked up
+  as WS3 of [BUG-003](../active/BUG-003-craft-absent-from-its-own-scene.md).
 
 ## Notes
 
